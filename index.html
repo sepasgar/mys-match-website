@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MysMatch - Meet People. Discover Events. Find Your Match.</title>
+  <meta name="description" content="MysMatch is a location-based social app for meeting new people and discovering exciting events near you." />
+  <meta property="og:title" content="MysMatch - Meet People. Discover Events." />
+  <meta property="og:description" content="A location-based social app for meeting new people and discovering exciting events near you." />
+  <meta property="og:image" content="logo.png" />
+  <meta property="og:url" content="https://mys-match.com" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" href="logo.png" type="image/png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --yellow: #FFCB37;
+      --yellow-dark: #E6B82E;
+      --dark: #0a0a1a;
+      --blue-deep: #0a0a3a;
+      --white: #ffffff;
+      --gray: #a3a3a3;
+      --light-gray: #f5f5f5;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--dark);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ── Animated gradient background ── */
+    .bg-gradient {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(135deg, #000000 0%, #0a0a2e 25%, #000010 50%, #001050 75%, #000000 100%);
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* ── Floating particles ── */
+    .particles {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--yellow);
+      border-radius: 50%;
+      opacity: 0;
+      animation: float linear infinite;
+    }
+
+    @keyframes float {
+      0% { opacity: 0; transform: translateY(100vh) scale(0); }
+      10% { opacity: 0.6; }
+      90% { opacity: 0.6; }
+      100% { opacity: 0; transform: translateY(-10vh) scale(1); }
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(10, 10, 26, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 203, 55, 0.1);
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+    }
+
+    .nav-logo img {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+    }
+
+    .nav-logo span {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.6rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--yellow), var(--white));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+
+    .nav-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8rem 2rem 4rem;
+      position: relative;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      text-align: center;
+      animation: fadeUp 1s ease-out;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-logo {
+      width: 120px;
+      height: 120px;
+      border-radius: 32px;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 60px rgba(255, 203, 55, 0.3);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 60px rgba(255, 203, 55, 0.3); }
+      50% { box-shadow: 0 0 80px rgba(255, 203, 55, 0.5); }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 .highlight {
+      background: linear-gradient(135deg, var(--yellow), #FFE082);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--gray);
+      max-width: 550px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--yellow);
+      color: #1a1a1a;
+    }
+
+    .btn-primary:hover {
+      background: var(--yellow-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 40px rgba(255, 203, 55, 0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--white);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateY(-2px);
+    }
+
+    /* ── Scroll indicator ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray);
+      font-size: 0.8rem;
+      animation: bounce 2s ease-in-out infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(10px); }
+    }
+
+    .scroll-indicator svg {
+      width: 24px;
+      height: 24px;
+      stroke: var(--gray);
+    }
+
+    /* ── Section base ── */
+    section {
+      padding: 6rem 2rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-header .label {
+      display: inline-block;
+      padding: 0.4rem 1rem;
+      border-radius: 50px;
+      background: rgba(255, 203, 55, 0.1);
+      color: var(--yellow);
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--gray);
+      font-size: 1.1rem;
+      max-width: 550px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Features ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 20px;
+      padding: 2.5rem;
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--yellow), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .feature-card:hover {
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-4px);
+      border-color: rgba(255, 203, 55, 0.2);
+    }
+
+    .feature-card:hover::before { opacity: 1; }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: rgba(255, 203, 55, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .feature-card p {
+      color: var(--gray);
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    /* ── How It Works ── */
+    .steps {
+      display: flex;
+      gap: 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .step {
+      flex: 1;
+      min-width: 220px;
+      max-width: 300px;
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--yellow), var(--yellow-dark));
+      color: #1a1a1a;
+      font-size: 1.5rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .step h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 0.75rem;
+    }
+
+    .step p {
+      color: var(--gray);
+      line-height: 1.6;
+      font-size: 0.9rem;
+    }
+
+    /* ── Stats ── */
+    .stats-section {
+      background: linear-gradient(135deg, rgba(255, 203, 55, 0.05), rgba(0, 16, 80, 0.2));
+      border-top: 1px solid rgba(255, 203, 55, 0.1);
+      border-bottom: 1px solid rgba(255, 203, 55, 0.1);
+    }
+
+    .stats-grid {
+      display: flex;
+      gap: 3rem;
+      max-width: 800px;
+      margin: 0 auto;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .stat {
+      text-align: center;
+      min-width: 150px;
+    }
+
+    .stat-value {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--yellow), #FFE082);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.2;
+    }
+
+    .stat-label {
+      color: var(--gray);
+      font-size: 0.95rem;
+      margin-top: 0.25rem;
+    }
+
+    /* ── CTA ── */
+    .cta-section {
+      text-align: center;
+      padding: 8rem 2rem;
+    }
+
+    .cta-section h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: var(--gray);
+      font-size: 1.15rem;
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      text-align: center;
+    }
+
+    .footer-logo {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--yellow), var(--white));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--gray);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover { color: var(--white); }
+
+    .footer-copyright {
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.8rem;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      nav { padding: 0.75rem 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 6rem 1.5rem 3rem; }
+      .hero-logo { width: 90px; height: 90px; border-radius: 24px; }
+      section { padding: 4rem 1.5rem; }
+      .features-grid { grid-template-columns: 1fr; }
+      .stats-grid { gap: 2rem; }
+      .stat-value { font-size: 2.2rem; }
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-gradient"></div>
+<div class="particles" id="particles"></div>
+
+<!-- Nav -->
+<nav>
+  <a href="#" class="nav-logo">
+    <img src="logo.png" alt="MysMatch" />
+    <span>MysMatch</span>
+  </a>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="#download" class="btn btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;">Get the App</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-content">
+    <img src="logo.png" alt="MysMatch" class="hero-logo" />
+    <h1>Meet People.<br /><span class="highlight">Discover Events.</span><br />Find Your Match.</h1>
+    <p>MysMatch connects you with real people and exciting events in your city. Swipe less, live more.</p>
+    <div class="hero-buttons">
+      <a href="#download" class="btn btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Now
+      </a>
+      <a href="#features" class="btn btn-secondary">Learn More</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Scroll</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</section>
+
+<!-- Features -->
+<section id="features">
+  <div class="section-header reveal">
+    <span class="label">Features</span>
+    <h2>Everything you need to connect</h2>
+    <p>From finding your perfect match to discovering local events, MysMatch has it all.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card reveal">
+      <div class="feature-icon">&#x1F4CD;</div>
+      <h3>Location-Based Matching</h3>
+      <p>Connect with people in your city. Set your location and discover matches who are actually nearby and ready to meet.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">&#x1F389;</div>
+      <h3>Discover Local Events</h3>
+      <p>Browse events by category, price, and popularity. From music to tech meetups, find what's happening around you.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">&#x2728;</div>
+      <h3>Create Your Own Events</h3>
+      <p>Host your own gatherings and let others discover them. Set capacity, pricing, and watch registrations roll in.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">&#x1F512;</div>
+      <h3>Verified Profiles</h3>
+      <p>Phone-verified accounts keep the community authentic. Real people, real connections, no catfishing.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">&#x1F4AC;</div>
+      <h3>Smart Matching</h3>
+      <p>Our matching system ensures meaningful connections based on your preferences, interests, and proximity.</p>
+    </div>
+    <div class="feature-card reveal">
+      <div class="feature-icon">&#x1F6E1;&#xFE0F;</div>
+      <h3>Safe & Respectful</h3>
+      <p>Built-in safeguards and balanced interaction limits create a respectful space for everyone.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<section id="how-it-works">
+  <div class="section-header reveal">
+    <span class="label">How It Works</span>
+    <h2>Three steps to get started</h2>
+    <p>Getting started with MysMatch takes just a minute.</p>
+  </div>
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-number">1</div>
+      <h3>Create Your Profile</h3>
+      <p>Sign up, verify your phone number, and build your profile with your photos and details.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-number">2</div>
+      <h3>Set Your City</h3>
+      <p>Choose your location to see matches and events near you. Everything is local-first.</p>
+    </div>
+    <div class="step reveal">
+      <div class="step-number">3</div>
+      <h3>Start Matching</h3>
+      <p>Browse potential matches, attend events, and make real connections in your area.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Stats -->
+<section class="stats-section">
+  <div class="stats-grid reveal">
+    <div class="stat">
+      <div class="stat-value">100%</div>
+      <div class="stat-label">Verified Users</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">8+</div>
+      <div class="stat-label">Event Categories</div>
+    </div>
+    <div class="stat">
+      <div class="stat-value">Free</div>
+      <div class="stat-label">To Download</div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="download">
+  <div class="reveal">
+    <span class="label" style="display:inline-block; padding:0.4rem 1rem; border-radius:50px; background:rgba(255,203,55,0.1); color:var(--yellow); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem;">Get Started</span>
+    <h2>Ready to find your match?</h2>
+    <p>Download MysMatch and start connecting with people and events in your city today.</p>
+    <div class="hero-buttons" style="margin-top: 2rem;">
+      <a href="#" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.1rem 2.5rem;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+        App Store (Coming Soon)
+      </a>
+      <a href="#" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1.1rem 2.5rem;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .61-.92zm.94-.94L15.5 6.5 6.13 1.13l-1.58-.256zm0 22.252L6.13 22.87 15.5 17.5l-10.95-5.626v11.252zM16.13 7.13L20.5 12l-4.37 4.87L8.97 12l7.16-4.87z"/></svg>
+        Google Play (Coming Soon)
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">MysMatch</div>
+  <div class="footer-links">
+    <a href="#features">Features</a>
+    <a href="#how-it-works">How It Works</a>
+    <a href="mailto:contact@mys-match.com">Contact</a>
+  </div>
+  <p class="footer-copyright">&copy; 2026 MysMatch. All rights reserved.</p>
+</footer>
+
+<script>
+  // Floating particles
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    p.classList.add('particle');
+    p.style.left = Math.random() * 100 + '%';
+    p.style.animationDuration = (8 + Math.random() * 12) + 's';
+    p.style.animationDelay = Math.random() * 10 + 's';
+    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+    container.appendChild(p);
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
