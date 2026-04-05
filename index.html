@@ -248,6 +248,63 @@
       font-weight: 500;
     }
 
+    /* ── SCREENSHOTS ──────────────────────────────── */
+    .screenshots {
+      padding: 100px 24px;
+      background: var(--white);
+      overflow: hidden;
+    }
+    .screenshots-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .screenshots-scroll {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .phone-frame {
+      position: relative;
+      width: 220px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .phone-frame img {
+      width: 100%;
+      border-radius: 28px;
+      box-shadow: 0 20px 60px rgba(13,30,76,0.12), 0 4px 16px rgba(13,30,76,0.06);
+      border: 4px solid var(--black);
+      transition: transform 0.3s;
+    }
+    .phone-frame:hover img {
+      transform: translateY(-8px);
+    }
+    .phone-label {
+      display: block;
+      margin-top: 16px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--gray);
+    }
+
+    @media (max-width: 768px) {
+      .screenshots-scroll {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding: 0 20px 20px;
+        margin: 0 -24px;
+      }
+      .phone-frame {
+        scroll-snap-align: center;
+        min-width: 180px;
+        width: 180px;
+      }
+    }
+
     /* ── FEATURES ─────────────────────────────────── */
     .features {
       padding: 100px 24px;
@@ -665,6 +722,35 @@
         <div class="hero-stat">
           <strong>Free</strong>
           <span>No paywalls</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- APP SCREENSHOTS -->
+  <section class="screenshots">
+    <div class="screenshots-inner">
+      <div class="fade-up" style="text-align:center;">
+        <span class="section-label">See It in Action</span>
+        <h2 class="section-title">A glimpse inside MysMatch</h2>
+        <p class="section-subtitle" style="margin:0 auto 48px;">Find study partners, chat, and join campus events — all in one app.</p>
+      </div>
+      <div class="screenshots-scroll fade-up">
+        <div class="phone-frame">
+          <img src="/screenshot-home.png" alt="MysMatch home screen" loading="lazy">
+          <span class="phone-label">Discover</span>
+        </div>
+        <div class="phone-frame">
+          <img src="/screenshot-profile.png" alt="MysMatch study partner profile" loading="lazy">
+          <span class="phone-label">Study Partners</span>
+        </div>
+        <div class="phone-frame">
+          <img src="/screenshot-chats.png" alt="MysMatch chats" loading="lazy">
+          <span class="phone-label">Chats</span>
+        </div>
+        <div class="phone-frame">
+          <img src="/screenshot-events.png" alt="MysMatch events" loading="lazy">
+          <span class="phone-label">Events</span>
         </div>
       </div>
     </div>
