@@ -1,518 +1,618 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MysMatch - Meet People. Discover Events. Find Your Match.</title>
-  <meta name="description" content="MysMatch is a location-based social app for meeting new people and discovering exciting events near you." />
-  <meta property="og:title" content="MysMatch - Meet People. Discover Events." />
-  <meta property="og:description" content="A location-based social app for meeting new people and discovering exciting events near you." />
-  <meta property="og:image" content="logo.png" />
-  <meta property="og:url" content="https://mys-match.com" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" href="logo.png" type="image/png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MysMatch — Meet Students Who Match Your Vibe</title>
+  <meta name="description" content="MysMatch connects university students for meaningful connections. Discover people at your campus, attend events, and find your match.">
+  <meta name="theme-color" content="#0D1E4C">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="MysMatch — Meet Students Who Match Your Vibe">
+  <meta property="og:description" content="The dating app built for university students in Germany. Smart matching, campus events, and real connections.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mys-match.com">
+  <meta property="og:image" content="https://mys-match.com/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="MysMatch — Meet Students Who Match Your Vibe">
+  <meta name="twitter:description" content="The dating app built for university students in Germany.">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="canonical" href="https://mys-match.com">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --yellow: #FFCB37;
-      --yellow-dark: #E6B82E;
-      --dark: #0a0a1a;
-      --blue-deep: #0a0a3a;
-      --white: #ffffff;
-      --gray: #a3a3a3;
-      --light-gray: #f5f5f5;
+      --primary: #C48CB3;
+      --primary-dark: #0D1E4C;
+      --primary-light: #E5C9D7;
+      --accent: #83A6CE;
+      --black: #0B1B32;
+      --white: #FFFFFF;
+      --gray: #26415E;
+      --gray-light: #6B8299;
+      --gray-bg: #F5F0F3;
+      --border: #E5C9D7;
+      --success: #34C77B;
+      --error: #E54D6B;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: var(--dark);
-      color: var(--white);
-      overflow-x: hidden;
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Animated gradient background ── */
-    .bg-gradient {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      background: linear-gradient(135deg, #000000 0%, #0a0a2e 25%, #000010 50%, #001050 75%, #000000 100%);
-      background-size: 400% 400%;
-      animation: gradientShift 15s ease infinite;
-    }
-
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    /* ── Floating particles ── */
-    .particles {
-      position: fixed;
-      inset: 0;
-      z-index: -1;
-      overflow: hidden;
-    }
-
-    .particle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      background: var(--yellow);
-      border-radius: 50%;
-      opacity: 0;
-      animation: float linear infinite;
-    }
-
-    @keyframes float {
-      0% { opacity: 0; transform: translateY(100vh) scale(0); }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.6; }
-      100% { opacity: 0; transform: translateY(-10vh) scale(1); }
-    }
-
-    /* ── Nav ── */
-    nav {
+    /* ── NAV ─────────────────────────────────────── */
+    .nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 1rem 2rem;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 2px 20px rgba(13,30,76,0.08); }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      background: rgba(10, 10, 26, 0.8);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 203, 55, 0.1);
     }
-
     .nav-logo {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 10px;
       text-decoration: none;
+      color: var(--primary-dark);
     }
-
-    .nav-logo img {
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
-    }
-
-    .nav-logo span {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.6rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, var(--yellow), var(--white));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .nav-links { display: flex; gap: 2rem; align-items: center; }
-
+    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
     .nav-links a {
-      color: var(--gray);
       text-decoration: none;
-      font-size: 0.9rem;
+      color: var(--gray);
+      font-size: 15px;
       font-weight: 500;
-      transition: color 0.3s;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary-dark); }
+    .nav-cta {
+      background: var(--primary-dark) !important;
+      color: var(--white) !important;
+      padding: 10px 22px !important;
+      border-radius: 12px !important;
+      font-weight: 600 !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(13,30,76,0.2);
     }
 
-    .nav-links a:hover { color: var(--white); }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8rem 2rem 4rem;
-      position: relative;
-    }
-
-    .hero-content {
-      max-width: 800px;
-      text-align: center;
-      animation: fadeUp 1s ease-out;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(40px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .hero-logo {
-      width: 120px;
-      height: 120px;
-      border-radius: 32px;
-      margin-bottom: 2rem;
-      box-shadow: 0 0 60px rgba(255, 203, 55, 0.3);
-      animation: pulse 3s ease-in-out infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { box-shadow: 0 0 60px rgba(255, 203, 55, 0.3); }
-      50% { box-shadow: 0 0 80px rgba(255, 203, 55, 0.5); }
-    }
-
-    .hero h1 {
-      font-size: clamp(2.5rem, 6vw, 4.5rem);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero h1 .highlight {
-      background: linear-gradient(135deg, var(--yellow), #FFE082);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .hero p {
-      font-size: 1.25rem;
-      color: var(--gray);
-      max-width: 550px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.7;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 1rem 2rem;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
-      text-decoration: none;
-      transition: all 0.3s ease;
-      cursor: pointer;
+    .mobile-toggle {
+      display: none;
+      background: none;
       border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--primary-dark);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: 0.3s;
     }
 
-    .btn-primary {
-      background: var(--yellow);
-      color: #1a1a1a;
-    }
-
-    .btn-primary:hover {
-      background: var(--yellow-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 40px rgba(255, 203, 55, 0.3);
-    }
-
-    .btn-secondary {
-      background: rgba(255, 255, 255, 0.08);
-      color: var(--white);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
-      transform: translateY(-2px);
-    }
-
-    /* ── Scroll indicator ── */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      color: var(--gray);
-      font-size: 0.8rem;
-      animation: bounce 2s ease-in-out infinite;
-    }
-
-    @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(10px); }
-    }
-
-    .scroll-indicator svg {
-      width: 24px;
-      height: 24px;
-      stroke: var(--gray);
-    }
-
-    /* ── Section base ── */
-    section {
-      padding: 6rem 2rem;
-    }
-
-    .section-header {
+    /* ── HERO ────────────────────────────────────── */
+    .hero {
+      padding: 140px 24px 100px;
       text-align: center;
-      margin-bottom: 4rem;
-    }
-
-    .section-header .label {
-      display: inline-block;
-      padding: 0.4rem 1rem;
-      border-radius: 50px;
-      background: rgba(255, 203, 55, 0.1);
-      color: var(--yellow);
-      font-size: 0.85rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 1rem;
-    }
-
-    .section-header h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-
-    .section-header p {
-      color: var(--gray);
-      font-size: 1.1rem;
-      max-width: 550px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* ── Features ── */
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
-
-    .feature-card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 20px;
-      padding: 2.5rem;
-      transition: all 0.4s ease;
+      background: linear-gradient(170deg, var(--gray-bg) 0%, var(--white) 60%);
       position: relative;
       overflow: hidden;
     }
-
-    .feature-card::before {
+    .hero::before {
       content: '';
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--yellow), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(196,140,179,0.12) 0%, transparent 70%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      left: -150px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(131,166,206,0.10) 0%, transparent 70%);
+    }
+    .hero-inner {
+      max-width: 720px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 28px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 60px);
+      font-weight: 800;
+      color: var(--primary-dark);
+      line-height: 1.1;
+      letter-spacing: -1.5px;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 18px;
+      color: var(--gray);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
+    }
+    .hero-buttons {
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .btn:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--primary-dark);
+      color: var(--white);
+      box-shadow: 0 4px 20px rgba(13,30,76,0.18);
+    }
+    .btn-primary:hover { box-shadow: 0 8px 30px rgba(13,30,76,0.25); }
+    .btn-outline {
+      background: var(--white);
+      color: var(--primary-dark);
+      border: 2px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--primary); }
+    .btn svg { width: 20px; height: 20px; }
+
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 48px;
+      margin-top: 56px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+    }
+    .hero-stat strong {
+      display: block;
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+    .hero-stat span {
+      font-size: 14px;
+      color: var(--gray-light);
+      font-weight: 500;
     }
 
+    /* ── FEATURES ─────────────────────────────────── */
+    .features {
+      padding: 100px 24px;
+      max-width: 1120px;
+      margin: 0 auto;
+    }
+    .section-label {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .section-subtitle {
+      font-size: 17px;
+      color: var(--gray-light);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 56px;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .feature-card {
+      padding: 36px 28px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
     .feature-card:hover {
-      background: rgba(255, 255, 255, 0.06);
       transform: translateY(-4px);
-      border-color: rgba(255, 203, 55, 0.2);
+      box-shadow: 0 12px 40px rgba(13,30,76,0.08);
     }
-
-    .feature-card:hover::before { opacity: 1; }
-
     .feature-icon {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      background: rgba(255, 203, 55, 0.1);
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
+      font-size: 24px;
+      margin-bottom: 20px;
     }
+    .fi-rose { background: rgba(196,140,179,0.15); }
+    .fi-navy { background: rgba(13,30,76,0.08); }
+    .fi-blue { background: rgba(131,166,206,0.2); }
+    .fi-green { background: rgba(52,199,123,0.12); }
+    .fi-pink { background: rgba(229,201,215,0.4); }
+    .fi-slate { background: rgba(107,130,153,0.12); }
 
     .feature-card h3 {
-      font-size: 1.25rem;
+      font-size: 18px;
       font-weight: 700;
-      margin-bottom: 0.75rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
     }
-
     .feature-card p {
-      color: var(--gray);
+      font-size: 15px;
+      color: var(--gray-light);
       line-height: 1.6;
-      font-size: 0.95rem;
     }
 
-    /* ── How It Works ── */
-    .steps {
-      display: flex;
-      gap: 2rem;
-      max-width: 1000px;
+    /* ── HOW IT WORKS ─────────────────────────────── */
+    .how-it-works {
+      padding: 100px 24px;
+      background: var(--gray-bg);
+    }
+    .how-inner {
+      max-width: 1120px;
       margin: 0 auto;
-      flex-wrap: wrap;
-      justify-content: center;
     }
-
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      margin-top: 56px;
+    }
     .step {
-      flex: 1;
-      min-width: 220px;
-      max-width: 300px;
       text-align: center;
       position: relative;
     }
-
-    .step-number {
-      width: 64px;
-      height: 64px;
+    .step-num {
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--yellow), var(--yellow-dark));
-      color: #1a1a1a;
-      font-size: 1.5rem;
+      background: var(--primary-dark);
+      color: var(--white);
+      font-size: 18px;
       font-weight: 800;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1.5rem;
+      margin-bottom: 20px;
     }
-
     .step h3 {
-      font-size: 1.15rem;
+      font-size: 17px;
       font-weight: 700;
-      margin-bottom: 0.75rem;
+      color: var(--primary-dark);
+      margin-bottom: 8px;
     }
-
     .step p {
-      color: var(--gray);
+      font-size: 14px;
+      color: var(--gray-light);
       line-height: 1.6;
-      font-size: 0.9rem;
     }
 
-    /* ── Stats ── */
-    .stats-section {
-      background: linear-gradient(135deg, rgba(255, 203, 55, 0.05), rgba(0, 16, 80, 0.2));
-      border-top: 1px solid rgba(255, 203, 55, 0.1);
-      border-bottom: 1px solid rgba(255, 203, 55, 0.1);
-    }
-
-    .stats-grid {
-      display: flex;
-      gap: 3rem;
-      max-width: 800px;
+    /* ── EVENTS SECTION ───────────────────────────── */
+    .events-section {
+      padding: 100px 24px;
+      max-width: 1120px;
       margin: 0 auto;
+    }
+    .events-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      margin-top: 48px;
+    }
+    .events-visual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .event-tag {
+      padding: 20px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .event-tag:hover { transform: scale(1.03); }
+    .event-tag .emoji { font-size: 32px; margin-bottom: 10px; display: block; }
+    .event-tag .label { font-size: 14px; font-weight: 600; color: var(--primary-dark); }
+    .events-text h3 {
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+    }
+    .events-text p {
+      font-size: 16px;
+      color: var(--gray-light);
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+    .check-list { list-style: none; }
+    .check-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 15px;
+      color: var(--gray);
+      font-weight: 500;
+      margin-bottom: 12px;
+    }
+    .check-list li::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--success);
+      flex-shrink: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+      background-size: 14px;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    /* ── SAFETY ────────────────────────────────────── */
+    .safety {
+      padding: 100px 24px;
+      background: var(--primary-dark);
+      color: var(--white);
+    }
+    .safety-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .safety .section-label { color: var(--primary-light); }
+    .safety .section-title { color: var(--white); }
+    .safety .section-subtitle {
+      color: rgba(255,255,255,0.6);
+      margin: 0 auto 56px;
+    }
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+    .safety-card {
+      padding: 32px 24px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      text-align: center;
+    }
+    .safety-card .s-icon {
+      font-size: 32px;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .safety-card h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .safety-card p {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.6;
+    }
+
+    /* ── CTA ───────────────────────────────────────── */
+    .cta {
+      padding: 100px 24px;
+      text-align: center;
+    }
+    .cta-inner {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    .cta h2 {
+      font-size: clamp(28px, 4vw, 40px);
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+    }
+    .cta p {
+      font-size: 17px;
+      color: var(--gray-light);
+      margin-bottom: 36px;
+      line-height: 1.7;
+    }
+    .store-buttons {
+      display: flex;
+      gap: 14px;
       justify-content: center;
       flex-wrap: wrap;
     }
-
-    .stat {
-      text-align: center;
-      min-width: 150px;
+    .store-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 28px;
+      border-radius: 14px;
+      background: var(--primary-dark);
+      color: var(--white);
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
     }
-
-    .stat-value {
-      font-size: 3rem;
-      font-weight: 800;
-      background: linear-gradient(135deg, var(--yellow), #FFE082);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      line-height: 1.2;
+    .store-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(13,30,76,0.2);
     }
-
-    .stat-label {
-      color: var(--gray);
-      font-size: 0.95rem;
-      margin-top: 0.25rem;
+    .store-btn .store-icon { font-size: 24px; }
+    .store-btn .store-text { text-align: left; }
+    .store-btn .store-text small {
+      display: block;
+      font-size: 11px;
+      font-weight: 400;
+      opacity: 0.7;
     }
-
-    /* ── CTA ── */
-    .cta-section {
-      text-align: center;
-      padding: 8rem 2rem;
-    }
-
-    .cta-section h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 800;
-      margin-bottom: 1rem;
-    }
-
-    .cta-section p {
-      color: var(--gray);
-      font-size: 1.15rem;
-      margin-bottom: 2.5rem;
-      max-width: 500px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.6;
-    }
-
-    /* ── Footer ── */
-    footer {
-      padding: 3rem 2rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      text-align: center;
-    }
-
-    .footer-logo {
-      font-family: 'Dancing Script', cursive;
-      font-size: 1.8rem;
+    .store-btn .store-text strong {
+      display: block;
+      font-size: 16px;
       font-weight: 700;
-      background: linear-gradient(135deg, var(--yellow), var(--white));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 1rem;
     }
 
+    /* ── FOOTER ────────────────────────────────────── */
+    .footer {
+      padding: 48px 24px;
+      border-top: 1px solid var(--border);
+      background: var(--gray-bg);
+    }
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-left img { width: 28px; height: 28px; border-radius: 8px; }
+    .footer-left span { font-size: 14px; color: var(--gray-light); }
     .footer-links {
       display: flex;
-      gap: 2rem;
-      justify-content: center;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
+      gap: 24px;
     }
-
     .footer-links a {
-      color: var(--gray);
+      font-size: 14px;
+      color: var(--gray-light);
       text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.3s;
+      font-weight: 500;
+      transition: color 0.2s;
     }
+    .footer-links a:hover { color: var(--primary-dark); }
 
-    .footer-links a:hover { color: var(--white); }
-
-    .footer-copyright {
-      color: rgba(255, 255, 255, 0.3);
-      font-size: 0.8rem;
-    }
-
-    /* ── Mobile ── */
+    /* ── MOBILE ────────────────────────────────────── */
     @media (max-width: 768px) {
-      nav { padding: 0.75rem 1rem; }
       .nav-links { display: none; }
-      .hero { padding: 6rem 1.5rem 3rem; }
-      .hero-logo { width: 90px; height: 90px; border-radius: 24px; }
-      section { padding: 4rem 1.5rem; }
+      .mobile-toggle { display: block; }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 8px 24px rgba(13,30,76,0.08);
+        gap: 16px;
+      }
+
+      .hero { padding: 120px 20px 72px; }
+      .hero-stats { gap: 28px; }
+      .hero-stat strong { font-size: 22px; }
+
       .features-grid { grid-template-columns: 1fr; }
-      .stats-grid { gap: 2rem; }
-      .stat-value { font-size: 2.2rem; }
+      .steps { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+      .events-split { grid-template-columns: 1fr; gap: 40px; }
+      .safety-grid { grid-template-columns: 1fr; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
     }
 
-    /* ── Scroll reveal ── */
-    .reveal {
+    @media (max-width: 480px) {
+      .steps { grid-template-columns: 1fr; }
+      .events-visual { grid-template-columns: 1fr 1fr; }
+    }
+
+    /* ── ANIMATIONS ───────────────────────────────── */
+    .fade-up {
       opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
     }
-
-    .reveal.visible {
+    .fade-up.visible {
       opacity: 1;
       transform: translateY(0);
     }
@@ -520,181 +620,250 @@
 </head>
 <body>
 
-<div class="bg-gradient"></div>
-<div class="particles" id="particles"></div>
-
-<!-- Nav -->
-<nav>
-  <a href="#" class="nav-logo">
-    <img src="logo.png" alt="MysMatch" />
-    <span>MysMatch</span>
-  </a>
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#how-it-works">How It Works</a>
-    <a href="#download" class="btn btn-primary" style="padding: 0.6rem 1.5rem; font-size: 0.85rem;">Get the App</a>
-  </div>
-</nav>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-content">
-    <img src="logo.png" alt="MysMatch" class="hero-logo" />
-    <h1>Meet People.<br /><span class="highlight">Discover Events.</span><br />Find Your Match.</h1>
-    <p>MysMatch connects you with real people and exciting events in your city. Swipe less, live more.</p>
-    <div class="hero-buttons">
-      <a href="#download" class="btn btn-primary">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-        Download Now
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="/logo.png" alt="MysMatch" width="36" height="36">
+        <span>MysMatch</span>
       </a>
-      <a href="#features" class="btn btn-secondary">Learn More</a>
+      <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How It Works</a>
+        <a href="#events">Events</a>
+        <a href="#safety">Safety</a>
+        <a href="#download" class="nav-cta">Get the App</a>
+      </div>
     </div>
-  </div>
-  <div class="scroll-indicator">
-    <span>Scroll</span>
-    <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-  </div>
-</section>
+  </nav>
 
-<!-- Features -->
-<section id="features">
-  <div class="section-header reveal">
-    <span class="label">Features</span>
-    <h2>Everything you need to connect</h2>
-    <p>From finding your perfect match to discovering local events, MysMatch has it all.</p>
-  </div>
-  <div class="features-grid">
-    <div class="feature-card reveal">
-      <div class="feature-icon">&#x1F4CD;</div>
-      <h3>Location-Based Matching</h3>
-      <p>Connect with people in your city. Set your location and discover matches who are actually nearby and ready to meet.</p>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Made for university students</div>
+      <h1>Meet Students Who <em>Match Your Vibe</em></h1>
+      <p>MysMatch connects you with students at your university. Real profiles, real people, meaningful connections.</p>
+      <div class="hero-buttons">
+        <a href="#download" class="btn btn-primary">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download Free
+        </a>
+        <a href="#how" class="btn btn-outline">See How It Works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>279+</strong>
+          <span>Universities</span>
+        </div>
+        <div class="hero-stat">
+          <strong>100%</strong>
+          <span>Student-verified</span>
+        </div>
+        <div class="hero-stat">
+          <strong>Free</strong>
+          <span>No paywalls</span>
+        </div>
+      </div>
     </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">&#x1F389;</div>
-      <h3>Discover Local Events</h3>
-      <p>Browse events by category, price, and popularity. From music to tech meetups, find what's happening around you.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">&#x2728;</div>
-      <h3>Create Your Own Events</h3>
-      <p>Host your own gatherings and let others discover them. Set capacity, pricing, and watch registrations roll in.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">&#x1F512;</div>
-      <h3>Verified Profiles</h3>
-      <p>Phone-verified accounts keep the community authentic. Real people, real connections, no catfishing.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">&#x1F4AC;</div>
-      <h3>Smart Matching</h3>
-      <p>Our matching system ensures meaningful connections based on your preferences, interests, and proximity.</p>
-    </div>
-    <div class="feature-card reveal">
-      <div class="feature-icon">&#x1F6E1;&#xFE0F;</div>
-      <h3>Safe & Respectful</h3>
-      <p>Built-in safeguards and balanced interaction limits create a respectful space for everyone.</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- How It Works -->
-<section id="how-it-works">
-  <div class="section-header reveal">
-    <span class="label">How It Works</span>
-    <h2>Three steps to get started</h2>
-    <p>Getting started with MysMatch takes just a minute.</p>
-  </div>
-  <div class="steps">
-    <div class="step reveal">
-      <div class="step-number">1</div>
-      <h3>Create Your Profile</h3>
-      <p>Sign up, verify your phone number, and build your profile with your photos and details.</p>
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <div class="fade-up">
+      <span class="section-label">Features</span>
+      <h2 class="section-title">Everything you need,<br>nothing you don't</h2>
+      <p class="section-subtitle">No endless swiping. No algorithms optimized for engagement. Just smart matching designed for students.</p>
     </div>
-    <div class="step reveal">
-      <div class="step-number">2</div>
-      <h3>Set Your City</h3>
-      <p>Choose your location to see matches and events near you. Everything is local-first.</p>
+    <div class="features-grid">
+      <div class="feature-card fade-up">
+        <div class="feature-icon fi-rose">&#x1F393;</div>
+        <h3>Campus Matching</h3>
+        <p>Connect with students from your university and city. Filter by study level, major, and more.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon fi-navy">&#x2728;</div>
+        <h3>Women-First Design</h3>
+        <p>Women initiate matches with smart criteria filters. Men set their availability. No spam, no pressure.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon fi-blue">&#x1F4AC;</div>
+        <h3>Instant Chat</h3>
+        <p>Once matched, start chatting right away. Real-time messages with read receipts.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon fi-green">&#x1F389;</div>
+        <h3>Student Events</h3>
+        <p>Discover and create campus events. From study sessions to parties, meet people IRL.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon fi-pink">&#x1F512;</div>
+        <h3>Biometric Security</h3>
+        <p>Lock the app with Face ID, fingerprint, or a custom PIN. Your privacy is non-negotiable.</p>
+      </div>
+      <div class="feature-card fade-up">
+        <div class="feature-icon fi-slate">&#x1F6E1;</div>
+        <h3>Report & Block</h3>
+        <p>Instantly block or report anyone. We review every report and take action fast.</p>
+      </div>
     </div>
-    <div class="step reveal">
-      <div class="step-number">3</div>
-      <h3>Start Matching</h3>
-      <p>Browse potential matches, attend events, and make real connections in your area.</p>
-    </div>
-  </div>
-</section>
+  </section>
 
-<!-- Stats -->
-<section class="stats-section">
-  <div class="stats-grid reveal">
-    <div class="stat">
-      <div class="stat-value">100%</div>
-      <div class="stat-label">Verified Users</div>
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how">
+    <div class="how-inner">
+      <div class="fade-up">
+        <span class="section-label">How It Works</span>
+        <h2 class="section-title">From sign-up to matched<br>in minutes</h2>
+      </div>
+      <div class="steps">
+        <div class="step fade-up">
+          <div class="step-num">1</div>
+          <h3>Create Your Profile</h3>
+          <p>Sign up with your university email. Add your photo, major, and a few details about yourself.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">2</div>
+          <h3>Set Preferences</h3>
+          <p>Choose what matters to you: age range, height, education level, and lifestyle preferences.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">3</div>
+          <h3>Get Matched</h3>
+          <p>Women discover compatible profiles and send match requests. Men accept or pass.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-num">4</div>
+          <h3>Start Talking</h3>
+          <p>Once both sides agree, a private chat opens. Plan a coffee, a study session, or a date.</p>
+        </div>
+      </div>
     </div>
-    <div class="stat">
-      <div class="stat-value">8+</div>
-      <div class="stat-label">Event Categories</div>
+  </section>
+
+  <!-- EVENTS -->
+  <section class="events-section" id="events">
+    <div class="fade-up">
+      <span class="section-label">Events</span>
+      <h2 class="section-title">Meet people beyond matching</h2>
+      <p class="section-subtitle">Create and join campus events. The best connections happen in person.</p>
     </div>
-    <div class="stat">
-      <div class="stat-value">Free</div>
-      <div class="stat-label">To Download</div>
+    <div class="events-split">
+      <div class="events-visual fade-up">
+        <div class="event-tag"><span class="emoji">&#x1F3B5;</span><span class="label">Music</span></div>
+        <div class="event-tag"><span class="emoji">&#x26BD;</span><span class="label">Sports</span></div>
+        <div class="event-tag"><span class="emoji">&#x1F4BB;</span><span class="label">Tech</span></div>
+        <div class="event-tag"><span class="emoji">&#x1F355;</span><span class="label">Food</span></div>
+        <div class="event-tag"><span class="emoji">&#x1F3A8;</span><span class="label">Art</span></div>
+        <div class="event-tag"><span class="emoji">&#x1F91D;</span><span class="label">Networking</span></div>
+      </div>
+      <div class="events-text fade-up">
+        <h3>Your campus, your events</h3>
+        <p>Browse events by category, city, or price. Create your own events and build your community.</p>
+        <ul class="check-list">
+          <li>Filter by city, date, and category</li>
+          <li>Gender-balanced capacity controls</li>
+          <li>QR code ticket scanning for organizers</li>
+          <li>Free and paid event support</li>
+        </ul>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- CTA -->
-<section class="cta-section" id="download">
-  <div class="reveal">
-    <span class="label" style="display:inline-block; padding:0.4rem 1rem; border-radius:50px; background:rgba(255,203,55,0.1); color:var(--yellow); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:1rem;">Get Started</span>
-    <h2>Ready to find your match?</h2>
-    <p>Download MysMatch and start connecting with people and events in your city today.</p>
-    <div class="hero-buttons" style="margin-top: 2rem;">
-      <a href="#" class="btn btn-primary" style="font-size: 1.1rem; padding: 1.1rem 2.5rem;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-        App Store (Coming Soon)
-      </a>
-      <a href="#" class="btn btn-secondary" style="font-size: 1.1rem; padding: 1.1rem 2.5rem;">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.61 1.814L13.793 12 3.61 22.186a.996.996 0 0 1-.61-.92V2.734a1 1 0 0 1 .61-.92zm.94-.94L15.5 6.5 6.13 1.13l-1.58-.256zm0 22.252L6.13 22.87 15.5 17.5l-10.95-5.626v11.252zM16.13 7.13L20.5 12l-4.37 4.87L8.97 12l7.16-4.87z"/></svg>
-        Google Play (Coming Soon)
-      </a>
+  <!-- SAFETY -->
+  <section class="safety" id="safety">
+    <div class="safety-inner">
+      <div class="fade-up">
+        <span class="section-label">Safety First</span>
+        <h2 class="section-title">Built with your safety in mind</h2>
+        <p class="section-subtitle">Every feature is designed to keep you safe and in control of your experience.</p>
+      </div>
+      <div class="safety-grid">
+        <div class="safety-card fade-up">
+          <span class="s-icon">&#x1F4F1;</span>
+          <h3>Phone Verification</h3>
+          <p>Every account is verified with a real phone number. No fake profiles, no catfishing.</p>
+        </div>
+        <div class="safety-card fade-up">
+          <span class="s-icon">&#x1F50F;</span>
+          <h3>End-to-End Privacy</h3>
+          <p>Your data stays yours. We never sell your information or share it with third parties.</p>
+        </div>
+        <div class="safety-card fade-up">
+          <span class="s-icon">&#x1F6AB;</span>
+          <h3>Zero Tolerance</h3>
+          <p>Harassment, hate speech, and inappropriate behavior result in immediate account removal.</p>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- Footer -->
-<footer>
-  <div class="footer-logo">MysMatch</div>
-  <div class="footer-links">
-    <a href="#features">Features</a>
-    <a href="#how-it-works">How It Works</a>
-    <a href="mailto:contact@mys-match.com">Contact</a>
-  </div>
-  <p class="footer-copyright">&copy; 2026 MysMatch. All rights reserved.</p>
-</footer>
+  <!-- CTA -->
+  <section class="cta" id="download">
+    <div class="cta-inner fade-up">
+      <h2>Ready to find your match?</h2>
+      <p>Join thousands of university students already connecting on MysMatch. Free, safe, and made for you.</p>
+      <div class="store-buttons">
+        <a href="#" class="store-btn" aria-label="Download on the App Store">
+          <span class="store-icon">&#xF8FF;</span>
+          <span class="store-text">
+            <small>Download on the</small>
+            <strong>App Store</strong>
+          </span>
+        </a>
+        <a href="#" class="store-btn" aria-label="Get it on Google Play">
+          <span class="store-icon">&#x25B6;</span>
+          <span class="store-text">
+            <small>Get it on</small>
+            <strong>Google Play</strong>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
 
-<script>
-  // Floating particles
-  const container = document.getElementById('particles');
-  for (let i = 0; i < 30; i++) {
-    const p = document.createElement('div');
-    p.classList.add('particle');
-    p.style.left = Math.random() * 100 + '%';
-    p.style.animationDuration = (8 + Math.random() * 12) + 's';
-    p.style.animationDelay = Math.random() * 10 + 's';
-    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
-    container.appendChild(p);
-  }
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="/logo.png" alt="MysMatch" width="28" height="28">
+        <span>&copy; 2026 MysMatch. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="mailto:support@mys-match.com">Contact</a>
+      </div>
+    </div>
+  </footer>
 
-  // Scroll reveal
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-      }
+  <script>
+    // Navbar scroll shadow
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
     });
-  }, { threshold: 0.15 });
 
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+    // Scroll-triggered fade-in
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
 
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
