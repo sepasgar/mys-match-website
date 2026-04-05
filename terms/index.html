@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Terms of Service - MysMatch</title>
+  <meta name="description" content="MysMatch Terms of Service. Read about the rules and guidelines for using MysMatch, the student dating and events platform.">
+  <meta name="theme-color" content="#0D1E4C">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Terms of Service - MysMatch">
+  <meta property="og:description" content="Read the MysMatch Terms of Service. Learn about the rules and guidelines for using MysMatch.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mys-match.com/terms">
+  <meta property="og:image" content="https://mys-match.com/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Terms of Service - MysMatch">
+  <meta name="twitter:description" content="Read the MysMatch Terms of Service.">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="canonical" href="https://mys-match.com/terms">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #C48CB3;
+      --primary-dark: #0D1E4C;
+      --primary-light: #E5C9D7;
+      --accent: #83A6CE;
+      --black: #0B1B32;
+      --white: #FFFFFF;
+      --gray: #26415E;
+      --gray-light: #6B8299;
+      --gray-bg: #F5F0F3;
+      --border: #E5C9D7;
+      --success: #34C77B;
+      --error: #E54D6B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* -- NAV ----------------------------------------- */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 2px 20px rgba(13,30,76,0.08); }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--primary-dark);
+    }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary-dark); }
+    .nav-cta {
+      background: var(--primary-dark) !important;
+      color: var(--white) !important;
+      padding: 10px 22px !important;
+      border-radius: 12px !important;
+      font-weight: 600 !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(13,30,76,0.2);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--primary-dark);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* -- LEGAL CONTENT ------------------------------- */
+    .legal-hero {
+      padding: 140px 24px 60px;
+      text-align: center;
+      background: linear-gradient(170deg, var(--gray-bg) 0%, var(--white) 60%);
+    }
+    .legal-hero h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .legal-hero .last-updated {
+      font-size: 15px;
+      color: var(--gray-light);
+      font-weight: 500;
+    }
+
+    .legal-content {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 100px;
+    }
+
+    .legal-content h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-top: 48px;
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+
+    .legal-content h2:first-child {
+      margin-top: 0;
+    }
+
+    .legal-content p {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .legal-content ul {
+      list-style: none;
+      margin-bottom: 16px;
+      padding-left: 0;
+    }
+
+    .legal-content ul li {
+      position: relative;
+      padding-left: 24px;
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 6px;
+    }
+
+    .legal-content ul li::before {
+      content: '';
+      position: absolute;
+      left: 8px;
+      top: 11px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .legal-content a {
+      color: var(--primary-dark);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .legal-content a:hover {
+      color: var(--primary);
+    }
+
+    .legal-content .sub-section {
+      margin-bottom: 16px;
+    }
+
+    .legal-content hr {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 48px 0;
+    }
+
+    /* -- FOOTER -------------------------------------- */
+    .footer {
+      padding: 48px 24px;
+      border-top: 1px solid var(--border);
+      background: var(--gray-bg);
+    }
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-left img { width: 28px; height: 28px; border-radius: 8px; }
+    .footer-left span { font-size: 14px; color: var(--gray-light); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--gray-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--primary-dark); }
+
+    /* -- MOBILE -------------------------------------- */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 8px 24px rgba(13,30,76,0.08);
+        gap: 16px;
+      }
+
+      .legal-hero { padding: 120px 20px 48px; }
+
+      .legal-content {
+        padding: 36px 20px 72px;
+      }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="/logo.png" alt="MysMatch" width="36" height="36">
+        <span>MysMatch</span>
+      </a>
+      <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="/">Back to Home</a>
+        <a href="/" class="nav-cta">Get the App</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="legal-hero">
+    <h1>Terms of Service</h1>
+    <p class="last-updated">Last updated: April 5, 2026</p>
+  </section>
+
+  <!-- CONTENT -->
+  <main class="legal-content">
+
+    <h2>1. Acceptance of Terms</h2>
+    <p>By creating an account, accessing, or using MysMatch ("the App", "the Service"), you agree to be bound by these Terms of Service ("Terms"). These Terms constitute a legally binding agreement between you and MysMatch, operated by Sepehr Asgari, based in Germany.</p>
+    <p>If you do not agree to these Terms, you must not create an account or use the Service. Please also review our <a href="https://mys-match.com/privacy-policy">Privacy Policy</a>, which describes how we collect and process your personal data.</p>
+
+    <h2>2. Eligibility</h2>
+    <p>To use MysMatch, you must:</p>
+    <ul>
+      <li>Be at least 16 years of age (in compliance with Art. 8 GDPR and &sect; 8 TTDSG under German law)</li>
+      <li>Be currently enrolled at, or affiliated with, a recognized university or higher education institution</li>
+      <li>Be legally capable of entering into a binding agreement under applicable law</li>
+      <li>Not have been previously banned or removed from MysMatch</li>
+    </ul>
+    <p>By creating an account, you represent and warrant that you meet all of the above requirements. We reserve the right to request verification of your eligibility at any time and to suspend or terminate accounts that do not meet these criteria.</p>
+
+    <h2>3. Account Registration and Security</h2>
+    <p>When you create an account, you agree to:</p>
+    <ul>
+      <li>Provide accurate, current, and complete information during registration and in your profile</li>
+      <li>Maintain and promptly update your information to keep it accurate</li>
+      <li>Keep your login credentials confidential and not share them with any third party</li>
+      <li>Create only one account per person — duplicate accounts will be removed</li>
+      <li>Notify us immediately at <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> if you suspect unauthorized access to your account</li>
+    </ul>
+    <p>You are solely responsible for all activity that occurs under your account. MysMatch is not liable for any loss or damage arising from unauthorized use of your account.</p>
+
+    <h2>4. The Service</h2>
+    <p>MysMatch provides a platform for university students to:</p>
+    <ul>
+      <li>Create a personal profile with academic and personal information</li>
+      <li>Discover and connect with other students through our matching system</li>
+      <li>Communicate with matched users via in-app messaging</li>
+      <li>Discover, create, and register for campus events</li>
+    </ul>
+    <p>MysMatch acts solely as a platform facilitating connections between users. We do not participate in, mediate, or guarantee any interactions, meetings, or relationships between users. We are not responsible for the conduct of any user, whether online or offline.</p>
+
+    <h2>5. Matching System</h2>
+    <p>Our matching system operates as follows:</p>
+    <ul>
+      <li>Users set their profile information and matching preferences (age range, height, education, lifestyle)</li>
+      <li>The system suggests potential matches based on these preferences</li>
+      <li>A match is established only when both parties have mutually agreed</li>
+      <li>Once matched, a private chat is created between the two users</li>
+    </ul>
+    <p>We do not guarantee the accuracy of user profiles, the quality of matches, or the outcome of any interaction. You acknowledge that meeting people involves inherent risks and agree to exercise caution and good judgment.</p>
+
+    <h2>6. Acceptable Use Policy</h2>
+    <p>You agree to use MysMatch in a lawful and respectful manner. You must NOT:</p>
+    <ul>
+      <li>Harass, bully, stalk, threaten, or intimidate any user</li>
+      <li>Send unsolicited sexual content or messages of a sexual nature</li>
+      <li>Post hateful, discriminatory, racist, or violent content</li>
+      <li>Impersonate any person or entity, or falsely claim an affiliation</li>
+      <li>Upload false, misleading, or deceptive profile information or photos</li>
+      <li>Use the Service for commercial purposes, advertising, or solicitation without our written consent</li>
+      <li>Attempt to collect, harvest, or scrape other users' personal data</li>
+      <li>Use automated systems, bots, or scripts to access or interact with the Service</li>
+      <li>Interfere with, disrupt, or place an undue burden on the Service or its infrastructure</li>
+      <li>Reverse-engineer, decompile, or attempt to extract the source code of the App</li>
+      <li>Upload viruses, malware, or any harmful code</li>
+      <li>Circumvent or attempt to circumvent any security measures</li>
+      <li>Violate any applicable local, national, or international law or regulation</li>
+    </ul>
+    <p>Violation of this policy may result in immediate account suspension or permanent termination, at our sole discretion and without prior notice.</p>
+
+    <h2>7. User Content</h2>
+    <p>"User Content" refers to any information, text, photos, or other material you upload, post, or transmit through MysMatch.</p>
+    <p>a) Ownership: you retain all ownership rights to your User Content.</p>
+    <p>b) License: by posting User Content, you grant MysMatch a worldwide, non-exclusive, royalty-free, transferable license to use, display, reproduce, and distribute your User Content solely for the purpose of operating and providing the Service. This license ends when you delete your content or your account, except where your content has been shared with other users and they have not deleted it.</p>
+    <p>c) Responsibility: you are solely responsible for your User Content. You represent that you have the right to share it and that it does not violate any third party's rights or applicable laws.</p>
+    <p>d) Moderation: we reserve the right, but have no obligation, to review, monitor, or remove User Content that violates these Terms. Reported content will be reviewed and appropriate action will be taken, which may include content removal and account termination.</p>
+
+    <h2>8. Events</h2>
+    <p>MysMatch allows users to create and register for campus events.</p>
+    <ul>
+      <li>Event creators are solely responsible for the accuracy of event details (title, description, date, location, pricing, capacity)</li>
+      <li>MysMatch is not an organizer, sponsor, or participant in any event listed on the platform</li>
+      <li>MysMatch is not responsible for the cancellation, postponement, or any outcome of events</li>
+      <li>Registration data (attendee name and profile) is shared with event creators for event management purposes</li>
+      <li>Events that violate these Terms or our community guidelines will be removed</li>
+      <li>Event creators must comply with all applicable local laws and regulations regarding their events</li>
+    </ul>
+
+    <h2>9. Reporting, Blocking, and Enforcement</h2>
+    <p>MysMatch provides tools to help keep the community safe:</p>
+    <ul>
+      <li>Block: you may block any user at any time. Blocked users cannot see your profile or contact you</li>
+      <li>Report: you may report users for violations of these Terms. All reports are reviewed by our team</li>
+      <li>Enforcement: we may take action against accounts that violate these Terms, including warnings, temporary suspension, or permanent termination</li>
+      <li>Appeals: if your account is suspended or terminated, you may contact us at <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> to request a review</li>
+    </ul>
+    <p>We reserve the right to take any action we deem necessary to protect the safety and integrity of our community, including cooperating with law enforcement where appropriate.</p>
+
+    <h2>10. Account Deletion</h2>
+    <p>You may delete your account at any time directly from within the App (Profile &rarr; Delete Account).</p>
+    <p>Upon deletion:</p>
+    <ul>
+      <li>Your account is immediately deactivated and hidden from other users</li>
+      <li>Your data is retained for 30 days to allow for account restoration if you change your mind</li>
+      <li>After 30 days, all your personal data is permanently and irreversibly deleted from our systems, including your profile, messages, matches, and event registrations</li>
+      <li>Deletion of your account does not affect messages already delivered to other users</li>
+    </ul>
+    <p>We may also delete accounts that have been inactive for an extended period after providing reasonable notice.</p>
+
+    <h2>11. Intellectual Property</h2>
+    <p>The MysMatch name, logo, branding, design, software, and all associated intellectual property are owned by MysMatch and protected by applicable copyright, trademark, and other intellectual property laws.</p>
+    <p>You may not:</p>
+    <ul>
+      <li>Copy, modify, or distribute any part of the App without our written consent</li>
+      <li>Use the MysMatch name or logo without prior authorization</li>
+      <li>Create derivative works based on the App or its content</li>
+    </ul>
+    <p>All rights not expressly granted in these Terms are reserved.</p>
+
+    <h2>12. Fees and Future Subscriptions</h2>
+    <p>MysMatch is currently free to use. We may introduce optional paid features or subscription plans in the future.</p>
+    <p>If we introduce paid features:</p>
+    <ul>
+      <li>We will clearly disclose pricing before any purchase</li>
+      <li>Subscriptions may be managed and cancelled through the Apple App Store or Google Play Store</li>
+      <li>Refund policies will follow the respective app store's guidelines</li>
+      <li>Free features will remain available</li>
+    </ul>
+    <p>We will notify users of any changes to pricing or the introduction of paid features in advance.</p>
+
+    <h2>13. Disclaimers</h2>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW:</p>
+    <ul>
+      <li>The Service is provided on an "AS IS" and "AS AVAILABLE" basis, without warranties of any kind, whether express, implied, or statutory</li>
+      <li>We do not warrant that the Service will be uninterrupted, error-free, secure, or free of viruses or other harmful components</li>
+      <li>We do not warrant the accuracy, completeness, or reliability of any user profiles, content, or information on the Service</li>
+      <li>We make no representations or warranties regarding the conduct, behavior, or intentions of other users</li>
+      <li>We are not responsible for any interactions between users, whether online or offline</li>
+      <li>We do not conduct criminal background checks on users</li>
+    </ul>
+    <p>You use the Service at your own risk. You are solely responsible for your interactions with other users. We strongly recommend meeting in public places and informing a trusted person of your plans when meeting someone from the App for the first time.</p>
+
+    <h2>14. Limitation of Liability</h2>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW:</p>
+    <ul>
+      <li>MysMatch, its operator, and its affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the Service</li>
+      <li>Our total cumulative liability shall not exceed the amount you have paid to MysMatch in the 12 months preceding the claim, or EUR 50, whichever is greater</li>
+      <li>This limitation applies regardless of the legal theory (contract, tort, negligence, strict liability, or otherwise)</li>
+    </ul>
+    <p>Nothing in these Terms excludes or limits liability for death or personal injury caused by negligence, fraud, or any other liability that cannot be excluded under applicable law.</p>
+
+    <h2>15. Indemnification</h2>
+    <p>You agree to indemnify, defend, and hold harmless MysMatch, its operator (Sepehr Asgari), and any affiliated parties from and against any claims, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising out of or related to:</p>
+    <ul>
+      <li>Your use of the Service</li>
+      <li>Your violation of these Terms</li>
+      <li>Your violation of any rights of a third party</li>
+      <li>Any User Content you post or transmit through the Service</li>
+    </ul>
+
+    <h2>16. Governing Law and Dispute Resolution</h2>
+    <p>These Terms are governed by and construed in accordance with the laws of the Federal Republic of Germany, without regard to its conflict of law provisions.</p>
+    <p>For users residing in the European Union, nothing in these Terms affects your rights under mandatory consumer protection laws of your country of residence.</p>
+    <p>The European Commission provides an online dispute resolution platform at <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr</a>. We are not obligated to participate in dispute resolution proceedings before a consumer arbitration body, but we are willing to engage in good-faith discussions to resolve disputes.</p>
+    <p>Any disputes that cannot be resolved amicably shall be subject to the exclusive jurisdiction of the courts of Germany.</p>
+
+    <h2>17. Severability</h2>
+    <p>If any provision of these Terms is found to be invalid, illegal, or unenforceable by a court of competent jurisdiction, the remaining provisions shall continue in full force and effect. The invalid provision shall be modified to the minimum extent necessary to make it valid and enforceable while preserving its original intent.</p>
+
+    <h2>18. Changes to These Terms</h2>
+    <p>We reserve the right to modify these Terms at any time. When we make material changes, we will notify you by:</p>
+    <ul>
+      <li>Displaying a prominent notice within the App</li>
+      <li>Sending an email to the address associated with your account</li>
+    </ul>
+    <p>The updated Terms will indicate the new "Last updated" date at the top. Your continued use of MysMatch after the effective date of the revised Terms constitutes your acceptance of the changes. If you do not agree to the revised Terms, you must stop using the Service and delete your account.</p>
+
+    <h2>19. Contact Information</h2>
+    <p>For any questions, concerns, or feedback regarding these Terms of Service, please contact us:</p>
+    <p>
+      MysMatch<br>
+      Operated by Sepehr Asgari<br>
+      Email: <a href="mailto:contact@mys-match.com">contact@mys-match.com</a><br>
+      Website: <a href="https://mys-match.com">https://mys-match.com</a>
+    </p>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="/logo.png" alt="MysMatch" width="28" height="28">
+        <span>&copy; 2026 MysMatch. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="mailto:contact@mys-match.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll shadow
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
