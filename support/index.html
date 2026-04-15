@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support — MysMatch</title>
+  <meta name="description" content="Get help with MysMatch. Contact support, browse FAQs, and learn how to manage your account, matches, and privacy.">
+  <meta name="theme-color" content="#0D1E4C">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Support — MysMatch">
+  <meta property="og:description" content="Get help with MysMatch. Contact support, browse FAQs, and learn how to manage your account.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mys-match.com/support">
+  <meta property="og:image" content="https://mys-match.com/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Support — MysMatch">
+  <meta name="twitter:description" content="Get help with MysMatch. Contact support and browse FAQs.">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="canonical" href="https://mys-match.com/support">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #C48CB3;
+      --primary-dark: #0D1E4C;
+      --primary-light: #E5C9D7;
+      --accent: #83A6CE;
+      --black: #0B1B32;
+      --white: #FFFFFF;
+      --gray: #26415E;
+      --gray-light: #6B8299;
+      --gray-bg: #F5F0F3;
+      --border: #E5C9D7;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 2px 20px rgba(13,30,76,0.08); }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--primary-dark);
+    }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary-dark); }
+    .nav-cta {
+      background: var(--primary-dark) !important;
+      color: var(--white) !important;
+      padding: 10px 22px !important;
+      border-radius: 12px !important;
+      font-weight: 600 !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(13,30,76,0.2);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--primary-dark);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ── HEADER ──────────────────────────────────── */
+    .support-header {
+      padding: 120px 24px 48px;
+      background: linear-gradient(170deg, var(--gray-bg) 0%, var(--white) 60%);
+      text-align: center;
+    }
+    .support-header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .support-header p {
+      font-size: 17px;
+      color: var(--gray-light);
+      font-weight: 500;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    /* ── MAIN ────────────────────────────────────── */
+    .support {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 100px;
+    }
+
+    .contact-card {
+      background: var(--gray-bg);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px;
+      margin-bottom: 48px;
+      text-align: center;
+    }
+    .contact-card h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-bottom: 10px;
+      letter-spacing: -0.3px;
+    }
+    .contact-card p {
+      font-size: 15px;
+      color: var(--gray);
+      margin-bottom: 20px;
+    }
+    .contact-btn {
+      display: inline-block;
+      background: var(--primary-dark);
+      color: var(--white);
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .contact-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(13,30,76,0.2);
+    }
+    .response-time {
+      font-size: 13px;
+      color: var(--gray-light);
+      margin-top: 16px;
+    }
+
+    .support h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-top: 48px;
+      margin-bottom: 20px;
+      letter-spacing: -0.3px;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 0;
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-item h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+    .faq-item p {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.8;
+    }
+    .faq-item a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .faq-item a:hover { color: var(--primary-dark); }
+
+    .resource-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 16px;
+    }
+    .resource-link {
+      display: block;
+      padding: 20px;
+      background: var(--gray-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .resource-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(13,30,76,0.08);
+    }
+    .resource-link strong {
+      display: block;
+      color: var(--primary-dark);
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .resource-link span {
+      color: var(--gray-light);
+      font-size: 13px;
+    }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    .footer {
+      padding: 48px 24px;
+      border-top: 1px solid var(--border);
+      background: var(--gray-bg);
+    }
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-left img { width: 28px; height: 28px; border-radius: 8px; }
+    .footer-left span { font-size: 14px; color: var(--gray-light); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--gray-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--primary-dark); }
+
+    /* ── MOBILE ────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 8px 24px rgba(13,30,76,0.08);
+        gap: 16px;
+      }
+
+      .support-header { padding: 100px 20px 36px; }
+      .support { padding: 36px 20px 72px; }
+      .support h2 { font-size: 20px; margin-top: 40px; }
+      .contact-card { padding: 24px; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="/logo.png" alt="MysMatch" width="36" height="36">
+        <span>MysMatch</span>
+      </a>
+      <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="/">Back to Home</a>
+        <a href="/" class="nav-cta">Get the App</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="support-header">
+    <h1>Support</h1>
+    <p>Questions, feedback, or trouble with the app? We're here to help.</p>
+  </header>
+
+  <!-- MAIN -->
+  <main class="support">
+
+    <!-- Contact card -->
+    <div class="contact-card">
+      <h2>Contact us</h2>
+      <p>Reach our team directly by email. Please include your account email and a short description of the issue.</p>
+      <a href="mailto:contact@mys-match.com?subject=MysMatch%20Support" class="contact-btn">contact@mys-match.com</a>
+      <p class="response-time">We typically respond within 2 business days.</p>
+    </div>
+
+    <!-- FAQ -->
+    <h2>Frequently asked questions</h2>
+
+    <div class="faq-item">
+      <h3>How do I create an account?</h3>
+      <p>Open MysMatch, tap <strong>Sign up</strong>, and enter your email, password, and basic profile details (name, university, major). You'll verify your phone number via SMS to help keep the community safe.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How does matching work?</h3>
+      <p>MysMatch suggests students based on your university, major, study level, and nearby city. Send a match request — if the other person accepts, you can start chatting.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>I didn't receive my SMS verification code.</h3>
+      <p>Check that your phone number is correct and has signal. Wait 60 seconds before requesting a new code. If it still doesn't arrive, email us at <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> with your number and country.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I reset my password?</h3>
+      <p>On the login screen, tap <strong>Forgot password</strong> and enter your account email. You'll receive a reset link within a few minutes. Check your spam folder if you don't see it.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I report or block another user?</h3>
+      <p>Open the user's profile or chat, tap the menu icon, and choose <strong>Report</strong> or <strong>Block</strong>. Reports are reviewed within 24 hours. Blocked users can no longer see your profile or contact you.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I delete my account?</h3>
+      <p>In the app, go to <strong>Profile &rarr; Settings &rarr; Delete Account</strong>. Your account and data will be permanently removed after a 30-day grace period. You can also request deletion by emailing <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> from your account email.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I change my email, university, or profile photo?</h3>
+      <p>Go to <strong>Profile &rarr; Edit Profile</strong>. Most fields can be updated directly. If you need to change your registered email address, contact support.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Can I use MysMatch if my university isn't listed?</h3>
+      <p>We're continually adding universities. If yours is missing, email us at <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> and we'll add it.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>How do I stop receiving push notifications?</h3>
+      <p>Disable notifications in your device settings (iOS: Settings &rarr; Notifications &rarr; MysMatch; Android: Settings &rarr; Apps &rarr; MysMatch &rarr; Notifications). You can also manage preferences inside the app under Settings.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>Is MysMatch free?</h3>
+      <p>Yes, MysMatch is free to download and use for core matching and messaging features.</p>
+    </div>
+
+    <div class="faq-item">
+      <h3>I found a bug or have a feature request.</h3>
+      <p>We'd love to hear it. Email <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> with a short description and, if possible, a screenshot or the steps to reproduce.</p>
+    </div>
+
+    <!-- Resources -->
+    <h2>More resources</h2>
+    <div class="resource-links">
+      <a href="/privacy-policy" class="resource-link">
+        <strong>Privacy Policy</strong>
+        <span>How we collect, use, and protect your data.</span>
+      </a>
+      <a href="/terms" class="resource-link">
+        <strong>Terms of Service</strong>
+        <span>The rules of using MysMatch.</span>
+      </a>
+      <a href="/privacy-policy#account-deletion" class="resource-link">
+        <strong>Account Deletion</strong>
+        <span>How to permanently delete your account.</span>
+      </a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="/logo.png" alt="MysMatch" width="28" height="28">
+        <span>&copy; 2026 MysMatch. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/support">Support</a>
+        <a href="mailto:contact@mys-match.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
