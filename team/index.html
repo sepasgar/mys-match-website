@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team — MysMatch</title>
+  <meta name="description" content="Meet the people behind MysMatch. Our team is passionate about building meaningful connections for university students.">
+  <meta name="theme-color" content="#0D1E4C">
+
+  <meta property="og:title" content="Team — MysMatch">
+  <meta property="og:description" content="Meet the people behind MysMatch.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mys-match.com/team">
+  <meta property="og:image" content="https://mys-match.com/og-image.png">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Team — MysMatch">
+  <meta name="twitter:description" content="Meet the people behind MysMatch.">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="canonical" href="https://mys-match.com/team">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #C48CB3;
+      --primary-dark: #0D1E4C;
+      --primary-light: #E5C9D7;
+      --accent: #83A6CE;
+      --black: #0B1B32;
+      --white: #FFFFFF;
+      --gray: #26415E;
+      --gray-light: #6B8299;
+      --gray-bg: #F5F0F3;
+      --border: #E5C9D7;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 2px 20px rgba(13,30,76,0.08); }
+    .nav-inner {
+      max-width: 1120px; margin: 0 auto; padding: 0 24px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none; color: var(--primary-dark);
+    }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      text-decoration: none; color: var(--gray); font-size: 15px;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary-dark); }
+    .nav-cta {
+      background: var(--primary-dark) !important; color: var(--white) !important;
+      padding: 10px 22px !important; border-radius: 12px !important;
+      font-weight: 600 !important; transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(13,30,76,0.2); }
+    .mobile-toggle {
+      display: none; background: none; border: none; cursor: pointer; padding: 8px;
+    }
+    .mobile-toggle span {
+      display: block; width: 22px; height: 2px; background: var(--primary-dark);
+      margin: 5px 0; border-radius: 2px; transition: 0.3s;
+    }
+
+    .page-header {
+      padding: 120px 24px 48px;
+      background: linear-gradient(170deg, var(--gray-bg) 0%, var(--white) 60%);
+      text-align: center;
+    }
+    .page-header h1 {
+      font-size: clamp(32px, 5vw, 48px); font-weight: 800;
+      color: var(--primary-dark); letter-spacing: -1px; margin-bottom: 12px;
+    }
+    .page-header p {
+      font-size: 17px; color: var(--gray-light); font-weight: 500;
+      max-width: 560px; margin: 0 auto;
+    }
+
+    .content {
+      max-width: 960px; margin: 0 auto; padding: 48px 24px 100px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .team-card {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      background: var(--white);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .team-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(13,30,76,0.08);
+    }
+    .team-avatar {
+      width: 88px; height: 88px; border-radius: 50%;
+      background: var(--gray-bg); border: 3px solid var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px; font-size: 36px;
+      object-fit: cover;
+    }
+    .team-card h3 {
+      font-size: 18px; font-weight: 700; color: var(--primary-dark); margin-bottom: 4px;
+    }
+    .team-role {
+      font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 12px;
+      display: block;
+    }
+    .team-card p {
+      font-size: 14px; color: var(--gray-light); line-height: 1.6;
+    }
+    .team-social {
+      display: flex; justify-content: center; gap: 12px; margin-top: 16px;
+    }
+    .team-social a {
+      color: var(--gray-light); text-decoration: none; font-size: 14px;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .team-social a:hover { color: var(--primary-dark); }
+
+    .join-banner {
+      margin-top: 56px; padding: 40px; border-radius: 20px;
+      background: var(--primary-dark); color: var(--white); text-align: center;
+    }
+    .join-banner h3 {
+      font-size: 22px; font-weight: 800; margin-bottom: 8px;
+    }
+    .join-banner p {
+      font-size: 15px; color: rgba(255,255,255,0.7); margin-bottom: 20px;
+    }
+    .join-banner a {
+      display: inline-block; background: var(--white); color: var(--primary-dark);
+      padding: 12px 28px; border-radius: 12px; font-weight: 700; font-size: 15px;
+      text-decoration: none; transition: transform 0.2s;
+    }
+    .join-banner a:hover { transform: translateY(-1px); }
+
+    .footer {
+      padding: 48px 24px; border-top: 1px solid var(--border); background: var(--gray-bg);
+    }
+    .footer-inner {
+      max-width: 1120px; margin: 0 auto;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-left { display: flex; align-items: center; gap: 10px; }
+    .footer-left img { width: 28px; height: 28px; border-radius: 8px; }
+    .footer-left span { font-size: 14px; color: var(--gray-light); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a {
+      font-size: 14px; color: var(--gray-light); text-decoration: none;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--primary-dark); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: absolute; top: 64px; left: 0; right: 0;
+        background: var(--white); padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 8px 24px rgba(13,30,76,0.08); gap: 16px;
+      }
+      .page-header { padding: 100px 20px 36px; }
+      .content { padding: 36px 20px 72px; }
+      .team-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="/logo.png" alt="MysMatch" width="36" height="36">
+        <span>MysMatch</span>
+      </a>
+      <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/vacancies">Vacancies</a>
+        <a href="/blogs">Blog</a>
+        <a href="/events">Events</a>
+        <a href="/" class="nav-cta">Get the App</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="page-header">
+    <h1>Our Team</h1>
+    <p>The people building meaningful connections for university students everywhere.</p>
+  </header>
+
+  <main class="content">
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">&#x1F9D1;&#x200D;&#x1F4BB;</div>
+        <h3>Team Member</h3>
+        <span class="team-role">Founder & CEO</span>
+        <p>Passionate about connecting students and building communities on campus.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">&#x1F469;&#x200D;&#x1F3A8;</div>
+        <h3>Team Member</h3>
+        <span class="team-role">Design Lead</span>
+        <p>Crafting intuitive experiences that make every interaction feel natural.</p>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">&#x1F468;&#x200D;&#x1F4BB;</div>
+        <h3>Team Member</h3>
+        <span class="team-role">Lead Engineer</span>
+        <p>Building the technology that powers reliable, real-time student matching.</p>
+      </div>
+    </div>
+
+    <div class="join-banner">
+      <h3>Want to join us?</h3>
+      <p>We're always looking for talented, passionate people to join our mission.</p>
+      <a href="/vacancies">View open positions</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="/logo.png" alt="MysMatch" width="28" height="28">
+        <span>&copy; 2026 MysMatch. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="/support">Support</a>
+        <a href="mailto:contact@mys-match.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
