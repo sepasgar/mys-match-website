@@ -107,6 +107,72 @@
       max-width: 960px; margin: 0 auto; padding: 48px 24px 100px;
     }
 
+    .featured-event {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: var(--white);
+      margin-bottom: 48px;
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+      color: inherit;
+    }
+    .featured-event:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(13,30,76,0.12);
+    }
+    .featured-event-img {
+      width: 100%;
+      height: 100%;
+      min-height: 280px;
+      object-fit: cover;
+      display: block;
+    }
+    .featured-event-info {
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .featured-event-tag {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 16px;
+      margin-bottom: 14px;
+      width: fit-content;
+    }
+    .featured-event-info h2 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -0.5px;
+      margin-bottom: 10px;
+      line-height: 1.2;
+    }
+    .featured-event-info p {
+      font-size: 15px;
+      color: var(--gray-light);
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .featured-event-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .featured-event-meta span {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--gray);
+    }
+
     .events-intro {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -208,6 +274,9 @@
       }
       .page-header { padding: 100px 20px 36px; }
       .content { padding: 36px 20px 72px; }
+      .featured-event { grid-template-columns: 1fr; }
+      .featured-event-img { min-height: 200px; }
+      .featured-event-info { padding: 24px 20px; }
       .events-intro { grid-template-columns: repeat(2, 1fr); }
       .features-row { grid-template-columns: 1fr; }
       .footer-inner { flex-direction: column; text-align: center; }
@@ -242,6 +311,20 @@
   </header>
 
   <main class="content">
+    <a href="/events/rwth-aachen-meetup.html" class="featured-event">
+      <img class="featured-event-img" src="/events/rwth-aachen-meetup.png" alt="RWTH Students Connection Night">
+      <div class="featured-event-info">
+        <span class="featured-event-tag">Student Event &middot; Aachen</span>
+        <h2>RWTH Students Connection Night</h2>
+        <p>Meet new people, find like-minded students, and make connections that last. One evening of real conversations.</p>
+        <div class="featured-event-meta">
+          <span>Fri, 8 May 2026</span>
+          <span>18:00 &ndash; 21:00</span>
+          <span>Free</span>
+        </div>
+      </div>
+    </a>
+
     <div class="events-intro">
       <div class="event-category">
         <span class="emoji">&#x1F3B5;</span>
