@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["63PF7SRGW6.com.mysmatch.app"],
+        "components": [
+          { "/": "/event/*", "comment": "Shared event deep links" }
+        ]
+      }
+    ]
+  }
+}

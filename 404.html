@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MysMatch</title>
+  <meta name="description" content="Open this event in the MysMatch app.">
+  <meta name="theme-color" content="#7B5CFF">
+
+  <meta property="og:title" content="MysMatch">
+  <meta property="og:description" content="Find study partners and join student events.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://mys-match.com/og-image.png">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #7B5CFF;
+      --accent: #E94B9A;
+      --gradient-start: #5E5BFF;
+      --gradient-mid: #9B5BFF;
+      --gradient-end: #E94B9A;
+      --black: #0F1020;
+      --gray: #4B4C63;
+      --gray-light: #8E8FA6;
+      --border: #ECEAF4;
+      --white: #FFFFFF;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--black);
+      background: var(--white);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .card {
+      max-width: 440px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .logo-tile {
+      width: 80px;
+      height: 80px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
+      margin: 0 auto 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 30px rgba(123, 92, 255, 0.35);
+    }
+
+    .logo-tile svg { width: 40px; height: 40px; }
+
+    .eyebrow {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+      line-height: 1.2;
+    }
+
+    .lede {
+      color: var(--gray-light);
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 28px;
+    }
+
+    .open-app-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 800;
+      font-size: 15px;
+      border-radius: 14px;
+      box-shadow: 0 6px 20px rgba(123, 92, 255, 0.35);
+      margin-bottom: 24px;
+      border: 0;
+      cursor: pointer;
+    }
+
+    .stores {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .store-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      text-decoration: none;
+      color: var(--black);
+      font-weight: 700;
+      font-size: 13px;
+      transition: border-color 0.15s;
+    }
+
+    .store-badge:hover { border-color: var(--primary); }
+    .store-badge svg { width: 20px; height: 20px; }
+
+    .home-link {
+      display: block;
+      margin-top: 28px;
+      color: var(--gray-light);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .home-link:hover { color: var(--primary); }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="logo-tile">
+      <!-- Placeholder calendar/check icon — swap for app logo SVG later if desired. -->
+      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8 2v3M16 2v3M3.5 9h17M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M9 14l2 2 4-4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <p class="eyebrow" id="eyebrow">MYSMATCH</p>
+    <h1 id="title">Open this event</h1>
+    <p class="lede" id="lede">
+      We're trying to open this event in the MysMatch app. If nothing happens,
+      install the app and tap the link again.
+    </p>
+
+    <!-- Primary CTA — tries to open the event in-app via the custom scheme.
+         On iOS / Android with the app installed, the universal/app link
+         intercepts BEFORE this page loads, so users see the app directly.
+         This button is the fallback for browsers / desktop / app-less users. -->
+    <a class="open-app-btn" id="openAppBtn" href="#">Open in MysMatch</a>
+
+    <p style="font-size: 13px; color: var(--gray-light); margin: 18px 0 10px;">
+      Don't have the app yet?
+    </p>
+
+    <div class="stores">
+      <a class="store-badge" href="https://apps.apple.com/app/mysmatch/id6762192785" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.05 12.04c-.03-3.06 2.5-4.53 2.61-4.6-1.42-2.08-3.63-2.37-4.42-2.4-1.88-.19-3.67 1.1-4.62 1.1-.96 0-2.43-1.08-4-1.05-2.06.03-3.96 1.2-5.02 3.05-2.14 3.72-.55 9.21 1.53 12.22 1.02 1.47 2.23 3.13 3.81 3.07 1.53-.06 2.11-.99 3.96-.99 1.85 0 2.37.99 3.99.96 1.65-.03 2.69-1.5 3.7-2.99 1.17-1.71 1.65-3.37 1.67-3.46-.04-.02-3.21-1.23-3.25-4.91zM14.2 3.36c.84-1.02 1.41-2.44 1.25-3.86-1.21.05-2.68.81-3.55 1.83-.77.91-1.46 2.36-1.28 3.75 1.36.1 2.74-.69 3.58-1.72z"/>
+        </svg>
+        App Store
+      </a>
+      <a class="store-badge" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.6 1.5c-.3.2-.5.6-.5 1v19c0 .4.2.8.5 1l10.7-10.7L3.6 1.5zm12.7 8.4l3.7-2.1c.8-.5.8-1.6 0-2.1L16 3.6l-2.8 2.8 3.1 3.5zm-1.9 1.6L4 22h.5L15.4 15l-1-3.5zm0-1.6 1-3.5L4.5 0H4l10.4 9.9z"/>
+        </svg>
+        Google Play
+      </a>
+    </div>
+
+    <a class="home-link" href="/">← Back to MysMatch home</a>
+  </main>
+
+  <script>
+    // GitHub Pages serves this file as the response to any path that doesn't
+    // exist on disk. We use it as a soft router: if the path looks like an
+    // event share link, render the "Open in app" UI and wire the CTA to the
+    // custom URL scheme. Otherwise (e.g. someone typoed a URL), fall through
+    // to a generic not-found message. The HTTP status remains 404 either way
+    // — this only affects what the user sees, not how search engines treat it.
+    (function () {
+      var path = window.location.pathname || '';
+      var eventMatch = path.match(/^\/event\/([^/]+)\/?$/);
+
+      if (eventMatch) {
+        var eventId = eventMatch[1];
+        // Custom scheme fallback for in-app navigation when universal links
+        // verification hasn't propagated yet (first ~5 min after install).
+        document.getElementById('openAppBtn').setAttribute('href', 'mysmatch://event/' + eventId);
+      } else {
+        // Generic 404 — keep the layout, swap the copy.
+        document.getElementById('eyebrow').textContent = '404';
+        document.getElementById('title').textContent = 'Page not found';
+        document.getElementById('lede').textContent =
+          "The page you're looking for doesn't exist. Try heading back to the home page.";
+        document.getElementById('openAppBtn').style.display = 'none';
+      }
+    })();
+  </script>
+</body>
+</html>

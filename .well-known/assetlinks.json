@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.mysmatch.app",
+      "sha256_cert_fingerprints": [
+        "95:A7:0A:B6:93:99:4A:82:AE:D1:FC:6D:C0:C6:4E:74:F2:53:18:7C:0E:12:F3:E2:5D:7B:79:EF:31:BC:27:49"
+      ]
+    }
+  }
+]
