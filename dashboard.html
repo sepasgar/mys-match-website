@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Organizer Dashboard — MysMatch</title>
+  <meta name="theme-color" content="#0D1E4C">
+  <meta name="robots" content="noindex">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #C48CB3; --primary-dark: #0D1E4C; --primary-light: #E5C9D7;
+      --accent: #83A6CE; --black: #0B1B32; --white: #FFFFFF; --gray: #26415E;
+      --gray-light: #6B8299; --gray-bg: #F5F0F3; --border: #E5C9D7; --success: #34C77B;
+    }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); background: var(--gray-bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    .nav { background: var(--white); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: 1120px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-dark); }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-right .who { font-size: 14px; color: var(--gray-light); }
+    .link-btn { background: none; border: none; color: var(--primary-dark); font-weight: 600; font-size: 14px; cursor: pointer; font-family: inherit; }
+
+    .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 24px 96px; }
+
+    /* Login */
+    .login-box { max-width: 420px; margin: 60px auto; background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 36px 32px; }
+    .login-box h1 { font-size: 26px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.5px; margin-bottom: 6px; }
+    .login-box p.sub { font-size: 14px; color: var(--gray-light); margin-bottom: 24px; }
+    label { display: block; font-size: 14px; font-weight: 700; margin: 14px 0 6px; }
+    input { width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; font-size: 15px; font-family: inherit; }
+    input:focus { outline: none; border-color: var(--primary); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 22px; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; border: none; cursor: pointer; background: var(--primary-dark); color: #fff; transition: transform .15s, box-shadow .2s; }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,30,76,0.22); }
+    .btn[disabled] { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn.secondary { background: var(--white); color: var(--primary-dark); border: 1px solid var(--border); }
+    .err { background: #FDE7EC; color: #C0264B; border: 1px solid #F6C2CF; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600; margin-top: 16px; }
+    .hint { font-size: 12px; color: var(--gray-light); margin-top: 14px; text-align: center; }
+
+    /* Dashboard */
+    h1.page { font-size: 30px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.7px; margin-bottom: 4px; }
+    p.page-sub { color: var(--gray-light); margin-bottom: 28px; }
+    .ev-list { display: grid; gap: 14px; }
+    .ev-row { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; transition: box-shadow .2s; }
+    .ev-row:hover { box-shadow: 0 6px 20px rgba(13,30,76,0.08); }
+    .ev-row .t { font-size: 16px; font-weight: 700; color: var(--primary-dark); }
+    .ev-row .m { font-size: 13px; color: var(--gray-light); margin-top: 2px; }
+    .badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    .pill { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; }
+    .pill.web { background: var(--primary-light); color: var(--primary-dark); }
+    .pill.priv { background: var(--gray-bg); color: var(--gray-light); }
+    .pill.count { background: var(--primary-dark); color: #fff; }
+    .empty { text-align: center; padding: 60px 24px; color: var(--gray-light); background: var(--white); border: 1px solid var(--border); border-radius: 16px; }
+
+    /* Attendees */
+    .att-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+    .att-head h1 { font-size: 24px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.5px; }
+    .table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 640px; }
+    th, td { text-align: left; padding: 12px 16px; font-size: 14px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+    th { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--gray-light); font-weight: 700; }
+    tr:last-child td { border-bottom: none; }
+    td.ans { white-space: normal; max-width: 320px; color: var(--gray); font-size: 13px; }
+    .src { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 10px; }
+    .src.web { background: var(--primary-light); color: var(--primary-dark); }
+    .src.app { background: var(--gray-bg); color: var(--gray); }
+    .toolbar { display: flex; gap: 10px; }
+    .btn-sm { padding: 9px 16px; border-radius: 12px; font-size: 14px; font-weight: 700; border: 1px solid var(--border); background: var(--white); color: var(--primary-dark); cursor: pointer; font-family: inherit; }
+    .btn-sm.primary { background: var(--primary-dark); color: #fff; border-color: var(--primary-dark); }
+    .center-state { text-align: center; padding: 80px 24px; color: var(--gray-light); }
+    @media (max-width: 600px) { .ev-row { flex-direction: column; align-items: flex-start; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><img src="/logo.png" alt="MysMatch" width="36" height="36"><span>MysMatch</span></a>
+      <div class="nav-right" id="nav-right"></div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <div id="root" class="center-state">Loading…</div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabase.js"></script>
+  <script>
+    (function () {
+      const root = document.getElementById('root');
+      const navRight = document.getElementById('nav-right');
+      const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      if (!window.MM) { root.textContent = 'Could not connect. Please try again later.'; return; }
+
+      function fmt(iso) { try { return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }); } catch (e) { return ''; } }
+      function fmtDT(iso) { try { return new Date(iso).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
+
+      MM.currentUser().then((user) => { user ? showDashboard(user) : showLogin(); });
+
+      // ---- Login -------------------------------------------------------------
+      function showLogin() {
+        navRight.innerHTML = '';
+        root.className = '';
+        root.innerHTML =
+          '<div class="login-box">'
+          + '<h1>Organizer sign in</h1>'
+          + '<p class="sub">Sign in with the same email & password you use in the MysMatch app to view your events and attendees.</p>'
+          + '<form id="login-form">'
+          + '<label for="le">Email</label><input id="le" type="email" autocomplete="email" required>'
+          + '<label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password" required>'
+          + '<div id="login-err" class="err" hidden></div>'
+          + '<button class="btn" id="login-btn" type="submit">Sign in</button>'
+          + '<p class="hint">Signed up with Apple/Google or don\'t have a password? Set one from <strong>Profile → Settings</strong> in the app, then sign in here.</p>'
+          + '</form></div>';
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          const btn = document.getElementById('login-btn');
+          const errBox = document.getElementById('login-err');
+          errBox.hidden = true; btn.disabled = true; btn.textContent = 'Signing in…';
+          MM.signIn(document.getElementById('le').value.trim(), document.getElementById('lp').value).then((res) => {
+            if (!res.ok) { errBox.textContent = res.error || 'Sign in failed.'; errBox.hidden = false; btn.disabled = false; btn.textContent = 'Sign in'; return; }
+            showDashboard(res.user);
+          });
+        });
+      }
+
+      // ---- Dashboard: event list --------------------------------------------
+      function showDashboard(user) {
+        navRight.innerHTML = '<span class="who">' + esc(user.email || '') + '</span><button class="link-btn" id="signout">Sign out</button>';
+        document.getElementById('signout').addEventListener('click', () => { MM.signOut().then(showLogin); });
+        root.className = '';
+        root.innerHTML = '<div class="center-state">Loading your events…</div>';
+        MM.myEvents(user.id).then((events) => {
+          let html = '<h1 class="page">Your events</h1><p class="page-sub">View registrations and export attendee lists. To create or edit events, use the app.</p>';
+          if (!events.length) {
+            html += '<div class="empty">You haven\'t created any events yet. Create one in the MysMatch app and it\'ll appear here.</div>';
+            root.innerHTML = html; return;
+          }
+          html += '<div class="ev-list">' + events.map((e) => {
+            const c = e._counts || { total: 0 };
+            return '<div class="ev-row" data-id="' + esc(e.id) + '" data-title="' + esc(e.title) + '">'
+              + '<div><div class="t">' + esc(e.title) + '</div>'
+              + '<div class="m">' + esc(fmt(e.date)) + (e.location || e.city ? ' · ' + esc(e.location || e.city) : '') + '</div></div>'
+              + '<div class="badges">'
+              + (e.publish_to_web ? '<span class="pill web">Web</span>' : '')
+              + (e.is_private ? '<span class="pill priv">Private</span>' : '')
+              + '<span class="pill count">' + c.total + (e.max_capacity != null ? '/' + e.max_capacity : '') + '</span>'
+              + '</div></div>';
+          }).join('') + '</div>';
+          root.innerHTML = html;
+          root.querySelectorAll('.ev-row').forEach((row) => {
+            row.addEventListener('click', () => showAttendees(user, row.getAttribute('data-id'), row.getAttribute('data-title')));
+          });
+        });
+      }
+
+      // ---- Dashboard: attendee list -----------------------------------------
+      function showAttendees(user, eventId, title) {
+        root.innerHTML = '<div class="center-state">Loading attendees…</div>';
+        // Fetch attendees + the event's questions (to label answer columns).
+        Promise.all([
+          MM.eventAttendees(eventId),
+          MM.db.from('events').select('questions').eq('id', eventId).maybeSingle(),
+        ]).then(([rows, evRes]) => {
+          const questions = (evRes && evRes.data && Array.isArray(evRes.data.questions)) ? evRes.data.questions : [];
+          renderAttendees(user, eventId, title, rows, questions);
+        });
+      }
+
+      function renderAttendees(user, eventId, title, rows, questions) {
+        const back = '<a class="back link-btn" id="back" style="display:inline-block;margin-bottom:14px;cursor:pointer">← Back to events</a>';
+        const head = '<div class="att-head"><div><h1>' + esc(title) + '</h1>'
+          + '<p class="page-sub" style="margin:0">' + rows.length + ' registration' + (rows.length === 1 ? '' : 's') + '</p></div>'
+          + '<div class="toolbar"><button class="btn-sm primary" id="csv">Export CSV</button></div></div>';
+
+        let table;
+        if (!rows.length) {
+          table = '<div class="empty">No registrations yet.</div>';
+        } else {
+          const qHeaders = questions.map((q) => '<th>' + esc(q.label) + '</th>').join('');
+          const body = rows.map((r, i) => {
+            const name = [r.first_name, r.last_name].filter(Boolean).join(' ') || '—';
+            const gender = r.user_gender || r.gender || '';
+            const ans = r.answers || {};
+            const qCells = questions.map((q) => '<td class="ans">' + esc(ans[q.id] || '') + '</td>').join('');
+            return '<tr><td>' + (i + 1) + '</td>'
+              + '<td>' + esc(name) + '</td>'
+              + '<td>' + esc(r.email || '') + '</td>'
+              + '<td>' + esc(gender) + '</td>'
+              + '<td><span class="src ' + (r.source === 'web' ? 'web' : 'app') + '">' + (r.source === 'web' ? 'Web' : 'App') + '</span></td>'
+              + '<td>' + esc(fmtDT(r.registered_at)) + '</td>'
+              + qCells + '</tr>';
+          }).join('');
+          table = '<div class="table-wrap"><table><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Gender</th><th>Source</th><th>Registered</th>'
+            + qHeaders + '</tr></thead><tbody>' + body + '</tbody></table></div>';
+        }
+        root.innerHTML = back + head + table;
+        document.getElementById('back').addEventListener('click', () => showDashboard(user));
+        const csvBtn = document.getElementById('csv');
+        if (csvBtn) csvBtn.addEventListener('click', () => downloadCsv(title, rows, questions));
+      }
+
+      function csvCell(v) { v = v == null ? '' : String(v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+      function downloadCsv(title, rows, questions) {
+        const header = ['#', 'Name', 'Email', 'Gender', 'Source', 'Registered at'].concat(questions.map((q) => q.label));
+        const lines = [header.map(csvCell).join(',')];
+        rows.forEach((r, i) => {
+          const name = [r.first_name, r.last_name].filter(Boolean).join(' ');
+          const ans = r.answers || {};
+          const cols = [i + 1, name, r.email || '', r.user_gender || r.gender || '', r.source === 'web' ? 'Web' : 'App', new Date(r.registered_at).toLocaleString()]
+            .concat(questions.map((q) => ans[q.id] || ''));
+          lines.push(cols.map(csvCell).join(','));
+        });
+        // Prepend a UTF-8 BOM so Excel renders accents correctly.
+        const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = (title || 'attendees').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '-attendees.csv';
+        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      }
+    })();
+  </script>
+</body>
+</html>

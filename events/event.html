@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Event — MysMatch</title>
+  <meta name="description" content="Register for this MysMatch event.">
+  <meta name="theme-color" content="#0D1E4C">
+  <meta name="robots" content="noindex"><!-- query-string detail page; the listing is the canonical index -->
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #C48CB3; --primary-dark: #0D1E4C; --primary-light: #E5C9D7;
+      --accent: #83A6CE; --black: #0B1B32; --white: #FFFFFF; --gray: #26415E;
+      --gray-light: #6B8299; --gray-bg: #F5F0F3; --border: #E5C9D7; --success: #34C77B;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--black); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner {
+      max-width: 1120px; margin: 0 auto; padding: 0 24px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-dark); }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-links a { text-decoration: none; color: var(--gray); font-size: 15px; font-weight: 500; }
+    .nav-cta {
+      background: var(--primary-dark); color: var(--white) !important;
+      padding: 10px 22px; border-radius: 12px; font-weight: 600;
+    }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 96px 24px 96px; }
+    .back { display: inline-flex; align-items: center; gap: 6px; color: var(--gray-light); text-decoration: none; font-weight: 600; font-size: 14px; margin-bottom: 20px; }
+    .back:hover { color: var(--primary-dark); }
+
+    .hero-img { width: 100%; height: 320px; object-fit: cover; border-radius: 20px; background: var(--gray-bg); margin-bottom: 28px; }
+    .hero-img.placeholder { display: flex; align-items: center; justify-content: center; font-size: 72px; }
+    .tag {
+      display: inline-block; background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: #fff; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 16px; margin-bottom: 14px;
+    }
+    h1 { font-size: clamp(28px, 4vw, 38px); font-weight: 800; color: var(--primary-dark); letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 18px; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-bottom: 24px; }
+    .meta-item { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--gray); }
+    .meta-item .ic { font-size: 18px; }
+    .spots-pill { display: inline-block; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 14px; background: var(--gray-bg); color: var(--gray); }
+    .spots-pill.full { background: #FDE7EC; color: #C0264B; }
+    .desc { font-size: 16px; color: var(--gray); line-height: 1.75; white-space: pre-wrap; margin-bottom: 36px; }
+
+    .card { border: 1px solid var(--border); border-radius: 20px; padding: 28px; background: var(--white); }
+    .card h2 { font-size: 22px; font-weight: 800; color: var(--primary-dark); margin-bottom: 6px; letter-spacing: -0.4px; }
+    .card .sub { font-size: 14px; color: var(--gray-light); margin-bottom: 22px; }
+    label { display: block; font-size: 14px; font-weight: 700; color: var(--black); margin: 16px 0 6px; }
+    label .req { color: #C0264B; }
+    input, select, textarea {
+      width: 100%; border: 1px solid var(--border); border-radius: 12px;
+      padding: 12px 14px; font-size: 15px; font-family: inherit; color: var(--black); background: var(--white);
+    }
+    textarea { min-height: 84px; resize: vertical; }
+    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
+    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
+      margin-top: 24px; padding: 15px 28px; border-radius: 14px; font-size: 16px; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer; background: var(--primary-dark); color: #fff;
+      transition: transform 0.15s, box-shadow 0.2s;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,30,76,0.22); }
+    .btn[disabled] { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+    .hint { font-size: 12px; color: var(--gray-light); margin-top: 6px; }
+    .form-error { background: #FDE7EC; color: #C0264B; border: 1px solid #F6C2CF; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600; margin-top: 18px; }
+    .success { text-align: center; padding: 16px 8px; }
+    .success .check { width: 64px; height: 64px; border-radius: 50%; background: var(--success); color: #fff; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .success h2 { margin-bottom: 8px; }
+    .center-state { text-align: center; padding: 120px 24px; color: var(--gray-light); }
+
+    .footer { padding: 40px 24px; border-top: 1px solid var(--border); background: var(--gray-bg); text-align: center; }
+    .footer a { color: var(--gray-light); text-decoration: none; font-size: 14px; margin: 0 12px; }
+    @media (max-width: 600px) { .row2 { grid-template-columns: 1fr; } .hero-img { height: 220px; } }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><img src="/logo.png" alt="MysMatch" width="36" height="36"><span>MysMatch</span></a>
+      <div class="nav-links"><a href="/events" class="nav-cta">All events</a></div>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <div id="state" class="center-state">Loading event…</div>
+    <div id="event" hidden>
+      <a href="/events" class="back">← All events</a>
+      <div id="event-content"></div>
+
+      <div class="card" id="register-card">
+        <h2>Register</h2>
+        <div class="sub" id="register-sub">Reserve your spot — it only takes a moment.</div>
+        <form id="reg-form">
+          <div class="row2">
+            <div>
+              <label for="f-name">Full name <span class="req">*</span></label>
+              <input id="f-name" name="name" type="text" autocomplete="name" required>
+            </div>
+            <div>
+              <label for="f-email">Email <span class="req">*</span></label>
+              <input id="f-email" name="email" type="email" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="row2">
+            <div id="gender-wrap">
+              <label for="f-gender">Gender</label>
+              <select id="f-gender" name="gender">
+                <option value="">Prefer not to say</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+            <div>
+              <label for="f-party">Number of people</label>
+              <input id="f-party" name="party" type="number" min="1" max="10" value="1">
+            </div>
+          </div>
+          <div id="questions"></div>
+          <div id="form-error" class="form-error" hidden></div>
+          <button class="btn" id="submit-btn" type="submit">Register</button>
+          <p class="hint">By registering you agree to our <a href="/terms">Terms</a> and <a href="/privacy-policy">Privacy Policy</a>. We'll share your details with the event organizer.</p>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a><a href="/support">Support</a><a href="mailto:contact@mys-match.com">Contact</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabase.js"></script>
+  <script>
+    (function () {
+      const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const stateEl = document.getElementById('state');
+      const eventEl = document.getElementById('event');
+      const id = new URLSearchParams(location.search).get('id');
+
+      if (!id) { stateEl.textContent = 'No event specified.'; return; }
+      if (!window.MM) { stateEl.textContent = 'Could not connect. Please try again later.'; return; }
+
+      function fmtDate(iso) {
+        try {
+          const d = new Date(iso);
+          return d.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
+            + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+        } catch (e) { return ''; }
+      }
+
+      Promise.all([MM.getEvent(id), MM.getCounts(id)]).then(([ev, counts]) => {
+        if (!ev) { stateEl.innerHTML = 'This event is not available.<br>It may be private or no longer published.'; return; }
+        document.title = ev.title + ' — MysMatch';
+        renderEvent(ev, counts);
+      }).catch((err) => { console.error(err); stateEl.textContent = 'Could not load this event.'; });
+
+      function renderEvent(ev, counts) {
+        const full = ev.max_capacity != null && counts.total >= ev.max_capacity;
+        const left = ev.max_capacity == null ? null : Math.max(0, ev.max_capacity - counts.total);
+        const price = (!ev.price || ev.price == 0) ? 'Free' : '€' + ev.price;
+        const loc = ev.location || ev.city || '';
+        const img = ev.event_image
+          ? '<img class="hero-img" src="' + esc(ev.event_image) + '" alt="' + esc(ev.title) + '">'
+          : '<div class="hero-img placeholder">🎉</div>';
+        let spots = '';
+        if (ev.max_capacity == null) spots = '<span class="spots-pill">Open registration</span>';
+        else if (full) spots = '<span class="spots-pill full">Fully booked</span>';
+        else spots = '<span class="spots-pill">' + left + ' spot' + (left === 1 ? '' : 's') + ' left</span>';
+
+        document.getElementById('event-content').innerHTML =
+          img
+          + (ev.category ? '<span class="tag">' + esc(ev.category) + '</span>' : '')
+          + '<h1>' + esc(ev.title) + '</h1>'
+          + '<div class="meta-row">'
+          + '<span class="meta-item"><span class="ic">📅</span>' + esc(fmtDate(ev.date)) + '</span>'
+          + (loc ? '<span class="meta-item"><span class="ic">📍</span>' + esc(loc) + '</span>' : '')
+          + (ev.starting_point ? '<span class="meta-item"><span class="ic">🚩</span>' + esc(ev.starting_point) + '</span>' : '')
+          + '<span class="meta-item"><span class="ic">🎟️</span>' + price + '</span>'
+          + '</div>'
+          + '<div style="margin-bottom:24px">' + spots + '</div>'
+          + (ev.description ? '<div class="desc">' + esc(ev.description) + '</div>' : '');
+
+        eventEl.hidden = false;
+        stateEl.hidden = true;
+
+        setupRegistration(ev, full);
+      }
+
+      function setupRegistration(ev, full) {
+        const card = document.getElementById('register-card');
+
+        // External-registration events: link out instead of collecting here.
+        if (ev.external_url) {
+          card.innerHTML = '<h2>Register</h2><div class="sub">Registration for this event is handled on the organizer\'s site.</div>'
+            + '<a class="btn" href="' + esc(ev.external_url) + '" target="_blank" rel="noopener noreferrer">Go to registration ↗</a>';
+          return;
+        }
+        if (ev.document_upload_required) {
+          card.innerHTML = '<h2>Register</h2><div class="sub">This event requires a document upload, so registration is only available in the MysMatch app.</div>'
+            + '<a class="btn" href="/">Get the app</a>';
+          return;
+        }
+        if (full) {
+          document.getElementById('register-sub').textContent = 'This event is fully booked.';
+          document.getElementById('submit-btn').disabled = true;
+          document.getElementById('submit-btn').textContent = 'Fully booked';
+          ['f-name', 'f-email', 'f-gender', 'f-party'].forEach((x) => { const el = document.getElementById(x); if (el) el.disabled = true; });
+          return;
+        }
+
+        // Hide the gender field unless the event uses gender-based capacity.
+        if (ev.max_capacity_male == null && ev.max_capacity_female == null) {
+          document.getElementById('gender-wrap').hidden = true;
+        }
+
+        // Build creator questions.
+        const questions = Array.isArray(ev.questions) ? ev.questions : [];
+        const qWrap = document.getElementById('questions');
+        qWrap.innerHTML = questions.map((q) => {
+          const reqMark = q.required ? ' <span class="req">*</span>' : '';
+          const fid = 'q_' + esc(q.id);
+          if (q.type === 'choice') {
+            const opts = (q.options || []).map((o) => '<option value="' + esc(o) + '">' + esc(o) + '</option>').join('');
+            return '<label for="' + fid + '">' + esc(q.label) + reqMark + '</label>'
+              + '<select id="' + fid + '" data-qid="' + esc(q.id) + '"' + (q.required ? ' required' : '') + '>'
+              + '<option value="">Select…</option>' + opts + '</select>';
+          }
+          return '<label for="' + fid + '">' + esc(q.label) + reqMark + '</label>'
+            + '<textarea id="' + fid + '" data-qid="' + esc(q.id) + '"' + (q.required ? ' required' : '') + '></textarea>';
+        }).join('');
+
+        document.getElementById('reg-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          submitRegistration(ev);
+        });
+      }
+
+      function submitRegistration(ev) {
+        const errBox = document.getElementById('form-error');
+        const btn = document.getElementById('submit-btn');
+        errBox.hidden = true;
+
+        const name = document.getElementById('f-name').value.trim();
+        const email = document.getElementById('f-email').value.trim();
+        const gender = document.getElementById('f-gender').value || null;
+        const party = parseInt(document.getElementById('f-party').value, 10) || 1;
+
+        const answers = {};
+        let missing = null;
+        document.querySelectorAll('#questions [data-qid]').forEach((el) => {
+          const qid = el.getAttribute('data-qid');
+          const val = (el.value || '').trim();
+          if (el.hasAttribute('required') && !val && !missing) missing = el.previousElementSibling.textContent.replace(' *', '');
+          if (val) answers[qid] = val;
+        });
+        if (missing) { errBox.textContent = 'Please answer: ' + missing; errBox.hidden = false; return; }
+
+        btn.disabled = true; btn.textContent = 'Registering…';
+        MM.registerGuest({ eventId: ev.id, name: name, email: email, answers: answers, gender: gender, partySize: party })
+          .then((res) => {
+            if (!res.ok) {
+              errBox.textContent = res.error || 'Registration failed. Please try again.';
+              errBox.hidden = false;
+              btn.disabled = false; btn.textContent = 'Register';
+              return;
+            }
+            document.getElementById('register-card').innerHTML =
+              '<div class="success"><div class="check">✓</div>'
+              + '<h2>You\'re registered!</h2>'
+              + '<p class="sub">We\'ve saved your spot for <strong>' + esc(ev.title) + '</strong>. '
+              + 'The organizer can see your registration. See you there!</p>'
+              + '<a class="btn" href="/events">Browse more events</a></div>';
+          })
+          .catch((err) => {
+            console.error(err);
+            errBox.textContent = 'Something went wrong. Please try again.';
+            errBox.hidden = false;
+            btn.disabled = false; btn.textContent = 'Register';
+          });
+      }
+    })();
+  </script>
+</body>
+</html>
