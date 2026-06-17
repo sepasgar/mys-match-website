@@ -86,6 +86,11 @@
     .success { text-align: center; padding: 16px 8px; }
     .success .check { width: 64px; height: 64px; border-radius: 50%; background: var(--success); color: #fff; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
     .success h2 { margin-bottom: 8px; }
+    .qr-box { display: flex; justify-content: center; margin: 8px 0 14px; }
+    .qr-box img { width: 220px; height: 220px; border: 1px solid var(--border); border-radius: 14px; padding: 10px; background: #fff; }
+    .qr-warn { background: #FFF6E5; border: 1px solid #F4D58B; color: #8A6100; border-radius: 12px; padding: 12px 14px; font-size: 13px; line-height: 1.55; margin-bottom: 18px; text-align: left; }
+    .btn.secondary { background: var(--white); color: var(--primary-dark); border: 1px solid var(--border); margin-top: 12px; }
+    .btn.secondary:hover { box-shadow: 0 6px 18px rgba(13,30,76,0.1); }
     .center-state { text-align: center; padding: 120px 24px; color: var(--gray-light); }
 
     .footer { padding: 40px 24px; border-top: 1px solid var(--border); background: var(--gray-bg); text-align: center; }
@@ -151,6 +156,7 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="/js/supabase.js"></script>
   <script>
     (function () {
@@ -287,12 +293,20 @@
               btn.disabled = false; btn.textContent = 'Register';
               return;
             }
+            // Ticket QR. Encodes exactly what the app's door scanner expects:
+            // { eventId, userId }, where userId is this guest registration's id
+            // (the scanner resolves web guests by that id via get_event_attendees).
+            const payload = JSON.stringify({ eventId: ev.id, userId: res.id });
             document.getElementById('register-card').innerHTML =
               '<div class="success"><div class="check">✓</div>'
               + '<h2>You\'re registered!</h2>'
-              + '<p class="sub">We\'ve saved your spot for <strong>' + esc(ev.title) + '</strong>. '
-              + 'The organizer can see your registration. See you there!</p>'
-              + '<a class="btn" href="/events">Browse more events</a></div>';
+              + '<p class="sub">Your spot for <strong>' + esc(ev.title) + '</strong> is confirmed. Show this QR code at the door.</p>'
+              + '<div class="qr-box"><img id="qr-img" width="220" height="220" alt="Your ticket QR code"></div>'
+              + '<div class="qr-warn">⚠️ <strong>Save your QR code now — it won\'t be shown again.</strong><br>'
+              + 'To cancel your registration, log in to the MysMatch app.</div>'
+              + '<a class="btn" id="qr-dl" download="mysmatch-ticket.png">Save QR code</a>'
+              + '<a class="btn secondary" href="/events">Browse more events</a></div>';
+            renderTicketQr(payload);
           })
           .catch((err) => {
             console.error(err);
@@ -300,6 +314,48 @@
             errBox.hidden = false;
             btn.disabled = false; btn.textContent = 'Register';
           });
+      }
+
+      // Generate the ticket QR (qrcodejs) into a throwaway node, then lift the
+      // canvas data-URL into a clean <img> so it's easy to save (long-press on
+      // mobile) and the "Save QR code" link can download it.
+      function renderTicketQr(payload) {
+        const img = document.getElementById('qr-img');
+        const dl = document.getElementById('qr-dl');
+        const unavailable = () => { if (img) img.alt = 'QR code unavailable — please screenshot this page.'; if (dl) dl.style.display = 'none'; };
+        if (!window.QRCode || !img) { unavailable(); return; }
+        try {
+          const tmp = document.createElement('div');
+          tmp.style.display = 'none';
+          document.body.appendChild(tmp);
+          // qrcodejs draws synchronously into `tmp` (canvas + fallback img).
+          new window.QRCode(tmp, {
+            text: payload, width: 440, height: 440,
+            colorDark: '#0D1E4C', colorLight: '#FFFFFF',
+            correctLevel: window.QRCode.CorrectLevel.M,
+          });
+          const canvas = tmp.querySelector('canvas');
+          let url = '';
+          if (canvas) {
+            // qrcodejs draws with NO quiet zone; QR spec needs a ~4-module white
+            // border or scanners (and saved screenshots) read unreliably. Re-draw
+            // onto a padded canvas so the border is baked into the saved image.
+            const margin = 40;
+            const out = document.createElement('canvas');
+            out.width = canvas.width + margin * 2;
+            out.height = canvas.height + margin * 2;
+            const ctx = out.getContext('2d');
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, out.width, out.height);
+            ctx.drawImage(canvas, margin, margin);
+            url = out.toDataURL('image/png');
+          } else {
+            const fallbackImg = tmp.querySelector('img');
+            url = fallbackImg ? fallbackImg.src : '';
+          }
+          document.body.removeChild(tmp);
+          if (url) { img.src = url; if (dl) dl.href = url; } else { unavailable(); }
+        } catch (e) { console.error(e); unavailable(); }
       }
     })();
   </script>
