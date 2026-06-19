@@ -72,6 +72,7 @@
     .src.app { background: var(--gray-bg); color: var(--gray); }
     .toolbar { display: flex; gap: 10px; }
     .btn-sm { padding: 9px 16px; border-radius: 12px; font-size: 14px; font-weight: 700; border: 1px solid var(--border); background: var(--white); color: var(--primary-dark); cursor: pointer; font-family: inherit; }
+    .doc-view { padding: 5px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1px solid var(--border); background: var(--white); color: var(--primary-dark); cursor: pointer; font-family: inherit; }
     .btn-sm.primary { background: var(--primary-dark); color: #fff; border-color: var(--primary-dark); }
     .center-state { text-align: center; padding: 80px 24px; color: var(--gray-light); }
     @media (max-width: 600px) { .ev-row { flex-direction: column; align-items: flex-start; } }
@@ -196,15 +197,25 @@
               + '<td>' + esc(gender) + '</td>'
               + '<td><span class="src ' + (r.source === 'web' ? 'web' : 'app') + '">' + (r.source === 'web' ? 'Web' : 'App') + '</span></td>'
               + '<td>' + esc(fmtDT(r.registered_at)) + '</td>'
+              + '<td>' + (r.document_url ? '<button class="doc-view" data-doc="' + esc(r.document_url) + '">View</button>' : '') + '</td>'
               + qCells + '</tr>';
           }).join('');
-          table = '<div class="table-wrap"><table><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Gender</th><th>Source</th><th>Registered</th>'
+          table = '<div class="table-wrap"><table><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Gender</th><th>Source</th><th>Registered</th><th>Doc</th>'
             + qHeaders + '</tr></thead><tbody>' + body + '</tbody></table></div>';
         }
         root.innerHTML = back + head + table;
         document.getElementById('back').addEventListener('click', () => showDashboard(user));
         const csvBtn = document.getElementById('csv');
         if (csvBtn) csvBtn.addEventListener('click', () => downloadCsv(title, rows, questions));
+        // Document viewers: sign the private path on demand and open it.
+        root.querySelectorAll('.doc-view').forEach((b) => {
+          b.addEventListener('click', async () => {
+            b.textContent = 'Opening…';
+            const url = await MM.signEventDoc(b.getAttribute('data-doc'));
+            b.textContent = 'View';
+            if (url) window.open(url, '_blank', 'noopener'); else alert('Could not open document.');
+          });
+        });
       }
 
       function csvCell(v) { v = v == null ? '' : String(v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }

@@ -141,6 +141,7 @@
             </div>
           </div>
           <div id="questions"></div>
+          <div id="doc-field"></div>
           <div id="form-error" class="form-error" hidden></div>
           <button class="btn" id="submit-btn" type="submit">Register</button>
           <p class="hint">By registering you agree to our <a href="/terms">Terms</a> and <a href="/privacy-policy">Privacy Policy</a>. We'll share your details with the event organizer.</p>
@@ -224,11 +225,6 @@
             + '<a class="btn" href="' + esc(ev.external_url) + '" target="_blank" rel="noopener noreferrer">Go to registration ↗</a>';
           return;
         }
-        if (ev.document_upload_required) {
-          card.innerHTML = '<h2>Register</h2><div class="sub">This event requires a document upload, so registration is only available in the MysMatch app.</div>'
-            + '<a class="btn" href="/">Get the app</a>';
-          return;
-        }
         if (full) {
           document.getElementById('register-sub').textContent = 'This event is fully booked.';
           document.getElementById('submit-btn').disabled = true;
@@ -258,6 +254,17 @@
             + '<textarea id="' + fid + '" data-qid="' + esc(q.id) + '"' + (q.required ? ' required' : '') + '></textarea>';
         }).join('');
 
+        // Document upload field — shown when the event enables or requires it.
+        if (ev.document_upload_enabled || ev.document_upload_required) {
+          const req = ev.document_upload_required;
+          document.getElementById('doc-field').innerHTML =
+            '<label for="f-doc">Document'
+            + (req ? ' <span class="req">*</span>' : ' <span style="color:var(--gray-light);font-weight:600">(optional)</span>')
+            + '</label>'
+            + '<input id="f-doc" type="file" accept="image/png,image/jpeg,image/webp">'
+            + '<p class="hint">Upload an image (e.g. payment receipt or proof). Max 5 MB.</p>';
+        }
+
         document.getElementById('reg-form').addEventListener('submit', (e) => {
           e.preventDefault();
           submitRegistration(ev);
@@ -284,8 +291,18 @@
         });
         if (missing) { errBox.textContent = 'Please answer: ' + missing; errBox.hidden = false; return; }
 
-        btn.disabled = true; btn.textContent = 'Registering…';
-        MM.registerGuest({ eventId: ev.id, name: name, email: email, answers: answers, gender: gender, partySize: party })
+        // Document handling (optional or required) — validate, then upload first.
+        const fileInput = document.getElementById('f-doc');
+        const file = fileInput && fileInput.files && fileInput.files[0];
+        if (ev.document_upload_required && !file) { errBox.textContent = 'Please upload the required document.'; errBox.hidden = false; return; }
+        if (file && file.size > 5 * 1024 * 1024) { errBox.textContent = 'Document must be 5 MB or smaller.'; errBox.hidden = false; return; }
+        if (file && ['image/png', 'image/jpeg', 'image/webp'].indexOf(file.type) === -1) { errBox.textContent = 'Document must be a PNG, JPG, or WEBP image.'; errBox.hidden = false; return; }
+
+        btn.disabled = true; btn.textContent = file ? 'Uploading…' : 'Registering…';
+
+        const register = (documentUrl) => {
+          btn.textContent = 'Registering…';
+          return MM.registerGuest({ eventId: ev.id, name: name, email: email, answers: answers, gender: gender, partySize: party, documentUrl: documentUrl })
           .then((res) => {
             if (!res.ok) {
               errBox.textContent = res.error || 'Registration failed. Please try again.';
@@ -314,6 +331,20 @@
             errBox.hidden = false;
             btn.disabled = false; btn.textContent = 'Register';
           });
+        };
+
+        if (file) {
+          MM.uploadGuestDocument(ev.id, file).then((up) => {
+            if (!up.ok) {
+              errBox.textContent = up.error || 'Could not upload your document. Please try again.';
+              errBox.hidden = false; btn.disabled = false; btn.textContent = 'Register';
+              return;
+            }
+            register(up.path);
+          });
+        } else {
+          register(null);
+        }
       }
 
       // Generate the ticket QR (qrcodejs) into a throwaway node, then lift the

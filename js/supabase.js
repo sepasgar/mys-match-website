@@ -79,9 +79,30 @@
       p_answers: opts.answers || {},
       p_user_gender: opts.gender || null,
       p_party_size: opts.partySize || 1,
+      p_document_url: opts.documentUrl || null,
     });
     if (error) return { ok: false, error: error.message };
     return { ok: true, id: data };
+  }
+
+  // Upload a guest's document to the private event-documents bucket under the
+  // event's web/ folder — allowed for anon by a scoped storage policy (path must
+  // be `{eventId}/web/...` under a web-published event). Returns the storage path.
+  async function uploadGuestDocument(eventId, file) {
+    const ext = file.type === 'image/png' ? 'png' : (file.type === 'image/webp' ? 'webp' : 'jpg');
+    const rand = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : (Date.now() + '-' + Math.random().toString(36).slice(2));
+    const path = eventId + '/web/' + rand + '.' + ext;
+    const { error } = await db.storage.from('event-documents').upload(path, file, { contentType: file.type, upsert: false });
+    if (error) return { ok: false, error: error.message };
+    return { ok: true, path: path };
+  }
+
+  // Creator-only: sign a private event document for viewing (1h URL). Works for
+  // both app and web docs — storage read RLS authorizes the event creator.
+  async function signEventDoc(path) {
+    const { data, error } = await db.storage.from('event-documents').createSignedUrl(path, 3600);
+    if (error || !data) return null;
+    return data.signedUrl;
   }
 
   // --- Creator auth + dashboard --------------------------------------------
@@ -123,6 +144,7 @@
   window.MM = {
     db, SUPABASE_URL,
     listEvents, getEvent, getCounts, countsBatch, registerGuest,
+    uploadGuestDocument, signEventDoc,
     signIn, signOut, currentUser, myEvents, eventAttendees,
   };
 })();
