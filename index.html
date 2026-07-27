@@ -220,6 +220,19 @@
   }
   /* Real event photo (replaces <image-slot>) */
   .event-card img{ width:100%; height:240px; object-fit:cover; display:block; }
+  /* Live-event card additions (populated by JS from the same Supabase feed as /events) */
+  .event-col{ display:flex; flex-direction:column; align-items:stretch; gap:18px; }
+  .show-more{ align-self:flex-start; padding:12px 22px; font-size:14px; }
+  .event-card .event-media{ display:block; }
+  .event-card .ph{
+    width:100%; height:240px; display:flex; align-items:center; justify-content:center;
+    font-size:54px; background:var(--grad-soft);
+  }
+  .event-foot-info{ display:flex; flex-direction:column; gap:2px; }
+  .event-price{ font-size:15px; font-weight:800; letter-spacing:-0.01em; color:var(--ink); }
+  .event-spots{ font-size:12.5px; font-weight:600; color:var(--ink2); }
+  .event-spots.full{ color:var(--accent); }
+  .event-skeleton{ padding:64px 24px; text-align:center; color:var(--ink3); font-size:14.5px; }
   .event-body{ padding:20px 22px 22px; }
   .event-tag{
     display:inline-flex; font-size:11px; font-weight:700; letter-spacing:0.06em;
@@ -542,21 +555,16 @@
           <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5L20 7"></path></svg></span>Free and paid event support</li>
         </ul>
       </div>
-      <div class="event-card reveal">
-        <!-- Real event photo already tracked in the repo -->
-        <img src="events/rwth-aachen-meetup.png" alt="RWTH Aachen student meetup" loading="lazy">
-        <div class="event-body">
-          <span class="event-tag">Networking</span>
-          <h3>RWTH Aachen Student Meetup</h3>
-          <div class="event-meta">
-            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2.5"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>Campus West, Aachen</span>
-            <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>RWTH Aachen</span>
-          </div>
-          <div class="event-foot">
-            <div class="avatars"><i></i><i></i><i></i><b>+42 going</b></div>
-            <a class="btn btn-grad" href="/events" style="padding:9px 18px; font-size:13px;">View event</a>
-          </div>
+      <div class="event-col">
+        <!-- Latest real event, loaded from Supabase — same source as the /events tab.
+             JS fills #latest-event with the soonest upcoming published event. -->
+        <div class="event-card reveal" id="latest-event">
+          <div class="event-skeleton">Loading the latest event…</div>
         </div>
+        <!-- Show more -> the full events tab -->
+        <a class="btn btn-grad show-more" href="/events">Show more events
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
+        </a>
       </div>
     </div>
   </div>
@@ -624,6 +632,83 @@
   </div>
 </footer>
 
+<!-- Supabase client + shared helpers (same MM.listEvents feed the /events tab uses) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script>
+// Latest real event on the landing page. Pulls from the exact same source as the
+// /events tab (MM.listEvents = web-published, non-private, upcoming, soonest first)
+// and shows events[0]. Card + detail link mirror the events tab for consistency.
+(function () {
+  var host = document.getElementById('latest-event');
+  if (!host) return;
+  var esc = function (s) {
+    return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  };
+  function fmtDate(iso) {
+    try {
+      var d = new Date(iso);
+      return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })
+        + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+    } catch (e) { return ''; }
+  }
+  var calSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2.5"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>';
+  var pinSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>';
+  function fallback(msg) { host.innerHTML = '<div class="event-skeleton">' + esc(msg) + '</div>'; }
+  function render(e) {
+    var href = '/events/event.html?id=' + encodeURIComponent(e.id);
+    var media = e.event_image
+      ? '<img src="' + esc(e.event_image) + '" alt="' + esc(e.title) + '" loading="lazy">'
+      : '<div class="ph">🎉</div>';
+    var loc = e.city || e.location || '';
+    var total = (e._counts && e._counts.total) || 0;
+    var full = e.max_capacity != null && total >= e.max_capacity;
+    var spots = e.max_capacity == null
+      ? (total ? total + ' going' : '')
+      : (full ? 'Fully booked' : (e.max_capacity - total) + ' spots left');
+    var price = (!e.price || e.price == 0) ? 'Free' : '€' + e.price;
+    host.innerHTML =
+      '<a class="event-media" href="' + href + '">' + media + '</a>'
+      + '<div class="event-body">'
+      + (e.category ? '<span class="event-tag">' + esc(e.category) + '</span>' : '')
+      + '<h3>' + esc(e.title) + '</h3>'
+      + '<div class="event-meta">'
+      + '<span>' + calSvg + esc(fmtDate(e.date)) + '</span>'
+      + (loc ? '<span>' + pinSvg + esc(loc) + '</span>' : '')
+      + '</div>'
+      + '<div class="event-foot">'
+      + '<div class="event-foot-info">'
+      + '<span class="event-price">' + price + '</span>'
+      + (spots ? '<span class="event-spots' + (full ? ' full' : '') + '">' + esc(spots) + '</span>' : '')
+      + '</div>'
+      + '<a class="btn btn-grad" href="' + href + '" style="padding:9px 18px;font-size:13px;">View event</a>'
+      + '</div></div>';
+  }
+  // No upcoming events -> fall back to the most recent event by date, so the
+  // landing card is never empty while any web-published event exists.
+  function showMostRecent() {
+    MM.db.from('events')
+      .select('id,title,location,city,date,event_image,category,price,max_capacity')
+      .eq('publish_to_web', true).eq('is_private', false)
+      .order('date', { ascending: false }).limit(1)
+      .then(function (res) {
+        var rows = res && res.data;
+        if (!rows || !rows.length) { fallback('No events to show yet — check back soon.'); return; }
+        var e = rows[0];
+        MM.getCounts(e.id).then(function (c) { e._counts = c; render(e); })
+          .catch(function () { e._counts = { total: 0 }; render(e); });
+      })
+      .catch(function (err) { console.error(err); fallback('Head to the Events page to see what’s on.'); });
+  }
+  if (!window.MM) { fallback('Head to the Events page to see what’s on.'); return; }
+  MM.listEvents().then(function (events) {
+    if (events && events.length) { render(events[0]); return; }
+    showMostRecent();
+  }).catch(function (err) { console.error(err); showMostRecent(); });
+})();
+</script>
 <script>
 // Mobile menu: close after tapping a link (parity with the previous site's nav)
 document.querySelectorAll('.nav-links a').forEach(function(a){
