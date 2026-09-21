@@ -100,7 +100,9 @@
         ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
       if (!window.MM) { root.textContent = 'Could not connect. Please try again later.'; return; }
 
-      function fmt(iso) { try { return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' }); } catch (e) { return ''; } }
+      // Event date: real start moment in the event's own zone (e.date is the
+      // typed time stored as if UTC; late-evening events showed the wrong day).
+      function fmtEvent(e) { try { return new Date(e.starts_at).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric', timeZone: e.timezone || 'Europe/Berlin' }); } catch (x) { return ''; } }
       function fmtDT(iso) { try { return new Date(iso).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
 
       MM.currentUser().then((user) => { user ? showDashboard(user) : showLogin(); });
@@ -148,7 +150,7 @@
             const c = e._counts || { total: 0 };
             return '<div class="ev-row" data-id="' + esc(e.id) + '" data-title="' + esc(e.title) + '">'
               + '<div><div class="t">' + esc(e.title) + '</div>'
-              + '<div class="m">' + esc(fmt(e.date)) + (e.location || e.city ? ' · ' + esc(e.location || e.city) : '') + '</div></div>'
+              + '<div class="m">' + esc(fmtEvent(e)) + (e.location || e.city ? ' · ' + esc(e.location || e.city) : '') + '</div></div>'
               + '<div class="badges">'
               + (e.publish_to_web ? '<span class="pill web">Web</span>' : '')
               + (e.is_private ? '<span class="pill priv">Private</span>' : '')

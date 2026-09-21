@@ -46,11 +46,13 @@
     const startOfToday = new Date(); startOfToday.setHours(0, 0, 0, 0);
     const { data, error } = await db
       .from('events')
-      .select('id,title,description,location,city,date,event_image,category,price,max_capacity,external_url')
+      .select('id,title,description,location,city,date,starts_at,timezone,event_image,category,price,max_capacity,external_url')
       .eq('publish_to_web', true)
       .eq('is_private', false)
-      .gte('date', startOfToday.toISOString())
-      .order('date', { ascending: true });
+      // starts_at = real start moment; `date` is the typed time stored as if UTC
+      // (2h late in German summer), so never compare it with "now".
+      .gte('starts_at', startOfToday.toISOString())
+      .order('starts_at', { ascending: true });
     if (error) { console.error('[MM] listEvents', error.message); return []; }
     const events = data || [];
     const counts = await countsBatch(events.map((e) => e.id));
@@ -124,9 +126,9 @@
   async function myEvents(userId) {
     const { data, error } = await db
       .from('events')
-      .select('id,title,date,location,city,publish_to_web,is_private,max_capacity')
+      .select('id,title,date,starts_at,timezone,location,city,publish_to_web,is_private,max_capacity')
       .eq('creator_id', userId)
-      .order('date', { ascending: false });
+      .order('starts_at', { ascending: false });
     if (error) { console.error('[MM] myEvents', error.message); return []; }
     const events = data || [];
     const counts = await countsBatch(events.map((e) => e.id));
