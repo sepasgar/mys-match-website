@@ -258,11 +258,15 @@
       if (!id) { stateEl.textContent = 'No event specified.'; return; }
       if (!window.MM) { stateEl.textContent = 'Could not connect. Please try again later.'; return; }
 
-      function fmtDate(iso) {
+      // Formats the real start moment in the EVENT's timezone, so every visitor
+      // sees the time the organizer entered (not converted to their own zone).
+      // `ev.date` is the typed time stored as if UTC; don't pass it to Date().
+      function fmtDate(ev) {
         try {
-          const d = new Date(iso);
-          return d.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
-            + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+          const d = new Date(ev.starts_at);
+          const timeZone = ev.timezone || 'Europe/Berlin';
+          return d.toLocaleDateString(undefined, { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone })
+            + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone });
         } catch (e) { return ''; }
       }
 
@@ -290,7 +294,7 @@
           + (ev.category ? '<span class="tag">' + esc(ev.category) + '</span>' : '')
           + '<h1>' + esc(ev.title) + '</h1>'
           + '<div class="meta-row">'
-          + '<span class="meta-item"><span class="ic">📅</span>' + esc(fmtDate(ev.date)) + '</span>'
+          + '<span class="meta-item"><span class="ic">📅</span>' + esc(fmtDate(ev)) + '</span>'
           + (loc ? '<span class="meta-item"><span class="ic">📍</span>' + esc(loc) + '</span>' : '')
           + (ev.starting_point ? '<span class="meta-item"><span class="ic">🚩</span>' + esc(ev.starting_point) + '</span>' : '')
           + '<span class="meta-item"><span class="ic">🎟️</span>' + price + '</span>'

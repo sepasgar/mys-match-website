@@ -489,11 +489,13 @@
       const countEl = document.getElementById('events-count');
       const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
         ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-      function fmtDate(iso) {
+      // Real start moment shown in the EVENT's timezone (see events/event.html).
+      function fmtDate(ev) {
         try {
-          const d = new Date(iso);
-          return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })
-            + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+          const d = new Date(ev.starts_at);
+          const timeZone = ev.timezone || 'Europe/Berlin';
+          return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short', timeZone })
+            + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone });
         } catch (e) { return ''; }
       }
       function card(e) {
@@ -510,7 +512,7 @@
           + '<div class="event-card-body">'
           + (e.category ? '<span class="event-card-tag">' + esc(e.category) + '</span>' : '')
           + '<h3>' + esc(e.title) + '</h3>'
-          + '<div class="meta">📅 ' + esc(fmtDate(e.date)) + '</div>'
+          + '<div class="meta">📅 ' + esc(fmtDate(e)) + '</div>'
           + (loc ? '<div class="meta">📍 ' + esc(loc) + '</div>' : '')
           + '<div class="foot"><span class="price">' + price + '</span>'
           + (spots ? '<span class="spots' + (full ? ' full' : '') + '">' + spots + '</span>' : '')
