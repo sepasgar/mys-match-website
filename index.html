@@ -665,8 +665,13 @@
     var loc = e.city || e.location || '';
     var total = (e._counts && e._counts.total) || 0;
     var full = e.max_capacity != null && total >= e.max_capacity;
+    // TEMPORARY (Sept 25 2026): the "N going" count is hidden, matching the
+    // app (SHOW_ATTENDANCE_PUBLICLY in MyApp lib/events.ts). Set to true to
+    // show it again. Unlimited events then read "Open registration" like the
+    // event page; capped events keep "N spots left" / "Fully booked".
+    var SHOW_ATTENDANCE_PUBLICLY = false;
     var spots = e.max_capacity == null
-      ? (total ? total + ' going' : '')
+      ? (SHOW_ATTENDANCE_PUBLICLY ? (total ? total + ' going' : '') : 'Open registration')
       : (full ? 'Fully booked' : (e.max_capacity - total) + ' spots left');
     var price = (!e.price || e.price == 0) ? 'Free' : '€' + e.price;
     host.innerHTML =
