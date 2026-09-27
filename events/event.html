@@ -105,6 +105,13 @@
       opacity: 0; transition: opacity 0.25s ease;
     }
     .app-card-backdrop.show { opacity: 1; }
+    /* The `display:flex` above overrides the [hidden] attribute, so "closed"
+       only faded the backdrop to opacity 0 — it stayed on top of the page and
+       taps where the App Store button had been still opened the store (Sept
+       2026). Honour [hidden], and don't take taps unless it's actually shown
+       (covers the fade-in/out moments too). */
+    .app-card-backdrop[hidden] { display: none; }
+    .app-card-backdrop:not(.show) { pointer-events: none; }
     .app-card {
       position: relative; background: var(--white); border-radius: 22px;
       max-width: 420px; width: 100%; padding: 34px 28px 24px; text-align: center;
