@@ -143,10 +143,46 @@
     return data || [];
   }
 
+  // --- Public jobs board (Sept 2026) ----------------------------------------
+  // Every job from the app, read through SECURITY DEFINER RPCs that return a
+  // fixed column set (no application questions, no poster id) and skip deleted
+  // organizations. The jobs table itself stays signed-in only. Applying is
+  // app-only, so there is nothing to write from the web.
+  async function listJobs() {
+    const { data, error } = await db.rpc('get_public_jobs', { p_limit: 200 });
+    if (error) { console.error('[MM] listJobs', error.message); return []; }
+    return data || [];
+  }
+
+  async function getJob(id) {
+    const { data, error } = await db.rpc('get_public_job', { p_id: id });
+    if (error) { console.error('[MM] getJob', error.message); return null; }
+    return (Array.isArray(data) ? data[0] : data) || null;
+  }
+
+  // Same labels as the app's jobs board.
+  const JOB_TYPE_LABELS = {
+    full_time: 'Full-time', part_time: 'Part-time', mini_job: 'Mini-job',
+    internship: 'Internship', volunteer: 'Volunteer',
+  };
+
+  // "Posted today" / "Posted 3 days ago" — jobs have no closing date yet, so
+  // the age is the one freshness signal a visitor gets.
+  function postedAgo(iso) {
+    const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+    if (!(days >= 0)) return '';
+    if (days === 0) return 'Posted today';
+    if (days === 1) return 'Posted yesterday';
+    if (days < 30) return 'Posted ' + days + ' days ago';
+    const months = Math.floor(days / 30);
+    return 'Posted ' + months + (months === 1 ? ' month' : ' months') + ' ago';
+  }
+
   window.MM = {
     db, SUPABASE_URL,
     listEvents, getEvent, getCounts, countsBatch, registerGuest,
     uploadGuestDocument, signEventDoc,
     signIn, signOut, currentUser, myEvents, eventAttendees,
+    listJobs, getJob, JOB_TYPE_LABELS, postedAgo,
   };
 })();

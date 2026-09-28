@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job — MysMatch</title>
+  <meta name="description" content="Student job on MysMatch. Apply in the MysMatch app.">
+  <meta name="theme-color" content="#0D1E4C">
+  <!-- Unlike events/event.html this page must stay indexable: Google for Jobs
+       only lists postings whose detail page can be indexed. The JobPosting
+       JSON-LD is injected by the script below once the job has loaded. -->
+  <link rel="canonical" id="canonical" href="https://www.mysmatch.com/jobs">
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --primary: #C48CB3; --primary-dark: #0D1E4C; --primary-light: #E5C9D7;
+      --accent: #83A6CE; --black: #0B1B32; --white: #FFFFFF; --gray: #26415E;
+      --gray-light: #6B8299; --gray-bg: #F5F0F3; --border: #E5C9D7; --success: #34C77B;
+    }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--black); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-inner { max-width: 1120px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-dark); }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-cta { text-decoration: none; background: var(--primary-dark); color: var(--white); padding: 10px 22px; border-radius: 12px; font-weight: 600; font-size: 15px; }
+
+    .wrap { max-width: 760px; margin: 0 auto; padding: 96px 24px 96px; }
+    .back { display: inline-flex; align-items: center; gap: 6px; color: var(--gray-light); text-decoration: none; font-weight: 600; font-size: 14px; margin-bottom: 20px; }
+    .back:hover { color: var(--primary-dark); }
+
+    .head { display: flex; gap: 18px; align-items: center; margin-bottom: 18px; }
+    .logo { width: 72px; height: 72px; flex: none; border-radius: 18px; object-fit: cover; background: var(--gray-bg); display: flex; align-items: center; justify-content: center; font-size: 34px; }
+    .company { font-size: 16px; font-weight: 700; color: var(--gray); }
+    .verified { color: var(--success); font-weight: 700; font-size: 14px; }
+    .tag { display: inline-block; background: linear-gradient(135deg, var(--primary), var(--accent)); color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 16px; margin-bottom: 6px; }
+    h1 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; color: var(--primary-dark); letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 16px; }
+    .meta-row { display: flex; flex-wrap: wrap; gap: 12px 26px; margin-bottom: 26px; }
+    .meta-item { font-size: 15px; font-weight: 600; color: var(--gray); }
+    .section-label { font-size: 12px; font-weight: 800; letter-spacing: 1.2px; text-transform: uppercase; color: var(--gray-light); margin-bottom: 8px; }
+    .desc { font-size: 16px; color: var(--gray); line-height: 1.75; white-space: pre-wrap; overflow-wrap: anywhere; margin-bottom: 28px; }
+    .contact { font-size: 15px; color: var(--gray); white-space: pre-wrap; overflow-wrap: anywhere; background: var(--gray-bg); border: 1px solid var(--border); border-radius: 14px; padding: 14px 16px; margin-bottom: 32px; }
+
+    .apply { border: 1px solid var(--border); border-radius: 20px; padding: 28px; text-align: center; background: var(--white); }
+    .apply h2 { font-size: 22px; font-weight: 800; color: var(--primary-dark); margin-bottom: 8px; letter-spacing: -0.4px; }
+    .apply p { font-size: 15px; color: var(--gray-light); margin-bottom: 20px; }
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      padding: 14px 24px; border-radius: 14px; font-size: 16px; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer; background: var(--primary-dark); color: #fff;
+      transition: transform 0.15s, box-shadow 0.2s; min-width: 170px;
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,30,76,0.22); }
+    .btn.secondary { background: var(--white); color: var(--primary-dark); border: 1px solid var(--border); }
+    .store-row { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 12px; }
+    .hint { font-size: 13px; color: var(--gray-light); margin-top: 10px; }
+    .center-state { text-align: center; padding: 120px 24px; color: var(--gray-light); }
+
+    .footer { padding: 40px 24px; border-top: 1px solid var(--border); background: var(--gray-bg); text-align: center; }
+    .footer a { color: var(--gray-light); text-decoration: none; font-size: 14px; margin: 0 12px; }
+    @media (max-width: 600px) {
+      .wrap { padding: 88px 16px 72px; }
+      .logo { width: 56px; height: 56px; }
+      .btn { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo"><img src="/logo.png" alt="MysMatch" width="36" height="36"><span>MysMatch</span></a>
+      <a href="/jobs" class="nav-cta">All jobs</a>
+    </div>
+  </nav>
+
+  <main class="wrap">
+    <div id="state" class="center-state">Loading job…</div>
+    <div id="job" hidden>
+      <a href="/jobs" class="back">← All jobs</a>
+      <div id="job-content"></div>
+
+      <!-- Applying is app-only (owner decision, Sept 2026). -->
+      <div class="apply">
+        <h2>Apply in the MysMatch app</h2>
+        <p>Applications — with your CV and the organization's questions — are sent through the app.</p>
+        <div class="store-row">
+          <a class="btn" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" target="_blank" rel="noopener noreferrer">App Store</a>
+          <a class="btn" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" target="_blank" rel="noopener noreferrer">Google Play</a>
+        </div>
+        <a class="btn secondary" id="open-app" href="#">Already have the app? Open this job</a>
+        <p class="hint">After installing, find this job in the app's Jobs tab.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div>
+      <a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a><a href="/support">Support</a><a href="mailto:contact@mys-match.com">Contact</a>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="/js/supabase.js"></script>
+  <script>
+    (function () {
+      const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const stateEl = document.getElementById('state');
+      const jobEl = document.getElementById('job');
+      const id = new URLSearchParams(location.search).get('id');
+
+      if (!id) { stateEl.textContent = 'No job specified.'; return; }
+      if (!window.MM) { stateEl.textContent = 'Could not connect. Please try again later.'; return; }
+
+      // Custom scheme opens app/job/[id].tsx when the app is installed.
+      document.getElementById('open-app').setAttribute('href', 'mysmatch://job/' + encodeURIComponent(id));
+
+      MM.getJob(id).then((j) => {
+        if (!j) { stateEl.innerHTML = 'This job is no longer available.<br><a href="/jobs">See all jobs</a>'; return; }
+        render(j);
+        addStructuredData(j);
+      }).catch((err) => { console.error(err); stateEl.textContent = 'Could not load this job.'; });
+
+      function render(j) {
+        const typeLabel = MM.JOB_TYPE_LABELS[j.employment_type] || j.employment_type;
+        const loc = [j.city, j.country].filter(Boolean).join(', ');
+        const logoUrl = j.company_logo || j.org_avatar_url;
+        document.title = j.title + ' at ' + j.company + ' — MysMatch Jobs';
+        const metaDesc = document.querySelector('meta[name="description"]');
+        if (metaDesc) metaDesc.setAttribute('content', (typeLabel + ' · ' + j.company + (loc ? ' · ' + loc : '') + '. Apply in the MysMatch app.').slice(0, 300));
+        document.getElementById('canonical').setAttribute('href', 'https://www.mysmatch.com/jobs/job.html?id=' + encodeURIComponent(j.id));
+
+        document.getElementById('job-content').innerHTML =
+          '<div class="head">'
+          + (logoUrl ? '<img class="logo" src="' + esc(logoUrl) + '" alt="' + esc(j.company) + '">' : '<div class="logo">💼</div>')
+          + '<div><span class="tag">' + esc(typeLabel) + '</span>'
+          + '<div class="company">' + esc(j.company)
+          + (j.org_verified ? ' <span class="verified">✓ Verified</span>' : '') + '</div></div></div>'
+          + '<h1>' + esc(j.title) + '</h1>'
+          + '<div class="meta-row">'
+          + (loc ? '<span class="meta-item">📍 ' + esc(loc) + '</span>' : '')
+          + (j.salary ? '<span class="meta-item">💶 ' + esc(j.salary) + '</span>' : '')
+          + '<span class="meta-item">🕒 ' + esc(MM.postedAgo(j.created_at)) + '</span>'
+          + '</div>'
+          + '<div class="section-label">About the role</div>'
+          + '<div class="desc">' + esc(j.description) + '</div>'
+          // Contact details are public by owner decision; the app's "Post a
+          // job" form tells organizations this.
+          + (j.contact_info ? '<div class="section-label">Contact</div><div class="contact">' + esc(j.contact_info) + '</div>' : '');
+
+        stateEl.hidden = true;
+        jobEl.hidden = false;
+      }
+
+      // Google for Jobs (https://developers.google.com/search/docs/appearance/structured-data/job-posting).
+      // Google renders JavaScript, so structured data added after load is read.
+      function addStructuredData(j) {
+        const types = { full_time: 'FULL_TIME', part_time: 'PART_TIME', mini_job: 'PART_TIME', internship: 'INTERN', volunteer: 'VOLUNTEER' };
+        const logoUrl = j.company_logo || j.org_avatar_url;
+        const data = {
+          '@context': 'https://schema.org/',
+          '@type': 'JobPosting',
+          title: j.title,
+          // Google accepts HTML here; escaped text with line breaks kept.
+          description: esc(j.description).replace(/\n/g, '<br>'),
+          datePosted: String(j.created_at).slice(0, 10),
+          employmentType: types[j.employment_type] || 'OTHER',
+          hiringOrganization: Object.assign({ '@type': 'Organization', name: j.company }, logoUrl ? { logo: logoUrl } : {}),
+          jobLocation: {
+            '@type': 'Place',
+            address: { '@type': 'PostalAddress', addressLocality: j.city, addressCountry: j.country },
+          },
+          identifier: { '@type': 'PropertyValue', name: 'MysMatch', value: j.id },
+          // Applying happens in the app, not on this page.
+          directApply: false,
+        };
+        const s = document.createElement('script');
+        s.type = 'application/ld+json';
+        s.textContent = JSON.stringify(data).replace(/</g, '\\u003c');
+        document.head.appendChild(s);
+      }
+    })();
+  </script>
+</body>
+</html>
