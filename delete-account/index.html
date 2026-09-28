@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete your account — MysMatch</title>
+  <meta name="description" content="How to delete your MysMatch account and data, in the app or by email, and what is deleted or kept.">
+  <meta name="theme-color" content="#0D1E4C">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Delete your account — MysMatch">
+  <meta property="og:description" content="How to delete your MysMatch account and data.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.mysmatch.com/delete-account">
+  <meta property="og:image" content="https://www.mysmatch.com/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Delete your account — MysMatch">
+  <meta name="twitter:description" content="How to delete your MysMatch account and data.">
+
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="canonical" href="https://www.mysmatch.com/delete-account">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --primary: #C48CB3;
+      --primary-dark: #0D1E4C;
+      --primary-light: #E5C9D7;
+      --accent: #83A6CE;
+      --black: #0B1B32;
+      --white: #FFFFFF;
+      --gray: #26415E;
+      --gray-light: #6B8299;
+      --gray-bg: #F5F0F3;
+      --border: #E5C9D7;
+      --success: #34C77B;
+      --error: #E54D6B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--black);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ─────────────────────────────────────── */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    .nav.scrolled { box-shadow: 0 2px 20px rgba(13,30,76,0.08); }
+    .nav-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--primary-dark);
+    }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
+    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; }
+    .nav-links a {
+      text-decoration: none;
+      color: var(--gray);
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary-dark); }
+    .nav-cta {
+      background: var(--primary-dark) !important;
+      color: var(--white) !important;
+      padding: 10px 22px !important;
+      border-radius: 12px !important;
+      font-weight: 600 !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+    }
+    .nav-cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(13,30,76,0.2);
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+    .mobile-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--primary-dark);
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    /* ── POLICY CONTENT ──────────────────────────── */
+    .policy-header {
+      padding: 120px 24px 48px;
+      background: linear-gradient(170deg, var(--gray-bg) 0%, var(--white) 60%);
+      text-align: center;
+    }
+    .policy-header h1 {
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 800;
+      color: var(--primary-dark);
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .policy-header .last-updated {
+      font-size: 15px;
+      color: var(--gray-light);
+      font-weight: 500;
+    }
+
+    .policy {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 48px 24px 100px;
+    }
+
+    .policy h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--primary-dark);
+      margin-top: 48px;
+      margin-bottom: 16px;
+      letter-spacing: -0.3px;
+    }
+
+    .policy h2:first-child {
+      margin-top: 0;
+    }
+
+    .policy p {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .policy ul, .policy ol {
+      margin-bottom: 16px;
+      padding-left: 24px;
+    }
+
+    .policy li {
+      font-size: 15px;
+      color: var(--gray);
+      line-height: 1.8;
+      margin-bottom: 6px;
+    }
+
+    .policy strong {
+      color: var(--black);
+      font-weight: 600;
+    }
+
+    .policy a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .policy a:hover {
+      color: var(--primary-dark);
+    }
+
+    .policy .contact-block {
+      background: var(--gray-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 16px;
+    }
+
+    .policy .contact-block p {
+      margin-bottom: 4px;
+    }
+
+    .policy .contact-block p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ── FOOTER ────────────────────────────────────── */
+    .footer {
+      padding: 48px 24px;
+      border-top: 1px solid var(--border);
+      background: var(--gray-bg);
+    }
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .footer-left img { width: 28px; height: 28px; border-radius: 8px; }
+    .footer-left span { font-size: 14px; color: var(--gray-light); }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-size: 14px;
+      color: var(--gray-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--primary-dark); }
+
+    /* ── MOBILE ────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .mobile-toggle { display: block; }
+
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        right: 0;
+        background: var(--white);
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--border);
+        box-shadow: 0 8px 24px rgba(13,30,76,0.08);
+        gap: 16px;
+      }
+
+      .policy-header { padding: 100px 20px 36px; }
+      .policy { padding: 36px 20px 72px; }
+      .policy h2 { font-size: 20px; margin-top: 40px; }
+
+      .footer-inner { flex-direction: column; text-align: center; }
+      .footer-links { flex-wrap: wrap; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="/logo.png" alt="MysMatch" width="36" height="36">
+        <span>MysMatch</span>
+      </a>
+      <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links">
+        <a href="/">Back to Home</a>
+        <a href="/" class="nav-cta">Get the App</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="policy-header">
+    <h1>Delete your account</h1>
+    <p class="last-updated">Last updated: September 28, 2026</p>
+  </header>
+
+  <!-- POLICY CONTENT -->
+  <main class="policy">
+    <!-- Account-deletion page for Google Play's Data safety form and Apple
+         5.1.1(v) (Sept 2026). Must stay reachable without the app and match
+         Privacy Policy Section 7 (retention) and Section 12. -->
+    <p>This page explains how to delete your <strong>MysMatch</strong> account (the MysMatch app for iOS and Android) and what happens to your data.</p>
+
+    <h2>1. Delete your account in the app</h2>
+    <ol>
+      <li>Open the MysMatch app and sign in.</li>
+      <li>Go to the <strong>Profile</strong> tab and tap <strong>Ownership</strong>.</li>
+      <li>Tap your account card, tell us briefly why you're leaving (at least 5 words), then tap <strong>Delete my account</strong> and confirm.</li>
+    </ol>
+    <p>Your account is deactivated immediately and permanently deleted after <strong>30 days</strong>. If you sign in again during those 30 days, the deletion is cancelled and your account is restored.</p>
+
+    <h2>2. Request deletion by email</h2>
+    <p>If you can't use the app, or you manage an organization account, email <a href="mailto:contact@mys-match.com?subject=Delete%20my%20MysMatch%20account">contact@mys-match.com</a> from the email address of your MysMatch account with the subject <strong>&ldquo;Delete my account&rdquo;</strong>. We confirm your request and complete the deletion within 30 days.</p>
+
+    <h2>3. What is deleted</h2>
+    <ul>
+      <li>Your profile: name, photos, university, major, semester, bio and preferences</li>
+      <li>Your login credentials (email address and phone number)</li>
+      <li>Your event registrations and any documents you uploaded for events</li>
+      <li>Your job applications and uploaded CVs</li>
+      <li>If you own an organization: its page, events, job postings and perks</li>
+    </ul>
+    <p>After deletion your profile is anonymized: other users see you only as a &ldquo;Deleted account&rdquo;.</p>
+
+    <h2>4. What is kept, and for how long</h2>
+    <ul>
+      <li><strong>Messages you sent</strong> stay in the other person&rsquo;s conversation so their chat history remains intact. They are shown as coming from a &ldquo;Deleted account&rdquo; and are no longer linked to you.</li>
+      <li><strong>Safety retention:</strong> messages, conversations or profiles connected to a report or a block are kept in full for 60 days from that report or block, to investigate abuse and to establish, exercise or defend legal claims. After that, the rules above apply.</li>
+      <li><strong>Crash reports</strong> are deleted after 90 days; <strong>analytics</strong> data is anonymized after 12 months.</li>
+      <li>Data we are required to keep by law may be kept for longer.</li>
+    </ul>
+    <p>Full details are in our <a href="/privacy-policy#account-deletion">Privacy Policy</a> (Sections 7 and 12). Questions: <a href="mailto:contact@mys-match.com">contact@mys-match.com</a>.</p>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="/logo.png" alt="MysMatch" width="28" height="28">
+        <span>&copy; 2026 MysMatch. All rights reserved.</span>
+      </div>
+      <div class="footer-links">
+        <a href="/privacy-policy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+        <a href="mailto:contact@mys-match.com">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll shadow
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 10);
+    }, { passive: true });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(a => {
+      a.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+</body>
+</html>
