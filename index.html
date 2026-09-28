@@ -151,19 +151,27 @@
 
   /* ───────── glimpse / phones ───────── */
   .glimpse{ background:var(--surface2); border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); }
-  .phones{ display:grid; grid-template-columns:repeat(4,1fr); gap:26px; }
-  .phone{
-    background:#fff; border:1px solid var(--line); border-radius:30px;
-    box-shadow:var(--shadow); padding:10px; position:relative;
+  /* App Store panels (Sept 2026): each 860×1864 image already has its own
+     phone frame + headline, so no CSS frame or label — just a swipeable row
+     (scroll-snap). ~4 visible on desktop with arrows, 1 + a peek on phones. */
+  .shots{
+    display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory;
+    padding:6px 2px 18px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
   }
-  /* Real screenshot (replaces <image-slot>); notch overlay dropped since the
-     captures already include the device status bar. All shots are 1260×2622. */
-  .phone img{ width:100%; height:auto; display:block; border-radius:22px; }
-  .phone-label{
-    display:flex; align-items:center; justify-content:center; gap:7px;
-    padding:13px 0 6px; font-size:13.5px; font-weight:600; color:var(--ink2);
+  .shots::-webkit-scrollbar{ display:none; }
+  .shot{
+    flex:0 0 calc((100% - 3*18px) / 4); scroll-snap-align:start;
+    border-radius:24px; overflow:hidden; background:#fff;
+    border:1px solid var(--line); box-shadow:var(--shadow);
   }
-  .phone-label svg{ color:var(--accent); }
+  .shot img{ width:100%; height:auto; display:block; }
+  .shots-nav{ display:flex; justify-content:center; gap:12px; margin-top:6px; }
+  .shots-nav button{
+    width:44px; height:44px; border-radius:50%; border:1px solid var(--line);
+    background:#fff; color:var(--ink); font-size:20px; line-height:1; cursor:pointer;
+    box-shadow:var(--shadow);
+  }
+  .shots-nav button:disabled{ opacity:.35; cursor:default; }
 
   /* ───────── features ───────── */
   .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
@@ -311,7 +319,7 @@
     }
     .mobile-toggle{ display:block; }
     .nav .btn-grad{ display:none; }
-    .phones{ grid-template-columns:repeat(2,1fr); }
+    .shot{ flex-basis:calc((100% - 2*18px) / 2.4); }
     .grid-3{ grid-template-columns:1fr 1fr; }
     .steps{ grid-template-columns:1fr 1fr; row-gap:34px; }
     .step::before{ display:none; }
@@ -362,7 +370,8 @@
   @keyframes breathe{ 0%,100%{ opacity:1; transform:translateX(-50%) scale(1); } 50%{ opacity:.7; transform:translateX(-50%) scale(1.06); } }
 
   @media (max-width: 600px){
-    .phones{ grid-template-columns:1fr; }
+    .shot{ flex-basis:74%; }
+    .shots-nav{ display:none; }
     .grid-3{ grid-template-columns:1fr; }
     .steps{ grid-template-columns:1fr; }
     .stats{ flex-direction:column; gap:18px; }
@@ -421,38 +430,41 @@
     <div class="sec-head reveal">
       <div class="kicker">See it in action</div>
       <h2>A glimpse inside MysMatch</h2>
-      <p class="sec-sub">Search for study partners, chat, browse events, and unlock perks — all in one app.</p>
+      <p class="sec-sub">Find study partners, student jobs, events, clubs and perks — all in one app.</p>
     </div>
-    <div class="phones">
-      <div class="phone reveal">
-        <img src="screenshots/discover.png" alt="MysMatch Discover screen" width="1260" height="2622" loading="lazy">
-        <div class="phone-label">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path></svg>
-          Discover
-        </div>
-      </div>
-      <div class="phone reveal">
-        <img src="screenshots/matches.png" alt="MysMatch match screen" width="1260" height="2622" loading="lazy">
-        <div class="phone-label">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>
-          Matches
-        </div>
-      </div>
-      <div class="phone reveal">
-        <img src="screenshots/chats.png" alt="MysMatch chats screen" width="1260" height="2622" loading="lazy">
-        <div class="phone-label">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-9 8.35 8.5 8.5 0 01-3.5-.75L3 21l1.9-5.5a8.38 8.38 0 01-.75-3.5 8.5 8.5 0 018.35-9 8.5 8.5 0 018.5 8.5z"></path></svg>
-          Chats
-        </div>
-      </div>
-      <div class="phone reveal">
-        <img src="screenshots/perks.png" alt="MysMatch perks and discounts screen" width="1260" height="2622" loading="lazy">
-        <div class="phone-label">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9"></path><rect x="2" y="7" width="20" height="5" rx="1"></rect><path d="M12 22V7"></path><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"></path><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"></path></svg>
-          Perks &amp; Discounts
-        </div>
-      </div>
+    <div class="shots reveal" id="shots">
+      <div class="shot"><img src="screenshots/jobs.png" alt="Jobs made for students: exclusive part-time and mini jobs" width="860" height="1864" loading="lazy"></div>
+      <div class="shot"><img src="screenshots/study-partner.png" alt="Find your study partner: browse students in your major and university" width="860" height="1864" loading="lazy"></div>
+      <div class="shot"><img src="screenshots/events.png" alt="Never miss a thing: meetups, runs and parties near you" width="860" height="1864" loading="lazy"></div>
+      <div class="shot"><img src="screenshots/campus.png" alt="Your campus in one app: student clubs and local partners" width="860" height="1864" loading="lazy"></div>
+      <div class="shot"><img src="screenshots/matches.png" alt="Meet your people: match by major and university" width="860" height="1864" loading="lazy"></div>
+      <div class="shot"><img src="screenshots/perks.png" alt="Save on what you love: curated student discounts" width="860" height="1864" loading="lazy"></div>
+      <div class="shot"><img src="screenshots/verified.png" alt="Real people, verified: phone-verified profiles and ratings" width="860" height="1864" loading="lazy"></div>
     </div>
+    <div class="shots-nav">
+      <button type="button" id="shots-prev" aria-label="Previous screenshots">&#8249;</button>
+      <button type="button" id="shots-next" aria-label="Next screenshots">&#8250;</button>
+    </div>
+    <script>
+      // Arrow buttons for mouse users; touch users just swipe. Scrolls by one
+      // panel and greys out an arrow at either end.
+      (function () {
+        var row = document.getElementById('shots');
+        var prev = document.getElementById('shots-prev');
+        var next = document.getElementById('shots-next');
+        if (!row || !prev || !next) return;
+        function step() { var c = row.querySelector('.shot'); return c ? c.getBoundingClientRect().width + 18 : 300; }
+        function update() {
+          prev.disabled = row.scrollLeft <= 4;
+          next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
+        }
+        prev.addEventListener('click', function () { row.scrollBy({ left: -step(), behavior: 'smooth' }); });
+        next.addEventListener('click', function () { row.scrollBy({ left: step(), behavior: 'smooth' }); });
+        row.addEventListener('scroll', update, { passive: true });
+        window.addEventListener('resize', update);
+        update();
+      })();
+    </script>
   </div>
 </section>
 
