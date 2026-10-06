@@ -66,7 +66,10 @@
     .card .sub { font-size: 14px; color: var(--gray-light); margin-bottom: 22px; }
     /* In-app-only events: store buttons sit left-aligned in the card, with an
        "open in app" link under them. */
-    #register-card .app-card-stores { justify-content: flex-start; }
+    /* App-only card content is centred (user, Oct 2026): store buttons in the
+       middle with heading, text and the open-in-app link centred above/below. */
+    #register-card.app-only { text-align: center; }
+    #register-card .app-card-stores { justify-content: center; }
     /* Same thin brand-gradient frame as in-app-only cards on /events. */
     #register-card.app-only {
       border: 2px solid transparent;
