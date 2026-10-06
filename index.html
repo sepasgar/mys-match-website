@@ -229,6 +229,12 @@
     background:#fff; border:1px solid var(--line-soft); border-radius:24px;
     box-shadow:var(--shadow); overflow:hidden;
   }
+  /* In-app-only event (Oct 2026): thin brand-gradient frame, same as the
+     /events list, so the preview reads differently. */
+  .event-card.app-only{
+    border:2px solid transparent;
+    background:linear-gradient(#fff,#fff) padding-box, var(--grad) border-box;
+  }
   /* Real event photo (replaces <image-slot>) */
   .event-card img{ width:100%; height:240px; object-fit:cover; display:block; }
   /* Live-event card additions (populated by JS from the same Supabase feed as /events) */
@@ -690,6 +696,8 @@
       ? (SHOW_ATTENDANCE_PUBLICLY ? (total ? total + ' going' : '') : 'Open registration')
       : (full ? 'Fully booked' : (e.max_capacity - total) + ' spots left');
     var price = (!e.price || e.price == 0) ? 'Free' : '€' + e.price;
+    // Gradient frame for in-app-only previews (see .event-card.app-only).
+    host.classList.toggle('app-only', e.web_registration === false);
     host.innerHTML =
       '<a class="event-media" href="' + href + '">' + media + '</a>'
       + '<div class="event-body">'

@@ -263,6 +263,14 @@
       border: 1px solid var(--border); background: var(--white);
       text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s;
     }
+    /* In-app-only events (Oct 2026): thin brand-gradient frame so the preview
+       reads differently from events you can register for here. Gradient border
+       = white padding-box over a gradient border-box. */
+    .event-card.app-only {
+      border: 2px solid transparent;
+      background: linear-gradient(var(--white), var(--white)) padding-box,
+                  linear-gradient(95deg, #4A2BFF 0%, #8A3BFF 48%, #FF39C6 100%) border-box;
+    }
     .event-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(13,30,76,0.12); }
     .event-card-img { width: 100%; height: 168px; object-fit: cover; background: var(--gray-bg); display: block; }
     .event-card-img.placeholder { display: flex; align-items: center; justify-content: center; font-size: 40px; }
@@ -510,7 +518,7 @@
         // In-app-only events arrive without date/location (server-side, see
         // MM.listEvents) — say where to find them instead.
         const appOnly = e.web_registration === false;
-        return '<a class="event-card" href="/events/event.html?id=' + encodeURIComponent(e.id) + '">'
+        return '<a class="event-card' + (appOnly ? ' app-only' : '') + '" href="/events/event.html?id=' + encodeURIComponent(e.id) + '">'
           + img
           + '<div class="event-card-body">'
           + (e.category ? '<span class="event-card-tag">' + esc(e.category) + '</span>' : '')

@@ -67,6 +67,12 @@
     /* In-app-only events: store buttons sit left-aligned in the card, with an
        "open in app" link under them. */
     #register-card .app-card-stores { justify-content: flex-start; }
+    /* Same thin brand-gradient frame as in-app-only cards on /events. */
+    #register-card.app-only {
+      border: 2px solid transparent;
+      background: linear-gradient(var(--white), var(--white)) padding-box,
+                  linear-gradient(95deg, #4A2BFF 0%, #8A3BFF 48%, #FF39C6 100%) border-box;
+    }
     .open-app { display: inline-block; margin-top: 18px; font-size: 14px; font-weight: 700; color: var(--primary); text-decoration: none; }
     .open-app:hover { text-decoration: underline; }
     label { display: block; font-size: 14px; font-weight: 700; color: var(--black); margin: 16px 0 6px; }
@@ -238,6 +244,11 @@
         setTimeout(function () { backdrop.hidden = true; }, 260);
       }
       function open() {
+        // In-app-only event: the page's own card already shows the store
+        // buttons ("Registration only on app…"), so don't repeat them in a
+        // pop-up covering it.
+        var reg = document.getElementById('register-card');
+        if (reg && reg.classList.contains('app-only')) return;
         backdrop.hidden = false;
         requestAnimationFrame(function () { backdrop.classList.add('show'); });
       }
@@ -334,6 +345,7 @@
         // app it lands on the "Open in MysMatch" fallback page).
         if (ev.web_registration === false) {
           const stores = document.querySelector('.app-card-stores');
+          card.classList.add('app-only');
           card.innerHTML = '<h2>Registration only on app for this event</h2>'
             + '<div class="sub">Download MysMatch to see the location and time and to register.</div>'
             + (stores ? stores.outerHTML : '')
