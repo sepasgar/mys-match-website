@@ -152,7 +152,9 @@
               + '<div><div class="t">' + esc(e.title) + '</div>'
               + '<div class="m">' + esc(fmtEvent(e)) + (e.location || e.city ? ' · ' + esc(e.location || e.city) : '') + '</div></div>'
               + '<div class="badges">'
-              + (e.publish_to_web ? '<span class="pill web">Web</span>' : '')
+              // publish_to_web now means "register on web too" (every public
+              // event is shown on the website since Oct 2026).
+              + (e.publish_to_web ? '<span class="pill web">Web registration</span>' : '')
               + (e.is_private ? '<span class="pill priv">Private</span>' : '')
               + '<span class="pill count">' + c.total + (e.max_capacity != null ? '/' + e.max_capacity : '') + '</span>'
               + '</div></div>';

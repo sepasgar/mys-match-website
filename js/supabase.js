@@ -40,36 +40,28 @@
   }
 
   // --- Public event listing -------------------------------------------------
-  // Only web-published, non-private, upcoming events. The anon RLS policy is the
-  // real gate; the filters here keep the payload small and the list tidy.
+  // Since Oct 2026 the website lists EVERY non-private upcoming event. Events
+  // without web registration ("Register on web too" off in the app) come back
+  // as previews: e.web_registration === false and NO date / time / location /
+  // city fields — the server leaves them out (get_web_events), so they can't be
+  // read from the page source. Pages show "Download the app to see the location
+  // and time" for those. Order is by the real start moment, done server-side.
   async function listEvents() {
     const startOfToday = new Date(); startOfToday.setHours(0, 0, 0, 0);
-    const { data, error } = await db
-      .from('events')
-      .select('id,title,description,location,city,date,starts_at,timezone,event_image,category,price,max_capacity,external_url')
-      .eq('publish_to_web', true)
-      .eq('is_private', false)
-      // starts_at = real start moment; `date` is the typed time stored as if UTC
-      // (2h late in German summer), so never compare it with "now".
-      .gte('starts_at', startOfToday.toISOString())
-      .order('starts_at', { ascending: true });
+    const { data, error } = await db.rpc('get_web_events', { p_from: startOfToday.toISOString() });
     if (error) { console.error('[MM] listEvents', error.message); return []; }
-    const events = data || [];
+    const events = Array.isArray(data) ? data : [];
     const counts = await countsBatch(events.map((e) => e.id));
     events.forEach((e) => { e._counts = counts[e.id] || { total: 0, male: 0, female: 0 }; });
     return events;
   }
 
+  // One event: full details when web registration is on, a preview otherwise
+  // (see listEvents), null when it doesn't exist or is private.
   async function getEvent(id) {
-    const { data, error } = await db
-      .from('events')
-      .select('*')
-      .eq('id', id)
-      .eq('publish_to_web', true)
-      .eq('is_private', false)
-      .maybeSingle();
+    const { data, error } = await db.rpc('get_web_event', { p_id: id });
     if (error) { console.error('[MM] getEvent', error.message); return null; }
-    return data;
+    return data || null;
   }
 
   // --- Guest registration (server-validated by the SECURITY DEFINER RPC) ----

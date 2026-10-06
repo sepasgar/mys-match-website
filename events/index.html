@@ -507,13 +507,18 @@
           ? '<img class="event-card-img" src="' + esc(e.event_image) + '" alt="' + esc(e.title) + '" loading="lazy">'
           : '<div class="event-card-img placeholder">🎉</div>';
         const loc = e.city || e.location || '';
+        // In-app-only events arrive without date/location (server-side, see
+        // MM.listEvents) — say where to find them instead.
+        const appOnly = e.web_registration === false;
         return '<a class="event-card" href="/events/event.html?id=' + encodeURIComponent(e.id) + '">'
           + img
           + '<div class="event-card-body">'
           + (e.category ? '<span class="event-card-tag">' + esc(e.category) + '</span>' : '')
           + '<h3>' + esc(e.title) + '</h3>'
-          + '<div class="meta">📅 ' + esc(fmtDate(e)) + '</div>'
-          + (loc ? '<div class="meta">📍 ' + esc(loc) + '</div>' : '')
+          + (appOnly
+            ? '<div class="meta">📱 Download the app to see the location and time</div>'
+            : '<div class="meta">📅 ' + esc(fmtDate(e)) + '</div>'
+              + (loc ? '<div class="meta">📍 ' + esc(loc) + '</div>' : ''))
           + '<div class="foot"><span class="price">' + price + '</span>'
           + (spots ? '<span class="spots' + (full ? ' full' : '') + '">' + spots + '</span>' : '')
           + '</div></div></a>';

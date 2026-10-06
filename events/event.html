@@ -64,6 +64,11 @@
     .card { border: 1px solid var(--border); border-radius: 20px; padding: 28px; background: var(--white); }
     .card h2 { font-size: 22px; font-weight: 800; color: var(--primary-dark); margin-bottom: 6px; letter-spacing: -0.4px; }
     .card .sub { font-size: 14px; color: var(--gray-light); margin-bottom: 22px; }
+    /* In-app-only events: store buttons sit left-aligned in the card, with an
+       "open in app" link under them. */
+    #register-card .app-card-stores { justify-content: flex-start; }
+    .open-app { display: inline-block; margin-top: 18px; font-size: 14px; font-weight: 700; color: var(--primary); text-decoration: none; }
+    .open-app:hover { text-decoration: underline; }
     label { display: block; font-size: 14px; font-weight: 700; color: var(--black); margin: 16px 0 6px; }
     label .req { color: #C0264B; }
     input, select, textarea {
@@ -128,15 +133,15 @@
     .app-card h3 { font-size: 20px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.4px; line-height: 1.25; margin-bottom: 10px; }
     .app-card > p { font-size: 14.5px; color: var(--gray-light); line-height: 1.6; margin-bottom: 22px; }
     .app-card-stores { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .app-card .store-btn {
+    .app-card .store-btn, #register-card .store-btn {
       display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
       background: var(--primary-dark); color: #fff; border-radius: 12px; padding: 10px 16px; text-align: left;
       transition: transform 0.15s, box-shadow 0.2s;
     }
-    .app-card .store-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13,30,76,0.28); }
-    .app-card .store-btn svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
-    .app-card .store-btn small { display: block; font-size: 10px; opacity: 0.75; }
-    .app-card .store-btn strong { display: block; font-size: 14px; font-weight: 700; }
+    .app-card .store-btn:hover, #register-card .store-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13,30,76,0.28); }
+    .app-card .store-btn svg, #register-card .store-btn svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
+    .app-card .store-btn small, #register-card .store-btn small { display: block; font-size: 10px; opacity: 0.75; }
+    .app-card .store-btn strong, #register-card .store-btn strong { display: block; font-size: 14px; font-weight: 700; }
     .app-card-dismiss {
       display: inline-block; margin-top: 16px; background: none; border: none; font-family: inherit;
       color: var(--gray-light); font-size: 13.5px; font-weight: 600; cursor: pointer;
@@ -296,14 +301,19 @@
         else if (full) spots = '<span class="spots-pill full">Fully booked</span>';
         else spots = '<span class="spots-pill">' + left + ' spot' + (left === 1 ? '' : 's') + ' left</span>';
 
+        // In-app-only event (Oct 2026): the server sends no date / time /
+        // location for it (get_web_event), so say where to find them instead.
+        const appOnly = ev.web_registration === false;
         document.getElementById('event-content').innerHTML =
           img
           + (ev.category ? '<span class="tag">' + esc(ev.category) + '</span>' : '')
           + '<h1>' + esc(ev.title) + '</h1>'
           + '<div class="meta-row">'
-          + '<span class="meta-item"><span class="ic">📅</span>' + esc(fmtDate(ev)) + '</span>'
-          + (loc ? '<span class="meta-item"><span class="ic">📍</span>' + esc(loc) + '</span>' : '')
-          + (ev.starting_point ? '<span class="meta-item"><span class="ic">🚩</span>' + esc(ev.starting_point) + '</span>' : '')
+          + (appOnly
+            ? '<span class="meta-item"><span class="ic">📱</span>Download the app to see the location and time</span>'
+            : '<span class="meta-item"><span class="ic">📅</span>' + esc(fmtDate(ev)) + '</span>'
+              + (loc ? '<span class="meta-item"><span class="ic">📍</span>' + esc(loc) + '</span>' : '')
+              + (ev.starting_point ? '<span class="meta-item"><span class="ic">🚩</span>' + esc(ev.starting_point) + '</span>' : ''))
           + '<span class="meta-item"><span class="ic">🎟️</span>' + price + '</span>'
           + '</div>'
           + '<div style="margin-bottom:24px">' + spots + '</div>'
@@ -317,6 +327,19 @@
 
       function setupRegistration(ev, full) {
         const card = document.getElementById('register-card');
+
+        // In-app-only event: no web form — store buttons (same as the app
+        // prompt below) plus a link that opens this event in the installed app
+        // (www.mysmatch.com/event/<id> is an app link from 1.5.0; without the
+        // app it lands on the "Open in MysMatch" fallback page).
+        if (ev.web_registration === false) {
+          const stores = document.querySelector('.app-card-stores');
+          card.innerHTML = '<h2>Registration only on app for this event</h2>'
+            + '<div class="sub">Download MysMatch to see the location and time and to register.</div>'
+            + (stores ? stores.outerHTML : '')
+            + '<a class="open-app" href="https://www.mysmatch.com/event/' + encodeURIComponent(ev.id) + '">Already have the app? Open this event →</a>';
+          return;
+        }
 
         // External-registration events: link out instead of collecting here.
         if (ev.external_url) {

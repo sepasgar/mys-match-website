@@ -652,7 +652,8 @@
 <script src="/js/supabase.js"></script>
 <script>
 // Latest real event on the landing page. Pulls from the exact same source as the
-// /events tab (MM.listEvents = web-published, non-private, upcoming, soonest first)
+// /events tab (MM.listEvents = every non-private upcoming event, soonest first;
+// in-app-only ones as previews without date/location — Oct 2026)
 // and shows events[0]. Card + detail link mirror the events tab for consistency.
 (function () {
   var host = document.getElementById('latest-event');
@@ -695,8 +696,12 @@
       + (e.category ? '<span class="event-tag">' + esc(e.category) + '</span>' : '')
       + '<h3>' + esc(e.title) + '</h3>'
       + '<div class="event-meta">'
-      + '<span>' + calSvg + esc(fmtDate(e.date)) + '</span>'
-      + (loc ? '<span>' + pinSvg + esc(loc) + '</span>' : '')
+      // In-app-only events arrive without date/location (MM.listEvents, Oct
+      // 2026) — say where to find them instead of an empty date.
+      + (e.web_registration === false
+        ? '<span>' + pinSvg + 'Download the app to see the location and time</span>'
+        : '<span>' + calSvg + esc(fmtDate(e.date)) + '</span>'
+          + (loc ? '<span>' + pinSvg + esc(loc) + '</span>' : ''))
       + '</div>'
       + '<div class="event-foot">'
       + '<div class="event-foot-info">'
