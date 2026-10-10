@@ -14,22 +14,24 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>MysMatch — Meet Students Who Match Your Vibe</title>
+<!-- WHY study-first wording everywhere (title, descriptions, hero): "match your vibe" / "find your match"
+     made Google and the app stores file MysMatch under dating. Brand playbook: say "study" first. -->
+<title>MysMatch — Nobody Studies Alone</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta name="description" content="MysMatch connects university students for meaningful connections. Discover people at your campus, attend events, and find your match.">
+<meta name="description" content="MysMatch helps university students find study partners in their own program and semester, plus campus events and student jobs. Verified students only. Free.">
 <meta name="theme-color" content="#0F0B2E">
 
 <!-- Open Graph -->
-<meta property="og:title" content="MysMatch — Meet Students Who Match Your Vibe">
-<meta property="og:description" content="Find your study mate on MysMatch now! Smart matching, campus events, and real connections.">
+<meta property="og:title" content="MysMatch — Nobody Studies Alone">
+<meta property="og:description" content="Find study partners in your own program and semester, plus campus events and student jobs. Verified students only. Free.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.mysmatch.com">
 <meta property="og:image" content="https://www.mysmatch.com/og-image.png">
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="MysMatch — Meet Students Who Match Your Vibe">
-<meta name="twitter:description" content="Find your study mate on MysMatch now!">
+<meta name="twitter:title" content="MysMatch — Nobody Studies Alone">
+<meta name="twitter:description" content="Find study partners in your own program and semester. Verified students only. Free.">
 
 <!-- WHY logo-512.png everywhere (logo + favicon): the original logo.png/favicon.png are
      2000px / 1.1 MB each; 512px (30 KB) is sharp at every size we render. The old
@@ -419,14 +421,16 @@
   <div class="hero-glow"></div>
   <div class="wrap">
     <span class="eyebrow"><span class="dot"></span>Made for university students</span>
-    <h1>Meet students who <span class="vibe">match your vibe</span></h1>
-    <p class="hero-sub">MysMatch connects you with study partners at your university. Search by major, semester, and city — or let smart matching do the work.</p>
+    <h1>Nobody <span class="vibe">studies alone.</span></h1>
+    <p class="hero-sub">Find study partners in your own program and semester. See who takes the same courses as you, then send a study request.</p>
     <div class="hero-ctas">
       <a class="btn btn-grad" href="#download">Download Free</a>
       <a class="btn btn-ghost" href="#how">See How It Works</a>
     </div>
     <div class="stats">
-      <div class="stat"><b>4,300+</b><span>Universities</span></div>
+      <!-- WHY no "4,300+ Universities": that was the size of the university list, not real usage;
+           the playbook asks for claims a reader can check, so this states how matching works instead. -->
+      <div class="stat"><b>Your courses</b><span>Matched by what you study</span></div>
       <div class="stat"><b>100%</b><span>Student-verified</span></div>
       <div class="stat"><b>Free</b><span>No paywalls</span></div>
     </div>
@@ -762,25 +766,7 @@ document.querySelectorAll('.nav-links a').forEach(function(a){
   }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
 
-  // stat count-up (first stat: 4,300+)
-  var statEl = document.querySelector('.stat b');
-  if (statEl){
-    var done = false;
-    var so = new IntersectionObserver(function(entries){
-      if (done || !entries[0].isIntersecting) return;
-      done = true; so.disconnect();
-      var t0 = null, dur = 1400, target = 4300;
-      function tick(t){
-        if (!t0) t0 = t;
-        var p = Math.min((t - t0) / dur, 1);
-        var eased = 1 - Math.pow(1 - p, 3);
-        statEl.textContent = Math.round(target * eased).toLocaleString('en-US') + '+';
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    }, { threshold: 0.6 });
-    so.observe(statEl);
-  }
+  // WHY no stat count-up any more: the first stat is text now ("Your courses"), not a number to animate.
 })();
 </script>
 
