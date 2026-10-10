@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <!--
   MysMatch landing page.
-  WHY this rewrite: adopted the new "Vibrant Violet & Magenta" design (Claude Design:
-  MysMatch Website.html). Changes vs. the raw design export:
-   - Swapped the design's placeholder SVG logo for the REAL brand logo (/logo.png).
-   - Replaced Claude Design <image-slot> web-components (and their image-slot.js /
-     __bundler_thumbnail scaffolding) with real <img> tags — those only work inside
-     the design tool, not on a static site.
-   - Wired real app screenshots (landing/screenshots/*) and the real RWTH event photo.
-   - Pointed nav/footer links at the actual sub-pages (/events, /team, /blogs, etc.).
-   - Merged back the production SEO/OG/Twitter/canonical/favicon head from the old page.
+  WHY this rewrite (Oct 2026): adopted the dark/editorial "MysMatch Home" design (Claude Design
+  export). Style only; copy is the existing study-first text. Changes vs. the raw export:
+   - The export is a React/"dc-runtime" bundle with <image-slot> components that only run inside
+     the design tool; rebuilt as static HTML + CSS + a small vanilla script.
+   - Design copy that read as dating or wasn't true ("match your vibe", "4,300+ Universities",
+     "100% Student-verified", "Unverified strangers", "Host. Hire. Partner.") is not used; the
+     "Today vs MysMatch" contrast section was dropped because the current site has no copy for it.
+   - Phone slots use our own screenshots; the events panel shows the live latest-event card.
+   - Added a mobile menu and phone-width layouts (the export's nav overflows below ~900px).
+   - Kept the production SEO/OG/Twitter/canonical/favicon head.
 -->
 <html lang="en">
 <head>
@@ -20,7 +21,7 @@
 <title>MysMatch — Nobody Studies Alone</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="MysMatch helps university students find study partners in their own program and semester, plus campus events and student jobs. Free.">
-<meta name="theme-color" content="#0F0B2E">
+<meta name="theme-color" content="#0F1020">
 
 <!-- Open Graph -->
 <meta property="og:title" content="MysMatch — Nobody Studies Alone">
@@ -42,584 +43,546 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --ink:#0F0B2E; --ink2:#5C5A7A; --ink3:#9D9BB5;
-    --bg:#FFFFFF; --surface2:#F8F7FB;
-    --line:rgba(15,11,46,0.08); --line-soft:rgba(15,11,46,0.05);
-    --accent:#E63A9E;
-    --grad:linear-gradient(95deg,#4A2BFF 0%,#8A3BFF 48%,#FF39C6 100%);
-    --grad-soft:linear-gradient(135deg,rgba(74,43,255,0.10),rgba(255,57,198,0.10));
-    --shadow:0 1px 2px rgba(15,11,46,0.04), 0 8px 28px rgba(15,11,46,0.06);
-    --shadow-sm:0 1px 2px rgba(15,11,46,0.04), 0 4px 14px rgba(15,11,46,0.04);
-    --grad-shadow:0 8px 22px rgba(74,43,255,0.25), 0 2px 6px rgba(255,57,198,0.15);
+    --ink:#0F1020; --ink-2:#4B4C63; --muted:#8E8FA6; --faint:#A9AAC0; --on-dark:#C9C9D9;
+    --violet:#7B5CFF; --violet-soft:#B7A6FF; --pink:#E94B9A; --green:#34C77B;
+    --line:#ECEAF4; --line-violet:#D9D1F5;
+    --accent-grad:linear-gradient(100deg,#B3B8FF,#CDB8FF 45%,#F5BCE4);
+    --pad-x:clamp(20px,5vw,96px);
+    --sec-y:clamp(96px,12vw,220px);
+    --mono:'Geist Mono',ui-monospace,monospace;
   }
-  * { box-sizing:border-box; -webkit-font-smoothing:antialiased; }
-  html { scroll-behavior:smooth; }
-  body{
-    margin:0; background:var(--bg); color:var(--ink);
-    font-family:'Geist', system-ui, sans-serif;
-    font-size:16px; line-height:1.55;
-  }
-  a { color:inherit; text-decoration:none; }
-  .wrap{ max-width:1140px; margin:0 auto; padding:0 28px; }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  html,body{ margin:0; padding:0; background:#0F1020; }
+  body{ font-family:'Geist',-apple-system,BlinkMacSystemFont,sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a{ color:var(--violet); text-decoration:none; }
+  img{ max-width:100%; }
+  h1,h2,h3,p{ margin:0; }
 
-  /* ───────── nav ───────── */
-  .nav{
-    position:sticky; top:0; z-index:50;
-    background:rgba(255,255,255,0.82);
-    backdrop-filter:blur(18px) saturate(180%);
-    -webkit-backdrop-filter:blur(18px) saturate(180%);
-    border-bottom:1px solid var(--line-soft);
-  }
-  .nav-in{ display:flex; align-items:center; gap:34px; height:68px; }
-  .brand{ display:flex; align-items:center; gap:10px; }
-  /* Real logo mark + wordmark (replaces the design's placeholder SVG) */
-  .brand img{ width:34px; height:34px; border-radius:10px; display:block; }
-  .brand .wordmark{ font-size:20px; font-weight:800; letter-spacing:-0.03em; color:var(--ink); }
-  .nav-links{ display:flex; gap:26px; margin-left:auto; }
-  .nav-links a{ font-size:14px; font-weight:500; color:var(--ink2); transition:color .15s; }
-  .nav-links a:hover{ color:var(--ink); }
-  .btn{
-    display:inline-flex; align-items:center; justify-content:center; gap:8px;
-    font-family:inherit; font-weight:600; cursor:pointer; border:none;
-    border-radius:999px; transition:transform .15s, box-shadow .15s;
-  }
-  .btn:hover{ transform:translateY(-1px); }
-  .btn-grad{
-    background:var(--grad); color:#fff; box-shadow:var(--grad-shadow);
-    padding:11px 22px; font-size:14px;
-  }
-  .btn-ghost{
-    background:var(--bg); color:var(--ink); border:1px solid var(--line);
-    box-shadow:var(--shadow-sm); padding:11px 22px; font-size:14px;
-  }
-  .nav .btn-grad{ padding:9px 18px; font-size:13.5px; }
+  /* Shared bits */
+  .kicker{ font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .dim{ color:var(--muted); }
+  .lead{ max-width:30ch; font-size:clamp(18px,1.5vw,26px); line-height:1.45; color:var(--ink-2); letter-spacing:-0.01em; text-wrap:pretty; }
+  /* WHY no text-wrap:balance: Chrome drew an empty line inside two-part headings (span + max-width in ch). */
+  .h2{ font-size:clamp(40px,6vw,120px); line-height:0.94; letter-spacing:-0.055em; font-weight:700; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:clamp(16px,1.15vw,19px); padding:18px 32px; border-radius:9999px; white-space:nowrap; transition:transform .3s, background .3s, border-color .3s; }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-violet{ background:var(--violet); color:#fff; box-shadow:0 14px 40px rgba(123,92,255,0.22); }
+  .btn-violet:hover{ background:#9B5BFF; color:#fff; }
+  .btn-ghost{ color:#fff; font-weight:500; border:1px solid rgba(255,255,255,0.22); }
+  .btn-ghost:hover{ border-color:#fff; color:#fff; }
+  .btn-dark{ background:var(--ink); color:#fff; }
+  .btn-dark:hover{ background:var(--violet); color:#fff; }
+  .sec-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; }
+  .sec-head-l{ display:flex; flex-direction:column; gap:clamp(20px,2vw,32px); }
+  .dash-list{ display:flex; flex-direction:column; border-top:1px solid var(--line); list-style:none; margin:0; padding:0; }
+  .dash-list li{ padding:clamp(16px,1.4vw,24px) 0; border-bottom:1px solid var(--line); display:flex; gap:20px; font-size:clamp(17px,1.3vw,22px); color:var(--ink); }
+  .dash-list li::before{ content:"—"; color:var(--violet); }
 
-  /* ───────── mobile nav toggle ───────── */
-  .mobile-toggle{ display:none; background:none; border:none; cursor:pointer; padding:8px; margin-left:auto; }
-  .mobile-toggle span{ display:block; width:22px; height:2px; background:var(--ink); margin:5px 0; border-radius:2px; transition:.3s; }
+  /* Stacked sheets: each section slides over the previous one with rounded top corners */
+  .sheet{ position:relative; margin-top:-48px; border-radius:48px 48px 0 0; box-shadow:0 -24px 48px rgba(15,16,32,0.08); }
+  .sheet > .in{ padding:var(--sec-y) var(--pad-x); }
+
+  /* Scroll reveal. WHY .js gate: without JS (or with reduced motion) everything stays visible. */
+  .js [data-reveal]{ opacity:0; transform:translateY(56px); filter:blur(10px); transition:opacity 1.2s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1), filter 1.2s cubic-bezier(.2,.7,.2,1); }
+  /* WHY "shown", not "in": .in is the section wrapper class; reusing it made revealed headings flex columns. */
+  .js [data-reveal].shown{ opacity:1; transform:none; filter:none; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .js [data-reveal]{ opacity:1; transform:none; filter:none; transition:none; }
+  }
+
+  /* ───────── header (floating pill) ───────── */
+  .nav{ position:sticky; top:16px; z-index:50; margin:16px 16px -88px; background:rgba(15,16,32,0.78); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,0.08); border-radius:36px; box-shadow:0 12px 40px rgba(15,16,32,0.25); overflow:hidden; }
+  .nav-in{ padding:12px 12px 12px 24px; display:flex; align-items:center; justify-content:space-between; gap:32px; }
+  .brand{ display:flex; align-items:center; gap:12px; color:#fff; font-weight:700; font-size:19px; letter-spacing:-0.02em; }
+  .brand:hover{ color:#fff; }
+  .brand img{ width:36px; height:36px; border-radius:10px; }
+  .nav-links{ display:flex; align-items:center; gap:clamp(18px,2.2vw,40px); white-space:nowrap; font-size:clamp(14px,1.05vw,16px); }
+  .nav-links a{ color:var(--on-dark); }
+  .nav-links a:hover{ color:#fff; }
+  .nav-cta{ background:#fff; color:var(--ink); font-weight:600; font-size:16px; padding:14px 26px; border-radius:9999px; white-space:nowrap; transition:transform .3s, background .3s; }
+  .nav-cta:hover{ background:#F1ECFF; color:var(--ink); transform:translateY(-1px); }
+  .menu-btn{ display:none; width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,0.18); background:transparent; cursor:pointer; padding:0; align-items:center; justify-content:center; flex-direction:column; gap:5px; }
+  .menu-btn span{ display:block; width:18px; height:2px; background:#fff; border-radius:2px; }
+  .progress{ position:absolute; left:0; bottom:0; height:2px; width:0; background:linear-gradient(90deg,#B3B8FF,#CDB8FF,#F5BCE4); }
 
   /* ───────── hero ───────── */
-  .hero{ position:relative; overflow:hidden; padding:92px 0 72px; text-align:center; }
-  .hero-glow{
-    position:absolute; left:50%; top:-340px; transform:translateX(-50%);
-    width:980px; height:640px; border-radius:50%; pointer-events:none;
-    background:radial-gradient(closest-side, rgba(138,59,255,0.10), rgba(255,57,198,0.05) 55%, transparent);
-  }
-  .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-size:12.5px; font-weight:600; letter-spacing:0.04em;
-    color:var(--ink2); background:var(--surface2);
-    border:1px solid var(--line-soft); border-radius:999px; padding:7px 15px;
-  }
-  .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--grad); }
-  h1{
-    margin:24px auto 0; max-width:760px;
-    font-size:clamp(40px, 6vw, 68px); font-weight:800;
-    letter-spacing:-0.035em; line-height:1.04; text-wrap:balance;
-  }
-  h1 .vibe{
-    font-family:'Instrument Serif', serif; font-style:italic; font-weight:400;
-    background:var(--grad); -webkit-background-clip:text; background-clip:text;
-    -webkit-text-fill-color:transparent; color:transparent;
-    padding-right:0.06em;
-  }
-  .hero-sub{
-    margin:22px auto 0; max-width:520px;
-    font-size:17.5px; color:var(--ink2); text-wrap:pretty;
-  }
-  .hero-ctas{ margin-top:34px; display:flex; gap:12px; justify-content:center; }
-  .hero-ctas .btn{ padding:14px 28px; font-size:15px; }
-  .stats{
-    margin:60px auto 0; max-width:640px;
-    display:flex; align-items:center; justify-content:center;
-  }
-  .stat{ flex:1; padding:0 18px; }
-  .stat + .stat{ border-left:1px solid var(--line); }
-  .stat b{ display:block; font-size:26px; font-weight:800; letter-spacing:-0.03em; }
-  .stat span{ font-size:13px; color:var(--ink2); }
+  .hero{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%); color:#fff; position:relative; overflow:hidden; min-height:100vh; display:flex; flex-direction:column; padding-bottom:48px; }
+  .hero-spot{ position:absolute; left:0; top:0; width:800px; height:800px; margin:-400px 0 0 -400px; border-radius:50%; background:radial-gradient(closest-side,rgba(233,75,154,0.1),rgba(15,16,32,0)); pointer-events:none; opacity:0; transition:opacity .5s; }
+  .hero-glow{ position:absolute; right:-10%; top:-25%; width:80vw; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.16),rgba(233,75,154,0.06) 55%,rgba(15,16,32,0) 75%); pointer-events:none; }
+  .hero-in{ position:relative; flex:1; display:flex; flex-direction:column; justify-content:space-between; gap:clamp(48px,6vw,96px); padding:clamp(140px,14vw,220px) var(--pad-x) 0; }
+  .eyebrow{ font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); display:flex; align-items:center; gap:12px; }
+  .eyebrow i{ width:9px; height:9px; border-radius:50%; background:var(--green); box-shadow:0 0 0 6px rgba(52,199,123,0.15); }
+  .hero h1{ margin-top:clamp(24px,2.4vw,40px); font-size:clamp(52px,8.6vw,176px); line-height:0.9; letter-spacing:-0.06em; font-weight:700; max-width:14ch; text-wrap:balance; }
+  .grad-text{ background:var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(48px,5vw,96px); align-items:end; }
+  .hero-copy{ display:flex; flex-direction:column; gap:clamp(32px,3vw,48px); padding-bottom:clamp(48px,6vw,104px); }
+  .hero-sub{ max-width:34ch; font-size:clamp(19px,1.6vw,28px); line-height:1.45; color:var(--on-dark); letter-spacing:-0.01em; text-wrap:pretty; }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
+  .stats{ display:flex; gap:clamp(32px,4vw,72px); flex-wrap:wrap; padding-top:clamp(24px,2.4vw,40px); border-top:1px solid rgba(255,255,255,0.1); }
+  .stat{ display:flex; flex-direction:column; gap:8px; }
+  .stat b{ font-size:clamp(34px,3.6vw,68px); font-weight:700; letter-spacing:-0.045em; line-height:1; }
+  .stat span{ font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); }
+  .hero-phones{ display:flex; justify-content:flex-end; gap:clamp(16px,2vw,36px); align-items:flex-start; margin-bottom:-48px; }
+  .phone{ aspect-ratio:860/1861; overflow:hidden; background:#1A1B30; }
+  .phone img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .hero-phones .phone{ width:clamp(150px,17vw,340px); border-radius:clamp(26px,2.6vw,52px); border:1px solid rgba(255,255,255,0.14); box-shadow:0 50px 100px rgba(0,0,0,0.55); }
+  .hero-phones .phone:first-child{ transform:translateY(6%) rotate(-4deg); }
+  .hero-phones .phone:last-child{ transform:translateY(18%) rotate(3deg); }
 
-  /* ───────── sections ───────── */
-  section{ padding:88px 0; }
-  .sec-head{ text-align:center; max-width:640px; margin:0 auto 54px; }
-  .kicker{
-    display:inline-flex; align-items:center; gap:7px;
-    font-size:12px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase;
-    color:var(--accent); margin-bottom:14px;
-  }
-  h2{
-    margin:0; font-size:clamp(30px,4vw,42px); font-weight:800;
-    letter-spacing:-0.03em; line-height:1.12; text-wrap:balance;
-  }
-  .sec-sub{ margin:16px auto 0; color:var(--ink2); font-size:16.5px; max-width:540px; text-wrap:pretty; }
+  /* ───────── manifesto (words light up while scrolling) ───────── */
+  .manifesto{ background:linear-gradient(135deg,#F4F5FF 0%,#FFFFFF 50%,#FEF5FA 100%); box-shadow:0 -24px 48px rgba(15,16,32,0.12); }
+  .manifesto .in{ display:flex; flex-direction:column; gap:clamp(32px,3vw,56px); }
+  .manifesto p{ font-size:clamp(36px,5.8vw,112px); line-height:1.02; letter-spacing:-0.05em; font-weight:600; text-wrap:pretty; }
+  .js .manifesto p span{ color:#DAD7E8; transition:color .35s; }
 
-  /* ───────── glimpse / phones ───────── */
-  .glimpse{ background:var(--surface2); border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); }
-  /* App Store panels (WebP q80, refreshed Oct 2026): each 860×1861 image already has its own
-     phone frame + headline, so no CSS frame or label — just a swipeable row
-     (scroll-snap). ~4 visible on desktop with arrows, 1 + a peek on phones. */
-  .shots{
-    display:flex; gap:18px; overflow-x:auto; scroll-snap-type:x mandatory;
-    padding:6px 2px 18px; scrollbar-width:none; -webkit-overflow-scrolling:touch;
-  }
-  .shots::-webkit-scrollbar{ display:none; }
-  .shot{
-    flex:0 0 calc((100% - 3*18px) / 4); scroll-snap-align:start;
-    border-radius:24px; overflow:hidden; background:#fff;
-    border:1px solid var(--line); box-shadow:var(--shadow);
-  }
-  .shot img{ width:100%; height:auto; display:block; }
-  .shots-nav{ display:flex; justify-content:center; gap:12px; margin-top:6px; }
-  .shots-nav button{
-    width:44px; height:44px; border-radius:50%; border:1px solid var(--line);
-    background:#fff; color:var(--ink); font-size:20px; line-height:1; cursor:pointer;
-    box-shadow:var(--shadow);
-  }
-  .shots-nav button:disabled{ opacity:.35; cursor:default; }
+  /* ───────── glimpse ───────── */
+  .glimpse{ background:linear-gradient(180deg,#FFFFFF 0%,#F8F4FF 100%); }
+  .glimpse .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .glimpse .h2{ max-width:12ch; }
+  .shots{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(16px,1.8vw,36px); align-items:start; }
+  .shot-item{ display:flex; flex-direction:column; gap:24px; }
+  .shot-item:nth-child(even){ margin-top:clamp(0px,6vw,140px); }
+  .shot-item .phone{ border-radius:clamp(24px,2.4vw,48px); background:#ECEAF4; transition:transform .7s cubic-bezier(.2,.7,.2,1), box-shadow .7s; }
+  .shot-item .phone:hover{ transform:translateY(-14px); box-shadow:0 40px 80px rgba(15,16,32,0.16); }
+  .shot-cap{ display:flex; flex-direction:column; gap:8px; }
+  .shot-cap span{ font-family:var(--mono); font-size:clamp(11px,0.85vw,14px); letter-spacing:0.1em; text-transform:uppercase; color:var(--violet); }
+  .shot-cap b{ font-size:clamp(17px,1.6vw,28px); font-weight:600; letter-spacing:-0.025em; }
 
-  /* ───────── features ───────── */
-  .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
-  .card{
-    background:#fff; border:1px solid var(--line-soft); border-radius:20px;
-    box-shadow:var(--shadow-sm); padding:26px 24px;
-  }
-  .icon-tile{
-    width:46px; height:46px; border-radius:14px;
-    background:var(--grad-soft); color:var(--accent);
-    display:flex; align-items:center; justify-content:center; margin-bottom:18px;
-  }
-  .card h3{ margin:0 0 8px; font-size:17.5px; font-weight:700; letter-spacing:-0.015em; }
-  .card p{ margin:0; font-size:14.5px; color:var(--ink2); text-wrap:pretty; }
+  /* ───────── features (list + sticky panel) ───────── */
+  .features{ background:linear-gradient(135deg,#EEF0FF 0%,#F4EEFF 50%,#FBEEF7 100%); }
+  .features .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .features .h2{ max-width:13ch; }
+  .feat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,560px),1fr)); gap:clamp(48px,5vw,112px); align-items:start; }
+  .feat-list{ display:flex; flex-direction:column; border-top:1px solid var(--line-violet); }
+  .feat{ cursor:pointer; border-bottom:1px solid var(--line-violet); padding:clamp(24px,2.6vw,48px) 0; display:grid; grid-template-columns:clamp(48px,5vw,96px) minmax(0,1fr); gap:12px 16px; }
+  .feat-n{ font-family:var(--mono); font-size:clamp(13px,1vw,16px); padding-top:clamp(10px,1vw,18px); color:#B4ADD0; transition:color .3s; }
+  .feat-body{ display:flex; flex-direction:column; gap:18px; }
+  .feat-top{ display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  .feat h3{ font-size:clamp(28px,3.4vw,64px); line-height:1; letter-spacing:-0.045em; font-weight:600; color:#B4ADD0; transition:color .3s; }
+  .feat-tag{ font-family:var(--mono); font-size:clamp(11px,0.85vw,14px); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+  .feat p{ max-width:40ch; font-size:clamp(17px,1.35vw,23px); line-height:1.5; color:var(--ink-2); text-wrap:pretty; display:none; }
+  .feat.on .feat-n{ color:var(--violet); }
+  .feat.on h3{ color:var(--ink); }
+  .feat.on p{ display:block; }
+  .feat-panel-wrap{ position:sticky; top:120px; }
+  .feat-panel{ position:relative; border-radius:40px; overflow:hidden; background:#fff; height:calc(100vh - 160px); min-height:520px; max-height:900px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px; box-shadow:0 40px 80px -30px rgba(60,40,140,0.25); padding:48px; text-align:center; }
+  .feat-panel::before{ content:""; position:absolute; left:-20%; bottom:-35%; width:100%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.18),rgba(255,255,255,0)); pointer-events:none; }
+  /* WHY icons, not screenshots: we only have 4 store panels, not one per feature; mismatched
+     screenshots would mislead, so the panel shows the feature's icon instead. */
+  .feat-icon{ position:relative; width:clamp(140px,14vw,220px); aspect-ratio:1; border-radius:28%; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#7B5CFF 0%,#B55BE8 55%,#E94B9A 100%); box-shadow:0 40px 80px rgba(123,92,255,0.3); }
+  .feat-icon svg{ width:44%; height:44%; }
+  .feat-icon [data-icon]{ display:none; }
+  .feat-icon [data-icon].on{ display:block; }
+  .feat-panel-title{ position:relative; font-size:clamp(26px,2.4vw,40px); font-weight:600; letter-spacing:-0.04em; }
+  .feat-panel-foot{ position:absolute; left:32px; right:32px; bottom:28px; display:flex; justify-content:space-between; font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-2); }
 
-  /* ───────── how it works ───────── */
-  .steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:18px; position:relative; }
-  .step{ position:relative; padding:0 8px; }
-  .step-n{
-    width:44px; height:44px; border-radius:50%;
-    background:var(--grad); color:#fff; font-weight:800; font-size:17px;
-    display:flex; align-items:center; justify-content:center;
-    box-shadow:var(--grad-shadow); margin-bottom:18px; position:relative; z-index:1;
+  /* ───────── how it works (stacking cards) ───────── */
+  .how{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#171027 100%); color:#fff; box-shadow:0 -24px 48px rgba(15,16,32,0.2); }
+  .how .in{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(48px,5vw,112px); align-items:start; }
+  .how-head{ display:flex; flex-direction:column; gap:clamp(20px,2vw,32px); }
+  .how-head .kicker{ color:var(--faint); }
+  .how-head .h2{ max-width:10ch; }
+  .steps{ display:flex; flex-direction:column; gap:24px; padding-bottom:48px; }
+  .step{ background:#17182C; border:1px solid rgba(255,255,255,0.08); border-radius:40px; padding:clamp(28px,3.4vw,64px); min-height:clamp(300px,30vw,480px); display:flex; flex-direction:column; justify-content:space-between; gap:40px; box-shadow:0 -24px 48px rgba(10,10,22,0.45); }
+  .step:nth-child(2){ background:#1C1D36; }
+  .step:nth-child(3){ background:#232442; }
+  .step:nth-child(4){ background:linear-gradient(135deg,#ECEEFF 0%,#F4ECFF 50%,#FCEBF6 100%); color:var(--ink); border-color:rgba(255,255,255,0.4); }
+  .step-top{ display:flex; justify-content:space-between; font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); }
+  .step:nth-child(4) .step-top{ color:var(--ink-2); }
+  /* WHY nowrap + shrink-proof number: with wrap the big step number dropped under longer texts. */
+  .step-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; }
+  .step-txt{ display:flex; flex-direction:column; gap:16px; max-width:30ch; flex:1 1 auto; min-width:0; }
+  .step h3{ font-size:clamp(30px,3.2vw,60px); line-height:1; letter-spacing:-0.045em; font-weight:600; }
+  .step p{ font-size:clamp(17px,1.3vw,22px); line-height:1.5; color:#B4B5C8; }
+  .step:nth-child(4) p{ color:var(--ink-2); }
+  .step-big{ flex-shrink:0; font-size:clamp(88px,10vw,200px); line-height:0.78; font-weight:700; letter-spacing:-0.07em; color:#2E2F52; }
+  .step:nth-child(2) .step-big{ color:#34355C; }
+  .step:nth-child(3) .step-big{ color:#3B3C68; }
+  .step:nth-child(4) .step-big{ color:#C9BEF5; }
+  /* WHY sticky only on wide screens: in one column the sticky heading would sit on top of the cards. */
+  @media (min-width:1100px){
+    .how-head{ position:sticky; top:140px; }
+    .step{ position:sticky; top:140px; }
+    .step:nth-child(2){ top:172px; } .step:nth-child(3){ top:204px; } .step:nth-child(4){ top:236px; }
   }
-  .step::before{
-    content:''; position:absolute; top:22px; left:60px; right:-10px; height:1px;
-    background:var(--line);
-  }
-  .step:last-child::before{ display:none; }
-  .step h3{ margin:0 0 7px; font-size:16.5px; font-weight:700; letter-spacing:-0.01em; }
-  .step p{ margin:0; font-size:14px; color:var(--ink2); text-wrap:pretty; }
 
   /* ───────── events ───────── */
-  .events{ background:var(--surface2); border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); }
-  .events-grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
-  .chips{ display:flex; flex-wrap:wrap; gap:9px; margin-bottom:26px; }
-  .chip{
-    display:inline-flex; align-items:center; gap:7px;
-    background:#fff; border:1px solid var(--line); border-radius:999px;
-    padding:8px 15px; font-size:13.5px; font-weight:600; color:var(--ink2);
-    box-shadow:var(--shadow-sm);
-  }
-  .chip svg{ color:var(--accent); }
-  .checks{ list-style:none; margin:24px 0 0; padding:0; display:grid; gap:12px; }
-  .checks li{ display:flex; gap:11px; align-items:flex-start; font-size:15px; color:var(--ink2); }
-  .checks .tick{
-    width:22px; height:22px; flex-shrink:0; border-radius:50%;
-    background:var(--grad-soft); color:var(--accent);
-    display:flex; align-items:center; justify-content:center; margin-top:1px;
-  }
-  .event-card{
-    background:#fff; border:1px solid var(--line-soft); border-radius:24px;
-    box-shadow:var(--shadow); overflow:hidden;
-  }
-  /* In-app-only event (Oct 2026): thin brand-gradient frame, same as the
-     /events list, so the preview reads differently. */
-  .event-card.app-only{
-    border:2px solid transparent;
-    background:linear-gradient(#fff,#fff) padding-box, var(--grad) border-box;
-  }
-  /* Real event photo (replaces <image-slot>) */
-  .event-card img{ width:100%; height:240px; object-fit:cover; display:block; }
-  /* Live-event card additions (populated by JS from the same Supabase feed as /events) */
-  .event-col{ display:flex; flex-direction:column; align-items:stretch; gap:18px; }
-  .show-more{ align-self:flex-start; padding:12px 22px; font-size:14px; }
+  .events{ background:linear-gradient(200deg,#FDF3F9 0%,#FFFFFF 50%,#F4F5FF 100%); box-shadow:0 -24px 48px rgba(15,16,32,0.12); }
+  .events .in{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(48px,5vw,112px); align-items:center; }
+  .event-stage{ position:relative; border-radius:40px; overflow:hidden; background:linear-gradient(160deg,#EBEEFF 0%,#F3EBFF 50%,#FCEAF5 100%); padding:clamp(28px,5vw,88px); display:flex; flex-direction:column; align-items:stretch; justify-content:center; gap:24px; min-height:clamp(480px,46vw,860px); }
+  .event-stage::before{ content:""; position:absolute; right:-25%; top:-25%; width:90%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(233,75,154,0.08),rgba(241,236,255,0)); pointer-events:none; }
+  .event-stage .kicker{ position:relative; }
+  .event-copy{ display:flex; flex-direction:column; gap:clamp(24px,2.6vw,44px); }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{ padding:clamp(9px,0.8vw,14px) clamp(16px,1.4vw,26px); border-radius:9999px; border:1px solid #E2DEF0; font-size:clamp(15px,1.1vw,19px); color:var(--ink-2); }
+  .events h4{ margin:0; font-size:clamp(20px,1.6vw,28px); font-weight:600; letter-spacing:-0.025em; }
+  /* Live latest-event card (filled by JS from the same Supabase feed as /events) */
+  .event-card{ position:relative; background:#fff; border-radius:32px; overflow:hidden; box-shadow:0 40px 80px rgba(15,16,32,0.14); }
+  /* In-app-only event (Oct 2026): thin brand-gradient frame, same as the /events list. */
+  .event-card.app-only{ border:2px solid transparent; background:linear-gradient(#fff,#fff) padding-box, linear-gradient(100deg,#7B5CFF,#E94B9A) border-box; }
   .event-card .event-media{ display:block; }
-  .event-card .ph{
-    width:100%; height:240px; display:flex; align-items:center; justify-content:center;
-    font-size:54px; background:var(--grad-soft);
-  }
-  .event-foot-info{ display:flex; flex-direction:column; gap:2px; }
-  .event-price{ font-size:15px; font-weight:800; letter-spacing:-0.01em; color:var(--ink); }
-  .event-spots{ font-size:12.5px; font-weight:600; color:var(--ink2); }
-  .event-spots.full{ color:var(--accent); }
-  .event-skeleton{ padding:64px 24px; text-align:center; color:var(--ink3); font-size:14.5px; }
-  .event-body{ padding:20px 22px 22px; }
-  .event-tag{
-    display:inline-flex; font-size:11px; font-weight:700; letter-spacing:0.06em;
-    text-transform:uppercase; color:#fff; background:var(--grad);
-    border-radius:999px; padding:4px 11px; margin-bottom:12px;
-  }
-  .event-body h3{ margin:0 0 6px; font-size:19px; font-weight:700; letter-spacing:-0.02em; }
-  .event-meta{ font-size:13.5px; color:var(--ink2); display:flex; gap:14px; flex-wrap:wrap; }
+  .event-card img{ width:100%; height:clamp(200px,20vw,300px); object-fit:cover; display:block; }
+  .event-card .ph{ width:100%; height:clamp(200px,20vw,300px); display:flex; align-items:center; justify-content:center; font-size:54px; background:linear-gradient(135deg,rgba(123,92,255,0.10),rgba(233,75,154,0.10)); }
+  .event-body{ padding:24px 26px 26px; }
+  .event-tag{ display:inline-flex; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--violet); border:1px solid var(--line-violet); border-radius:999px; padding:5px 12px; margin-bottom:14px; }
+  .event-body h3{ margin:0 0 8px; font-size:clamp(20px,1.6vw,26px); font-weight:600; letter-spacing:-0.03em; }
+  .event-meta{ font-size:14px; color:var(--ink-2); display:flex; gap:14px; flex-wrap:wrap; }
   .event-meta span{ display:inline-flex; align-items:center; gap:6px; }
-  .event-foot{
-    margin-top:16px; padding-top:16px; border-top:1px solid var(--line-soft);
-    display:flex; align-items:center; justify-content:space-between;
-  }
-  .avatars{ display:flex; }
-  .avatars i{
-    width:28px; height:28px; border-radius:50%; border:2px solid #fff;
-    background:linear-gradient(150deg,#8A78E8,#5C49C9); display:block;
-  }
-  .avatars i:nth-child(2){ background:linear-gradient(150deg,#E878C8,#C9498F); margin-left:-9px; }
-  .avatars i:nth-child(3){ background:linear-gradient(150deg,#78B4E8,#4980C9); margin-left:-9px; }
-  .avatars b{
-    font-size:12px; color:var(--ink2); font-weight:600; margin-left:9px; align-self:center;
-  }
+  .event-foot{ margin-top:18px; padding-top:18px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .event-foot-info{ display:flex; flex-direction:column; gap:2px; }
+  .event-price{ font-size:16px; font-weight:700; letter-spacing:-0.01em; }
+  .event-spots{ font-size:13px; font-weight:500; color:var(--ink-2); }
+  .event-spots.full{ color:var(--pink); }
+  .event-foot .btn{ padding:11px 20px; font-size:14px; }
+  .event-skeleton{ padding:72px 24px; text-align:center; color:var(--muted); font-size:15px; }
 
-  /* ───────── safety (dark band) ───────── */
-  .safety{ background:#0F0B2E; color:#fff; }
-  .safety .kicker{ color:#FF7AD1; }
-  .safety .sec-sub{ color:rgba(255,255,255,0.62); }
-  .safety .card{
-    background:rgba(255,255,255,0.04); border-color:rgba(255,255,255,0.09);
-    box-shadow:none;
-  }
-  .safety .card h3{ color:#fff; }
-  .safety .card p{ color:rgba(255,255,255,0.62); }
-  .safety .icon-tile{ background:rgba(255,255,255,0.08); color:#FF7AD1; }
+  /* ───────── safety ───────── */
+  .safety{ background:linear-gradient(160deg,#F2F3FF 0%,#F8F2FF 55%,#FDF2F8 100%); }
+  .safety .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .safety .h2{ max-width:12ch; }
+  .safe-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .safe-card{ background:#fff; border-radius:40px; padding:clamp(28px,3.4vw,64px); display:flex; flex-direction:column; gap:20px; min-height:clamp(320px,30vw,520px); }
+  .safe-card .kicker{ color:var(--violet); }
+  .safe-card h3{ margin-top:auto; font-size:clamp(28px,2.6vw,48px); line-height:1; letter-spacing:-0.045em; font-weight:600; }
+  .safe-card p{ font-size:clamp(17px,1.25vw,21px); line-height:1.55; color:var(--ink-2); }
 
-  /* ───────── download CTA ───────── */
-  .cta-card{
-    position:relative; overflow:hidden; border-radius:32px;
-    background:var(--grad); color:#fff; text-align:center;
-    padding:72px 40px; box-shadow:var(--grad-shadow);
-  }
-  .cta-card::before{
-    content:''; position:absolute; right:-120px; top:-160px; width:480px; height:480px;
-    border-radius:50%; background:radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
-  }
-  .cta-card h2{ color:#fff; }
-  .cta-card p{ color:rgba(255,255,255,0.85); font-size:16.5px; max-width:480px; margin:16px auto 0; }
-  .stores{ margin-top:34px; display:flex; gap:14px; justify-content:center; }
-  .store{
-    display:flex; align-items:center; gap:11px; background:#0F0B2E; color:#fff;
-    border-radius:14px; padding:11px 20px; text-align:left;
-    box-shadow:0 8px 20px rgba(15,11,46,0.3); transition:transform .15s;
-  }
-  .store:hover{ transform:translateY(-2px); }
-  .store small{ display:block; font-size:10.5px; opacity:0.7; letter-spacing:0.02em; }
-  .store b{ font-size:15.5px; font-weight:700; letter-spacing:-0.01em; }
+  /* ───────── download ───────── */
+  .download{ background:linear-gradient(135deg,#EDEFFF 0%,#F5EDFF 50%,#FCEDF6 100%); }
+  .cta-card{ background:var(--ink); color:#fff; border-radius:40px; padding:clamp(36px,5vw,96px); display:flex; flex-direction:column; justify-content:space-between; gap:56px; min-height:clamp(440px,38vw,680px); position:relative; overflow:hidden; }
+  .cta-card::before{ content:""; position:absolute; right:-15%; top:-45%; width:70%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.22),rgba(15,16,32,0)); pointer-events:none; }
+  .cta-card h2{ position:relative; font-size:clamp(44px,6.8vw,136px); line-height:0.92; letter-spacing:-0.06em; font-weight:700; max-width:14ch; }
+  .cta-bottom{ position:relative; display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .cta-bottom p{ max-width:32ch; font-size:clamp(18px,1.4vw,24px); line-height:1.5; color:var(--on-dark); }
+  .stores{ display:flex; gap:14px; flex-wrap:wrap; }
+  .store{ background:#fff; color:var(--ink); padding:14px 26px 14px 20px; border-radius:18px; display:flex; align-items:center; gap:12px; line-height:1.15; white-space:nowrap; transition:transform .3s, background .3s; }
+  .store:hover{ background:#F1ECFF; color:var(--ink); transform:translateY(-2px); }
+  .store span{ display:flex; flex-direction:column; }
+  .store small{ font-size:13px; color:var(--ink-2); }
+  .store b{ font-size:clamp(19px,1.4vw,24px); font-weight:600; letter-spacing:-0.02em; }
 
   /* ───────── footer ───────── */
-  footer{ border-top:1px solid var(--line-soft); padding:38px 0 46px; }
-  .foot{ display:flex; align-items:center; gap:30px; flex-wrap:wrap; }
-  .foot .brand img{ width:28px; height:28px; border-radius:8px; display:block; }
-  .foot .copy{ font-size:13px; color:var(--ink3); margin-left:auto; }
-  .foot-links{ display:flex; gap:22px; flex-wrap:wrap; }
-  .foot-links a{ font-size:13.5px; color:var(--ink2); }
-  .foot-links a:hover{ color:var(--ink); }
+  .footer{ background:var(--ink); color:#fff; overflow:hidden; box-shadow:0 -24px 48px rgba(15,16,32,0.2); }
+  .footer .in{ padding:clamp(88px,8vw,140px) var(--pad-x) 40px; display:flex; flex-direction:column; gap:clamp(56px,7vw,120px); }
+  .foot-top{ display:flex; justify-content:space-between; gap:56px; flex-wrap:wrap; }
+  .foot-brand{ display:flex; flex-direction:column; gap:20px; max-width:420px; }
+  .foot-brand .brand{ font-size:24px; gap:14px; }
+  .foot-brand .brand img{ width:44px; height:44px; border-radius:12px; }
+  .foot-brand p{ font-size:clamp(17px,1.3vw,22px); line-height:1.5; color:var(--faint); }
+  .foot-cols{ display:grid; grid-template-columns:repeat(3,minmax(120px,auto)); gap:clamp(32px,5vw,96px); font-size:clamp(16px,1.2vw,20px); }
+  .foot-col{ display:flex; flex-direction:column; gap:16px; }
+  .foot-col a{ color:#E4E4EE; }
+  .foot-col a:hover{ color:#fff; }
+  /* WHY 18.5vw (design had 21.5vw): at our side padding the last letter got clipped. */
+  .wordmark{ font-size:clamp(60px,18.5vw,400px); line-height:0.78; font-weight:800; letter-spacing:-0.07em; background:linear-gradient(180deg,#26274A,#141528); -webkit-background-clip:text; background-clip:text; color:transparent; user-select:none; margin-left:-0.04em; white-space:nowrap; }
+  .foot-bottom{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); color:var(--muted); border-top:1px solid rgba(255,255,255,0.08); padding-top:28px; }
+  .foot-bottom a{ color:var(--muted); }
+  .foot-bottom a:hover{ color:#fff; }
 
-  /* ───────── responsive ───────── */
-  @media (max-width: 960px){
-    .nav-links{ display:none; }
-    .nav-links.open{
-      display:flex; flex-direction:column; align-items:flex-start; gap:18px;
-      position:absolute; top:68px; left:0; right:0;
-      background:#fff; padding:22px 28px; border-bottom:1px solid var(--line-soft);
-      box-shadow:var(--shadow); margin-left:0;
-    }
-    .mobile-toggle{ display:block; }
-    .nav .btn-grad{ display:none; }
-    .shot{ flex-basis:calc((100% - 2*18px) / 2.4); }
-    .grid-3{ grid-template-columns:1fr 1fr; }
-    .steps{ grid-template-columns:1fr 1fr; row-gap:34px; }
-    .step::before{ display:none; }
-    .events-grid{ grid-template-columns:1fr; gap:36px; }
+  /* ───────── tablet / phone ───────── */
+  @media (max-width:1100px){
+    /* WHY: the export's nav doesn't fit below ~1100px; collapse links into a dropdown. */
+    .menu-btn{ display:flex; }
+    .nav-links{ display:none; position:absolute; left:0; right:0; top:100%; }
+    .nav.open{ border-radius:28px; }
+    .nav.open .nav-links{ display:flex; position:static; flex-direction:column; align-items:flex-start; gap:4px; padding:4px 24px 20px; font-size:18px; }
+    .nav.open .nav-links a{ padding:10px 0; }
+    .nav-in{ flex-wrap:wrap; gap:12px; }
+    .nav-right{ display:flex; align-items:center; gap:10px; }
+    .shots{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    /* Features: no sticky panel; every description visible. */
+    .feat-panel-wrap{ display:none; }
+    .feat p{ display:block; }
+    .feat h3{ color:var(--ink); }
+    .feat-n{ color:var(--violet); }
   }
-  /* ───────── animations ───────── */
-  @media (prefers-reduced-motion: no-preference){
-    /* hero entrance — staggered rise */
-    .hero .eyebrow, .hero h1, .hero-sub, .hero-ctas, .stats{
-      opacity:0; transform:translateY(18px);
-      animation:rise .8s cubic-bezier(.2,.7,.2,1) forwards;
-    }
-    .hero .eyebrow{ animation-delay:.05s; }
-    .hero h1{ animation-delay:.15s; }
-    .hero-sub{ animation-delay:.3s; }
-    .hero-ctas{ animation-delay:.45s; }
-    .stats{ animation-delay:.6s; }
-
-    /* gradient headline shimmer */
-    h1 .vibe{
-      background:linear-gradient(95deg,#4A2BFF 0%,#8A3BFF 25%,#FF39C6 50%,#8A3BFF 75%,#4A2BFF 100%);
-      background-size:220% 100%;
-      -webkit-background-clip:text; background-clip:text;
-      animation:shimmer 5s ease-in-out 1.1s infinite;
-    }
-
-    /* scroll-triggered reveals */
-    .reveal{ opacity:0; transform:translateY(26px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); }
-    .reveal.in{ opacity:1; transform:none; }
-    /* stagger siblings */
-    .reveal.in:nth-child(2){ transition-delay:.08s; }
-    .reveal.in:nth-child(3){ transition-delay:.16s; }
-    .reveal.in:nth-child(4){ transition-delay:.24s; }
-    .reveal.in:nth-child(5){ transition-delay:.32s; }
-    .reveal.in:nth-child(6){ transition-delay:.4s; }
-
-    /* hero glow breathes */
-    .hero-glow{ animation:breathe 7s ease-in-out infinite; }
-
-    /* card lift on hover */
-    .card{ transition:transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s; }
-    .card:hover{ transform:translateY(-4px); box-shadow:var(--shadow); }
-    .chip{ transition:transform .2s, box-shadow .2s; }
-    .chip:hover{ transform:translateY(-2px); box-shadow:var(--shadow); }
-  }
-  @keyframes rise{ to{ opacity:1; transform:none; } }
-  @keyframes shimmer{ 0%,100%{ background-position:0% 0; } 50%{ background-position:100% 0; } }
-  @keyframes breathe{ 0%,100%{ opacity:1; transform:translateX(-50%) scale(1); } 50%{ opacity:.7; transform:translateX(-50%) scale(1.06); } }
-
-  @media (max-width: 600px){
-    .shot{ flex-basis:74%; }
-    .shots-nav{ display:none; }
-    .grid-3{ grid-template-columns:1fr; }
-    .steps{ grid-template-columns:1fr; }
-    .stats{ flex-direction:column; gap:18px; }
-    .stat + .stat{ border-left:none; }
-    .hero-ctas{ flex-direction:column; align-items:center; }
+  @media (max-width:640px){
+    .nav{ margin:12px 12px -80px; top:12px; }
+    .nav-in{ padding:10px 10px 10px 16px; }
+    .nav-cta{ padding:12px 18px; font-size:15px; }
+    .brand{ font-size:17px; }
+    .brand img{ width:32px; height:32px; }
+    .hero-phones{ justify-content:center; margin-bottom:-24px; }
+    .hero-phones .phone{ width:42vw; }
+    .sheet{ border-radius:32px 32px 0 0; margin-top:-32px; }
+    .step, .safe-card, .cta-card, .event-stage, .feat-panel{ border-radius:28px; }
+    .foot-cols{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .store{ flex:1 1 auto; }
   }
 </style>
 </head>
 <body>
 
-<!-- ════════ NAV ════════ -->
-<header class="nav">
-  <div class="wrap nav-in">
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+  <div class="nav-in">
     <a class="brand" href="/">
-      <img src="/logo-512.png" alt="MysMatch" width="34" height="34">
-      <span class="wordmark">MysMatch</span>
+      <img src="/logo-512.png" alt="" width="36" height="36">
+      <span>MysMatch</span>
     </a>
-    <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
-      <span></span><span></span><span></span>
-    </button>
-    <nav class="nav-links">
+    <nav class="nav-links" id="nav-links">
       <a href="#features">Features</a>
-      <a href="#how">How It Works</a>
+      <a href="#how">How it works</a>
       <a href="/events">Events</a>
       <a href="/jobs">Jobs</a>
       <a href="#safety">Safety</a>
       <!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
     </nav>
-    <a class="btn btn-grad" href="#download">Get the App</a>
+    <div class="nav-right">
+      <a class="nav-cta" href="#download">Get the app</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+    </div>
   </div>
+  <div class="progress" id="progress"></div>
 </header>
 
 <!-- ════════ HERO ════════ -->
-<section class="hero">
+<section class="hero" id="top">
+  <div class="hero-spot" id="hero-spot"></div>
   <div class="hero-glow"></div>
-  <div class="wrap">
-    <span class="eyebrow"><span class="dot"></span>Made for university students</span>
-    <h1>Nobody <span class="vibe">studies alone.</span></h1>
-    <p class="hero-sub">Find study partners in your own program and semester. See who takes the same courses as you, then send a study request.</p>
-    <div class="hero-ctas">
-      <a class="btn btn-grad" href="#download">Download Free</a>
-      <a class="btn btn-ghost" href="#how">See How It Works</a>
+  <div class="hero-in">
+    <div>
+      <div class="eyebrow" data-reveal><i></i><span>Made for university students</span></div>
+      <h1 data-reveal>Nobody <span class="grad-text">studies alone.</span></h1>
     </div>
-    <div class="stats">
-      <!-- WHY no "4,300+ Universities": that was the size of the university list, not real usage;
-           the playbook asks for claims a reader can check, so this states how matching works instead. -->
-      <div class="stat"><b>Your courses</b><span>Matched by what you study</span></div>
-      <!-- WHY no "100% Student-verified" stat: student status isn't checked, so the claim was false. -->
-      <div class="stat"><b>Free</b><span>No paywalls</span></div>
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <p class="hero-sub" data-reveal>Find study partners in your own program and semester. See who takes the same courses as you, then send a study request.</p>
+        <div class="hero-ctas" data-reveal>
+          <a class="btn btn-violet" href="#download">Download free</a>
+          <a class="btn btn-ghost" href="#how">See how it works →</a>
+        </div>
+        <div class="stats" data-reveal>
+          <!-- WHY only these two: "4,300+ Universities" was the size of the university list, not real
+               usage, and "100% Student-verified" was false (student status isn't checked). -->
+          <div class="stat"><b>Your courses</b><span>Matched by what you study</span></div>
+          <div class="stat"><b>Free</b><span>No paywalls</span></div>
+        </div>
+      </div>
+      <div class="hero-phones" data-reveal>
+        <div class="phone"><img src="screenshots/cover.webp" alt="Study partners, jobs and more: your campus, only in the app" width="860" height="1861"></div>
+        <div class="phone"><img src="screenshots/discover.webp" alt="Discover: find study partners in your major" width="860" height="1861"></div>
+      </div>
     </div>
+  </div>
+</section>
+
+<!-- ════════ MANIFESTO ════════ -->
+<!-- WHY this text: it's the existing features intro; the design's own manifesto ("best time to meet
+     people … their vibe") read as dating. -->
+<section class="sheet manifesto">
+  <div class="in">
+    <div class="kicker">/ Why MysMatch</div>
+    <p id="manifesto" data-accent-from="Just">No endless swiping. No algorithms optimized for engagement. Just smart tools designed for students to find the right study partners.</p>
   </div>
 </section>
 
 <!-- ════════ GLIMPSE ════════ -->
-<section class="glimpse">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="kicker">See it in action</div>
-      <h2>A glimpse inside MysMatch</h2>
-      <p class="sec-sub">Find study partners, student jobs and events — with real students around you.</p>
+<section class="sheet glimpse">
+  <div class="in">
+    <div class="sec-head">
+      <div class="sec-head-l">
+        <div class="kicker">/ See it in action</div>
+        <h2 class="h2" data-reveal>A glimpse <span class="dim">inside MysMatch.</span></h2>
+      </div>
+      <p class="lead">Find study partners, student jobs and events — with real students around you.</p>
     </div>
-    <div class="shots reveal" id="shots">
-      <!-- WHY these four (Oct 2026): new study-first store panels replace jobs/verified/study-partner/events;
-           "verified" panel implied student checks we don't do. Source PNGs 1284x2778 resized to 860 wide, WebP q80. -->
-      <div class="shot"><img src="screenshots/cover-logo.webp" alt="MysMatch: Do not study alone" width="860" height="1861" loading="lazy"></div>
-      <div class="shot"><img src="screenshots/cover.webp" alt="Study partners, jobs and more: your campus, only in the app" width="860" height="1861" loading="lazy"></div>
-      <div class="shot"><img src="screenshots/discover.webp" alt="Discover: find study partners in your major" width="860" height="1861" loading="lazy"></div>
-      <div class="shot"><img src="screenshots/matches.webp" alt="Matches: match by major and start talking" width="860" height="1861" loading="lazy"></div>
+    <!-- Store panels (Oct 2026): source PNGs 1284x2778 resized to 860 wide, WebP q80. -->
+    <div class="shots">
+      <div class="shot-item" data-reveal>
+        <div class="phone"><img src="screenshots/cover-logo.webp" alt="MysMatch: Do not study alone" width="860" height="1861" loading="lazy"></div>
+        <div class="shot-cap"><span>01 / MysMatch</span><b>Do not study alone</b></div>
+      </div>
+      <div class="shot-item" data-reveal>
+        <div class="phone"><img src="screenshots/cover.webp" alt="Study partners, jobs and more: your campus, only in the app" width="860" height="1861" loading="lazy"></div>
+        <div class="shot-cap"><span>02 / Campus</span><b>Study partners, jobs and more</b></div>
+      </div>
+      <div class="shot-item" data-reveal>
+        <div class="phone"><img src="screenshots/discover.webp" alt="Discover: find study partners in your major" width="860" height="1861" loading="lazy"></div>
+        <div class="shot-cap"><span>03 / Discover</span><b>Find study partners in your major</b></div>
+      </div>
+      <div class="shot-item" data-reveal>
+        <div class="phone"><img src="screenshots/matches.webp" alt="Matches: match by major and start talking" width="860" height="1861" loading="lazy"></div>
+        <div class="shot-cap"><span>04 / Matches</span><b>Match by major and start talking</b></div>
+      </div>
     </div>
-    <div class="shots-nav">
-      <button type="button" id="shots-prev" aria-label="Previous screenshots">&#8249;</button>
-      <button type="button" id="shots-next" aria-label="Next screenshots">&#8250;</button>
-    </div>
-    <script>
-      // Arrow buttons for mouse users; touch users just swipe. Scrolls by one
-      // panel and greys out an arrow at either end.
-      (function () {
-        var row = document.getElementById('shots');
-        var prev = document.getElementById('shots-prev');
-        var next = document.getElementById('shots-next');
-        if (!row || !prev || !next) return;
-        function step() { var c = row.querySelector('.shot'); return c ? c.getBoundingClientRect().width + 18 : 300; }
-        var nav = prev.parentNode;
-        function update() {
-          nav.style.visibility = row.scrollWidth > row.clientWidth + 4 ? 'visible' : 'hidden';
-          prev.disabled = row.scrollLeft <= 4;
-          next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 4;
-        }
-        prev.addEventListener('click', function () { row.scrollBy({ left: -step(), behavior: 'smooth' }); });
-        next.addEventListener('click', function () { row.scrollBy({ left: step(), behavior: 'smooth' }); });
-        row.addEventListener('scroll', update, { passive: true });
-        window.addEventListener('resize', update);
-        update();
-      })();
-    </script>
   </div>
 </section>
 
 <!-- ════════ FEATURES ════════ -->
-<section id="features">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="kicker">Features</div>
-      <h2>Everything you need, nothing you don't</h2>
-      <p class="sec-sub">No endless swiping. No algorithms optimized for engagement. Just smart tools designed for students to find the right study partners.</p>
+<section class="sheet features" id="features">
+  <div class="in">
+    <div class="sec-head">
+      <div class="sec-head-l">
+        <div class="kicker">/ Features</div>
+        <h2 class="h2" data-reveal>Everything you need, <span class="dim">nothing you don't.</span></h2>
+      </div>
     </div>
-    <div class="grid-3">
-      <div class="card reveal">
-        <div class="icon-tile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9L12 4 2 9l10 5 10-5z"></path><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"></path><path d="M22 9v5"></path></svg></div>
-        <h3>Smart Discovery</h3>
-        <p>Automatically discover students who share your university, major, and semester — organized in tiers from closest match to broadest.</p>
+    <div class="feat-grid">
+      <div class="feat-list" id="feat-list">
+        <div class="feat on" data-i="0" tabindex="0">
+          <span class="feat-n">01</span>
+          <div class="feat-body">
+            <div class="feat-top"><h3>Smart Discovery</h3><span class="feat-tag">/ Discovery</span></div>
+            <p>Automatically discover students who share your university, major, and semester — organized in tiers from closest match to broadest.</p>
+          </div>
+        </div>
+        <div class="feat" data-i="1" tabindex="0">
+          <span class="feat-n">02</span>
+          <div class="feat-body">
+            <div class="feat-top"><h3>Search Preferences</h3><span class="feat-tag">/ Discovery</span></div>
+            <p>Set your own criteria — university, major, semester, city, or gender — and browse matching students. Your search, your way.</p>
+          </div>
+        </div>
+        <div class="feat" data-i="2" tabindex="0">
+          <span class="feat-n">03</span>
+          <div class="feat-body">
+            <div class="feat-top"><h3>Instant Chat</h3><span class="feat-tag">/ Connection</span></div>
+            <p>Once matched, start chatting right away. Real-time messages with read receipts.</p>
+          </div>
+        </div>
+        <div class="feat" data-i="3" tabindex="0">
+          <span class="feat-n">04</span>
+          <div class="feat-body">
+            <div class="feat-top"><h3>Student Events</h3><span class="feat-tag">/ Connection</span></div>
+            <p>Browse and join campus events, or create your own. See who's organizing, track your registrations, and get QR tickets on the day.</p>
+          </div>
+        </div>
+        <div class="feat" data-i="4" tabindex="0">
+          <span class="feat-n">05</span>
+          <div class="feat-body">
+            <div class="feat-top"><h3>Biometric Security</h3><span class="feat-tag">/ Control</span></div>
+            <p>Lock the app with Face ID, fingerprint, or a custom PIN. Your privacy is non-negotiable.</p>
+          </div>
+        </div>
+        <div class="feat" data-i="5" tabindex="0">
+          <span class="feat-n">06</span>
+          <div class="feat-body">
+            <div class="feat-top"><h3>Report &amp; Block</h3><span class="feat-tag">/ Control</span></div>
+            <p>Instantly block or report anyone. We review every report and take action fast.</p>
+          </div>
+        </div>
       </div>
-      <div class="card reveal">
-        <div class="icon-tile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path><path d="M8 11h6M11 8v6"></path></svg></div>
-        <h3>Search Preferences</h3>
-        <p>Set your own criteria — university, major, semester, city, or gender — and browse matching students. Your search, your way.</p>
-      </div>
-      <div class="card reveal">
-        <div class="icon-tile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-9 8.35 8.5 8.5 0 01-3.5-.75L3 21l1.9-5.5a8.38 8.38 0 01-.75-3.5 8.5 8.5 0 018.35-9 8.5 8.5 0 018.5 8.5z"></path><path d="M8 11h8M8 14h5"></path></svg></div>
-        <h3>Instant Chat</h3>
-        <p>Once matched, start chatting right away. Real-time messages with read receipts.</p>
-      </div>
-      <div class="card reveal">
-        <div class="icon-tile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2.5"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="M9.5 15.5l2 2 3.5-4"></path></svg></div>
-        <h3>Student Events</h3>
-        <p>Browse and join campus events, or create your own. See who's organizing, track your registrations, and get QR tickets on the day.</p>
-      </div>
-      <div class="card reveal">
-        <div class="icon-tile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"></rect><path d="M8 10V7a4 4 0 018 0v3"></path><circle cx="12" cy="15.5" r="1.6"></circle></svg></div>
-        <h3>Biometric Security</h3>
-        <p>Lock the app with Face ID, fingerprint, or a custom PIN. Your privacy is non-negotiable.</p>
-      </div>
-      <div class="card reveal">
-        <div class="icon-tile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v5.5c0 4.5-3.2 7.8-8 9.5-4.8-1.7-8-5-8-9.5V6l8-3z"></path><path d="M9.5 12.5l1.8 1.8 3.6-4"></path></svg></div>
-        <h3>Report &amp; Block</h3>
-        <p>Instantly block or report anyone. We review every report and take action fast.</p>
+      <div class="feat-panel-wrap" aria-hidden="true">
+        <div class="feat-panel">
+          <div class="feat-icon">
+            <svg data-icon="0" class="on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9L12 4 2 9l10 5 10-5z"></path><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"></path><path d="M22 9v5"></path></svg>
+            <svg data-icon="1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path><path d="M8 11h6M11 8v6"></path></svg>
+            <svg data-icon="2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-9 8.35 8.5 8.5 0 01-3.5-.75L3 21l1.9-5.5a8.38 8.38 0 01-.75-3.5 8.5 8.5 0 018.35-9 8.5 8.5 0 018.5 8.5z"></path><path d="M8 11h8M8 14h5"></path></svg>
+            <svg data-icon="3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2.5"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="M9.5 15.5l2 2 3.5-4"></path></svg>
+            <svg data-icon="4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"></rect><path d="M8 10V7a4 4 0 018 0v3"></path><circle cx="12" cy="15.5" r="1.6"></circle></svg>
+            <svg data-icon="5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v5.5c0 4.5-3.2 7.8-8 9.5-4.8-1.7-8-5-8-9.5V6l8-3z"></path><path d="M9.5 12.5l1.8 1.8 3.6-4"></path></svg>
+          </div>
+          <div class="feat-panel-title" id="feat-title">Smart Discovery</div>
+          <div class="feat-panel-foot"><span>MysMatch app</span><span id="feat-count">01 / 06</span></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ════════ HOW IT WORKS ════════ -->
-<section id="how" style="padding-top:24px;">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="kicker">How it works</div>
-      <h2>From sign-up to matched in minutes</h2>
+<section class="sheet how" id="how">
+  <div class="in">
+    <div class="how-head">
+      <div class="kicker">/ How it works</div>
+      <h2 class="h2" data-reveal>From sign-up <span style="color:var(--violet-soft)">to matched in minutes.</span></h2>
     </div>
     <div class="steps">
-      <div class="step reveal">
-        <div class="step-n">1</div>
-        <h3>Create Your Profile</h3>
-        <p>Sign up with your university email. Add your photo, major, and a few details about yourself.</p>
+      <div class="step">
+        <div class="step-top"><span>/ Step</span><span>01 — 04</span></div>
+        <div class="step-row">
+          <div class="step-txt"><h3>Create your profile</h3><p>Sign up with your university email. Add your photo, major, and a few details about yourself.</p></div>
+          <span class="step-big">01</span>
+        </div>
       </div>
-      <div class="step reveal">
-        <div class="step-n">2</div>
-        <h3>Search or Discover</h3>
-        <p>Browse auto-matched study partners, or set your own search criteria: university, major, semester, city, and more.</p>
+      <div class="step">
+        <div class="step-top"><span>/ Step</span><span>02 — 04</span></div>
+        <div class="step-row">
+          <div class="step-txt"><h3>Search or discover</h3><p>Browse auto-matched study partners, or set your own search criteria: university, major, semester, city, and more.</p></div>
+          <span class="step-big">02</span>
+        </div>
       </div>
-      <div class="step reveal">
-        <div class="step-n">3</div>
-        <h3>Send a Match Request</h3>
-        <p>Found someone interesting? Send a match request. They can accept or pass — no pressure.</p>
+      <div class="step">
+        <div class="step-top"><span>/ Step</span><span>03 — 04</span></div>
+        <div class="step-row">
+          <div class="step-txt"><h3>Send a match request</h3><p>Found someone interesting? Send a match request. They can accept or pass — no pressure.</p></div>
+          <span class="step-big">03</span>
+        </div>
       </div>
-      <div class="step reveal">
-        <div class="step-n">4</div>
-        <h3>Start Talking</h3>
-        <p>Once both sides agree, a private chat opens. Plan a study session, group project, or campus meetup.</p>
+      <div class="step">
+        <div class="step-top"><span>/ Step</span><span>04 — 04</span></div>
+        <div class="step-row">
+          <div class="step-txt"><h3>Start talking</h3><p>Once both sides agree, a private chat opens. Plan a study session, group project, or campus meetup.</p></div>
+          <span class="step-big">04</span>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ════════ EVENTS ════════ -->
-<section class="events" id="events">
-  <div class="wrap">
-    <div class="events-grid">
-      <div>
-        <div class="kicker">Events</div>
-        <h2>Meet people beyond matching</h2>
-        <p class="sec-sub" style="margin-left:0; max-width:460px;">Create and join campus events. The best connections happen in person.</p>
-        <div class="chips" style="margin-top:26px;">
-          <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V6l11-2v12"></path><circle cx="6" cy="18" r="3"></circle><circle cx="17" cy="16" r="3"></circle></svg>Music</span>
-          <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 3a15 15 0 010 18M3 12h18"></path></svg>Sports</span>
-          <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 9l-4 3 4 3M16 9l4 3-4 3M13 5l-2 14"></path></svg>Tech</span>
-          <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11l8-8 8 8"></path><path d="M5 10v9a1 1 0 001 1h12a1 1 0 001-1v-9"></path></svg>Food</span>
-          <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r="2.5"></circle><path d="M3 21c3-7 7.5-10.5 12-9.5M14 14.5c2.5 1 4.5 3.5 5.5 6.5"></path></svg>Art</span>
-          <span class="chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 00-3-3.87"></path><path d="M16 3.13a4 4 0 010 7.75"></path></svg>Networking</span>
-        </div>
-        <h3 style="margin:0; font-size:19px; font-weight:700; letter-spacing:-0.02em;">Your campus, your events</h3>
-        <ul class="checks">
-          <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5L20 7"></path></svg></span>See the organizer's profile on every event</li>
-          <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5L20 7"></path></svg></span>Track all your registered events in one place</li>
-          <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5L20 7"></path></svg></span>Gender-balanced capacity controls</li>
-          <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5L20 7"></path></svg></span>QR code ticket scanning for organizers</li>
-          <li><span class="tick"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l5 5L20 7"></path></svg></span>Free and paid event support</li>
-        </ul>
+<section class="sheet events" id="events">
+  <div class="in">
+    <!-- WHY the live card instead of the design's screenshot: same latest-event feed as before. -->
+    <div class="event-stage" data-reveal>
+      <div class="kicker">/ Next on campus</div>
+      <!-- Latest real event, loaded from Supabase — same source as the /events tab.
+           JS fills #latest-event with the soonest upcoming published event. -->
+      <div class="event-card" id="latest-event">
+        <div class="event-skeleton">Loading the latest event…</div>
       </div>
-      <div class="event-col">
-        <!-- Latest real event, loaded from Supabase — same source as the /events tab.
-             JS fills #latest-event with the soonest upcoming published event. -->
-        <div class="event-card reveal" id="latest-event">
-          <div class="event-skeleton">Loading the latest event…</div>
-        </div>
-        <!-- Show more -> the full events tab -->
-        <a class="btn btn-grad show-more" href="/events">Show more events
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"></path></svg>
-        </a>
+    </div>
+    <div class="event-copy">
+      <div class="kicker">/ Events</div>
+      <h2 class="h2" data-reveal>Meet people <span class="dim">beyond matching.</span></h2>
+      <p class="lead">Create and join campus events. The best connections happen in person.</p>
+      <div class="chips">
+        <span class="chip">Music</span><span class="chip">Sports</span><span class="chip">Tech</span>
+        <span class="chip">Food</span><span class="chip">Art</span><span class="chip">Networking</span>
       </div>
+      <h4>Your campus, your events</h4>
+      <ul class="dash-list">
+        <li>See the organizer's profile on every event</li>
+        <li>Track all your registered events in one place</li>
+        <li>Gender-balanced capacity controls</li>
+        <li>QR code ticket scanning for organizers</li>
+        <li>Free and paid event support</li>
+      </ul>
+      <div><a class="btn btn-dark" href="/events">Show more events →</a></div>
     </div>
   </div>
 </section>
 
 <!-- ════════ SAFETY ════════ -->
-<section class="safety" id="safety">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <div class="kicker">Safety first</div>
-      <h2>Built with your safety in mind</h2>
-      <p class="sec-sub">Every feature is designed to keep you safe and in control of your experience.</p>
+<section class="sheet safety" id="safety">
+  <div class="in">
+    <div class="sec-head">
+      <div class="sec-head-l">
+        <div class="kicker">/ Safety first</div>
+        <h2 class="h2" data-reveal>Built with your safety <span class="dim">in mind.</span></h2>
+      </div>
+      <p class="lead">Every feature is designed to keep you safe and in control of your experience.</p>
     </div>
-    <div class="grid-3">
-      <div class="card reveal">
-        <div class="icon-tile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.8"></rect><path d="M10.5 18.5h3"></path></svg></div>
-        <h3>Phone Verification</h3>
+    <div class="safe-grid">
+      <div class="safe-card" data-reveal>
+        <span class="kicker">/ 01</span>
+        <h3>Phone verification</h3>
         <!-- WHY reworded: phone verification is optional (it earns a profile badge), only creating events requires it. -->
         <p>Verify your phone number by SMS to get a verified badge on your profile. Phone verification is required to create events — keeping the community trustworthy.</p>
       </div>
-      <div class="card reveal">
-        <div class="icon-tile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2.5"></rect><path d="M8 10V7a4 4 0 018 0v3"></path><circle cx="12" cy="15.5" r="1.6"></circle></svg></div>
-        <h3>End-to-End Privacy</h3>
+      <div class="safe-card" data-reveal>
+        <span class="kicker">/ 02</span>
+        <h3>End-to-end privacy</h3>
         <p>Your data stays yours. We never sell your information or share it with third parties.</p>
       </div>
-      <div class="card reveal">
-        <div class="icon-tile"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M5.5 5.5l13 13"></path></svg></div>
-        <h3>Zero Tolerance</h3>
+      <div class="safe-card" data-reveal>
+        <span class="kicker">/ 03</span>
+        <h3>Zero tolerance</h3>
         <p>Harassment, hate speech, and inappropriate behavior result in immediate account removal.</p>
       </div>
     </div>
@@ -627,36 +590,55 @@
 </section>
 
 <!-- ════════ DOWNLOAD ════════ -->
-<section id="download">
-  <div class="wrap">
-    <div class="cta-card reveal">
-      <h2>Ready to find your study partner?</h2>
-      <p>Join thousands of university students already connecting on MysMatch. Free, safe, and made for you.</p>
-      <div class="stores">
-        <a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
-          <span><small>Download on the</small><b>App Store</b></span>
-        </a>
-        <a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
-          <span><small>Get it on</small><b>Google Play</b></span>
-        </a>
+<section class="sheet download" id="download">
+  <div class="in">
+    <div class="cta-card" data-reveal>
+      <h2>Ready to find your <span style="color:var(--violet-soft)">study partner?</span></h2>
+      <div class="cta-bottom">
+        <p>Join thousands of university students already connecting on MysMatch. Free, safe, and made for you.</p>
+        <div class="stores">
+          <a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
+            <span><small>Download on the</small><b>App Store</b></span>
+          </a>
+          <a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
+            <span><small>Get it on</small><b>Google Play</b></span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ════════ FOOTER ════════ -->
-<footer>
-  <div class="wrap foot">
-    <a class="brand" href="/">
-      <img src="/logo-512.png" alt="MysMatch" width="28" height="28">
-    </a>
-    <nav class="foot-links">
-      <a href="/events">Events</a><a href="/jobs">Jobs</a>
-      <a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/support">Support</a><a href="mailto:contact@mys-match.com">Contact</a>
-    </nav>
-    <span class="copy">© 2026 MysMatch. All rights reserved.</span>
+<footer class="sheet footer">
+  <div class="in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="/"><img src="/logo-512.png" alt="" width="44" height="44"><span>MysMatch</span></a>
+        <p>Nobody studies alone.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <span class="kicker">Product</span>
+          <a href="/events">Events</a><a href="/jobs">Jobs</a><a href="#safety">Safety</a>
+        </div>
+        <div class="foot-col">
+          <span class="kicker">Company</span>
+          <a href="mailto:contact@mys-match.com">Contact</a>
+        </div>
+        <div class="foot-col">
+          <span class="kicker">Legal</span>
+          <a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/support">Support</a>
+        </div>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">MysMatch</div>
+    <div class="foot-bottom">
+      <span>© 2026 MysMatch. All rights reserved.</span>
+      <a href="mailto:contact@mys-match.com">contact@mys-match.com</a>
+    </div>
   </div>
 </footer>
 
@@ -723,7 +705,7 @@
       + '<span class="event-price">' + price + '</span>'
       + (spots ? '<span class="event-spots' + (full ? ' full' : '') + '">' + esc(spots) + '</span>' : '')
       + '</div>'
-      + '<a class="btn btn-grad" href="' + href + '" style="padding:9px 18px;font-size:13px;">View event</a>'
+      + '<a class="btn btn-violet" href="' + href + '">View event</a>'
       + '</div></div>';
   }
   // No upcoming events -> fall back to the most recent event by date, so the
@@ -750,26 +732,86 @@
 })();
 </script>
 <script>
-// Mobile menu: close after tapping a link (parity with the previous site's nav)
-document.querySelectorAll('.nav-links a').forEach(function(a){
-  a.addEventListener('click', function(){
-    document.querySelector('.nav-links').classList.remove('open');
-  });
-});
-
-(function(){
+// Page motion + small interactions (vanilla port of the design export's React logic).
+(function () {
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduce) return;
 
-  // scroll-triggered reveals
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if (e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+  // Mobile menu: toggle, and close after tapping a link.
+  var nav = document.getElementById('nav'), btn = document.getElementById('menu-btn');
+  function setMenu(open) { nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  btn.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
+  document.querySelectorAll('#nav-links a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+
+  // Features: hover/click/focus picks which feature the sticky panel shows.
+  var feats = [].slice.call(document.querySelectorAll('.feat'));
+  var icons = [].slice.call(document.querySelectorAll('.feat-icon [data-icon]'));
+  var title = document.getElementById('feat-title'), count = document.getElementById('feat-count');
+  function pick(i) {
+    feats.forEach(function (f, k) { f.classList.toggle('on', k === i); });
+    icons.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+    title.textContent = feats[i].querySelector('h3').textContent;
+    count.textContent = '0' + (i + 1) + ' / 0' + feats.length;
+  }
+  feats.forEach(function (f, i) {
+    f.addEventListener('mouseenter', function () { pick(i); });
+    f.addEventListener('click', function () { pick(i); });
+    f.addEventListener('focus', function () { pick(i); });
+  });
+
+  // Manifesto: split into words (JS only, so no-JS readers get the plain sentence);
+  // words from data-accent-from onwards light up violet, the rest ink.
+  var man = document.getElementById('manifesto'), words = [];
+  if (man && !reduce) {
+    var accentFrom = man.getAttribute('data-accent-from'), accent = false;
+    var parts = man.textContent.trim().split(/\s+/);
+    man.textContent = '';
+    parts.forEach(function (w) {
+      if (w === accentFrom) accent = true;
+      var s = document.createElement('span');
+      s.textContent = w + ' ';
+      s.dataset.w = accent ? '#7B5CFF' : '#0F1020';
+      man.appendChild(s); words.push(s);
     });
-  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  }
 
-  // WHY no stat count-up any more: the first stat is text now ("Your courses"), not a number to animate.
+  if (reduce) return;
+  document.documentElement.classList.add('js');
+
+  // Scroll reveals, staggered among siblings.
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var el = en.target; io.unobserve(el);
+      var sibs = [].filter.call(el.parentElement.children, function (c) { return c.hasAttribute('data-reveal'); });
+      el.style.transitionDelay = Math.max(0, sibs.indexOf(el)) * 110 + 'ms';
+      el.classList.add('shown');
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+
+  // Header progress bar + manifesto word lighting.
+  var bar = document.getElementById('progress');
+  var manSec = man ? man.closest('section') : null;
+  function onScroll() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    if (!manSec || !words.length) return;
+    var r = manSec.getBoundingClientRect(), vh = window.innerHeight;
+    var p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height * 0.75)));
+    var n = Math.round(p * words.length);
+    words.forEach(function (s, i) { s.style.color = i < n ? s.dataset.w : ''; });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Hero spotlight follows the mouse.
+  var hero = document.getElementById('top'), spot = document.getElementById('hero-spot');
+  hero.addEventListener('mousemove', function (e) {
+    var r = hero.getBoundingClientRect();
+    spot.style.transform = 'translate(' + (e.clientX - r.left) + 'px,' + (e.clientY - r.top) + 'px)';
+    spot.style.opacity = '1';
+  });
+  hero.addEventListener('mouseleave', function () { spot.style.opacity = '0'; });
 })();
 </script>
 
