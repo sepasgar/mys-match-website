@@ -157,7 +157,7 @@
 
   /* ───────── glimpse / phones ───────── */
   .glimpse{ background:var(--surface2); border-top:1px solid var(--line-soft); border-bottom:1px solid var(--line-soft); }
-  /* App Store panels (Sept 2026, WebP q80): each 860×1864 image already has its own
+  /* App Store panels (WebP q80, refreshed Oct 2026): each 860×1861 image already has its own
      phone frame + headline, so no CSS frame or label — just a swipeable row
      (scroll-snap). ~4 visible on desktop with arrows, 1 + a peek on phones. */
   .shots{
@@ -446,10 +446,12 @@
       <p class="sec-sub">Find study partners, student jobs and events — with real students around you.</p>
     </div>
     <div class="shots reveal" id="shots">
-      <div class="shot"><img src="screenshots/jobs.webp" alt="Jobs made for students: exclusive part-time and mini jobs" width="860" height="1864" loading="lazy"></div>
-      <div class="shot"><img src="screenshots/verified.webp" alt="Real people, verified: phone-verified profiles and ratings" width="860" height="1864" loading="lazy"></div>
-      <div class="shot"><img src="screenshots/study-partner.webp" alt="Find your study partner: browse students in your major and university" width="860" height="1864" loading="lazy"></div>
-      <div class="shot"><img src="screenshots/events.webp" alt="Never miss a thing: meetups, runs and parties near you" width="860" height="1864" loading="lazy"></div>
+      <!-- WHY these four (Oct 2026): new study-first store panels replace jobs/verified/study-partner/events;
+           "verified" panel implied student checks we don't do. Source PNGs 1284x2778 resized to 860 wide, WebP q80. -->
+      <div class="shot"><img src="screenshots/cover-logo.webp" alt="MysMatch: Do not study alone" width="860" height="1861" loading="lazy"></div>
+      <div class="shot"><img src="screenshots/cover.webp" alt="Study partners, jobs and more: your campus, only in the app" width="860" height="1861" loading="lazy"></div>
+      <div class="shot"><img src="screenshots/discover.webp" alt="Discover: find study partners in your major" width="860" height="1861" loading="lazy"></div>
+      <div class="shot"><img src="screenshots/matches.webp" alt="Matches: match by major and start talking" width="860" height="1861" loading="lazy"></div>
     </div>
     <div class="shots-nav">
       <button type="button" id="shots-prev" aria-label="Previous screenshots">&#8249;</button>
