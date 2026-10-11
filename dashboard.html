@@ -12,8 +12,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/css/site.css">
 <style>
-  /* Oct 2026 redesign on top of /css/site.css. Logic unchanged apart from the
-     Excel export and the "People" column. */
+  /* Oct 2026 redesign on top of /css/site.css, plus the Excel export, the
+     "People" column and check-in (who came / manual tick, Oct 11 2026). */
   .who{ font-size:14px; color:var(--on-dark); max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
   .signout{ background:#fff; color:var(--ink); font-family:inherit; font-weight:600; font-size:15px; padding:12px 22px; border-radius:9999px; border:none; cursor:pointer; transition:background .3s; }
   .signout:hover{ background:#F1ECFF; }
@@ -72,6 +72,18 @@
   .src.app{ background:#ECEAF4; color:var(--ink-2); }
   .doc-view{ padding:6px 14px; border-radius:9999px; font-size:13px; font-weight:600; border:1px solid #E2DEF0; background:#fff; color:var(--ink); cursor:pointer; font-family:inherit; }
   .doc-view:hover{ border-color:var(--ink); }
+  /* Check-in (Oct 11 2026) */
+  .tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+  .tab{ cursor:pointer; font-family:inherit; font-size:15px; font-weight:500; padding:10px 18px; border-radius:9999px; border:1px solid #E2DEF0; background:#fff; color:var(--ink-2); }
+  .tab span{ font-family:var(--mono); font-size:13px; color:var(--muted); margin-left:4px; }
+  .tab.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .tab.on span{ color:var(--faint); }
+  .ci{ cursor:pointer; font-family:inherit; font-size:13px; font-weight:600; padding:7px 14px; border-radius:9999px; border:1px dashed #CFC6EC; background:#fff; color:var(--ink-2); white-space:nowrap; }
+  .ci:hover{ border-style:solid; border-color:var(--ink); color:var(--ink); }
+  .ci.on{ border:1px solid transparent; background:#E7F8EF; color:#1C7A4A; }
+  .ci.on:hover{ background:#FDECF4; color:#B3246B; }
+  .ci[disabled]{ opacity:.6; cursor:wait; }
+  tr.came td{ background:#FBFFFC; }
   @media (max-width:640px){ .who{ display:none; } .table-wrap{ border-radius:20px; } }
 </style>
 </head>
@@ -144,6 +156,7 @@
     // Event date: real start moment in the event's own zone (e.date is the
     // typed time stored as if UTC; late-evening events showed the wrong day).
     function fmtEvent(e) { try { return new Date(e.starts_at).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric', timeZone: e.timezone || 'Europe/Berlin' }); } catch (x) { return ''; } }
+    function fmtTime(iso) { try { return new Date(iso).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
     function fmtDT(iso) { try { return new Date(iso).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
 
     MM.currentUser().then((user) => { user ? showDashboard(user) : showLogin(); });
@@ -221,63 +234,106 @@
     }
 
     function renderAttendees(user, eventId, title, rows, questions) {
-      const people = rows.reduce((n, r) => n + (r.party_size || 1), 0);
+      // Check-in filter (Oct 11 2026): all / came / not checked in.
+      let filter = 'all';
       const back = '<button class="back" id="back" type="button">← Back to events</button>';
-      const head = '<div class="att-head"><div><h2>' + esc(title) + '</h2>'
-        + '<div class="cnt">' + rows.length + ' registration' + (rows.length === 1 ? '' : 's')
-        + (people !== rows.length ? ' · ' + people + ' people' : '') + '</div></div>'
-        + (rows.length ? '<div class="toolbar"><button class="btn-sm" id="csv" type="button">Export CSV</button><button class="btn-sm primary" id="xlsx" type="button">Export Excel</button></div>' : '')
-        + '</div>';
-
-      let table;
-      if (!rows.length) {
-        table = '<div class="empty">No registrations yet.</div>';
-      } else {
-        const qHeaders = questions.map((q) => '<th>' + esc(q.label) + '</th>').join('');
-        const body = rows.map((r, i) => {
-          const name = [r.first_name, r.last_name].filter(Boolean).join(' ') || '—';
-          const gender = r.user_gender || r.gender || '';
-          const ans = r.answers || {};
-          const qCells = questions.map((q) => '<td class="ans">' + esc(ans[q.id] || '') + '</td>').join('');
-          return '<tr><td class="num">' + (i + 1) + '</td>'
-            + '<td>' + esc(name) + '</td>'
-            + '<td>' + esc(r.email || '') + '</td>'
-            + '<td>' + esc(gender) + '</td>'
-            // WHY People (Oct 2026): party_size was already returned but never shown.
-            + '<td>' + (r.party_size || 1) + '</td>'
-            + '<td><span class="src ' + (r.source === 'web' ? 'web' : 'app') + '">' + (r.source === 'web' ? 'Web' : 'App') + '</span></td>'
-            + '<td>' + esc(fmtDT(r.registered_at)) + '</td>'
-            + '<td>' + (r.document_url ? '<button class="doc-view" data-doc="' + esc(r.document_url) + '">View</button>' : '') + '</td>'
-            + qCells + '</tr>';
-        }).join('');
-        table = '<div class="table-wrap"><table><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Gender</th><th>People</th><th>Source</th><th>Registered</th><th>Doc</th>'
-          + qHeaders + '</tr></thead><tbody>' + body + '</tbody></table></div>';
-      }
-      root.innerHTML = back + head + table;
+      root.innerHTML = back + '<div id="att-body"></div>';
       document.getElementById('back').addEventListener('click', () => showDashboard(user));
-      const csvBtn = document.getElementById('csv');
-      if (csvBtn) csvBtn.addEventListener('click', () => downloadCsv(title, rows, questions));
-      const xlsxBtn = document.getElementById('xlsx');
-      if (xlsxBtn) xlsxBtn.addEventListener('click', () => downloadXlsx(xlsxBtn, title, rows, questions));
-      // Document viewers: sign the private path on demand and open it.
-      root.querySelectorAll('.doc-view').forEach((b) => {
-        b.addEventListener('click', async () => {
-          b.textContent = 'Opening…';
-          const url = await MM.signEventDoc(b.getAttribute('data-doc'));
-          b.textContent = 'View';
-          if (url) window.open(url, '_blank', 'noopener'); else alert('Could not open document.');
+      const body = document.getElementById('att-body');
+
+      function draw() {
+        const people = rows.reduce((n, r) => n + (r.party_size || 1), 0);
+        const came = rows.filter((r) => r.checked_in_at);
+        const cameP = came.reduce((n, r) => n + (r.party_size || 1), 0);
+        const shown = rows.filter((r) => filter === 'all' || (filter === 'in' ? r.checked_in_at : !r.checked_in_at));
+        const head = '<div class="att-head"><div><h2>' + esc(title) + '</h2>'
+          + '<div class="cnt">' + rows.length + ' registration' + (rows.length === 1 ? '' : 's')
+          + (people !== rows.length ? ' · ' + people + ' people' : '')
+          // People count, because a booking can bring several guests.
+          + (rows.length ? ' · ' + cameP + ' of ' + people + ' checked in' : '') + '</div></div>'
+          + (rows.length ? '<div class="toolbar"><button class="btn-sm" id="csv" type="button">Export CSV</button><button class="btn-sm primary" id="xlsx" type="button">Export Excel</button></div>' : '')
+          + '</div>';
+        const tabs = rows.length
+          ? '<div class="tabs" role="tablist">'
+            + [['all', 'All', rows.length], ['in', 'Checked in', came.length], ['out', 'Not checked in', rows.length - came.length]]
+              .map((t) => '<button class="tab' + (filter === t[0] ? ' on' : '') + '" type="button" data-f="' + t[0] + '">' + t[1] + ' <span>' + t[2] + '</span></button>').join('')
+            + '</div>'
+          : '';
+
+        let table;
+        if (!rows.length) {
+          table = '<div class="empty">No registrations yet.</div>';
+        } else if (!shown.length) {
+          table = '<div class="empty">' + (filter === 'in' ? 'Nobody is checked in yet.' : 'Everyone is checked in.') + '</div>';
+        } else {
+          const qHeaders = questions.map((q) => '<th>' + esc(q.label) + '</th>').join('');
+          const trs = shown.map((r) => {
+            const i = rows.indexOf(r);
+            const name = [r.first_name, r.last_name].filter(Boolean).join(' ') || '—';
+            const gender = r.user_gender || r.gender || '';
+            const ans = r.answers || {};
+            const qCells = questions.map((q) => '<td class="ans">' + esc(ans[q.id] || '') + '</td>').join('');
+            // Manual check-in (user decision): tick / untick per attendee.
+            const ci = r.checked_in_at
+              ? '<button class="ci on" type="button" data-i="' + i + '" title="Click to undo">✓ ' + esc(fmtTime(r.checked_in_at)) + '</button>'
+              : '<button class="ci" type="button" data-i="' + i + '">Mark arrived</button>';
+            return '<tr' + (r.checked_in_at ? ' class="came"' : '') + '><td class="num">' + (i + 1) + '</td>'
+              + '<td>' + ci + '</td>'
+              + '<td>' + esc(name) + '</td>'
+              + '<td>' + esc(r.email || '') + '</td>'
+              + '<td>' + esc(gender) + '</td>'
+              // WHY People (Oct 2026): party_size was already returned but never shown.
+              + '<td>' + (r.party_size || 1) + '</td>'
+              + '<td><span class="src ' + (r.source === 'web' ? 'web' : 'app') + '">' + (r.source === 'web' ? 'Web' : 'App') + '</span></td>'
+              + '<td>' + esc(fmtDT(r.registered_at)) + '</td>'
+              + '<td>' + (r.document_url ? '<button class="doc-view" data-doc="' + esc(r.document_url) + '">View</button>' : '') + '</td>'
+              + qCells + '</tr>';
+          }).join('');
+          table = '<div class="table-wrap"><table><thead><tr><th>#</th><th>Checked in</th><th>Name</th><th>Email</th><th>Gender</th><th>People</th><th>Source</th><th>Registered</th><th>Doc</th>'
+            + qHeaders + '</tr></thead><tbody>' + trs + '</tbody></table></div>';
+        }
+        body.innerHTML = head + tabs + table;
+
+        const csvBtn = document.getElementById('csv');
+        if (csvBtn) csvBtn.addEventListener('click', () => downloadCsv(title, rows, questions));
+        const xlsxBtn = document.getElementById('xlsx');
+        if (xlsxBtn) xlsxBtn.addEventListener('click', () => downloadXlsx(xlsxBtn, title, rows, questions));
+        body.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => { filter = t.getAttribute('data-f'); draw(); }));
+        body.querySelectorAll('.ci').forEach((b) => {
+          b.addEventListener('click', async () => {
+            const r = rows[Number(b.getAttribute('data-i'))];
+            const turnOn = !r.checked_in_at;
+            if (!turnOn && !confirm('Undo check-in for ' + ([r.first_name, r.last_name].filter(Boolean).join(' ') || 'this attendee') + '?')) return;
+            b.disabled = true; b.textContent = 'Saving…';
+            const res = await MM.setCheckIn(eventId, r.user_id, turnOn);
+            if (res && res.status === 'ok') r.checked_in_at = res.checked_in_at || null;
+            else alert('Could not save the check-in. Please try again.');
+            draw();
+          });
         });
-      });
+        // Document viewers: sign the private path on demand and open it.
+        body.querySelectorAll('.doc-view').forEach((b) => {
+          b.addEventListener('click', async () => {
+            b.textContent = 'Opening…';
+            const url = await MM.signEventDoc(b.getAttribute('data-doc'));
+            b.textContent = 'View';
+            if (url) window.open(url, '_blank', 'noopener'); else alert('Could not open document.');
+          });
+        });
+      }
+      draw();
     }
 
     // ---- Export (CSV + Excel share one table) -------------------------------
     // WHY one builder: both files must always have the same columns.
     function exportTable(rows, questions) {
-      const header = ['#', 'Name', 'Email', 'Gender', 'People', 'Source', 'Registered at'].concat(questions.map((q) => q.label));
+      const header = ['#', 'Name', 'Email', 'Gender', 'People', 'Source', 'Registered at', 'Checked in at'].concat(questions.map((q) => q.label));
       const body = rows.map((r, i) => {
         const ans = r.answers || {};
         return [i + 1, [r.first_name, r.last_name].filter(Boolean).join(' '), r.email || '', r.user_gender || r.gender || '',
-          r.party_size || 1, r.source === 'web' ? 'Web' : 'App', new Date(r.registered_at).toLocaleString()]
+          r.party_size || 1, r.source === 'web' ? 'Web' : 'App', new Date(r.registered_at).toLocaleString(),
+          // Empty = did not check in (Oct 11 2026).
+          r.checked_in_at ? new Date(r.checked_in_at).toLocaleString() : '']
           .concat(questions.map((q) => ans[q.id] || ''));
       });
       return [header].concat(body);

@@ -136,6 +136,15 @@
     return data || [];
   }
 
+  // Organizer check-in (Oct 11 2026): mark / unmark an attendee as arrived.
+  // Creator-only on the server (set_event_check_in); the app's ticket scanner
+  // calls the same RPC. attendeeId = get_event_attendees' user_id.
+  async function setCheckIn(eventId, attendeeId, checkedIn) {
+    const { data, error } = await db.rpc('set_event_check_in', { p_event_id: eventId, p_attendee_id: attendeeId, p_checked_in: checkedIn });
+    if (error) { console.error('[MM] setCheckIn', error.message); return { status: 'error' }; }
+    return data || { status: 'error' };
+  }
+
   // --- Public jobs board (Sept 2026) ----------------------------------------
   // Every job from the app, read through SECURITY DEFINER RPCs that return a
   // fixed column set (no application questions, no poster id) and skip deleted
@@ -175,7 +184,7 @@
     db, SUPABASE_URL,
     listEvents, getEvent, getCounts, countsBatch, registerGuest,
     uploadGuestDocument, signEventDoc,
-    signIn, signOut, currentUser, myEvents, eventAttendees,
+    signIn, signOut, currentUser, myEvents, eventAttendees, setCheckIn,
     listJobs, getJob, JOB_TYPE_LABELS, postedAgo,
   };
 })();
