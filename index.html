@@ -213,10 +213,13 @@
   .step:nth-child(2) .step-big{ color:#34355C; }
   .step:nth-child(3) .step-big{ color:#3B3C68; }
   .step:nth-child(4) .step-big{ color:#C9BEF5; }
-  /* WHY sticky only on wide screens: in one column the sticky heading would sit on top of the cards. */
+  /* Stacking cards on every screen (user, Oct 2026: phones too). In one column only the cards
+     stick — a sticky heading would sit on top of them — just below the floating header. */
+  .step{ position:sticky; top:84px; }
+  .step:nth-child(2){ top:100px; } .step:nth-child(3){ top:116px; } .step:nth-child(4){ top:132px; }
   @media (min-width:1100px){
     .how-head{ position:sticky; top:140px; }
-    .step{ position:sticky; top:140px; }
+    .step{ top:140px; }
     .step:nth-child(2){ top:172px; } .step:nth-child(3){ top:204px; } .step:nth-child(4){ top:236px; }
   }
 
