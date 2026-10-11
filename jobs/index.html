@@ -1,293 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Jobs — MysMatch</title>
-  <meta name="description" content="Student jobs, internships and mini-jobs from organizations on MysMatch. Browse here, apply in the MysMatch app.">
-  <meta name="theme-color" content="#0D1E4C">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jobs — MysMatch</title>
+<meta name="description" content="Student jobs, internships and mini-jobs from organizations on MysMatch. Browse here, apply in the MysMatch app.">
+<meta name="theme-color" content="#0F1020">
 
-  <meta property="og:title" content="Jobs — MysMatch">
-  <meta property="og:description" content="Student jobs, internships and mini-jobs. Apply in the MysMatch app.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.mysmatch.com/jobs">
-  <meta property="og:image" content="https://www.mysmatch.com/og-image.png">
+<meta property="og:title" content="Jobs — MysMatch">
+<meta property="og:description" content="Student jobs, internships and mini-jobs. Apply in the MysMatch app.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.mysmatch.com/jobs">
+<meta property="og:image" content="https://www.mysmatch.com/og-image.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Jobs — MysMatch">
-  <meta name="twitter:description" content="Student jobs, internships and mini-jobs. Apply in the MysMatch app.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Jobs — MysMatch">
+<meta name="twitter:description" content="Student jobs, internships and mini-jobs. Apply in the MysMatch app.">
 
-  <link rel="icon" type="image/png" href="/logo-512.png">
-  <link rel="canonical" href="https://www.mysmatch.com/jobs">
+<link rel="icon" type="image/png" href="/logo-512.png">
+<link rel="canonical" href="https://www.mysmatch.com/jobs">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<!-- Jobs board on the web (Sept 2026; Oct 2026 redesign). Every job from the app
+     is listed (via the get_public_jobs RPC); applying happens only in the app,
+     so there's no apply form here — just store buttons. -->
+<style>
+  .hero-right{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .hero-pill{ display:flex; align-items:center; gap:10px; padding:14px 22px; border-radius:9999px; border:1px solid rgba(255,255,255,0.14); font-size:clamp(15px,1.05vw,17px); color:var(--on-dark); }
+  .hero-pill i{ width:8px; height:8px; border-radius:50%; background:#CDB8FF; flex-shrink:0; }
 
-  <!-- Jobs board on the web (Sept 2026). Same look as /events. Every job from
-       the app is listed (via the get_public_jobs RPC); applying happens only in
-       the app, so there's no apply form here — just store buttons. -->
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary: #C48CB3; --primary-dark: #0D1E4C; --primary-light: #E5C9D7;
-      --accent: #83A6CE; --black: #0B1B32; --white: #FFFFFF; --gray: #26415E;
-      --gray-light: #6B8299; --gray-bg: #F5F0F3; --border: #E5C9D7; --success: #34C77B;
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--black); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased;
-    }
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border); transition: box-shadow 0.3s;
-    }
-    .nav.scrolled { box-shadow: 0 2px 20px rgba(13,30,76,0.08); }
-    .nav-inner {
-      max-width: 1120px; margin: 0 auto; padding: 0 24px; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-dark); }
-    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
-    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-    .nav-links { display: flex; align-items: center; gap: 32px; }
-    .nav-links a { text-decoration: none; color: var(--gray); font-size: 15px; font-weight: 500; transition: color 0.2s; }
-    .nav-links a:hover { color: var(--primary-dark); }
-    .nav-cta {
-      background: var(--primary-dark) !important; color: var(--white) !important;
-      padding: 10px 22px !important; border-radius: 12px !important; font-weight: 600 !important;
-    }
-    .mobile-toggle { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-    .mobile-toggle span { display: block; width: 22px; height: 2px; background: var(--primary-dark); margin: 5px 0; border-radius: 2px; }
+  /* ───────── open positions ───────── */
+  .positions .in{ display:flex; flex-direction:column; gap:clamp(40px,4vw,72px); }
+  .pos-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .pos-head-l{ display:flex; flex-direction:column; gap:clamp(16px,1.6vw,28px); }
+  .pos-head .h2{ font-size:clamp(44px,5.6vw,112px); display:flex; align-items:baseline; gap:clamp(14px,1.4vw,28px); flex-wrap:wrap; }
+  .count{ font-family:var(--mono); font-size:clamp(16px,1.4vw,24px); letter-spacing:0; font-weight:500; color:var(--violet); }
+  .city-pick{ display:flex; align-items:center; gap:12px; padding:6px 6px 6px 22px; border-radius:9999px; background:#fff; border:1px solid #E2DEF0; }
+  .city-pick span{ font-family:var(--mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .city-pick select{ appearance:none; -webkit-appearance:none; border:none; outline:none; background:#F4F1FD; color:var(--ink); font-family:inherit; font-size:clamp(15px,1.05vw,17px); font-weight:500; padding:12px 40px 12px 18px; border-radius:9999px; cursor:pointer; background-image:linear-gradient(45deg,transparent 50%,#4B4C63 50%),linear-gradient(135deg,#4B4C63 50%,transparent 50%); background-position:calc(100% - 20px) 52%,calc(100% - 15px) 52%; background-size:5px 5px,5px 5px; background-repeat:no-repeat; }
+  .chips{ display:flex; gap:10px; flex-wrap:wrap; }
+  .chip{ cursor:pointer; font-family:inherit; font-size:clamp(15px,1.1vw,18px); font-weight:500; padding:clamp(12px,0.9vw,15px) clamp(20px,1.6vw,28px); white-space:nowrap; border-radius:9999px; border:1px solid #E2DEF0; background:#fff; color:var(--ink-2); transition:background .25s, color .25s, border-color .25s; }
+  .chip:hover{ border-color:var(--ink); }
+  .chip.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .rows{ display:flex; flex-direction:column; border-top:1px solid #E2DEF0; }
+  .row{ display:flex; align-items:center; gap:clamp(20px,2.4vw,48px); flex-wrap:wrap; padding:clamp(24px,2.2vw,40px) clamp(8px,1.4vw,28px); border-bottom:1px solid #E2DEF0; color:var(--ink); border-radius:24px; transition:background .3s; }
+  .row:hover{ background:#fff; color:var(--ink); }
+  .row-l{ display:flex; align-items:center; gap:clamp(16px,1.6vw,28px); flex:1 1 380px; min-width:0; }
+  .logo-tile{ flex-shrink:0; width:clamp(52px,4.4vw,76px); height:clamp(52px,4.4vw,76px); border-radius:clamp(16px,1.4vw,24px); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:clamp(17px,1.4vw,24px); letter-spacing:-0.03em; color:var(--ink-2); overflow:hidden; }
+  .logo-tile img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .row-txt{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+  .row-title{ font-size:clamp(22px,2.2vw,40px); font-weight:600; letter-spacing:-0.04em; line-height:1.05; }
+  .row-org{ font-size:clamp(15px,1.15vw,19px); color:var(--ink-2); }
+  .row-org b{ color:var(--violet); font-weight:600; }
+  .row-r{ display:flex; align-items:center; gap:clamp(12px,1.6vw,32px); flex-wrap:wrap; font-size:clamp(15px,1.1vw,18px); color:var(--ink-2); }
+  .type-pill{ padding:8px 16px; border-radius:9999px; background:#F1ECFF; color:#4B3BB0; font-weight:500; white-space:nowrap; }
+  .row-city{ min-width:110px; }
+  .row-age{ min-width:150px; }
+  .row-pay{ font-weight:600; color:var(--ink); }
+  .row-go{ width:clamp(44px,3.4vw,56px); height:clamp(44px,3.4vw,56px); border-radius:50%; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; transition:background .3s; }
+  .row:hover .row-go{ background:var(--violet); }
+  .state{ padding:clamp(56px,6vw,96px) 0; display:flex; flex-direction:column; align-items:flex-start; gap:20px; }
+  .state span{ font-size:clamp(24px,2.2vw,38px); font-weight:600; letter-spacing:-0.04em; line-height:1.2; max-width:30ch; }
 
-    .page-header { padding: 120px 24px 48px; background: linear-gradient(170deg, var(--gray-bg) 0%, var(--white) 60%); text-align: center; }
-    .page-header h1 { font-size: clamp(32px, 5vw, 48px); font-weight: 800; color: var(--primary-dark); letter-spacing: -1px; margin-bottom: 12px; }
-    .page-header p { font-size: 17px; color: var(--gray-light); font-weight: 500; max-width: 560px; margin: 0 auto; }
+  /* ───────── how to apply ───────── */
+  .apply-sec .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .apply-sec .kicker{ color:var(--faint); }
+  .apply-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; }
+  .apply-head .h2{ max-width:12ch; }
+  .steps3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .step3{ background:#17182C; border:1px solid rgba(255,255,255,0.08); border-radius:40px; padding:clamp(32px,3.4vw,64px); min-height:clamp(320px,26vw,460px); display:flex; flex-direction:column; justify-content:space-between; gap:40px; }
+  .step3:nth-child(2){ background:#1C1D36; }
+  .step3:nth-child(3){ background:linear-gradient(135deg,#ECEEFF 0%,#F4ECFF 50%,#FCEBF6 100%); color:var(--ink); border:none; }
+  .step3 .n{ font-size:clamp(80px,7vw,140px); line-height:0.8; font-weight:700; letter-spacing:-0.07em; color:#2E2F52; }
+  .step3:nth-child(2) .n{ color:#34355C; }
+  .step3:nth-child(3) .n{ color:#C9BEF5; }
+  .step3 h3{ font-size:clamp(28px,2.6vw,48px); line-height:1; letter-spacing:-0.045em; font-weight:600; margin-bottom:14px; }
+  .step3 p{ font-size:clamp(17px,1.25vw,21px); line-height:1.55; color:#B4B5C8; }
+  .step3:nth-child(3) p{ color:var(--ink-2); }
 
-    .content { max-width: 960px; margin: 0 auto; padding: 40px 24px 100px; }
-
-    .apply-note {
-      display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap;
-      background: var(--gray-bg); border: 1px solid var(--border); border-radius: 16px;
-      padding: 16px 20px; margin-bottom: 28px;
-    }
-    .apply-note p { font-size: 15px; color: var(--gray); font-weight: 600; }
-    .apply-note a { color: var(--primary-dark); font-weight: 700; }
-
-    .filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
-    .filters select {
-      border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; font-size: 14px;
-      font-family: inherit; color: var(--black); background: var(--white); min-width: 180px;
-    }
-    .jobs-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 8px; }
-    .jobs-head h2 { font-size: 26px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.5px; }
-    .jobs-head .count { font-size: 14px; color: var(--gray-light); font-weight: 600; }
-
-    .jobs-list { display: flex; flex-direction: column; gap: 14px; }
-    .job-card {
-      display: flex; gap: 18px; align-items: flex-start; padding: 20px;
-      border: 1px solid var(--border); border-radius: 18px; background: var(--white);
-      text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .job-card:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(13,30,76,0.12); }
-    .job-logo {
-      width: 56px; height: 56px; flex: none; border-radius: 14px; object-fit: cover;
-      background: var(--gray-bg); display: flex; align-items: center; justify-content: center; font-size: 26px;
-    }
-    .job-body { flex: 1; min-width: 0; }
-    .job-type {
-      display: inline-block; background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: #fff; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 14px; margin-bottom: 6px;
-    }
-    .job-card h3 { font-size: 18px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.3px; line-height: 1.25; margin-bottom: 4px; }
-    .job-company { font-size: 14px; font-weight: 700; color: var(--gray); margin-bottom: 6px; }
-    .job-meta { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--gray-light); font-weight: 600; }
-    .verified { color: var(--success); font-weight: 700; }
-    .jobs-empty, .jobs-loading { text-align: center; padding: 48px 24px; color: var(--gray-light); font-size: 15px; line-height: 1.6; }
-
-    .jobs-cta { text-align: center; padding: 48px 28px; background: var(--gray-bg); border-radius: 20px; border: 1px solid var(--border); margin-top: 48px; }
-    .jobs-cta h3 { font-size: 24px; font-weight: 800; color: var(--primary-dark); margin-bottom: 10px; }
-    .jobs-cta p { font-size: 16px; color: var(--gray-light); max-width: 480px; margin: 0 auto 24px; line-height: 1.7; }
-    .store-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-      padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700;
-      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; border: none; cursor: pointer;
-      background: var(--primary-dark); color: var(--white); box-shadow: 0 4px 20px rgba(13,30,76,0.18);
-      min-width: 180px;
-    }
-    .btn:hover { transform: translateY(-2px); }
-
-    .footer { padding: 48px 24px; border-top: 1px solid var(--border); background: var(--gray-bg); }
-    .footer-inner { max-width: 1120px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
-    .footer-left { display: flex; align-items: center; gap: 10px; }
-    .footer-left img { width: 28px; height: 28px; border-radius: 8px; }
-    .footer-left span { font-size: 14px; color: var(--gray-light); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a { font-size: 14px; color: var(--gray-light); text-decoration: none; font-weight: 500; }
-    .footer-links a:hover { color: var(--primary-dark); }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .mobile-toggle { display: block; }
-      .nav-links.open {
-        display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0;
-        background: var(--white); padding: 20px 24px; border-bottom: 1px solid var(--border);
-        box-shadow: 0 8px 24px rgba(13,30,76,0.08); gap: 16px;
-      }
-      .page-header { padding: 100px 20px 36px; }
-      .content { padding: 28px 16px 72px; }
-      .filters select { flex: 1; min-width: 0; }
-      .job-card { padding: 16px; gap: 14px; }
-      .job-logo { width: 46px; height: 46px; }
-      .footer-inner { flex-direction: column; text-align: center; }
-      .footer-links { flex-wrap: wrap; justify-content: center; }
-    }
-  </style>
+  @media (max-width:760px){
+    /* WHY stacked rows on phones: the design's one-line row has no room below ~760px. */
+    .row{ align-items:flex-start; gap:16px; }
+    .row-l{ flex:1 1 100%; }
+    .row-r{ gap:10px 14px; }
+    .row-city, .row-age{ min-width:0; }
+    .row-go{ display:none; }
+  }
+  @media (max-width:640px){ .step3{ border-radius:28px; } }
+</style>
 </head>
 <body>
 
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">
-        <img src="/logo-512.png" alt="MysMatch" width="36" height="36">
-        <span>MysMatch</span>
-      </a>
-      <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-      <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/events">Events</a>
-        <!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
-        <a href="/" class="nav-cta">Get the App</a>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="/"><img src="/logo-512.png" alt="" width="36" height="36"><span>MysMatch</span></a>
+    <nav class="nav-links" id="nav-links">
+      <a href="/">Home</a>
+      <a href="/events">Events</a>
+      <a href="/jobs" class="on" aria-current="page">Jobs</a>
+      <!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
+    </nav>
+    <div class="nav-right">
+      <a class="nav-cta" href="#get-app">Get the app</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<!-- ════════ HERO ════════ -->
+<section class="page-hero">
+  <div class="hero-stack">
+    <div class="hero-head">
+      <div class="kicker" data-reveal>/ Jobs</div>
+      <h1 data-reveal>Student jobs<br><span class="grad-text">that fit your studies.</span></h1>
+    </div>
+    <div class="hero-foot" data-reveal>
+      <p class="hero-sub">Student jobs, internships and mini-jobs from organizations on MysMatch.</p>
+      <div class="hero-right">
+        <span class="hero-pill"><i></i>Applications are sent through the MysMatch app</span>
+        <a class="btn btn-violet" href="#positions">Browse positions ↓</a>
       </div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <header class="page-header">
-    <h1>Jobs</h1>
-    <p>Student jobs, internships and mini-jobs from organizations on MysMatch.</p>
-  </header>
-
-  <main class="content">
-    <div class="apply-note">
-      <p>📱 Applications are sent through the MysMatch app.</p>
-      <a href="#get-app">Get the app →</a>
+<!-- ════════ OPEN POSITIONS (live from Supabase: get_public_jobs) ════════ -->
+<section class="sheet sheet-white positions" id="positions">
+  <div class="in">
+    <div class="pos-head">
+      <div class="pos-head-l">
+        <div class="kicker">/ Open positions</div>
+        <h2 class="h2" data-reveal><span>Open positions</span><span class="count" id="jobs-count"></span></h2>
+      </div>
+      <label class="city-pick"><span>City</span><select id="f-city" aria-label="City"><option value="">All cities</option></select></label>
     </div>
-
-    <div class="filters">
-      <select id="f-type" aria-label="Job type">
-        <option value="">All types</option>
-      </select>
-      <select id="f-city" aria-label="City">
-        <option value="">All cities</option>
-      </select>
-    </div>
-
-    <div class="jobs-head">
-      <h2>Open positions</h2>
-      <span class="count" id="jobs-count"></span>
-    </div>
-    <div class="jobs-loading" id="jobs-loading">Loading jobs…</div>
-    <div class="jobs-list" id="jobs-list" hidden></div>
-    <div class="jobs-empty" id="jobs-empty" hidden>No jobs listed right now. Check back soon — new ones are posted in the app regularly.</div>
-
-    <div class="jobs-cta" id="get-app">
-      <h3>Apply in the MysMatch app</h3>
-      <p>Download MysMatch to apply with your CV, answer the organization's questions, and chat with employers.</p>
-      <div class="store-row">
-        <a href="https://apps.apple.com/gb/app/mysmatch/id6762192785" class="btn" target="_blank" rel="noopener noreferrer">App Store</a>
-        <a href="https://play.google.com/store/apps/details?id=com.mysmatch.app" class="btn" target="_blank" rel="noopener noreferrer">Google Play</a>
+    <div class="chips" id="type-chips"></div>
+    <div>
+      <div class="state" id="jobs-loading"><span>Loading jobs…</span></div>
+      <div class="rows" id="jobs-list" hidden></div>
+      <div class="state" id="jobs-empty" hidden><span>No jobs listed right now. Check back soon — new ones are posted in the app regularly.</span></div>
+      <div class="state" id="jobs-nomatch" hidden>
+        <span>No positions match these filters yet.</span>
+        <button class="btn btn-dark" id="clear-filters" type="button">Clear filters</button>
       </div>
     </div>
-  </main>
+  </div>
+</section>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <img src="/logo-512.png" alt="MysMatch" width="28" height="28">
-        <span>&copy; 2026 MysMatch. All rights reserved.</span>
+<!-- ════════ HOW TO APPLY ════════ -->
+<section class="sheet sheet-dark apply-sec" id="get-app">
+  <div class="in">
+    <div class="apply-head">
+      <div class="pos-head-l">
+        <div class="kicker">/ How to apply</div>
+        <h2 class="h2" data-reveal>Apply in the <span style="color:#CDB8FF">MysMatch app.</span></h2>
       </div>
-      <div class="footer-links">
-        <a href="/privacy-policy">Privacy Policy</a>
-        <a href="/terms">Terms of Service</a>
-        <a href="/support">Support</a>
-        <a href="mailto:contact@mys-match.com">Contact</a>
+      <div class="stores light">
+        <a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" target="_blank" rel="noopener noreferrer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
+          <span><small>Download on the</small><b>App Store</b></span>
+        </a>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" target="_blank" rel="noopener noreferrer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
+          <span><small>Get it on</small><b>Google Play</b></span>
+        </a>
       </div>
     </div>
-  </footer>
+    <div class="steps3">
+      <div class="step3" data-reveal><span class="n">01</span><div><h3>Apply with your CV</h3><p>Send your application with your CV straight from the MysMatch app.</p></div></div>
+      <div class="step3" data-reveal><span class="n">02</span><div><h3>Answer their questions</h3><p>Respond to the organization's questions right in the app.</p></div></div>
+      <div class="step3" data-reveal><span class="n">03</span><div><h3>Chat with employers</h3><p>Talk directly with the organization once they review your application.</p></div></div>
+    </div>
+  </div>
+</section>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/js/supabase.js"></script>
-  <script>
-    (function () {
-      const list = document.getElementById('jobs-list');
-      const loading = document.getElementById('jobs-loading');
-      const empty = document.getElementById('jobs-empty');
-      const countEl = document.getElementById('jobs-count');
-      const fType = document.getElementById('f-type');
-      const fCity = document.getElementById('f-city');
-      const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
-        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-      let jobs = [];
+<!-- ════════ FOR ORGANIZATIONS ════════ -->
+<section class="sheet app-band">
+  <div class="in">
+    <div class="pos-head-l">
+      <div class="kicker" style="color:var(--ink-2)">/ For organizations</div>
+      <h2 data-reveal>Hiring students?<br><span style="color:var(--violet)">Post a job.</span></h2>
+    </div>
+    <div class="app-band-r">
+      <!-- WHY not the design's "Reach verified students": student status isn't checked (claims removed site-wide). -->
+      <p>Create an organization account in the MysMatch app to post jobs and chat with applicants in one place.</p>
+      <div><a class="btn btn-dark" href="mailto:contact@mys-match.com">Get in touch →</a></div>
+    </div>
+  </div>
+</section>
 
-      function card(j) {
-        const logoUrl = j.company_logo || j.org_avatar_url;
-        const logo = logoUrl
-          ? '<img class="job-logo" src="' + esc(logoUrl) + '" alt="' + esc(j.company) + '" loading="lazy">'
-          : '<div class="job-logo">💼</div>';
-        const loc = [j.city, j.country].filter(Boolean).join(', ');
-        return '<a class="job-card" href="/jobs/job.html?id=' + encodeURIComponent(j.id) + '">'
-          + logo
-          + '<div class="job-body">'
-          + '<span class="job-type">' + esc(MM.JOB_TYPE_LABELS[j.employment_type] || j.employment_type) + '</span>'
-          + '<h3>' + esc(j.title) + '</h3>'
-          + '<div class="job-company">' + esc(j.company)
-          + (j.org_verified ? ' <span class="verified" title="Verified organization">✓</span>' : '') + '</div>'
-          + '<div class="job-meta">'
-          + (loc ? '<span>📍 ' + esc(loc) + '</span>' : '')
-          + (j.salary ? '<span>💶 ' + esc(j.salary) + '</span>' : '')
-          + '<span>🕒 ' + esc(MM.postedAgo(j.created_at)) + '</span>'
-          + '</div></div></a>';
-      }
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+  <div class="in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="/"><img src="/logo-512.png" alt="" width="44" height="44"><span>MysMatch</span></a>
+        <p>Nobody studies alone.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col"><span class="kicker">Product</span><a href="/events">Events</a><a href="/jobs">Jobs</a><a href="/dashboard.html">Organizer login</a></div>
+        <div class="foot-col"><span class="kicker">Company</span><a href="mailto:contact@mys-match.com">Contact</a></div>
+        <div class="foot-col"><span class="kicker">Legal</span><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/support">Support</a></div>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">MysMatch</div>
+    <div class="foot-bottom"><span>© 2026 MysMatch. All rights reserved.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+  </div>
+</footer>
 
-      function render() {
-        const t = fType.value, c = fCity.value;
-        const shown = jobs.filter((j) => (!t || j.employment_type === t) && (!c || j.city === c));
-        list.innerHTML = shown.map(card).join('');
-        list.hidden = !shown.length;
-        empty.hidden = !!shown.length;
-        countEl.textContent = shown.length + (shown.length === 1 ? ' job' : ' jobs');
-      }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/site.js"></script>
+<script>
+// Live jobs list + filters (type chips, city select). Pure string templating.
+(function () {
+  var list = document.getElementById('jobs-list'), loading = document.getElementById('jobs-loading');
+  var empty = document.getElementById('jobs-empty'), noMatch = document.getElementById('jobs-nomatch');
+  var countEl = document.getElementById('jobs-count'), chipsEl = document.getElementById('type-chips');
+  var fCity = document.getElementById('f-city');
+  var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var TINTS = ['linear-gradient(135deg,#E6E9FF,#F1E8FF)', 'linear-gradient(135deg,#F1E8FF,#FCE6F3)', 'linear-gradient(135deg,#E9EEFF,#FCE9F4)'];
+  // WHY: organizations type "-" when a job has no fixed city; treat it as empty.
+  var cityOf = function (j) { var c = (j.city || '').trim(); return c === '-' ? '' : c; };
+  var jobs = [], state = { type: '', city: '' };
 
-      function fillFilters() {
-        const types = [...new Set(jobs.map((j) => j.employment_type))];
-        types.forEach((t) => fType.insertAdjacentHTML('beforeend',
-          '<option value="' + esc(t) + '">' + esc(MM.JOB_TYPE_LABELS[t] || t) + '</option>'));
-        const cities = [...new Set(jobs.map((j) => j.city).filter(Boolean))].sort();
-        cities.forEach((c) => fCity.insertAdjacentHTML('beforeend', '<option>' + esc(c) + '</option>'));
-      }
+  function initials(name) {
+    return String(name || '?').split(/\s+/).filter(Boolean).map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+  }
+  function row(j, i) {
+    var logoUrl = j.company_logo || j.org_avatar_url;
+    var tile = '<span class="logo-tile" style="background:' + TINTS[i % TINTS.length] + '">'
+      + (logoUrl ? '<img src="' + esc(logoUrl) + '" alt="" loading="lazy">' : esc(initials(j.company))) + '</span>';
+    var loc = [cityOf(j), j.country].filter(Boolean).join(', ');
+    return '<a class="row" data-reveal href="/jobs/job.html?id=' + encodeURIComponent(j.id) + '">'
+      + '<div class="row-l">' + tile + '<div class="row-txt"><span class="row-title">' + esc(j.title) + '</span>'
+      + '<span class="row-org">' + esc(j.company) + (j.org_verified ? ' <b title="Verified organization">✓</b>' : '') + '</span></div></div>'
+      + '<div class="row-r"><span class="type-pill">' + esc(MM.JOB_TYPE_LABELS[j.employment_type] || j.employment_type) + '</span>'
+      + '<span class="row-city">' + esc(loc || 'Flexible location') + '</span>'
+      + '<span class="row-age">' + esc(MM.postedAgo(j.created_at)) + '</span>'
+      + (j.salary ? '<span class="row-pay">' + esc(j.salary) + '</span>' : '')
+      + '<span class="row-go" aria-hidden="true">→</span></div></a>';
+  }
+  function render() {
+    var shown = jobs.filter(function (j) { return (!state.type || j.employment_type === state.type) && (!state.city || cityOf(j) === state.city); });
+    chipsEl.querySelectorAll('.chip').forEach(function (b) { b.classList.toggle('on', b.dataset.type === state.type); });
+    fCity.value = state.city;
+    countEl.textContent = pad(shown.length) + (shown.length === 1 ? ' role' : ' roles');
+    if (!jobs.length) { list.hidden = true; noMatch.hidden = true; empty.hidden = false; return; }
+    empty.hidden = true;
+    noMatch.hidden = shown.length > 0;
+    list.hidden = shown.length === 0;
+    list.innerHTML = shown.map(row).join('');
+    if (window.MMReveal) window.MMReveal(list);
+  }
+  function buildFilters() {
+    // Chips: every job type the app has (same labels as the app's jobs board).
+    chipsEl.innerHTML = [['', 'All types']].concat(Object.keys(MM.JOB_TYPE_LABELS).map(function (k) { return [k, MM.JOB_TYPE_LABELS[k]]; }))
+      .map(function (t) { return '<button class="chip" type="button" data-type="' + esc(t[0]) + '">' + esc(t[1]) + '</button>'; }).join('');
+    var cities = jobs.map(cityOf).filter(Boolean).filter(function (c, i, a) { return a.indexOf(c) === i; }).sort();
+    cities.forEach(function (c) { fCity.insertAdjacentHTML('beforeend', '<option value="' + esc(c) + '">' + esc(c) + '</option>'); });
+  }
+  chipsEl.addEventListener('click', function (e) { var b = e.target.closest('.chip'); if (b) { state.type = b.dataset.type; render(); } });
+  fCity.addEventListener('change', function () { state.city = fCity.value; render(); });
+  document.getElementById('clear-filters').addEventListener('click', function () { state = { type: '', city: '' }; render(); });
 
-      if (!window.MM) { loading.textContent = 'Could not load jobs.'; return; }
-      MM.listJobs().then((data) => {
-        jobs = data;
-        loading.hidden = true;
-        if (!jobs.length) { empty.hidden = false; countEl.textContent = '0 jobs'; return; }
-        fillFilters();
-        render();
-      }).catch((err) => { loading.textContent = 'Could not load jobs.'; console.error(err); });
-      fType.addEventListener('change', render);
-      fCity.addEventListener('change', render);
-    })();
-
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 10); }, { passive: true });
-    document.querySelectorAll('.nav-links a').forEach((a) => {
-      a.addEventListener('click', () => document.querySelector('.nav-links').classList.remove('open'));
-    });
-  </script>
+  if (!window.MM) { loading.firstChild.textContent = 'Could not load jobs.'; return; }
+  MM.listJobs().then(function (data) {
+    jobs = data || [];
+    loading.hidden = true;
+    buildFilters();
+    render();
+  }).catch(function (err) { loading.firstChild.textContent = 'Could not load jobs.'; console.error(err); });
+})();
+</script>
 </body>
 </html>
