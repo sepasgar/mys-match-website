@@ -111,16 +111,21 @@
   .progress{ position:absolute; left:0; bottom:0; height:2px; width:0; background:linear-gradient(90deg,#B3B8FF,#CDB8FF,#F5BCE4); }
 
   /* ───────── hero ───────── */
-  .hero{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%); color:#fff; position:relative; overflow:hidden; min-height:100vh; display:flex; flex-direction:column; padding-bottom:48px; }
+  /* WHY no min-height:100vh + space-between (Oct 2026): on laptop screens (e.g. 1536×730
+     at 125% scaling) that spread left a big gap above the title and pushed the buttons and
+     stats below the fold. Content now stacks from the top and fits the first screen. */
+  .hero{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%); color:#fff; position:relative; overflow:hidden; display:flex; flex-direction:column; padding-bottom:48px; }
   .hero-spot{ position:absolute; left:0; top:0; width:800px; height:800px; margin:-400px 0 0 -400px; border-radius:50%; background:radial-gradient(closest-side,rgba(233,75,154,0.1),rgba(15,16,32,0)); pointer-events:none; opacity:0; transition:opacity .5s; }
   .hero-glow{ position:absolute; right:-10%; top:-25%; width:80vw; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.16),rgba(233,75,154,0.06) 55%,rgba(15,16,32,0) 75%); pointer-events:none; }
-  .hero-in{ position:relative; flex:1; display:flex; flex-direction:column; justify-content:space-between; gap:clamp(48px,6vw,96px); padding:clamp(140px,14vw,220px) var(--pad-x) 0; }
+  .hero-in{ position:relative; flex:1; display:flex; flex-direction:column; justify-content:flex-start; gap:clamp(28px,3vw,48px); padding:clamp(112px,9vw,150px) var(--pad-x) 0; }
   .eyebrow{ font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); display:flex; align-items:center; gap:12px; }
   .eyebrow i{ width:9px; height:9px; border-radius:50%; background:var(--green); box-shadow:0 0 0 6px rgba(52,199,123,0.15); }
-  .hero h1{ margin-top:clamp(24px,2.4vw,40px); font-size:clamp(52px,8.6vw,176px); line-height:0.9; letter-spacing:-0.06em; font-weight:700; max-width:14ch; text-wrap:balance; }
+  /* WHY min(vw, vh) + no 14ch cap: on short laptop screens the title wrapped to two big lines
+     and pushed the buttons below the fold; now it stays one line wherever it fits. */
+  .hero h1{ margin-top:0; font-size:clamp(48px,min(8.6vw,15vh),176px); line-height:0.9; letter-spacing:-0.06em; font-weight:700; text-wrap:balance; }
   .grad-text{ background:var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
   .hero-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(48px,5vw,96px); align-items:end; }
-  .hero-copy{ display:flex; flex-direction:column; gap:clamp(32px,3vw,48px); padding-bottom:clamp(48px,6vw,104px); }
+  .hero-copy{ display:flex; flex-direction:column; gap:clamp(24px,2.4vw,40px); padding-bottom:clamp(32px,4vw,72px); }
   .hero-sub{ max-width:34ch; font-size:clamp(19px,1.6vw,28px); line-height:1.45; color:var(--on-dark); letter-spacing:-0.01em; text-wrap:pretty; }
   .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
   .stats{ display:flex; gap:clamp(32px,4vw,72px); flex-wrap:wrap; padding-top:clamp(24px,2.4vw,40px); border-top:1px solid rgba(255,255,255,0.1); }
@@ -130,7 +135,8 @@
   .hero-phones{ display:flex; justify-content:flex-end; gap:clamp(16px,2vw,36px); align-items:flex-start; margin-bottom:-48px; }
   .phone{ aspect-ratio:860/1861; overflow:hidden; background:#1A1B30; }
   .phone img{ width:100%; height:100%; object-fit:cover; display:block; }
-  .hero-phones .phone{ width:clamp(150px,17vw,340px); border-radius:clamp(26px,2.6vw,52px); border:1px solid rgba(255,255,255,0.14); box-shadow:0 50px 100px rgba(0,0,0,0.55); }
+  /* WHY min(…vw, …vh): the phones set the hero height; capping by screen height keeps short laptop screens above the fold. */
+  .hero-phones .phone{ width:clamp(130px,min(16vw,30vh),320px); border-radius:clamp(26px,2.6vw,52px); border:1px solid rgba(255,255,255,0.14); box-shadow:0 50px 100px rgba(0,0,0,0.55); }
   .hero-phones .phone:first-child{ transform:translateY(6%) rotate(-4deg); }
   .hero-phones .phone:last-child{ transform:translateY(18%) rotate(3deg); }
 
