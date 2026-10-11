@@ -42,10 +42,11 @@
   // --- Public event listing -------------------------------------------------
   // Since Oct 2026 the website lists EVERY non-private upcoming event. Events
   // without web registration ("Register on web too" off in the app) come back
-  // as previews: e.web_registration === false and NO date / time / location /
-  // city fields — the server leaves them out (get_web_events), so they can't be
-  // read from the page source. Pages show "Download the app to see the location
-  // and time" for those. Order is by the real start moment, done server-side.
+  // as previews: e.web_registration === false and NO location / city /
+  // starting-point fields — the server leaves them out (get_web_events), so they
+  // can't be read from the page source. Since Oct 11 2026 previews DO include
+  // date / starts_at / timezone (only the location stays app-only); pages show
+  // "Location in the app". Order is by the real start moment, done server-side.
   async function listEvents() {
     const startOfToday = new Date(); startOfToday.setHours(0, 0, 0, 0);
     const { data, error } = await db.rpc('get_web_events', { p_from: startOfToday.toISOString() });

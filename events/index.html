@@ -275,14 +275,16 @@
     var total = (e._counts && e._counts.total) || 0;
     var full = e.max_capacity != null && total >= e.max_capacity;
     var badge = e.max_capacity == null ? '' : (full ? '<span class="ev-badge full">Fully booked</span>' : '<span class="ev-badge">' + (e.max_capacity - total) + ' spots left</span>');
-    // In-app-only events arrive without date/location (server-side, see MM.listEvents).
+    // In-app-only events arrive without a location (server-side, see MM.listEvents).
+    // Since Oct 11 2026 they include the date; the "in the app" fallback covers
+    // responses from before that server change.
     var appOnly = e.web_registration === false;
-    var dp = appOnly ? null : (e.starts_at ? dateParts(e) : null);
+    var dp = e.starts_at ? dateParts(e) : null;
     var date = dp
       ? '<span class="ev-date-l"><span class="ev-day">' + esc(dp.day) + '</span><span class="ev-mon"><span>' + esc(dp.mon) + '</span><span>' + esc(dp.wd) + ' · ' + esc(dp.time) + '</span></span></span>'
       : '<span class="ev-noday">' + (appOnly ? 'Date &amp; place in the app' : 'Date to be announced') + '</span>';
     var row = '<span class="ev-cat">' + esc(cat ? cat.label : (e.category || 'Event')) + '</span>' + badge;
-    var place = appOnly ? 'Download the app to see the location and time' : (e.city || e.location || '');
+    var place = appOnly ? (dp ? 'Location in the app' : 'Download the app to see the location and time') : (e.city || e.location || '');
     return '<a class="ev-card' + (appOnly ? ' app-only' : '') + '" data-reveal href="/events/event.html?id=' + encodeURIComponent(e.id) + '">'
       + '<div class="ev-top' + (e.event_image ? ' has-photo' : '') + '" style="background:' + TINTS[ci >= 0 ? ci : 0] + '">'
       + (e.event_image
