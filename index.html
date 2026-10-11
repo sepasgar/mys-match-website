@@ -290,7 +290,10 @@
   .foot-col a{ color:#E4E4EE; }
   .foot-col a:hover{ color:#fff; }
   /* WHY 18.5vw (design had 21.5vw): at our side padding the last letter got clipped. */
-  .wordmark{ font-size:clamp(60px,18.5vw,400px); line-height:0.78; font-weight:800; letter-spacing:-0.07em; background:linear-gradient(180deg,#26274A,#141528); -webkit-background-clip:text; background-clip:text; color:transparent; user-select:none; margin-left:-0.04em; white-space:nowrap; }
+  .wordmark{ font-size:clamp(60px,18.5vw,400px); line-height:0.78; font-weight:800; letter-spacing:-0.07em; background:linear-gradient(180deg,#26274A,#141528); -webkit-background-clip:text; background-clip:text; color:transparent; user-select:none; margin-left:-0.04em; white-space:nowrap;
+    /* WHY padding + negative margin: with line-height .78 the gradient (background-clip:text)
+       ended above the y's descender and cut it off; extend the box, keep the spacing. */
+    padding-bottom:0.16em; margin-bottom:-0.16em; }
   .foot-bottom{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); color:var(--muted); border-top:1px solid rgba(255,255,255,0.08); padding-top:28px; }
   .foot-bottom a{ color:var(--muted); }
   .foot-bottom a:hover{ color:#fff; }
