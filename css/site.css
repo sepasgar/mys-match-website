@@ -107,7 +107,8 @@ h1,h2,h3,p{ margin:0; }
 .foot-brand .brand{ font-size:24px; gap:14px; }
 .foot-brand .brand img{ width:44px; height:44px; border-radius:12px; }
 .foot-brand p{ font-size:clamp(17px,1.3vw,22px); line-height:1.5; color:var(--faint); }
-.foot-cols{ display:grid; grid-template-columns:repeat(3,minmax(120px,auto)); gap:clamp(32px,5vw,96px); font-size:clamp(16px,1.2vw,20px); }
+/* 4 columns since Oct 2026: Product, Company, Legal, Social. */
+.foot-cols{ display:grid; grid-template-columns:repeat(4,minmax(110px,auto)); gap:clamp(32px,5vw,96px); font-size:clamp(16px,1.2vw,20px); }
 .foot-col{ display:flex; flex-direction:column; gap:16px; }
 .foot-col a{ color:#E4E4EE; }
 .foot-col a:hover{ color:#fff; }
