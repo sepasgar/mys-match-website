@@ -1,557 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Events — MysMatch</title>
-  <meta name="description" content="Discover and join student events on MysMatch. From study sessions to campus parties, find what's happening near you.">
-  <meta name="theme-color" content="#0D1E4C">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events — MysMatch</title>
+<meta name="description" content="Discover and join student events on MysMatch. From study sessions to campus parties, find what's happening near you.">
+<meta name="theme-color" content="#0F1020">
 
-  <meta property="og:title" content="Events — MysMatch">
-  <meta property="og:description" content="Discover student events on MysMatch. Find what's happening near you.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://www.mysmatch.com/events">
-  <meta property="og:image" content="https://www.mysmatch.com/og-image.png">
+<meta property="og:title" content="Events — MysMatch">
+<meta property="og:description" content="Discover student events on MysMatch. Find what's happening near you.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.mysmatch.com/events">
+<meta property="og:image" content="https://www.mysmatch.com/og-image.png">
 
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Events — MysMatch">
-  <meta name="twitter:description" content="Discover student events on MysMatch.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Events — MysMatch">
+<meta name="twitter:description" content="Discover student events on MysMatch.">
 
-  <link rel="icon" type="image/png" href="/logo-512.png">
-  <link rel="canonical" href="https://www.mysmatch.com/events">
+<link rel="icon" type="image/png" href="/logo-512.png">
+<link rel="canonical" href="https://www.mysmatch.com/events">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<style>
+  /* ───────── upcoming (filters + date cards) ───────── */
+  .upcoming .in{ display:flex; flex-direction:column; gap:clamp(40px,4vw,72px); }
+  .up-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .up-head-l{ display:flex; flex-direction:column; gap:clamp(16px,1.6vw,28px); }
+  .up-head .h2{ font-size:clamp(44px,5.6vw,112px); display:flex; align-items:baseline; gap:clamp(14px,1.4vw,28px); flex-wrap:wrap; }
+  .count{ font-family:var(--mono); font-size:clamp(16px,1.4vw,24px); letter-spacing:0; font-weight:500; color:var(--violet); }
+  .free-toggle{ cursor:pointer; display:flex; align-items:center; gap:14px; padding:8px 20px 8px 8px; border-radius:9999px; background:#fff; border:1px solid #E2DEF0; font-family:inherit; font-size:clamp(15px,1.05vw,17px); color:var(--ink); font-weight:500; }
+  .free-track{ width:52px; height:30px; border-radius:9999px; background:#E2DEF0; position:relative; transition:background .25s; }
+  .free-track::after{ content:""; position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(15,16,32,0.2); transition:left .25s; }
+  .free-toggle[aria-pressed="true"] .free-track{ background:var(--violet); }
+  .free-toggle[aria-pressed="true"] .free-track::after{ left:25px; }
+  .cat-chips{ display:flex; gap:10px; flex-wrap:wrap; }
+  .cat-chip{ cursor:pointer; font-family:inherit; font-size:clamp(15px,1.1vw,18px); font-weight:500; padding:clamp(12px,0.9vw,15px) clamp(20px,1.6vw,28px); white-space:nowrap; border-radius:9999px; border:1px solid #E2DEF0; background:#fff; color:var(--ink-2); transition:background .25s, color .25s, border-color .25s; }
+  .cat-chip:hover{ border-color:var(--ink); }
+  .cat-chip.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .ev-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .ev-card{ display:flex; flex-direction:column; border-radius:36px; overflow:hidden; background:#fff; color:var(--ink); box-shadow:0 1px 2px rgba(15,16,32,0.04),0 24px 48px -28px rgba(60,40,140,0.25); transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s; }
+  .ev-card:hover{ transform:translateY(-8px); box-shadow:0 40px 70px -30px rgba(60,40,140,0.35); color:var(--ink); }
+  /* In-app-only event (Oct 2026): thin brand-gradient frame so the preview reads
+     differently from events you can register for here (same idea as before). */
+  .ev-card.app-only{ border:2px solid transparent; background:linear-gradient(#fff,#fff) padding-box, linear-gradient(100deg,#7B5CFF,#E94B9A) border-box; }
+  .ev-top{ position:relative; padding:clamp(24px,2vw,36px); min-height:clamp(220px,17vw,300px); display:flex; flex-direction:column; justify-content:space-between; gap:20px; }
+  .ev-row{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .ev-cat{ font-family:var(--mono); font-size:clamp(11px,0.8vw,13px); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-2); }
+  .ev-badge{ padding:6px 12px; border-radius:9999px; background:rgba(255,255,255,0.75); color:var(--ink); font-size:13px; font-weight:600; white-space:nowrap; }
+  .ev-badge.full{ background:var(--ink); color:#fff; }
+  .ev-date{ display:flex; align-items:flex-end; justify-content:space-between; gap:14px; }
+  .ev-date-l{ display:flex; align-items:flex-end; gap:14px; min-width:0; }
+  .ev-day{ font-size:clamp(88px,7.6vw,148px); line-height:0.78; font-weight:700; letter-spacing:-0.07em; }
+  .ev-mon{ display:flex; flex-direction:column; gap:2px; padding-bottom:4px; font-size:clamp(16px,1.2vw,20px); font-weight:600; letter-spacing:-0.02em; }
+  .ev-mon span:last-child{ color:var(--ink-2); font-weight:500; }
+  .ev-noday{ font-size:clamp(26px,2.2vw,36px); line-height:1.05; font-weight:600; letter-spacing:-0.04em; max-width:10ch; }
+  /* WHY a thumbnail: real events have a cover photo; the design's date block stays
+     the hero of the card and the photo sits beside it instead of replacing it. */
+  .ev-thumb{ width:clamp(72px,6vw,96px); aspect-ratio:1; border-radius:22px; object-fit:cover; flex-shrink:0; box-shadow:0 10px 24px rgba(15,16,32,0.18); }
+  .ev-body{ padding:clamp(22px,1.8vw,32px) clamp(24px,2vw,36px) clamp(26px,2vw,36px); display:flex; flex-direction:column; gap:18px; flex:1; }
+  .ev-title{ font-size:clamp(22px,1.9vw,32px); font-weight:600; letter-spacing:-0.04em; line-height:1.08; }
+  .ev-foot{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:clamp(15px,1.05vw,17px); color:var(--ink-2); }
+  .ev-price{ padding:8px 16px; border-radius:9999px; background:#F1ECFF; color:#4B3BB0; font-weight:600; white-space:nowrap; }
+  .ev-state{ padding:clamp(40px,4vw,72px) 0; display:flex; flex-direction:column; align-items:flex-start; gap:20px; }
+  .ev-state span{ font-size:clamp(24px,2.2vw,38px); font-weight:600; letter-spacing:-0.04em; line-height:1.2; max-width:30ch; }
 
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  /* ───────── explore by category ───────── */
+  .explore .in{ display:flex; flex-direction:column; gap:clamp(48px,5vw,96px); }
+  .explore .h2{ max-width:12ch; }
+  .tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:clamp(12px,1.2vw,20px); }
+  .tile{ cursor:pointer; text-align:left; font-family:inherit; border:none; border-radius:32px; background:#fff; padding:clamp(24px,2.2vw,40px); min-height:clamp(180px,14vw,260px); display:flex; flex-direction:column; justify-content:space-between; gap:24px; color:var(--ink); transition:transform .5s cubic-bezier(.2,.7,.2,1), background .4s; }
+  .tile:hover{ transform:translateY(-6px); background:#FCFBFF; }
+  .tile-top{ display:flex; justify-content:space-between; align-items:center; }
+  .tile-ic{ width:clamp(44px,3.2vw,56px); height:clamp(44px,3.2vw,56px); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:clamp(20px,1.5vw,26px); }
+  .tile-n{ font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); color:var(--muted); }
+  .tile b{ font-size:clamp(24px,2.1vw,38px); font-weight:600; letter-spacing:-0.04em; line-height:1.02; }
 
-    :root {
-      --primary: #C48CB3;
-      --primary-dark: #0D1E4C;
-      --primary-light: #E5C9D7;
-      --accent: #83A6CE;
-      --black: #0B1B32;
-      --white: #FFFFFF;
-      --gray: #26415E;
-      --gray-light: #6B8299;
-      --gray-bg: #F5F0F3;
-      --border: #E5C9D7;
-      --success: #34C77B;
-    }
+  /* ───────── guests / organizers ───────── */
+  .both .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .both .kicker{ color:var(--faint); }
+  .both .h2{ max-width:13ch; }
+  .both-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .both-card{ background:#17182C; border:1px solid rgba(255,255,255,0.08); border-radius:40px; padding:clamp(28px,3.4vw,64px); display:flex; flex-direction:column; gap:clamp(28px,2.6vw,44px); }
+  .both-card.light{ background:linear-gradient(135deg,#ECEEFF 0%,#F4ECFF 50%,#FCEBF6 100%); color:var(--ink); border:none; }
+  .both-card.light .kicker{ color:var(--ink-2); }
+  .both-list{ display:flex; flex-direction:column; border-top:1px solid rgba(255,255,255,0.1); }
+  .both-list > div{ padding:clamp(20px,1.8vw,32px) 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; gap:8px; }
+  .both-list > div:last-child{ border-bottom:none; }
+  .both-list h3{ font-size:clamp(22px,2vw,34px); letter-spacing:-0.035em; font-weight:600; }
+  .both-list p{ font-size:clamp(16px,1.2vw,20px); line-height:1.55; color:#B4B5C8; }
+  .both-card.light .both-list, .both-card.light .both-list > div{ border-color:#DCD3F2; }
+  .both-card.light .both-list p{ color:var(--ink-2); }
 
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--black);
-      background: var(--white);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      transition: box-shadow 0.3s;
-    }
-    .nav.scrolled { box-shadow: 0 2px 20px rgba(13,30,76,0.08); }
-    .nav-inner {
-      max-width: 1120px; margin: 0 auto; padding: 0 24px; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      text-decoration: none; color: var(--primary-dark);
-    }
-    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
-    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-    .nav-links { display: flex; align-items: center; gap: 32px; }
-    .nav-links a {
-      text-decoration: none; color: var(--gray); font-size: 15px;
-      font-weight: 500; transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--primary-dark); }
-    .nav-cta {
-      background: var(--primary-dark) !important; color: var(--white) !important;
-      padding: 10px 22px !important; border-radius: 12px !important;
-      font-weight: 600 !important; transition: transform 0.2s, box-shadow 0.2s !important;
-    }
-    .nav-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(13,30,76,0.2); }
-    .mobile-toggle {
-      display: none; background: none; border: none; cursor: pointer; padding: 8px;
-    }
-    .mobile-toggle span {
-      display: block; width: 22px; height: 2px; background: var(--primary-dark);
-      margin: 5px 0; border-radius: 2px; transition: 0.3s;
-    }
-
-    .page-header {
-      padding: 120px 24px 48px;
-      background: linear-gradient(170deg, var(--gray-bg) 0%, var(--white) 60%);
-      text-align: center;
-    }
-    .page-header h1 {
-      font-size: clamp(32px, 5vw, 48px); font-weight: 800;
-      color: var(--primary-dark); letter-spacing: -1px; margin-bottom: 12px;
-    }
-    .page-header p {
-      font-size: 17px; color: var(--gray-light); font-weight: 500;
-      max-width: 560px; margin: 0 auto;
-    }
-
-    .content {
-      max-width: 960px; margin: 0 auto; padding: 48px 24px 100px;
-    }
-
-    .featured-event {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border-radius: 20px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background: var(--white);
-      margin-bottom: 48px;
-      transition: transform 0.2s, box-shadow 0.2s;
-      text-decoration: none;
-      color: inherit;
-    }
-    .featured-event:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 40px rgba(13,30,76,0.12);
-    }
-    .featured-event-img {
-      width: 100%;
-      height: 100%;
-      min-height: 280px;
-      object-fit: cover;
-      display: block;
-    }
-    .featured-event-info {
-      padding: 36px 32px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .featured-event-tag {
-      display: inline-block;
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: var(--white);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 16px;
-      margin-bottom: 14px;
-      width: fit-content;
-    }
-    .featured-event-info h2 {
-      font-size: 24px;
-      font-weight: 800;
-      color: var(--primary-dark);
-      letter-spacing: -0.5px;
-      margin-bottom: 10px;
-      line-height: 1.2;
-    }
-    .featured-event-info p {
-      font-size: 15px;
-      color: var(--gray-light);
-      line-height: 1.6;
-      margin-bottom: 18px;
-    }
-    .featured-event-meta {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .featured-event-meta span {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--gray);
-    }
-
-    .events-intro {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-      margin-bottom: 48px;
-    }
-    .event-category {
-      padding: 24px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: var(--white);
-      text-align: center;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .event-category:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 24px rgba(13,30,76,0.08);
-    }
-    .event-category .emoji { font-size: 36px; margin-bottom: 10px; display: block; }
-    .event-category .label {
-      font-size: 15px; font-weight: 700; color: var(--primary-dark);
-    }
-
-    .events-cta {
-      text-align: center; padding: 56px 32px;
-      background: var(--gray-bg); border-radius: 20px;
-      border: 1px solid var(--border);
-    }
-    .events-cta h3 {
-      font-size: 24px; font-weight: 800; color: var(--primary-dark); margin-bottom: 12px;
-    }
-    .events-cta p {
-      font-size: 16px; color: var(--gray-light); max-width: 480px;
-      margin: 0 auto 28px; line-height: 1.7;
-    }
-    .events-cta-buttons {
-      display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;
-    }
-    .btn {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700;
-      text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;
-      cursor: pointer; border: none;
-    }
-    .btn:hover { transform: translateY(-2px); }
-    .btn-primary {
-      background: var(--primary-dark); color: var(--white);
-      box-shadow: 0 4px 20px rgba(13,30,76,0.18);
-    }
-    .btn-primary:hover { box-shadow: 0 8px 30px rgba(13,30,76,0.25); }
-    .store-btn { flex: 1; min-width: 180px; max-width: 220px; justify-content: center; }
-
-    .features-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 20px;
-      margin-top: 48px;
-    }
-    .feature-item {
-      padding: 24px;
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      background: var(--white);
-    }
-    .feature-item h4 {
-      font-size: 16px; font-weight: 700; color: var(--primary-dark);
-      margin-bottom: 6px;
-    }
-    .feature-item p {
-      font-size: 14px; color: var(--gray-light); line-height: 1.6;
-    }
-
-    /* --- Live events grid (loaded from Supabase) --- */
-    .live-events { margin-bottom: 56px; }
-    .live-events-head {
-      display: flex; align-items: baseline; justify-content: space-between;
-      margin-bottom: 24px; flex-wrap: wrap; gap: 8px;
-    }
-    .live-events-head h2 {
-      font-size: 26px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.5px;
-    }
-    .live-events-head .count { font-size: 14px; color: var(--gray-light); font-weight: 600; }
-    .events-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px;
-    }
-    .event-card {
-      display: flex; flex-direction: column; border-radius: 18px; overflow: hidden;
-      border: 1px solid var(--border); background: var(--white);
-      text-decoration: none; color: inherit; transition: transform 0.2s, box-shadow 0.2s;
-    }
-    /* In-app-only events (Oct 2026): thin brand-gradient frame so the preview
-       reads differently from events you can register for here. Gradient border
-       = white padding-box over a gradient border-box. */
-    .event-card.app-only {
-      border: 2px solid transparent;
-      background: linear-gradient(var(--white), var(--white)) padding-box,
-                  linear-gradient(95deg, #4A2BFF 0%, #8A3BFF 48%, #FF39C6 100%) border-box;
-    }
-    .event-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(13,30,76,0.12); }
-    .event-card-img { width: 100%; height: 168px; object-fit: cover; background: var(--gray-bg); display: block; }
-    .event-card-img.placeholder { display: flex; align-items: center; justify-content: center; font-size: 40px; }
-    .event-card-body { padding: 20px; display: flex; flex-direction: column; flex: 1; }
-    .event-card-tag {
-      align-self: flex-start; background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 14px; margin-bottom: 10px;
-    }
-    .event-card h3 {
-      font-size: 18px; font-weight: 800; color: var(--primary-dark);
-      letter-spacing: -0.3px; margin-bottom: 8px; line-height: 1.25;
-    }
-    .event-card .meta {
-      font-size: 13px; color: var(--gray-light); font-weight: 600;
-      margin-bottom: 4px; display: flex; gap: 6px; align-items: center;
-    }
-    .event-card .foot {
-      margin-top: auto; padding-top: 14px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .event-card .price { font-size: 14px; font-weight: 800; color: var(--primary-dark); }
-    .event-card .spots { font-size: 12px; font-weight: 700; color: var(--gray-light); }
-    .event-card .spots.full { color: #D14; }
-    .events-empty, .events-loading { text-align: center; padding: 48px 24px; color: var(--gray-light); font-size: 15px; line-height: 1.6; }
-    .section-divider {
-      text-align: center; font-size: 12px; font-weight: 800; letter-spacing: 1.5px;
-      text-transform: uppercase; color: var(--gray-light); margin: 8px 0 28px;
-    }
-
-    .footer {
-      padding: 48px 24px; border-top: 1px solid var(--border); background: var(--gray-bg);
-    }
-    .footer-inner {
-      max-width: 1120px; margin: 0 auto;
-      display: flex; justify-content: space-between; align-items: center;
-      flex-wrap: wrap; gap: 16px;
-    }
-    .footer-left { display: flex; align-items: center; gap: 10px; }
-    .footer-left img { width: 28px; height: 28px; border-radius: 8px; }
-    .footer-left span { font-size: 14px; color: var(--gray-light); }
-    .footer-links { display: flex; gap: 24px; }
-    .footer-links a {
-      font-size: 14px; color: var(--gray-light); text-decoration: none;
-      font-weight: 500; transition: color 0.2s;
-    }
-    .footer-links a:hover { color: var(--primary-dark); }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .mobile-toggle { display: block; }
-      .nav-links.open {
-        display: flex; flex-direction: column;
-        position: absolute; top: 64px; left: 0; right: 0;
-        background: var(--white); padding: 20px 24px;
-        border-bottom: 1px solid var(--border);
-        box-shadow: 0 8px 24px rgba(13,30,76,0.08); gap: 16px;
-      }
-      .page-header { padding: 100px 20px 36px; }
-      .content { padding: 36px 20px 72px; }
-      .featured-event { grid-template-columns: 1fr; }
-      .featured-event-img { min-height: 200px; }
-      .featured-event-info { padding: 24px 20px; }
-      .events-intro { grid-template-columns: repeat(2, 1fr); }
-      .events-grid { grid-template-columns: 1fr; }
-      .features-row { grid-template-columns: 1fr; }
-      .footer-inner { flex-direction: column; text-align: center; }
-      .footer-links { flex-wrap: wrap; justify-content: center; }
-    }
-  </style>
+  @media (max-width:640px){
+    .ev-card, .tile{ border-radius:28px; }
+    .both-card{ border-radius:28px; }
+    .free-toggle{ padding-right:16px; }
+    /* WHY two columns: one tile per row made seven near-empty cards a long scroll. */
+    .tiles{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .tile{ min-height:150px; padding:20px; border-radius:24px; gap:16px; }
+    .tile-n{ font-size:11px; }
+    .tile b{ font-size:20px; }
+  }
+</style>
 </head>
 <body>
 
-  <nav class="nav" id="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo">
-        <img src="/logo-512.png" alt="MysMatch" width="36" height="36">
-        <span>MysMatch</span>
-      </a>
-      <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
-        <span></span><span></span><span></span>
-      </button>
-      <div class="nav-links">
-        <a href="/">Home</a>
-        <a href="/jobs">Jobs</a>
-        <!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
-        <a href="/" class="nav-cta">Get the App</a>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="/"><img src="/logo-512.png" alt="" width="36" height="36"><span>MysMatch</span></a>
+    <nav class="nav-links" id="nav-links">
+      <a href="/">Home</a>
+      <a href="/events" class="on" aria-current="page">Events</a>
+      <a href="/jobs">Jobs</a>
+      <!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
+    </nav>
+    <div class="nav-right">
+      <a class="nav-cta" href="#app">Get the app</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<!-- ════════ HERO ════════ -->
+<section class="page-hero">
+  <div class="hero-stack">
+    <div class="hero-head">
+      <div class="kicker" data-reveal>/ Events</div>
+      <h1 data-reveal>Your campus,<br><span class="grad-text">in real life.</span></h1>
+    </div>
+    <div class="hero-foot" data-reveal>
+      <p class="hero-sub">Discover campus events, meet new people, and build your community in real life.</p>
+      <a class="btn btn-violet" href="#upcoming">See upcoming events ↓</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ UPCOMING (live from Supabase: every non-private upcoming event) ════════ -->
+<section class="sheet sheet-white upcoming" id="upcoming">
+  <div class="in">
+    <div class="up-head">
+      <div class="up-head-l">
+        <div class="kicker">/ Upcoming</div>
+        <h2 class="h2" data-reveal><span>Upcoming events</span><span class="count" id="events-count"></span></h2>
+      </div>
+      <button class="free-toggle" id="free-toggle" type="button" aria-pressed="false"><span class="free-track"></span><span>Free only</span></button>
+    </div>
+    <div class="cat-chips" id="cat-chips"></div>
+    <div class="ev-state" id="events-loading"><span>Loading events…</span></div>
+    <div class="ev-grid" id="events-grid" hidden></div>
+    <div class="ev-state" id="events-empty" hidden>
+      <span>No events are open for online registration right now. Check back soon — or get the app to see everything happening near you.</span>
+    </div>
+    <div class="ev-state" id="events-nomatch" hidden>
+      <span>No upcoming events match these filters.</span>
+      <button class="btn btn-dark" id="clear-filters" type="button">Clear filters</button>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ EXPLORE BY CATEGORY ════════ -->
+<section class="sheet sheet-lilac explore">
+  <div class="in">
+    <div class="up-head-l">
+      <div class="kicker" style="color:var(--ink-2)">/ Explore</div>
+      <h2 class="h2" data-reveal>Explore by <span class="dim">category.</span></h2>
+    </div>
+    <div class="tiles" id="cat-tiles"></div>
+  </div>
+</section>
+
+<!-- ════════ FOR GUESTS / FOR ORGANIZERS ════════ -->
+<section class="sheet sheet-dark both">
+  <div class="in">
+    <div class="up-head-l">
+      <div class="kicker">/ In the app</div>
+      <h2 class="h2" data-reveal>For guests.<br><span style="color:#CDB8FF">For organizers.</span></h2>
+    </div>
+    <div class="both-grid">
+      <div class="both-card" data-reveal>
+        <div class="kicker">/ Going to events</div>
+        <div class="both-list">
+          <div><h3>See who's organizing</h3><p>Every event shows the organizer's profile. Tap to view their full profile before you register.</p></div>
+          <div><h3>Track your registrations</h3><p>See all your registered events — past and upcoming — in one place from your profile.</p></div>
+          <div><h3>Filter &amp; discover</h3><p>Find events by city, date, category, or price. Past events are automatically hidden — only upcoming events are shown.</p></div>
+          <div><h3>Fully booked indicator</h3><p>Full events are clearly marked with a visual indicator so you know at a glance what's still available.</p></div>
+        </div>
+      </div>
+      <div class="both-card light" data-reveal>
+        <div class="kicker">/ Hosting events</div>
+        <div class="both-list">
+          <div><h3>Create events</h3><p>Set up your own campus events with custom capacity, pricing, and gender-balance controls.</p></div>
+          <div><h3>Verified creators</h3><p>Only phone-verified users can create events, keeping the community safe and trustworthy.</p></div>
+          <div><h3>QR ticket scanning</h3><p>Organizers can scan QR tickets at the door for fast, secure check-in.</p></div>
+          <div><h3>Free &amp; paid events</h3><p>Support both free community events and paid ticketed experiences.</p></div>
+        </div>
+        <div><a class="btn btn-dark" href="/dashboard.html">Organizer login →</a></div>
       </div>
     </div>
-  </nav>
+  </div>
+</section>
 
-  <header class="page-header">
-    <h1>Events</h1>
-    <p>Discover campus events, meet new people, and build your community in real life.</p>
-  </header>
-
-  <main class="content">
-    <!-- Live events pulled from Supabase (publish_to_web && !is_private). -->
-    <section class="live-events" id="live-events">
-      <div class="live-events-head">
-        <h2>Upcoming events</h2>
-        <span class="count" id="events-count"></span>
-      </div>
-      <div class="events-loading" id="events-loading">Loading events…</div>
-      <div class="events-grid" id="events-grid" hidden></div>
-      <div class="events-empty" id="events-empty" hidden>
-        No events are open for online registration right now.<br>
-        Check back soon — or get the app to see everything happening near you.
-      </div>
-    </section>
-
-    <div class="section-divider">Explore by category</div>
-
-    <div class="events-intro">
-      <div class="event-category">
-        <span class="emoji">&#x1F3B5;</span>
-        <span class="label">Music & Parties</span>
-      </div>
-      <div class="event-category">
-        <span class="emoji">&#x26BD;</span>
-        <span class="label">Sports</span>
-      </div>
-      <div class="event-category">
-        <span class="emoji">&#x1F4BB;</span>
-        <span class="label">Tech & Hackathons</span>
-      </div>
-      <div class="event-category">
-        <span class="emoji">&#x1F355;</span>
-        <span class="label">Food & Social</span>
-      </div>
-      <div class="event-category">
-        <span class="emoji">&#x1F3A8;</span>
-        <span class="label">Art & Culture</span>
-      </div>
-      <div class="event-category">
-        <span class="emoji">&#x1F4DA;</span>
-        <span class="label">Study Sessions</span>
-      </div>
-      <div class="event-category">
-        <span class="emoji">&#x1F91D;</span>
-        <span class="label">Networking</span>
-      </div>
-      <div class="event-category">
-        <span class="emoji">&#x1F3AE;</span>
-        <span class="label">Gaming</span>
-      </div>
+<!-- ════════ GET THE APP ════════ -->
+<section class="sheet app-band" id="app">
+  <div class="in">
+    <div class="up-head-l">
+      <div class="kicker" style="color:var(--ink-2)">/ Get the app</div>
+      <h2 data-reveal>Register.<br>Show up.<br><span style="color:var(--violet)">Meet people.</span></h2>
     </div>
-
-    <div class="events-cta">
-      <h3>Browse events in the app</h3>
+    <div class="app-band-r">
       <p>Download MysMatch to discover events near your campus, register with one tap, track your upcoming events, and create your own.</p>
-      <div class="events-cta-buttons">
-        <a href="https://apps.apple.com/gb/app/mysmatch/id6762192785" class="btn btn-primary store-btn" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-          App Store
+      <div class="stores">
+        <a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" target="_blank" rel="noopener noreferrer">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
+          <span><small>Download on the</small><b>App Store</b></span>
         </a>
-        <a href="https://play.google.com/store/apps/details?id=com.mysmatch.app&pcampaignid=web_share" class="btn btn-primary store-btn" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M3.18 23.67c-.37-.2-.63-.55-.63-1.02V1.35c0-.47.26-.82.63-1.02l11.06 11.67L3.18 23.67zM14.89 12.65l2.69 2.83-9.89 5.6 7.2-8.43zM20.16 10.5c.47.27.78.74.78 1.18s-.31.91-.78 1.18l-2.3 1.3-2.95-3.11 2.95-3.11 2.3 1.56zM7.69 3.09l9.89 5.6-2.69 2.83-7.2-8.43z"/></svg>
-          Google Play
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" target="_blank" rel="noopener noreferrer">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
+          <span><small>Get it on</small><b>Google Play</b></span>
         </a>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="features-row">
-      <div class="feature-item">
-        <h4>See who's organizing</h4>
-        <p>Every event shows the organizer's profile. Tap to view their full profile before you register.</p>
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+  <div class="in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="/"><img src="/logo-512.png" alt="" width="44" height="44"><span>MysMatch</span></a>
+        <p>Nobody studies alone.</p>
       </div>
-      <div class="feature-item">
-        <h4>Track your registrations</h4>
-        <p>See all your registered events — past and upcoming — in one place from your profile.</p>
-      </div>
-      <div class="feature-item">
-        <h4>Verified creators</h4>
-        <p>Only phone-verified users can create events, keeping the community safe and trustworthy.</p>
-      </div>
-      <div class="feature-item">
-        <h4>Create events</h4>
-        <p>Set up your own campus events with custom capacity, pricing, and gender-balance controls.</p>
-      </div>
-      <div class="feature-item">
-        <h4>QR ticket scanning</h4>
-        <p>Organizers can scan QR tickets at the door for fast, secure check-in.</p>
-      </div>
-      <div class="feature-item">
-        <h4>Filter & discover</h4>
-        <p>Find events by city, date, category, or price. Past events are automatically hidden — only upcoming events are shown.</p>
-      </div>
-      <div class="feature-item">
-        <h4>Fully booked indicator</h4>
-        <p>Full events are clearly marked with a visual indicator so you know at a glance what's still available.</p>
-      </div>
-      <div class="feature-item">
-        <h4>Free & paid events</h4>
-        <p>Support both free community events and paid ticketed experiences.</p>
+      <div class="foot-cols">
+        <div class="foot-col"><span class="kicker">Product</span><a href="/events">Events</a><a href="/jobs">Jobs</a><a href="/dashboard.html">Organizer login</a></div>
+        <div class="foot-col"><span class="kicker">Company</span><a href="mailto:contact@mys-match.com">Contact</a></div>
+        <div class="foot-col"><span class="kicker">Legal</span><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/support">Support</a></div>
       </div>
     </div>
-  </main>
+    <div class="wordmark" aria-hidden="true">MysMatch</div>
+    <div class="foot-bottom"><span>© 2026 MysMatch. All rights reserved.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+  </div>
+</footer>
 
-  <footer class="footer">
-    <div class="footer-inner">
-      <div class="footer-left">
-        <img src="/logo-512.png" alt="MysMatch" width="28" height="28">
-        <span>&copy; 2026 MysMatch. All rights reserved.</span>
-      </div>
-      <div class="footer-links">
-        <a href="/privacy-policy">Privacy Policy</a>
-        <a href="/terms">Terms of Service</a>
-        <a href="/support">Support</a>
-        <a href="/dashboard.html">Organizer login</a>
-        <a href="mailto:contact@mys-match.com">Contact</a>
-      </div>
-    </div>
-  </footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/site.js"></script>
+<script>
+// Live events grid + filters. Pure string templating (no framework) to keep the
+// static-site footprint tiny. Data: MM.listEvents (every non-private upcoming
+// event; in-app-only ones arrive without date/location — Oct 2026).
+(function () {
+  // WHY these keys: they are the app's real event categories (create-event.tsx);
+  // the labels are the friendlier names the site already used.
+  var CATS = [
+    { key: 'Music', label: 'Music & Parties', ic: '🎵' },
+    { key: 'Sports', label: 'Sports', ic: '⚽' },
+    { key: 'Tech', label: 'Tech & Hackathons', ic: '💻' },
+    { key: 'Food', label: 'Food & Social', ic: '🍕' },
+    { key: 'Art', label: 'Art & Culture', ic: '🎨' },
+    { key: 'Networking', label: 'Networking', ic: '🤝' },
+    { key: 'Other', label: 'Other', ic: '✨' },
+  ];
+  var TINTS = ['linear-gradient(150deg,#E8EAFF,#F1E8FF)', 'linear-gradient(150deg,#E6F0FF,#ECEBFF)', 'linear-gradient(150deg,#ECE9FF,#E6EEFF)',
+    'linear-gradient(150deg,#FDEBF4,#F6E9FF)', 'linear-gradient(150deg,#F3E8FF,#FDE9F3)', 'linear-gradient(150deg,#EFEAFF,#FBEAF5)', 'linear-gradient(150deg,#E9E8FF,#FCE8F2)'];
+  var catIndex = function (key) { for (var i = 0; i < CATS.length; i++) if (CATS[i].key === key) return i; return -1; };
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/js/supabase.js"></script>
-  <script>
-    // Render the live events grid. Pure string templating (no framework) to
-    // keep the static-site footprint tiny.
-    (function () {
-      const grid = document.getElementById('events-grid');
-      const loading = document.getElementById('events-loading');
-      const empty = document.getElementById('events-empty');
-      const countEl = document.getElementById('events-count');
-      const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
-        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-      // Real start moment shown in the EVENT's timezone (see events/event.html).
-      function fmtDate(ev) {
-        try {
-          const d = new Date(ev.starts_at);
-          const timeZone = ev.timezone || 'Europe/Berlin';
-          return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short', timeZone })
-            + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone });
-        } catch (e) { return ''; }
-      }
-      function card(e) {
-        const c = e._counts || { total: 0 };
-        const full = e.max_capacity != null && c.total >= e.max_capacity;
-        const spots = e.max_capacity == null ? '' : (full ? 'Fully booked' : (e.max_capacity - c.total) + ' spots left');
-        const price = (!e.price || e.price == 0) ? 'Free' : '€' + e.price;
-        const img = e.event_image
-          ? '<img class="event-card-img" src="' + esc(e.event_image) + '" alt="' + esc(e.title) + '" loading="lazy">'
-          : '<div class="event-card-img placeholder">🎉</div>';
-        const loc = e.city || e.location || '';
-        // In-app-only events arrive without date/location (server-side, see
-        // MM.listEvents) — say where to find them instead.
-        const appOnly = e.web_registration === false;
-        return '<a class="event-card' + (appOnly ? ' app-only' : '') + '" href="/events/event.html?id=' + encodeURIComponent(e.id) + '">'
-          + img
-          + '<div class="event-card-body">'
-          + (e.category ? '<span class="event-card-tag">' + esc(e.category) + '</span>' : '')
-          + '<h3>' + esc(e.title) + '</h3>'
-          + (appOnly
-            ? '<div class="meta">📱 Download the app to see the location and time</div>'
-            : '<div class="meta">📅 ' + esc(fmtDate(e)) + '</div>'
-              + (loc ? '<div class="meta">📍 ' + esc(loc) + '</div>' : ''))
-          + '<div class="foot"><span class="price">' + price + '</span>'
-          + (spots ? '<span class="spots' + (full ? ' full' : '') + '">' + spots + '</span>' : '')
-          + '</div></div></a>';
-      }
-      if (window.MM) {
-        MM.listEvents().then((events) => {
-          loading.hidden = true;
-          if (!events.length) { empty.hidden = false; return; }
-          grid.innerHTML = events.map(card).join('');
-          grid.hidden = false;
-          countEl.textContent = events.length + (events.length === 1 ? ' event' : ' events');
-        }).catch((err) => { loading.textContent = 'Could not load events.'; console.error(err); });
-      } else {
-        loading.textContent = 'Could not load events.';
-      }
-    })();
+  var grid = document.getElementById('events-grid'), loading = document.getElementById('events-loading');
+  var empty = document.getElementById('events-empty'), noMatch = document.getElementById('events-nomatch');
+  var countEl = document.getElementById('events-count'), chipsEl = document.getElementById('cat-chips');
+  var tilesEl = document.getElementById('cat-tiles'), freeBtn = document.getElementById('free-toggle');
+  var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var plural = function (n) { return pad(n) + (n === 1 ? ' event' : ' events'); };
 
-    const nav = document.getElementById('nav');
-    window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 10);
-    }, { passive: true });
-    document.querySelectorAll('.nav-links a').forEach(a => {
-      a.addEventListener('click', () => {
-        document.querySelector('.nav-links').classList.remove('open');
-      });
-    });
-  </script>
+  var all = [], state = { cat: 'All', free: false };
+  var isFree = function (e) { return !e.price || e.price == 0; };
+
+  // Date parts of the real start moment, in the EVENT's timezone (see event.html).
+  function dateParts(e) {
+    try {
+      var d = new Date(e.starts_at), tz = e.timezone || 'Europe/Berlin';
+      var get = function (o) { return d.toLocaleString(undefined, Object.assign({ timeZone: tz }, o)); };
+      return { day: get({ day: '2-digit' }), mon: get({ month: 'long' }), wd: get({ weekday: 'short' }), time: get({ hour: '2-digit', minute: '2-digit' }) };
+    } catch (err) { return null; }
+  }
+
+  function card(e) {
+    var ci = catIndex(e.category), cat = ci >= 0 ? CATS[ci] : null;
+    var total = (e._counts && e._counts.total) || 0;
+    var full = e.max_capacity != null && total >= e.max_capacity;
+    var badge = e.max_capacity == null ? '' : (full ? '<span class="ev-badge full">Fully booked</span>' : '<span class="ev-badge">' + (e.max_capacity - total) + ' spots left</span>');
+    // In-app-only events arrive without date/location (server-side, see MM.listEvents).
+    var appOnly = e.web_registration === false;
+    var dp = appOnly ? null : (e.starts_at ? dateParts(e) : null);
+    var thumb = e.event_image ? '<img class="ev-thumb" src="' + esc(e.event_image) + '" alt="" loading="lazy">' : '';
+    var date = dp
+      ? '<span class="ev-date-l"><span class="ev-day">' + esc(dp.day) + '</span><span class="ev-mon"><span>' + esc(dp.mon) + '</span><span>' + esc(dp.wd) + ' · ' + esc(dp.time) + '</span></span></span>'
+      : '<span class="ev-noday">' + (appOnly ? 'Date &amp; place in the app' : 'Date to be announced') + '</span>';
+    var place = appOnly ? 'Download the app to see the location and time' : (e.city || e.location || '');
+    return '<a class="ev-card' + (appOnly ? ' app-only' : '') + '" data-reveal href="/events/event.html?id=' + encodeURIComponent(e.id) + '">'
+      + '<div class="ev-top" style="background:' + TINTS[ci >= 0 ? ci : 0] + '">'
+      + '<div class="ev-row"><span class="ev-cat">' + esc(cat ? cat.label : (e.category || 'Event')) + '</span>' + badge + '</div>'
+      + '<div class="ev-date">' + date + thumb + '</div></div>'
+      + '<div class="ev-body"><span class="ev-title">' + esc(e.title) + '</span>'
+      + '<div class="ev-foot"><span>' + esc(place) + '</span><span class="ev-price">' + (isFree(e) ? 'Free' : '€' + esc(e.price)) + '</span></div></div></a>';
+  }
+
+  function render() {
+    var list = all.filter(function (e) { return (state.cat === 'All' || e.category === state.cat) && (!state.free || isFree(e)); });
+    chipsEl.querySelectorAll('.cat-chip').forEach(function (b) { b.classList.toggle('on', b.dataset.cat === state.cat); });
+    freeBtn.setAttribute('aria-pressed', state.free ? 'true' : 'false');
+    countEl.textContent = plural(list.length);
+    if (!all.length) { grid.hidden = true; noMatch.hidden = true; empty.hidden = false; return; }
+    empty.hidden = true;
+    noMatch.hidden = list.length > 0;
+    grid.hidden = list.length === 0;
+    grid.innerHTML = list.map(card).join('');
+    if (window.MMReveal) window.MMReveal(grid);
+  }
+
+  function setCat(c) { state.cat = c; render(); }
+  chipsEl.innerHTML = [{ key: 'All', label: 'All events' }].concat(CATS).map(function (c) {
+    return '<button class="cat-chip" type="button" data-cat="' + esc(c.key) + '">' + esc(c.label) + '</button>';
+  }).join('');
+  chipsEl.addEventListener('click', function (ev) { var b = ev.target.closest('.cat-chip'); if (b) setCat(b.dataset.cat); });
+  freeBtn.addEventListener('click', function () { state.free = !state.free; render(); });
+  document.getElementById('clear-filters').addEventListener('click', function () { state = { cat: 'All', free: false }; render(); });
+
+  function renderTiles() {
+    tilesEl.innerHTML = CATS.map(function (c, i) {
+      var n = all.filter(function (e) { return e.category === c.key; }).length;
+      return '<button class="tile" type="button" data-reveal data-cat="' + esc(c.key) + '"><span class="tile-top"><span class="tile-ic" style="background:' + TINTS[i] + '">' + c.ic + '</span><span class="tile-n">' + plural(n) + '</span></span><b>' + esc(c.label) + '</b></button>';
+    }).join('');
+    if (window.MMReveal) window.MMReveal(tilesEl);
+  }
+  // Tile → filter the list by that category and scroll up to it.
+  tilesEl.addEventListener('click', function (ev) {
+    var t = ev.target.closest('.tile'); if (!t) return;
+    state = { cat: t.dataset.cat, free: false }; render();
+    var up = document.getElementById('upcoming');
+    window.scrollTo({ top: up.getBoundingClientRect().top + window.scrollY - 20, behavior: 'smooth' });
+  });
+
+  renderTiles();
+  if (!window.MM) { loading.firstChild.textContent = 'Could not load events.'; return; }
+  MM.listEvents().then(function (events) {
+    all = events || [];
+    loading.hidden = true;
+    renderTiles();
+    render();
+  }).catch(function (err) { loading.firstChild.textContent = 'Could not load events.'; console.error(err); });
+})();
+</script>
 </body>
 </html>

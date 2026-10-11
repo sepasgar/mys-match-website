@@ -1,0 +1,157 @@
+/* Shared style for the sub-pages (events, event detail, support, legal, …).
+   WHY a shared file: the homepage redesign (Oct 2026) inlines its CSS; the
+   sub-pages reuse the same tokens, header, sheets and footer from here so
+   they stay in sync with one edit instead of seven. */
+:root{
+  --ink:#0F1020; --ink-2:#4B4C63; --muted:#8E8FA6; --faint:#A9AAC0; --on-dark:#C9C9D9;
+  --violet:#7B5CFF; --violet-soft:#B7A6FF; --pink:#E94B9A; --green:#34C77B;
+  --line:#ECEAF4; --line-violet:#D9D1F5;
+  --accent-grad:linear-gradient(100deg,#B3B8FF,#CDB8FF 45%,#F5BCE4);
+  --pad-x:clamp(20px,5vw,96px);
+  --sec-y:clamp(88px,10vw,180px);
+  --mono:'Geist Mono',ui-monospace,monospace;
+}
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+html,body{ margin:0; padding:0; background:#0F1020; }
+body{ font-family:'Geist',-apple-system,BlinkMacSystemFont,sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+a{ color:var(--violet); text-decoration:none; }
+img{ max-width:100%; }
+h1,h2,h3,p{ margin:0; }
+[hidden]{ display:none !important; }
+
+/* Shared bits */
+.kicker{ font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+.dim{ color:var(--muted); }
+.grad-text{ background:var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+/* WHY no text-wrap:balance: Chrome drew an empty line inside two-part headings (span + max-width in ch). */
+.h2{ font-size:clamp(40px,6vw,120px); line-height:0.94; letter-spacing:-0.055em; font-weight:700; }
+.btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; font-family:inherit; font-weight:600; font-size:clamp(16px,1.15vw,19px); padding:18px 32px; border-radius:9999px; border:none; cursor:pointer; white-space:nowrap; transition:transform .3s, background .3s, border-color .3s; }
+.btn:hover{ transform:translateY(-2px); }
+.btn-violet{ background:var(--violet); color:#fff; box-shadow:0 14px 40px rgba(123,92,255,0.22); }
+.btn-violet:hover{ background:#9B5BFF; color:#fff; }
+.btn-dark{ background:var(--ink); color:#fff; }
+.btn-dark:hover{ background:var(--violet); color:#fff; }
+.btn-light{ background:#fff; color:var(--ink); border:1px solid #E2DEF0; }
+.btn-light:hover{ border-color:var(--ink); color:var(--ink); }
+
+/* Stacked sheets: each section slides over the previous one with rounded top corners */
+.sheet{ position:relative; margin-top:-48px; border-radius:48px 48px 0 0; box-shadow:0 -24px 48px rgba(15,16,32,0.08); }
+.sheet > .in{ padding:var(--sec-y) var(--pad-x); }
+.sheet-white{ background:linear-gradient(180deg,#FFFFFF 0%,#F8F4FF 100%); box-shadow:0 -24px 48px rgba(15,16,32,0.12); }
+.sheet-lilac{ background:linear-gradient(135deg,#EEF0FF 0%,#F4EEFF 50%,#FBEEF7 100%); }
+.sheet-dark{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#171027 100%); color:#fff; box-shadow:0 -24px 48px rgba(15,16,32,0.2); }
+
+/* Scroll reveal. WHY .js gate: without JS (or with reduced motion) everything stays visible. */
+.js [data-reveal]{ opacity:0; transform:translateY(56px); filter:blur(10px); transition:opacity 1.2s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1), filter 1.2s cubic-bezier(.2,.7,.2,1); }
+.js [data-reveal].shown{ opacity:1; transform:none; filter:none; }
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  .js [data-reveal]{ opacity:1; transform:none; filter:none; transition:none; }
+}
+
+/* ───────── header (floating pill) ───────── */
+.nav{ position:sticky; top:16px; z-index:50; margin:16px 16px -88px; background:rgba(15,16,32,0.78); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,0.08); border-radius:36px; box-shadow:0 12px 40px rgba(15,16,32,0.25); overflow:hidden; }
+.nav-in{ padding:12px 12px 12px 24px; display:flex; align-items:center; justify-content:space-between; gap:32px; }
+.brand{ display:flex; align-items:center; gap:12px; color:#fff; font-weight:700; font-size:19px; letter-spacing:-0.02em; }
+.brand:hover{ color:#fff; }
+.brand img{ width:36px; height:36px; border-radius:10px; }
+.nav-links{ display:flex; align-items:center; gap:clamp(18px,2.2vw,40px); white-space:nowrap; font-size:clamp(14px,1.05vw,16px); }
+.nav-links a{ color:var(--on-dark); display:flex; align-items:center; gap:8px; }
+.nav-links a:hover, .nav-links a.on{ color:#fff; }
+.nav-links a.on::before{ content:""; width:6px; height:6px; border-radius:50%; background:#CDB8FF; }
+.nav-right{ display:flex; align-items:center; gap:10px; }
+.nav-cta{ background:#fff; color:var(--ink); font-weight:600; font-size:16px; padding:14px 26px; border-radius:9999px; white-space:nowrap; transition:transform .3s, background .3s; }
+.nav-cta:hover{ background:#F1ECFF; color:var(--ink); transform:translateY(-1px); }
+.menu-btn{ display:none; width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,0.18); background:transparent; cursor:pointer; padding:0; align-items:center; justify-content:center; flex-direction:column; gap:5px; }
+.menu-btn span{ display:block; width:18px; height:2px; background:#fff; border-radius:2px; }
+.progress{ position:absolute; left:0; bottom:0; height:2px; width:0; background:linear-gradient(90deg,#B3B8FF,#CDB8FF,#F5BCE4); }
+
+/* ───────── page hero (dark, like the homepage hero but shorter) ───────── */
+.page-hero{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%); color:#fff; position:relative; overflow:hidden; min-height:clamp(520px,72vh,820px); display:flex; flex-direction:column; justify-content:flex-end; padding:clamp(160px,14vw,230px) var(--pad-x) clamp(110px,10vw,180px); }
+.page-hero.short{ min-height:0; padding-bottom:clamp(100px,9vw,160px); }
+.page-hero::before{ content:""; position:absolute; left:-15%; top:-30%; width:75vw; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(233,75,154,0.1),rgba(123,92,255,0.08) 55%,rgba(15,16,32,0) 75%); pointer-events:none; }
+.page-hero > *{ position:relative; }
+.hero-stack{ display:flex; flex-direction:column; gap:clamp(40px,4vw,72px); }
+.hero-head{ display:flex; flex-direction:column; gap:clamp(24px,2.4vw,40px); }
+.page-hero .kicker{ color:var(--faint); }
+.page-hero h1{ font-size:clamp(52px,8.2vw,168px); line-height:0.9; letter-spacing:-0.06em; font-weight:700; max-width:13ch; }
+.page-hero.short h1{ font-size:clamp(48px,6.6vw,128px); max-width:16ch; }
+.hero-foot{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; }
+.hero-sub{ max-width:34ch; font-size:clamp(19px,1.6vw,28px); line-height:1.45; color:var(--on-dark); letter-spacing:-0.01em; text-wrap:pretty; }
+
+/* ───────── store buttons ───────── */
+.stores{ display:flex; gap:14px; flex-wrap:wrap; }
+.store{ background:var(--ink); color:#fff; padding:14px 26px 14px 20px; border-radius:18px; display:flex; align-items:center; gap:12px; line-height:1.15; white-space:nowrap; transition:transform .3s, background .3s; }
+.store:hover{ background:#1C1D36; color:#fff; transform:translateY(-2px); }
+.store span{ display:flex; flex-direction:column; text-align:left; }
+.store small{ font-size:13px; color:var(--faint); }
+.store b{ font-size:clamp(19px,1.4vw,24px); font-weight:600; letter-spacing:-0.02em; }
+.store svg{ flex-shrink:0; }
+.stores.light .store{ background:#fff; color:var(--ink); }
+.stores.light .store:hover{ background:#F1ECFF; color:var(--ink); }
+.stores.light .store small{ color:var(--ink-2); }
+
+/* ───────── get-the-app band ───────── */
+.app-band{ background:linear-gradient(135deg,#EDEFFF 0%,#F5EDFF 50%,#FCEDF6 100%); }
+.app-band .in{ display:flex; justify-content:space-between; align-items:flex-end; gap:48px; flex-wrap:wrap; }
+.app-band h2{ font-size:clamp(52px,7vw,144px); line-height:0.9; letter-spacing:-0.06em; font-weight:700; }
+.app-band-r{ display:flex; flex-direction:column; gap:28px; max-width:460px; }
+.app-band-r p{ font-size:clamp(18px,1.4vw,24px); line-height:1.5; color:var(--ink-2); }
+
+/* ───────── footer ───────── */
+.footer{ background:var(--ink); color:#fff; overflow:hidden; box-shadow:0 -24px 48px rgba(15,16,32,0.2); }
+.footer .in{ padding:clamp(88px,8vw,140px) var(--pad-x) 40px; display:flex; flex-direction:column; gap:clamp(56px,7vw,120px); }
+.foot-top{ display:flex; justify-content:space-between; gap:56px; flex-wrap:wrap; }
+.foot-brand{ display:flex; flex-direction:column; gap:20px; max-width:420px; }
+.foot-brand .brand{ font-size:24px; gap:14px; }
+.foot-brand .brand img{ width:44px; height:44px; border-radius:12px; }
+.foot-brand p{ font-size:clamp(17px,1.3vw,22px); line-height:1.5; color:var(--faint); }
+.foot-cols{ display:grid; grid-template-columns:repeat(3,minmax(120px,auto)); gap:clamp(32px,5vw,96px); font-size:clamp(16px,1.2vw,20px); }
+.foot-col{ display:flex; flex-direction:column; gap:16px; }
+.foot-col a{ color:#E4E4EE; }
+.foot-col a:hover{ color:#fff; }
+/* WHY 18.5vw (design had 21.5vw): at our side padding the last letter got clipped. */
+.wordmark{ font-size:clamp(60px,18.5vw,400px); line-height:0.78; font-weight:800; letter-spacing:-0.07em; background:linear-gradient(180deg,#26274A,#141528); -webkit-background-clip:text; background-clip:text; color:transparent; user-select:none; margin-left:-0.04em; white-space:nowrap; }
+.foot-bottom{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); color:var(--muted); border-top:1px solid rgba(255,255,255,0.08); padding-top:28px; }
+.foot-bottom a{ color:var(--muted); }
+.foot-bottom a:hover{ color:#fff; }
+
+/* ───────── long-form text (support, privacy, terms, …) ───────── */
+.prose{ max-width:760px; font-size:clamp(17px,1.2vw,19px); line-height:1.7; color:var(--ink-2); }
+.prose h2{ font-size:clamp(26px,2.4vw,38px); line-height:1.1; letter-spacing:-0.04em; font-weight:600; color:var(--ink); margin:clamp(48px,4vw,72px) 0 18px; }
+.prose h2:first-child{ margin-top:0; }
+.prose h3{ font-size:clamp(19px,1.5vw,23px); letter-spacing:-0.02em; font-weight:600; color:var(--ink); margin:32px 0 10px; }
+.prose p{ margin:0 0 16px; }
+.prose ul, .prose ol{ margin:0 0 18px; padding-left:22px; }
+.prose li{ margin:0 0 8px; }
+.prose li::marker{ color:var(--violet); }
+.prose strong{ color:var(--ink); font-weight:600; }
+.prose a{ color:var(--violet); text-decoration:underline; text-underline-offset:3px; }
+.prose a:hover{ color:var(--pink); }
+.prose table{ width:100%; border-collapse:collapse; margin:0 0 20px; font-size:15px; }
+.prose th, .prose td{ text-align:left; padding:12px 14px; border-bottom:1px solid var(--line); vertical-align:top; }
+.prose th{ color:var(--ink); font-weight:600; }
+.card{ background:#fff; border-radius:32px; padding:clamp(24px,3vw,48px); box-shadow:0 1px 2px rgba(15,16,32,0.04),0 24px 48px -28px rgba(60,40,140,0.25); }
+
+/* ───────── tablet / phone ───────── */
+@media (max-width:1100px){
+  /* WHY: the full nav doesn't fit below ~1100px; collapse links into a dropdown. */
+  .menu-btn{ display:flex; }
+  .nav-links{ display:none; position:absolute; left:0; right:0; top:100%; }
+  .nav.open{ border-radius:28px; }
+  .nav.open .nav-links{ display:flex; position:static; flex-direction:column; align-items:flex-start; gap:4px; padding:4px 24px 20px; font-size:18px; width:100%; }
+  .nav.open .nav-links a{ padding:10px 0; }
+  .nav-in{ flex-wrap:wrap; gap:12px; }
+}
+@media (max-width:640px){
+  .nav{ margin:12px 12px -80px; top:12px; }
+  .nav-in{ padding:10px 10px 10px 16px; }
+  .nav-cta{ padding:12px 18px; font-size:15px; }
+  .brand{ font-size:17px; }
+  .brand img{ width:32px; height:32px; }
+  .sheet{ border-radius:32px 32px 0 0; margin-top:-32px; }
+  .card{ border-radius:24px; }
+  .foot-cols{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .store{ flex:1 1 auto; }
+}

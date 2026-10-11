@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MysMatch</title>
   <meta name="description" content="Open this event in the MysMatch app.">
-  <meta name="theme-color" content="#7B5CFF">
+  <meta name="theme-color" content="#0F1020">
 
   <meta property="og:title" content="MysMatch">
   <meta property="og:description" content="Find study partners and classmates and join student events.">
@@ -16,133 +16,36 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
+    /* Oct 2026 redesign: same dark look as the rest of the site. Markup + logic unchanged. */
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-    :root {
-      --primary: #7B5CFF;
-      --accent: #E94B9A;
-      --gradient-start: #5E5BFF;
-      --gradient-mid: #9B5BFF;
-      --gradient-end: #E94B9A;
-      --black: #0F1020;
-      --gray: #4B4C63;
-      --gray-light: #8E8FA6;
-      --border: #ECEAF4;
-      --white: #FFFFFF;
-    }
-
+    :root { --ink:#0F1020; --on-dark:#C9C9D9; --faint:#A9AAC0; --violet:#7B5CFF; --mono:'Geist Mono',ui-monospace,monospace; }
     body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--black);
-      background: var(--white);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      -webkit-font-smoothing: antialiased;
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #fff; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      padding: 24px; -webkit-font-smoothing: antialiased;
+      background: linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%);
+      background-image: radial-gradient(60% 45% at 10% 0%, rgba(123,92,255,0.16), transparent 70%),
+                        radial-gradient(50% 40% at 95% 100%, rgba(233,75,154,0.10), transparent 70%),
+                        linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%);
     }
-
-    .card {
-      max-width: 440px;
-      width: 100%;
-      text-align: center;
-    }
-
-    .logo-tile {
-      width: 80px;
-      height: 80px;
-      border-radius: 22px;
-      background: linear-gradient(135deg, var(--gradient-start), var(--gradient-mid), var(--gradient-end));
-      margin: 0 auto 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 10px 30px rgba(123, 92, 255, 0.35);
-    }
-
+    .card { max-width: 480px; width: 100%; text-align: center; }
+    .logo-tile { width: 84px; height: 84px; border-radius: 26px; background: linear-gradient(135deg,#7B5CFF 0%,#B55BE8 55%,#E94B9A 100%); margin: 0 auto 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 30px 60px rgba(123,92,255,0.35); }
     .logo-tile svg { width: 40px; height: 40px; }
-
-    .eyebrow {
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      margin-bottom: 8px;
-    }
-
-    h1 {
-      font-size: 30px;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      margin-bottom: 12px;
-      line-height: 1.2;
-    }
-
-    .lede {
-      color: var(--gray-light);
-      font-size: 15px;
-      line-height: 1.5;
-      margin-bottom: 28px;
-    }
-
-    .open-app-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      width: 100%;
-      padding: 14px 20px;
-      background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 800;
-      font-size: 15px;
-      border-radius: 14px;
-      box-shadow: 0 6px 20px rgba(123, 92, 255, 0.35);
-      margin-bottom: 24px;
-      border: 0;
-      cursor: pointer;
-    }
-
-    .stores {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 8px;
-    }
-
-    .store-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 18px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      text-decoration: none;
-      color: var(--black);
-      font-weight: 700;
-      font-size: 13px;
-      transition: border-color 0.15s;
-    }
-
-    .store-badge:hover { border-color: var(--primary); }
+    .eyebrow { font-family: var(--mono); color: var(--faint); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
+    h1 { font-size: clamp(40px, 9vw, 64px); font-weight: 700; letter-spacing: -0.055em; line-height: 0.95; margin-bottom: 18px; }
+    .lede { color: var(--on-dark); font-size: 17px; line-height: 1.55; margin-bottom: 32px; }
+    .open-app-btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 18px 28px; background: var(--violet); color: #fff; text-decoration: none; font-weight: 600; font-size: 17px; border-radius: 9999px; box-shadow: 0 14px 40px rgba(123,92,255,0.3); margin-bottom: 12px; border: 0; cursor: pointer; transition: transform .3s, background .3s; }
+    .open-app-btn:hover { background: #9B5BFF; transform: translateY(-2px); }
+    .card > p[style] { color: var(--faint) !important; }
+    .stores { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px; }
+    .store-badge { display: inline-flex; align-items: center; gap: 10px; padding: 14px 22px; background: #fff; border-radius: 18px; text-decoration: none; color: var(--ink); font-weight: 600; font-size: 15px; transition: transform .3s, background .3s; }
+    .store-badge:hover { background: #F1ECFF; transform: translateY(-2px); }
     .store-badge svg { width: 20px; height: 20px; }
-
-    .home-link {
-      display: block;
-      margin-top: 28px;
-      color: var(--gray-light);
-      font-size: 13px;
-      font-weight: 600;
-      text-decoration: none;
-    }
-
-    .home-link:hover { color: var(--primary); }
+    .home-link { display: block; margin-top: 36px; color: var(--faint); font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-decoration: none; }
+    .home-link:hover { color: #fff; }
   </style>
 </head>
 <body>

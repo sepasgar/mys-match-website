@@ -1,278 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Event — MysMatch</title>
-  <meta name="description" content="Register for this MysMatch event.">
-  <meta name="theme-color" content="#0D1E4C">
-  <meta name="robots" content="noindex"><!-- query-string detail page; the listing is the canonical index -->
-  <link rel="icon" type="image/png" href="/logo-512.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Event — MysMatch</title>
+<meta name="description" content="Register for this MysMatch event.">
+<meta name="theme-color" content="#0F1020">
+<meta name="robots" content="noindex"><!-- query-string detail page; the listing is the canonical index -->
+<link rel="icon" type="image/png" href="/logo-512.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<style>
+  /* ───────── hero (title + key facts, filled by JS) ───────── */
+  .ev-hero{ min-height:0; padding-bottom:clamp(100px,9vw,160px); }
+  .ev-hero h1{ font-size:clamp(44px,6.4vw,124px); max-width:18ch; overflow-wrap:anywhere; }
+  .back{ color:var(--faint); font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; }
+  .back:hover{ color:#fff; }
+  .facts{ display:flex; flex-wrap:wrap; gap:12px; }
+  .fact{ display:inline-flex; align-items:center; gap:10px; padding:12px 20px; border-radius:9999px; border:1px solid rgba(255,255,255,0.14); color:var(--on-dark); font-size:clamp(15px,1.1vw,18px); }
+  .fact svg{ flex-shrink:0; color:var(--violet-soft); }
+  .fact.full{ border-color:rgba(233,75,154,0.5); color:#F5BCE4; }
+  .center-state{ font-size:clamp(20px,1.8vw,30px); color:var(--on-dark); letter-spacing:-0.02em; line-height:1.4; }
 
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary: #C48CB3; --primary-dark: #0D1E4C; --primary-light: #E5C9D7;
-      --accent: #83A6CE; --black: #0B1B32; --white: #FFFFFF; --gray: #26415E;
-      --gray-light: #6B8299; --gray-bg: #F5F0F3; --border: #E5C9D7; --success: #34C77B;
-    }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--black); background: var(--white); line-height: 1.6; -webkit-font-smoothing: antialiased;
-    }
-    .nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    .nav-inner {
-      max-width: 1120px; margin: 0 auto; padding: 0 24px; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-dark); }
-    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
-    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-    .nav-links a { text-decoration: none; color: var(--gray); font-size: 15px; font-weight: 500; }
-    .nav-cta {
-      background: var(--primary-dark); color: var(--white) !important;
-      padding: 10px 22px; border-radius: 12px; font-weight: 600;
-    }
+  /* ───────── body: photo + description | register card ───────── */
+  .ev-main .in{ display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:clamp(32px,4vw,80px); align-items:start; }
+  .ev-left{ display:flex; flex-direction:column; gap:clamp(28px,3vw,48px); }
+  /* WHY natural height: covers are often posters with text; a fixed crop cut it off. */
+  .hero-img{ width:100%; height:auto; max-height:min(110vh,1100px); object-fit:cover; border-radius:36px; background:#ECEAF4; display:block; box-shadow:0 40px 80px -30px rgba(60,40,140,0.3); }
+  .hero-img.placeholder{ aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; font-size:72px; background:linear-gradient(135deg,rgba(123,92,255,0.10),rgba(233,75,154,0.10)); }
+  .desc-wrap{ display:flex; flex-direction:column; gap:16px; }
+  .desc{ font-size:clamp(17px,1.25vw,20px); color:var(--ink-2); line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; }
+  @media (min-width:961px){ #register-card{ position:sticky; top:120px; } }
+  @media (max-width:960px){
+    .ev-main .in{ grid-template-columns:1fr; }
+    /* WHY reorder: in one column the form sat below long descriptions; put it right under the photo. */
+    .ev-left{ display:contents; }
+    .ev-left > .hero-img{ order:1; }
+    #register-card{ order:2; }
+    .ev-left > .desc-wrap{ order:3; }
+  }
+  /* WHY smaller on phones: long single-word titles (e.g. German compounds) broke mid-word. */
+  @media (max-width:640px){ .ev-hero h1{ font-size:clamp(30px,9vw,44px); } }
 
-    .wrap { max-width: 760px; margin: 0 auto; padding: 96px 24px 96px; }
-    .back { display: inline-flex; align-items: center; gap: 6px; color: var(--gray-light); text-decoration: none; font-weight: 600; font-size: 14px; margin-bottom: 20px; }
-    .back:hover { color: var(--primary-dark); }
+  /* ───────── register card + form ───────── */
+  #register-card h2{ font-size:clamp(28px,2.4vw,40px); letter-spacing:-0.045em; font-weight:600; line-height:1.05; margin-bottom:8px; }
+  #register-card .sub{ font-size:16px; color:var(--ink-2); line-height:1.55; margin-bottom:12px; }
+  /* App-only card content is centred (user, Oct 2026): store buttons in the
+     middle with heading, text and the open-in-app link centred above/below. */
+  #register-card.app-only{ text-align:center; }
+  #register-card.app-only .stores{ justify-content:center; margin-top:20px; }
+  /* Same thin brand-gradient frame as in-app-only cards on /events. */
+  #register-card.app-only{ border:2px solid transparent; background:linear-gradient(#fff,#fff) padding-box, linear-gradient(100deg,#7B5CFF,#E94B9A) border-box; }
+  .open-app{ display:inline-block; margin-top:20px; font-size:15px; font-weight:600; color:var(--violet); }
+  .open-app:hover{ color:var(--pink); }
+  label{ display:block; font-size:14px; font-weight:600; color:var(--ink); margin:18px 0 8px; }
+  label .req{ color:var(--pink); }
+  input, select, textarea{ width:100%; border:1px solid #E2DEF0; border-radius:16px; padding:14px 16px; font-size:16px; font-family:inherit; color:var(--ink); background:#fff; transition:border-color .2s, box-shadow .2s; }
+  textarea{ min-height:96px; resize:vertical; }
+  input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--violet); box-shadow:0 0 0 4px rgba(123,92,255,0.12); }
+  input:disabled, select:disabled{ background:#F7F6FB; color:var(--muted); }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  #register-card .btn{ width:100%; margin-top:24px; }
+  #register-card .btn[disabled]{ opacity:0.5; cursor:not-allowed; transform:none; }
+  #submit-btn, #qr-dl{ background:var(--ink); color:#fff; }
+  #submit-btn:hover:not([disabled]), #qr-dl:hover{ background:var(--violet); color:#fff; }
+  .btn.secondary{ background:#fff; color:var(--ink); border:1px solid #E2DEF0; margin-top:12px; }
+  .btn.secondary:hover{ border-color:var(--ink); color:var(--ink); }
+  .hint{ font-size:13px; color:var(--muted); margin-top:10px; line-height:1.5; }
+  .hint a{ color:var(--ink-2); text-decoration:underline; }
+  .form-error{ background:#FDECF4; color:#B3246B; border:1px solid #F6C2DD; border-radius:16px; padding:12px 16px; font-size:14px; font-weight:600; margin-top:18px; }
+  .success{ text-align:center; }
+  .success .check{ width:64px; height:64px; border-radius:50%; background:var(--green); color:#fff; font-size:32px; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+  .qr-box{ display:flex; justify-content:center; margin:12px 0 16px; }
+  .qr-box img{ width:220px; height:220px; border:1px solid #E2DEF0; border-radius:20px; padding:10px; background:#fff; }
+  .qr-warn{ background:#FFF6E5; border:1px solid #F4D58B; color:#8A6100; border-radius:16px; padding:12px 16px; font-size:14px; line-height:1.55; text-align:left; }
+  @media (max-width:600px){ .row2{ grid-template-columns:1fr; } .hero-img{ border-radius:28px; } }
 
-    .hero-img { width: 100%; height: 320px; object-fit: cover; border-radius: 20px; background: var(--gray-bg); margin-bottom: 28px; }
-    .hero-img.placeholder { display: flex; align-items: center; justify-content: center; font-size: 72px; }
-    .tag {
-      display: inline-block; background: linear-gradient(135deg, var(--primary), var(--accent));
-      color: #fff; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 16px; margin-bottom: 14px;
-    }
-    h1 { font-size: clamp(28px, 4vw, 38px); font-weight: 800; color: var(--primary-dark); letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 18px; }
-    .meta-row { display: flex; flex-wrap: wrap; gap: 14px 28px; margin-bottom: 24px; }
-    .meta-item { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; color: var(--gray); }
-    .meta-item .ic { font-size: 18px; }
-    .spots-pill { display: inline-block; font-size: 13px; font-weight: 700; padding: 4px 12px; border-radius: 14px; background: var(--gray-bg); color: var(--gray); }
-    .spots-pill.full { background: #FDE7EC; color: #C0264B; }
-    .desc { font-size: 16px; color: var(--gray); line-height: 1.75; white-space: pre-wrap; margin-bottom: 36px; }
-
-    .card { border: 1px solid var(--border); border-radius: 20px; padding: 28px; background: var(--white); }
-    .card h2 { font-size: 22px; font-weight: 800; color: var(--primary-dark); margin-bottom: 6px; letter-spacing: -0.4px; }
-    .card .sub { font-size: 14px; color: var(--gray-light); margin-bottom: 22px; }
-    /* In-app-only events: store buttons sit left-aligned in the card, with an
-       "open in app" link under them. */
-    /* App-only card content is centred (user, Oct 2026): store buttons in the
-       middle with heading, text and the open-in-app link centred above/below. */
-    #register-card.app-only { text-align: center; }
-    #register-card .app-card-stores { justify-content: center; }
-    /* Same thin brand-gradient frame as in-app-only cards on /events. */
-    #register-card.app-only {
-      border: 2px solid transparent;
-      background: linear-gradient(var(--white), var(--white)) padding-box,
-                  linear-gradient(95deg, #4A2BFF 0%, #8A3BFF 48%, #FF39C6 100%) border-box;
-    }
-    .open-app { display: inline-block; margin-top: 18px; font-size: 14px; font-weight: 700; color: var(--primary); text-decoration: none; }
-    .open-app:hover { text-decoration: underline; }
-    label { display: block; font-size: 14px; font-weight: 700; color: var(--black); margin: 16px 0 6px; }
-    label .req { color: #C0264B; }
-    input, select, textarea {
-      width: 100%; border: 1px solid var(--border); border-radius: 12px;
-      padding: 12px 14px; font-size: 15px; font-family: inherit; color: var(--black); background: var(--white);
-    }
-    textarea { min-height: 84px; resize: vertical; }
-    input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary); }
-    .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%;
-      margin-top: 24px; padding: 15px 28px; border-radius: 14px; font-size: 16px; font-weight: 700;
-      text-decoration: none; border: none; cursor: pointer; background: var(--primary-dark); color: #fff;
-      transition: transform 0.15s, box-shadow 0.2s;
-    }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,30,76,0.22); }
-    .btn[disabled] { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-    .hint { font-size: 12px; color: var(--gray-light); margin-top: 6px; }
-    .form-error { background: #FDE7EC; color: #C0264B; border: 1px solid #F6C2CF; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600; margin-top: 18px; }
-    .success { text-align: center; padding: 16px 8px; }
-    .success .check { width: 64px; height: 64px; border-radius: 50%; background: var(--success); color: #fff; font-size: 32px; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
-    .success h2 { margin-bottom: 8px; }
-    .qr-box { display: flex; justify-content: center; margin: 8px 0 14px; }
-    .qr-box img { width: 220px; height: 220px; border: 1px solid var(--border); border-radius: 14px; padding: 10px; background: #fff; }
-    .qr-warn { background: #FFF6E5; border: 1px solid #F4D58B; color: #8A6100; border-radius: 12px; padding: 12px 14px; font-size: 13px; line-height: 1.55; margin-bottom: 18px; text-align: left; }
-    .btn.secondary { background: var(--white); color: var(--primary-dark); border: 1px solid var(--border); margin-top: 12px; }
-    .btn.secondary:hover { box-shadow: 0 6px 18px rgba(13,30,76,0.1); }
-    .center-state { text-align: center; padding: 120px 24px; color: var(--gray-light); }
-
-    .footer { padding: 40px 24px; border-top: 1px solid var(--border); background: var(--gray-bg); text-align: center; }
-    .footer a { color: var(--gray-light); text-decoration: none; font-size: 14px; margin: 0 12px; }
-    @media (max-width: 600px) { .row2 { grid-template-columns: 1fr; } .hero-img { height: 220px; } }
-
-    /* App-download prompt — dismissible modal shown once per session on event pages. */
-    .app-card-backdrop {
-      position: fixed; inset: 0; z-index: 200; padding: 20px;
-      background: rgba(11,27,50,0.55);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; transition: opacity 0.25s ease;
-    }
-    .app-card-backdrop.show { opacity: 1; }
-    /* The `display:flex` above overrides the [hidden] attribute, so "closed"
-       only faded the backdrop to opacity 0 — it stayed on top of the page and
-       taps where the App Store button had been still opened the store (Sept
-       2026). Honour [hidden], and don't take taps unless it's actually shown
-       (covers the fade-in/out moments too). */
-    .app-card-backdrop[hidden] { display: none; }
-    .app-card-backdrop:not(.show) { pointer-events: none; }
-    .app-card {
-      position: relative; background: var(--white); border-radius: 22px;
-      max-width: 420px; width: 100%; padding: 34px 28px 24px; text-align: center;
-      box-shadow: 0 24px 70px rgba(11,27,50,0.35);
-      transform: translateY(12px) scale(0.98); transition: transform 0.25s ease;
-    }
-    .app-card-backdrop.show .app-card { transform: none; }
-    .app-card-close {
-      position: absolute; top: 10px; right: 12px; background: none; border: none;
-      font-size: 26px; line-height: 1; color: var(--gray-light); cursor: pointer; padding: 4px;
-    }
-    .app-card-close:hover { color: var(--primary-dark); }
-    .app-card-logo { width: 56px; height: 56px; border-radius: 14px; margin-bottom: 16px; }
-    .app-card h3 { font-size: 20px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.4px; line-height: 1.25; margin-bottom: 10px; }
-    .app-card > p { font-size: 14.5px; color: var(--gray-light); line-height: 1.6; margin-bottom: 22px; }
-    .app-card-stores { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .app-card .store-btn, #register-card .store-btn {
-      display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
-      background: var(--primary-dark); color: #fff; border-radius: 12px; padding: 10px 16px; text-align: left;
-      transition: transform 0.15s, box-shadow 0.2s;
-    }
-    .app-card .store-btn:hover, #register-card .store-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(13,30,76,0.28); }
-    .app-card .store-btn svg, #register-card .store-btn svg { width: 22px; height: 22px; fill: #fff; flex-shrink: 0; }
-    .app-card .store-btn small, #register-card .store-btn small { display: block; font-size: 10px; opacity: 0.75; }
-    .app-card .store-btn strong, #register-card .store-btn strong { display: block; font-size: 14px; font-weight: 700; }
-    .app-card-dismiss {
-      display: inline-block; margin-top: 16px; background: none; border: none; font-family: inherit;
-      color: var(--gray-light); font-size: 13.5px; font-weight: 600; cursor: pointer;
-      text-decoration: underline; text-underline-offset: 2px;
-    }
-    .app-card-dismiss:hover { color: var(--primary-dark); }
-    @media (max-width: 420px) { .app-card-stores { flex-direction: column; } .app-card .store-btn { justify-content: center; } }
-  </style>
+  /* ───────── app-download prompt (dismissible, once per session) ───────── */
+  .app-card-backdrop{ position:fixed; inset:0; z-index:200; padding:20px; background:rgba(15,16,32,0.6); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .25s ease; }
+  .app-card-backdrop.show{ opacity:1; }
+  /* The `display:flex` above overrides the [hidden] attribute, so "closed"
+     only faded the backdrop to opacity 0 — it stayed on top of the page and
+     taps where the App Store button had been still opened the store (Sept
+     2026). Honour [hidden], and don't take taps unless it's actually shown
+     (covers the fade-in/out moments too). */
+  .app-card-backdrop[hidden]{ display:none; }
+  .app-card-backdrop:not(.show){ pointer-events:none; }
+  .app-card{ position:relative; background:var(--ink); color:#fff; border-radius:36px; max-width:460px; width:100%; padding:40px 32px 28px; text-align:center; overflow:hidden; box-shadow:0 40px 100px rgba(0,0,0,0.5); transform:translateY(12px) scale(0.98); transition:transform .25s ease; }
+  .app-card::before{ content:""; position:absolute; right:-30%; top:-50%; width:90%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.28),rgba(15,16,32,0)); pointer-events:none; }
+  .app-card > *{ position:relative; }
+  .app-card-backdrop.show .app-card{ transform:none; }
+  .app-card-close{ position:absolute; top:14px; right:16px; background:none; border:none; font-size:28px; line-height:1; color:var(--faint); cursor:pointer; padding:4px; }
+  .app-card-close:hover{ color:#fff; }
+  .app-card-logo{ width:56px; height:56px; border-radius:16px; margin-bottom:18px; }
+  .app-card h3{ font-size:clamp(22px,2vw,28px); font-weight:600; letter-spacing:-0.035em; line-height:1.15; margin:0 0 12px; }
+  .app-card > p{ font-size:15px; color:var(--on-dark); line-height:1.6; margin-bottom:24px; }
+  .app-card .stores{ justify-content:center; }
+  .app-card-dismiss{ display:inline-block; margin-top:18px; background:none; border:none; font-family:inherit; color:var(--faint); font-size:14px; font-weight:500; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+  .app-card-dismiss:hover{ color:#fff; }
+</style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo"><img src="/logo-512.png" alt="MysMatch" width="36" height="36"><span>MysMatch</span></a>
-      <div class="nav-links"><a href="/events" class="nav-cta">All events</a></div>
-    </div>
-  </nav>
 
-  <main class="wrap">
-    <div id="state" class="center-state">Loading event…</div>
-    <div id="event" hidden>
-      <a href="/events" class="back">← All events</a>
-      <div id="event-content"></div>
-
-      <div class="card" id="register-card">
-        <h2>Register</h2>
-        <div class="sub" id="register-sub">Reserve your spot — it only takes a moment.</div>
-        <form id="reg-form">
-          <div class="row2">
-            <div>
-              <label for="f-name">Full name <span class="req">*</span></label>
-              <input id="f-name" name="name" type="text" autocomplete="name" required>
-            </div>
-            <div>
-              <label for="f-email">Email <span class="req">*</span></label>
-              <input id="f-email" name="email" type="email" autocomplete="email" required>
-            </div>
-          </div>
-          <div class="row2">
-            <div id="gender-wrap">
-              <label for="f-gender">Gender</label>
-              <select id="f-gender" name="gender">
-                <option value="">Prefer not to say</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
-            </div>
-            <div>
-              <label for="f-party">Number of people</label>
-              <input id="f-party" name="party" type="number" min="1" max="10" value="1">
-            </div>
-          </div>
-          <div id="questions"></div>
-          <div id="doc-field"></div>
-          <div id="form-error" class="form-error" hidden></div>
-          <button class="btn" id="submit-btn" type="submit">Register</button>
-          <p class="hint">By registering you agree to our <a href="/terms">Terms</a> and <a href="/privacy-policy">Privacy Policy</a>. We'll share your details with the event organizer.</p>
-        </form>
-      </div>
-    </div>
-  </main>
-
-  <!-- App-download prompt (dismissible). Independent of the event load so it still
-       nudges even if the event fails to render. Shown once per browser session. -->
-  <div id="app-card-backdrop" class="app-card-backdrop" hidden>
-    <div class="app-card" role="dialog" aria-modal="true" aria-labelledby="app-card-title">
-      <button class="app-card-close" id="app-card-close" aria-label="Close">&times;</button>
-      <img class="app-card-logo" src="/logo-512.png" alt="MysMatch" width="56" height="56">
-      <h3 id="app-card-title">Download the app to be informed about all events — and much more</h3>
-      <p>Get notified about new events near you, register in one tap, chat with organizers, and find study partners and classmates.</p>
-      <div class="app-card-stores">
-        <a class="store-btn" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
-          <span><small>Download on the</small><strong>App Store</strong></span>
-        </a>
-        <a class="store-btn" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" target="_blank" rel="noopener noreferrer">
-          <svg viewBox="0 0 24 24"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z"></path></svg>
-          <span><small>Get it on</small><strong>Google Play</strong></span>
-        </a>
-      </div>
-      <button class="app-card-dismiss" id="app-card-dismiss">Continue on web</button>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="/"><img src="/logo-512.png" alt="" width="36" height="36"><span>MysMatch</span></a>
+    <nav class="nav-links" id="nav-links">
+      <a href="/">Home</a>
+      <a href="/events" class="on">Events</a>
+      <a href="/jobs">Jobs</a>
+    </nav>
+    <div class="nav-right">
+      <a class="nav-cta" href="/events">All events</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
     </div>
   </div>
-  <script>
-    // Dismissible app-download prompt. Once dismissed, stays closed for the rest
-    // of the browser session so it never blocks someone mid-registration.
-    (function () {
-      var KEY = 'mm_app_prompt_dismissed';
-      var backdrop = document.getElementById('app-card-backdrop');
-      if (!backdrop) return;
-      try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
-      function close() {
-        backdrop.classList.remove('show');
-        try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
-        setTimeout(function () { backdrop.hidden = true; }, 260);
-      }
-      function open() {
-        // In-app-only event: the page's own card already shows the store
-        // buttons ("Registration only on app…"), so don't repeat them in a
-        // pop-up covering it.
-        var reg = document.getElementById('register-card');
-        if (reg && reg.classList.contains('app-only')) return;
-        backdrop.hidden = false;
-        requestAnimationFrame(function () { backdrop.classList.add('show'); });
-      }
-      document.getElementById('app-card-close').addEventListener('click', close);
-      document.getElementById('app-card-dismiss').addEventListener('click', close);
-      backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !backdrop.hidden) close(); });
-      // Let the event content paint first.
-      setTimeout(open, 900);
-    })();
-  </script>
+  <div class="progress" id="progress"></div>
+</header>
 
-  <footer class="footer">
-    <div>
-      <a href="/privacy-policy">Privacy</a><a href="/terms">Terms</a><a href="/support">Support</a><a href="mailto:contact@mys-match.com">Contact</a>
+<!-- ════════ HERO (title + facts, filled by JS) ════════ -->
+<section class="page-hero ev-hero">
+  <div class="hero-stack">
+    <div class="hero-head">
+      <a href="/events" class="back">← All events</a>
+      <div id="state" class="center-state">Loading event…</div>
+      <div id="ev-head" hidden></div>
     </div>
-  </footer>
+  </div>
+</section>
+
+<!-- ════════ BODY ════════ -->
+<section class="sheet sheet-white ev-main" id="event" hidden>
+  <div class="in">
+    <div class="ev-left" id="event-content"></div>
+
+    <div class="card" id="register-card">
+      <h2>Register</h2>
+      <div class="sub" id="register-sub">Reserve your spot — it only takes a moment.</div>
+      <form id="reg-form">
+        <div class="row2">
+          <div>
+            <label for="f-name">Full name <span class="req">*</span></label>
+            <input id="f-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div>
+            <label for="f-email">Email <span class="req">*</span></label>
+            <input id="f-email" name="email" type="email" autocomplete="email" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div id="gender-wrap">
+            <label for="f-gender">Gender</label>
+            <select id="f-gender" name="gender">
+              <option value="">Prefer not to say</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-party">Number of people</label>
+            <input id="f-party" name="party" type="number" min="1" max="10" value="1">
+          </div>
+        </div>
+        <div id="questions"></div>
+        <div id="doc-field"></div>
+        <div id="form-error" class="form-error" hidden></div>
+        <button class="btn" id="submit-btn" type="submit">Register</button>
+        <p class="hint">By registering you agree to our <a href="/terms">Terms</a> and <a href="/privacy-policy">Privacy Policy</a>. We'll share your details with the event organizer.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- App-download prompt (dismissible). Independent of the event load so it still
+     nudges even if the event fails to render. Shown once per browser session. -->
+<div id="app-card-backdrop" class="app-card-backdrop" hidden>
+  <div class="app-card" role="dialog" aria-modal="true" aria-labelledby="app-card-title">
+    <button class="app-card-close" id="app-card-close" aria-label="Close">&times;</button>
+    <img class="app-card-logo" src="/logo-512.png" alt="MysMatch" width="56" height="56">
+    <h3 id="app-card-title">Download the app to be informed about all events — and much more</h3>
+    <p>Get notified about new events near you, register in one tap, chat with organizers, and find study partners and classmates.</p>
+    <!-- WHY both classes: .stores styles it; .app-card-stores is what the in-app-only
+         register card copies (see setupRegistration). -->
+    <div class="stores light app-card-stores">
+      <a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" target="_blank" rel="noopener noreferrer">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
+        <span><small>Download on the</small><b>App Store</b></span>
+      </a>
+      <a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" target="_blank" rel="noopener noreferrer">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
+        <span><small>Get it on</small><b>Google Play</b></span>
+      </a>
+    </div>
+    <button class="app-card-dismiss" id="app-card-dismiss">Continue on web</button>
+  </div>
+</div>
+<script>
+  // Dismissible app-download prompt. Once dismissed, stays closed for the rest
+  // of the browser session so it never blocks someone mid-registration.
+  (function () {
+    var KEY = 'mm_app_prompt_dismissed';
+    var backdrop = document.getElementById('app-card-backdrop');
+    if (!backdrop) return;
+    try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
+    function close() {
+      backdrop.classList.remove('show');
+      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      setTimeout(function () { backdrop.hidden = true; }, 260);
+    }
+    function open() {
+      // In-app-only event: the page's own card already shows the store
+      // buttons ("Registration only on app…"), so don't repeat them in a
+      // pop-up covering it.
+      var reg = document.getElementById('register-card');
+      if (reg && reg.classList.contains('app-only')) return;
+      backdrop.hidden = false;
+      requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    }
+    document.getElementById('app-card-close').addEventListener('click', close);
+    document.getElementById('app-card-dismiss').addEventListener('click', close);
+    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !backdrop.hidden) close(); });
+    // Let the event content paint first.
+    setTimeout(open, 900);
+  })();
+</script>
+
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+  <div class="in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="/"><img src="/logo-512.png" alt="" width="44" height="44"><span>MysMatch</span></a>
+        <p>Nobody studies alone.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col"><span class="kicker">Product</span><a href="/events">Events</a><a href="/jobs">Jobs</a><a href="/dashboard.html">Organizer login</a></div>
+        <div class="foot-col"><span class="kicker">Company</span><a href="mailto:contact@mys-match.com">Contact</a></div>
+        <div class="foot-col"><span class="kicker">Legal</span><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/support">Support</a></div>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">MysMatch</div>
+    <div class="foot-bottom"><span>© 2026 MysMatch. All rights reserved.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+  </div>
+</footer>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script src="/js/supabase.js"></script>
+  <script src="/js/site.js"></script>
   <script>
     (function () {
       const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
@@ -310,28 +290,41 @@
         const img = ev.event_image
           ? '<img class="hero-img" src="' + esc(ev.event_image) + '" alt="' + esc(ev.title) + '">'
           : '<div class="hero-img placeholder">🎉</div>';
+        // Facts as pills in the dark hero (Oct 2026 redesign); same data as before.
+        const ic = {
+          cal: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2.5"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>',
+          pin: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>',
+          flag: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4M4 4h12l-2 4 2 4H4"></path></svg>',
+          ticket: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V6a1 1 0 011-1h16a1 1 0 011 1v3a3 3 0 000 6v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3a3 3 0 000-6z"></path></svg>',
+          phone: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"></rect><path d="M11 18h2"></path></svg>',
+          people: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5M16 4.8a3.5 3.5 0 010 6.4M18.5 14.8c1.6.8 2.7 2.6 3 5.2"></path></svg>',
+        };
+        const fact = (icon, text, extra) => '<span class="fact' + (extra || '') + '">' + ic[icon] + esc(text) + '</span>';
         let spots = '';
-        if (ev.max_capacity == null) spots = '<span class="spots-pill">Open registration</span>';
-        else if (full) spots = '<span class="spots-pill full">Fully booked</span>';
-        else spots = '<span class="spots-pill">' + left + ' spot' + (left === 1 ? '' : 's') + ' left</span>';
+        if (ev.max_capacity == null) spots = fact('people', 'Open registration');
+        else if (full) spots = fact('people', 'Fully booked', ' full');
+        else spots = fact('people', left + ' spot' + (left === 1 ? '' : 's') + ' left');
 
         // In-app-only event (Oct 2026): the server sends no date / time /
         // location for it (get_web_event), so say where to find them instead.
         const appOnly = ev.web_registration === false;
+        const head = document.getElementById('ev-head');
+        head.innerHTML =
+          '<div style="display:flex;flex-direction:column;gap:clamp(24px,2.4vw,40px)">'
+          + (ev.category ? '<div class="kicker">/ ' + esc(ev.category) + '</div>' : '')
+          + '<h1>' + esc(ev.title) + '</h1>'
+          + '<div class="facts">'
+          + (appOnly
+            ? fact('phone', 'Download the app to see the location and time')
+            : fact('cal', fmtDate(ev))
+              + (loc ? fact('pin', loc) : '')
+              + (ev.starting_point ? fact('flag', ev.starting_point) : ''))
+          + fact('ticket', price) + spots
+          + '</div></div>';
+        head.hidden = false;
         document.getElementById('event-content').innerHTML =
           img
-          + (ev.category ? '<span class="tag">' + esc(ev.category) + '</span>' : '')
-          + '<h1>' + esc(ev.title) + '</h1>'
-          + '<div class="meta-row">'
-          + (appOnly
-            ? '<span class="meta-item"><span class="ic">📱</span>Download the app to see the location and time</span>'
-            : '<span class="meta-item"><span class="ic">📅</span>' + esc(fmtDate(ev)) + '</span>'
-              + (loc ? '<span class="meta-item"><span class="ic">📍</span>' + esc(loc) + '</span>' : '')
-              + (ev.starting_point ? '<span class="meta-item"><span class="ic">🚩</span>' + esc(ev.starting_point) + '</span>' : ''))
-          + '<span class="meta-item"><span class="ic">🎟️</span>' + price + '</span>'
-          + '</div>'
-          + '<div style="margin-bottom:24px">' + spots + '</div>'
-          + (ev.description ? '<div class="desc">' + esc(ev.description) + '</div>' : '');
+          + (ev.description ? '<div class="desc-wrap"><div class="kicker">/ About this event</div><div class="desc">' + esc(ev.description) + '</div></div>' : '');
 
         eventEl.hidden = false;
         stateEl.hidden = true;
@@ -351,7 +344,8 @@
           card.classList.add('app-only');
           card.innerHTML = '<h2>Registration only on app for this event</h2>'
             + '<div class="sub">Download MysMatch to see the location and time and to register.</div>'
-            + (stores ? stores.outerHTML : '')
+            // WHY drop .light: dark store buttons read better on this white card.
+            + (stores ? stores.outerHTML.replace(' light', '') : '')
             + '<a class="open-app" href="https://www.mysmatch.com/event/' + encodeURIComponent(ev.id) + '">Already have the app? Open this event →</a>';
           return;
         }
@@ -359,7 +353,7 @@
         // External-registration events: link out instead of collecting here.
         if (ev.external_url) {
           card.innerHTML = '<h2>Register</h2><div class="sub">Registration for this event is handled on the organizer\'s site.</div>'
-            + '<a class="btn" href="' + esc(ev.external_url) + '" target="_blank" rel="noopener noreferrer">Go to registration ↗</a>';
+            + '<a class="btn btn-dark" href="' + esc(ev.external_url) + '" target="_blank" rel="noopener noreferrer">Go to registration ↗</a>';
           return;
         }
         if (full) {

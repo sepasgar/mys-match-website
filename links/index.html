@@ -13,7 +13,7 @@
 <title>MysMatch — Links</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="description" content="Download MysMatch on the App Store or Google Play, visit our website, or get in touch.">
-<meta name="theme-color" content="#0F0B2E">
+<meta name="theme-color" content="#0F1020">
 <!-- WHY noindex: a thin page of outbound links adds nothing for search; the
      landing page should be what ranks. Not listed in sitemap.xml for the same reason. -->
 <meta name="robots" content="noindex, follow">
@@ -31,30 +31,31 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
+  /* Oct 2026 redesign: dark look of the new site (was white). Markup unchanged. */
   :root{
-    --ink:#0F0B2E;
-    --muted:rgba(15,11,46,0.62);
-    --bg:#FFFFFF;
-    --card:#FFFFFF;
-    --line:rgba(15,11,46,0.08);
-    --grad:linear-gradient(95deg,#4A2BFF 0%,#8A3BFF 48%,#FF39C6 100%);
-    --shadow-sm:0 1px 2px rgba(15,11,46,0.04), 0 4px 14px rgba(15,11,46,0.05);
-    --grad-shadow:0 8px 22px rgba(74,43,255,0.25), 0 2px 6px rgba(255,57,198,0.15);
+    --ink:#0F1020;
+    --muted:rgba(201,201,217,0.8);
+    --bg:#0F1020;
+    --card:#17182C;
+    --line:rgba(255,255,255,0.08);
+    --grad:linear-gradient(100deg,#7B5CFF 0%,#B55BE8 55%,#E94B9A 100%);
+    --shadow-sm:0 1px 2px rgba(0,0,0,0.2);
+    --grad-shadow:0 14px 40px rgba(123,92,255,0.3);
   }
   *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
   html,body{ min-height:100%; }
   body{
     font-family:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;
-    color:var(--ink);
+    color:#fff;
     background:var(--bg);
     -webkit-font-smoothing:antialiased;
     /* WHY: soft brand glow behind the column, echoing the landing hero */
     background-image:
-      radial-gradient(60% 40% at 15% 0%, rgba(74,43,255,0.12), transparent 70%),
-      radial-gradient(55% 40% at 90% 10%, rgba(255,57,198,0.12), transparent 70%);
+      radial-gradient(60% 40% at 15% 0%, rgba(123,92,255,0.18), transparent 70%),
+      radial-gradient(55% 40% at 90% 10%, rgba(233,75,154,0.12), transparent 70%);
     background-repeat:no-repeat;
   }
   main{
@@ -70,7 +71,7 @@
   }
   h1{
     margin-top:18px;
-    font-size:26px; font-weight:800; letter-spacing:-0.03em;
+    font-size:32px; font-weight:700; letter-spacing:-0.05em;
   }
   .tagline{
     margin-top:6px; text-align:center;
@@ -85,21 +86,22 @@
   .link{
     display:flex; align-items:center; gap:14px;
     width:100%; min-height:60px; padding:12px 18px;
-    border-radius:18px;
+    border-radius:22px;
     background:var(--card);
     border:1px solid var(--line);
     box-shadow:var(--shadow-sm);
-    color:var(--ink); text-decoration:none;
+    color:#fff; text-decoration:none;
     font-weight:600; font-size:16px;
     transition:transform .15s ease, box-shadow .15s ease;
   }
-  .link:hover{ transform:translateY(-2px); box-shadow:var(--grad-shadow); }
+  .link:hover{ transform:translateY(-2px); border-color:rgba(255,255,255,0.2); }
+  .link.primary:hover{ box-shadow:0 20px 50px rgba(123,92,255,0.4); }
   .link:active{ transform:translateY(0); }
   .link:focus-visible{ outline:3px solid #8A3BFF; outline-offset:3px; }
   .link .ic{
     flex:none; width:36px; height:36px; border-radius:11px;
     display:grid; place-items:center;
-    background:var(--ink); color:#fff;
+    background:rgba(255,255,255,0.08); color:#fff;
   }
   .link .txt{ display:flex; flex-direction:column; line-height:1.2; flex:1; min-width:0; }
   .link .txt small{ font-size:12px; font-weight:500; color:var(--muted); }
@@ -118,7 +120,7 @@
   .link.primary .arrow{ opacity:.7; }
   footer{
     margin-top:auto; padding-top:40px;
-    font-size:12px; color:var(--muted);
+    font-family:'Geist Mono',ui-monospace,monospace; font-size:12px; color:var(--muted);
   }
   footer a{ color:inherit; }
   @media (prefers-reduced-motion:reduce){ .link{ transition:none; } .link:hover{ transform:none; } }
