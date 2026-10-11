@@ -57,26 +57,22 @@
   .ev-mon{ display:flex; flex-direction:column; gap:2px; padding-bottom:4px; font-size:clamp(16px,1.2vw,20px); font-weight:600; letter-spacing:-0.02em; }
   .ev-mon span:last-child{ color:var(--ink-2); font-weight:500; }
   .ev-noday{ font-size:clamp(26px,2.2vw,36px); line-height:1.05; font-weight:600; letter-spacing:-0.04em; max-width:10ch; }
-  /* WHY a thumbnail: real events have a cover photo; the design's date block stays
-     the hero of the card and the photo sits beside it instead of replacing it. */
-  .ev-thumb{ width:clamp(72px,6vw,96px); aspect-ratio:1; border-radius:22px; object-fit:cover; flex-shrink:0; box-shadow:0 10px 24px rgba(15,16,32,0.18); }
+  /* WHY a big photo (user, Oct 2026): the cover photo fills ~60% of the card's top
+     block; category + badge sit on it and the design's big date stays below. */
+  .ev-top.has-photo{ padding:0; min-height:clamp(340px,26vw,440px); gap:0; }
+  .ev-photo{ position:relative; flex:0 0 60%; overflow:hidden; background:#E6E3F3; }
+  .ev-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s cubic-bezier(.2,.7,.2,1); }
+  .ev-card:hover .ev-photo img{ transform:scale(1.04); }
+  .ev-photo .ev-row{ position:absolute; left:0; right:0; top:0; padding:clamp(18px,1.6vw,26px); }
+  .ev-photo .ev-cat{ padding:6px 12px; border-radius:9999px; background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  .ev-top.has-photo .ev-date{ flex:1; align-items:flex-end; padding:clamp(18px,1.6vw,28px) clamp(24px,2vw,36px); }
+  .ev-top.has-photo .ev-day{ font-size:clamp(64px,5.4vw,104px); }
   .ev-body{ padding:clamp(22px,1.8vw,32px) clamp(24px,2vw,36px) clamp(26px,2vw,36px); display:flex; flex-direction:column; gap:18px; flex:1; }
   .ev-title{ font-size:clamp(22px,1.9vw,32px); font-weight:600; letter-spacing:-0.04em; line-height:1.08; }
   .ev-foot{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:clamp(15px,1.05vw,17px); color:var(--ink-2); }
   .ev-price{ padding:8px 16px; border-radius:9999px; background:#F1ECFF; color:#4B3BB0; font-weight:600; white-space:nowrap; }
   .ev-state{ padding:clamp(40px,4vw,72px) 0; display:flex; flex-direction:column; align-items:flex-start; gap:20px; }
   .ev-state span{ font-size:clamp(24px,2.2vw,38px); font-weight:600; letter-spacing:-0.04em; line-height:1.2; max-width:30ch; }
-
-  /* ───────── explore by category ───────── */
-  .explore .in{ display:flex; flex-direction:column; gap:clamp(48px,5vw,96px); }
-  .explore .h2{ max-width:12ch; }
-  .tiles{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr)); gap:clamp(12px,1.2vw,20px); }
-  .tile{ cursor:pointer; text-align:left; font-family:inherit; border:none; border-radius:32px; background:#fff; padding:clamp(24px,2.2vw,40px); min-height:clamp(180px,14vw,260px); display:flex; flex-direction:column; justify-content:space-between; gap:24px; color:var(--ink); transition:transform .5s cubic-bezier(.2,.7,.2,1), background .4s; }
-  .tile:hover{ transform:translateY(-6px); background:#FCFBFF; }
-  .tile-top{ display:flex; justify-content:space-between; align-items:center; }
-  .tile-ic{ width:clamp(44px,3.2vw,56px); height:clamp(44px,3.2vw,56px); border-radius:16px; display:flex; align-items:center; justify-content:center; font-size:clamp(20px,1.5vw,26px); }
-  .tile-n{ font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); color:var(--muted); }
-  .tile b{ font-size:clamp(24px,2.1vw,38px); font-weight:600; letter-spacing:-0.04em; line-height:1.02; }
 
   /* ───────── guests / organizers ───────── */
   .both .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
@@ -95,14 +91,9 @@
   .both-card.light .both-list p{ color:var(--ink-2); }
 
   @media (max-width:640px){
-    .ev-card, .tile{ border-radius:28px; }
+    .ev-card{ border-radius:28px; }
     .both-card{ border-radius:28px; }
     .free-toggle{ padding-right:16px; }
-    /* WHY two columns: one tile per row made seven near-empty cards a long scroll. */
-    .tiles{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-    .tile{ min-height:150px; padding:20px; border-radius:24px; gap:16px; }
-    .tile-n{ font-size:11px; }
-    .tile b{ font-size:20px; }
   }
 </style>
 </head>
@@ -160,17 +151,6 @@
       <span>No upcoming events match these filters.</span>
       <button class="btn btn-dark" id="clear-filters" type="button">Clear filters</button>
     </div>
-  </div>
-</section>
-
-<!-- ════════ EXPLORE BY CATEGORY ════════ -->
-<section class="sheet sheet-lilac explore">
-  <div class="in">
-    <div class="up-head-l">
-      <div class="kicker" style="color:var(--ink-2)">/ Explore</div>
-      <h2 class="h2" data-reveal>Explore by <span class="dim">category.</span></h2>
-    </div>
-    <div class="tiles" id="cat-tiles"></div>
   </div>
 </section>
 
@@ -258,13 +238,13 @@
   // WHY these keys: they are the app's real event categories (create-event.tsx);
   // the labels are the friendlier names the site already used.
   var CATS = [
-    { key: 'Music', label: 'Music & Parties', ic: '🎵' },
-    { key: 'Sports', label: 'Sports', ic: '⚽' },
-    { key: 'Tech', label: 'Tech & Hackathons', ic: '💻' },
-    { key: 'Food', label: 'Food & Social', ic: '🍕' },
-    { key: 'Art', label: 'Art & Culture', ic: '🎨' },
-    { key: 'Networking', label: 'Networking', ic: '🤝' },
-    { key: 'Other', label: 'Other', ic: '✨' },
+    { key: 'Music', label: 'Music & Parties' },
+    { key: 'Sports', label: 'Sports' },
+    { key: 'Tech', label: 'Tech & Hackathons' },
+    { key: 'Food', label: 'Food & Social' },
+    { key: 'Art', label: 'Art & Culture' },
+    { key: 'Networking', label: 'Networking' },
+    { key: 'Other', label: 'Other' },
   ];
   var TINTS = ['linear-gradient(150deg,#E8EAFF,#F1E8FF)', 'linear-gradient(150deg,#E6F0FF,#ECEBFF)', 'linear-gradient(150deg,#ECE9FF,#E6EEFF)',
     'linear-gradient(150deg,#FDEBF4,#F6E9FF)', 'linear-gradient(150deg,#F3E8FF,#FDE9F3)', 'linear-gradient(150deg,#EFEAFF,#FBEAF5)', 'linear-gradient(150deg,#E9E8FF,#FCE8F2)'];
@@ -273,7 +253,7 @@
   var grid = document.getElementById('events-grid'), loading = document.getElementById('events-loading');
   var empty = document.getElementById('events-empty'), noMatch = document.getElementById('events-nomatch');
   var countEl = document.getElementById('events-count'), chipsEl = document.getElementById('cat-chips');
-  var tilesEl = document.getElementById('cat-tiles'), freeBtn = document.getElementById('free-toggle');
+  var freeBtn = document.getElementById('free-toggle');
   var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
   var pad = function (n) { return (n < 10 ? '0' : '') + n; };
   var plural = function (n) { return pad(n) + (n === 1 ? ' event' : ' events'); };
@@ -298,15 +278,17 @@
     // In-app-only events arrive without date/location (server-side, see MM.listEvents).
     var appOnly = e.web_registration === false;
     var dp = appOnly ? null : (e.starts_at ? dateParts(e) : null);
-    var thumb = e.event_image ? '<img class="ev-thumb" src="' + esc(e.event_image) + '" alt="" loading="lazy">' : '';
     var date = dp
       ? '<span class="ev-date-l"><span class="ev-day">' + esc(dp.day) + '</span><span class="ev-mon"><span>' + esc(dp.mon) + '</span><span>' + esc(dp.wd) + ' · ' + esc(dp.time) + '</span></span></span>'
       : '<span class="ev-noday">' + (appOnly ? 'Date &amp; place in the app' : 'Date to be announced') + '</span>';
+    var row = '<span class="ev-cat">' + esc(cat ? cat.label : (e.category || 'Event')) + '</span>' + badge;
     var place = appOnly ? 'Download the app to see the location and time' : (e.city || e.location || '');
     return '<a class="ev-card' + (appOnly ? ' app-only' : '') + '" data-reveal href="/events/event.html?id=' + encodeURIComponent(e.id) + '">'
-      + '<div class="ev-top" style="background:' + TINTS[ci >= 0 ? ci : 0] + '">'
-      + '<div class="ev-row"><span class="ev-cat">' + esc(cat ? cat.label : (e.category || 'Event')) + '</span>' + badge + '</div>'
-      + '<div class="ev-date">' + date + thumb + '</div></div>'
+      + '<div class="ev-top' + (e.event_image ? ' has-photo' : '') + '" style="background:' + TINTS[ci >= 0 ? ci : 0] + '">'
+      + (e.event_image
+        ? '<div class="ev-photo"><img src="' + esc(e.event_image) + '" alt="" loading="lazy"><div class="ev-row">' + row + '</div></div>'
+        : '<div class="ev-row">' + row + '</div>')
+      + '<div class="ev-date">' + date + '</div></div>'
       + '<div class="ev-body"><span class="ev-title">' + esc(e.title) + '</span>'
       + '<div class="ev-foot"><span>' + esc(place) + '</span><span class="ev-price">' + (isFree(e) ? 'Free' : '€' + esc(e.price)) + '</span></div></div></a>';
   }
@@ -332,27 +314,10 @@
   freeBtn.addEventListener('click', function () { state.free = !state.free; render(); });
   document.getElementById('clear-filters').addEventListener('click', function () { state = { cat: 'All', free: false }; render(); });
 
-  function renderTiles() {
-    tilesEl.innerHTML = CATS.map(function (c, i) {
-      var n = all.filter(function (e) { return e.category === c.key; }).length;
-      return '<button class="tile" type="button" data-reveal data-cat="' + esc(c.key) + '"><span class="tile-top"><span class="tile-ic" style="background:' + TINTS[i] + '">' + c.ic + '</span><span class="tile-n">' + plural(n) + '</span></span><b>' + esc(c.label) + '</b></button>';
-    }).join('');
-    if (window.MMReveal) window.MMReveal(tilesEl);
-  }
-  // Tile → filter the list by that category and scroll up to it.
-  tilesEl.addEventListener('click', function (ev) {
-    var t = ev.target.closest('.tile'); if (!t) return;
-    state = { cat: t.dataset.cat, free: false }; render();
-    var up = document.getElementById('upcoming');
-    window.scrollTo({ top: up.getBoundingClientRect().top + window.scrollY - 20, behavior: 'smooth' });
-  });
-
-  renderTiles();
   if (!window.MM) { loading.firstChild.textContent = 'Could not load events.'; return; }
   MM.listEvents().then(function (events) {
     all = events || [];
     loading.hidden = true;
-    renderTiles();
     render();
   }).catch(function (err) { loading.firstChild.textContent = 'Could not load events.'; console.error(err); });
 })();
