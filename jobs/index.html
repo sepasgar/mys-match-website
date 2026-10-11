@@ -81,6 +81,12 @@
   .step3 p{ font-size:clamp(17px,1.25vw,21px); line-height:1.55; color:#B4B5C8; }
   .step3:nth-child(3) p{ color:var(--ink-2); }
 
+  .org-steps{ margin:0; padding:0; list-style:none; counter-reset:st; display:flex; flex-direction:column; border-top:1px solid #DCD3F2; }
+  .org-steps li{ counter-increment:st; display:flex; gap:14px; padding:14px 0; border-bottom:1px solid #DCD3F2; font-size:clamp(16px,1.15vw,18px); line-height:1.5; color:var(--ink-2); }
+  .org-steps li::before{ content:counter(st); flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--ink); color:#fff; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  /* WHY a span per step: a flex <li> split the bold words and the rest into two columns. */
+  .org-steps b{ color:var(--ink); font-weight:600; }
+
   @media (max-width:760px){
     /* WHY stacked rows on phones: the design's one-line row has no room below ~760px. */
     .row{ align-items:flex-start; gap:16px; }
@@ -188,8 +194,15 @@
     </div>
     <div class="app-band-r">
       <!-- WHY not the design's "Reach verified students": student status isn't checked (claims removed site-wide). -->
-      <p>Create an organization account in the MysMatch app to post jobs and chat with applicants in one place.</p>
-      <div><a class="btn btn-dark" href="mailto:contact@mys-match.com">Get in touch →</a></div>
+      <p>Create your organization's page in the MysMatch app and post jobs yourself — no need to contact us.</p>
+      <!-- WHY steps instead of "Get in touch" (user, Oct 2026): organizations post jobs themselves
+           from their own page; the full guide is /organizations. -->
+      <ol class="org-steps">
+        <li><span><b>Get the app</b> from the App Store or Google Play.</span></li>
+        <li><span><b>Sign up as Partner / Service Provider</b> to create your organization's page.</span></li>
+        <li><span><b>Post a job</b> and chat with applicants in one place.</span></li>
+      </ol>
+      <div><a class="btn btn-dark" href="/organizations">Organization sign-up →</a></div>
     </div>
   </div>
 </section>
