@@ -1,246 +1,336 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Organizer Dashboard — MysMatch</title>
-  <meta name="theme-color" content="#0D1E4C">
-  <meta name="robots" content="noindex">
-  <link rel="icon" type="image/png" href="/logo-512.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    :root {
-      --primary: #C48CB3; --primary-dark: #0D1E4C; --primary-light: #E5C9D7;
-      --accent: #83A6CE; --black: #0B1B32; --white: #FFFFFF; --gray: #26415E;
-      --gray-light: #6B8299; --gray-bg: #F5F0F3; --border: #E5C9D7; --success: #34C77B;
-    }
-    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--black); background: var(--gray-bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    .nav { background: var(--white); border-bottom: 1px solid var(--border); }
-    .nav-inner { max-width: 1120px; margin: 0 auto; padding: 0 24px; height: 64px; display: flex; align-items: center; justify-content: space-between; }
-    .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--primary-dark); }
-    .nav-logo img { width: 36px; height: 36px; border-radius: 10px; }
-    .nav-logo span { font-size: 20px; font-weight: 800; letter-spacing: -0.5px; }
-    .nav-right { display: flex; align-items: center; gap: 16px; }
-    .nav-right .who { font-size: 14px; color: var(--gray-light); }
-    .link-btn { background: none; border: none; color: var(--primary-dark); font-weight: 600; font-size: 14px; cursor: pointer; font-family: inherit; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Organizer Dashboard — MysMatch</title>
+<meta name="theme-color" content="#0F1020">
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="/logo-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<style>
+  /* Oct 2026 redesign on top of /css/site.css. Logic unchanged apart from the
+     Excel export and the "People" column. */
+  .who{ font-size:14px; color:var(--on-dark); max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .signout{ background:#fff; color:var(--ink); font-family:inherit; font-weight:600; font-size:15px; padding:12px 22px; border-radius:9999px; border:none; cursor:pointer; transition:background .3s; }
+  .signout:hover{ background:#F1ECFF; }
+  .dash .in{ min-height:50vh; }
+  .center-state{ padding:clamp(48px,6vw,96px) 0; font-size:clamp(20px,1.8vw,28px); color:var(--ink-2); letter-spacing:-0.02em; }
 
-    .wrap { max-width: 1000px; margin: 0 auto; padding: 40px 24px 96px; }
+  /* Login */
+  .login-box{ max-width:480px; }
+  .login-box h2{ font-size:clamp(32px,3vw,48px); letter-spacing:-0.045em; font-weight:600; line-height:1.05; margin-bottom:12px; }
+  .login-box p.sub{ font-size:16px; color:var(--ink-2); line-height:1.55; margin-bottom:12px; }
+  label{ display:block; font-size:14px; font-weight:600; color:var(--ink); margin:18px 0 8px; }
+  input{ width:100%; border:1px solid #E2DEF0; border-radius:16px; padding:14px 16px; font-size:16px; font-family:inherit; color:var(--ink); background:#fff; transition:border-color .2s, box-shadow .2s; }
+  input:focus{ outline:none; border-color:var(--violet); box-shadow:0 0 0 4px rgba(123,92,255,0.12); }
+  .login-box .btn{ width:100%; margin-top:24px; }
+  .btn[disabled]{ opacity:.5; cursor:not-allowed; transform:none; }
+  .err{ background:#FDECF4; color:#B3246B; border:1px solid #F6C2DD; border-radius:16px; padding:12px 16px; font-size:14px; font-weight:600; margin-top:16px; }
+  .hint{ font-size:13px; color:var(--muted); margin-top:16px; line-height:1.5; }
 
-    /* Login */
-    .login-box { max-width: 420px; margin: 60px auto; background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 36px 32px; }
-    .login-box h1 { font-size: 26px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.5px; margin-bottom: 6px; }
-    .login-box p.sub { font-size: 14px; color: var(--gray-light); margin-bottom: 24px; }
-    label { display: block; font-size: 14px; font-weight: 700; margin: 14px 0 6px; }
-    input { width: 100%; border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; font-size: 15px; font-family: inherit; }
-    input:focus { outline: none; border-color: var(--primary); }
-    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: 100%; margin-top: 22px; padding: 14px 28px; border-radius: 14px; font-size: 16px; font-weight: 700; border: none; cursor: pointer; background: var(--primary-dark); color: #fff; transition: transform .15s, box-shadow .2s; }
-    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(13,30,76,0.22); }
-    .btn[disabled] { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
-    .btn.secondary { background: var(--white); color: var(--primary-dark); border: 1px solid var(--border); }
-    .err { background: #FDE7EC; color: #C0264B; border: 1px solid #F6C2CF; border-radius: 12px; padding: 12px 14px; font-size: 14px; font-weight: 600; margin-top: 16px; }
-    .hint { font-size: 12px; color: var(--gray-light); margin-top: 14px; text-align: center; }
+  /* Event list */
+  .list-head{ display:flex; flex-direction:column; gap:14px; margin-bottom:clamp(28px,3vw,48px); }
+  .list-head h2{ font-size:clamp(36px,4vw,72px); letter-spacing:-0.055em; font-weight:700; line-height:0.95; }
+  .list-head p{ font-size:clamp(16px,1.2vw,19px); color:var(--ink-2); max-width:56ch; }
+  .ev-list{ display:flex; flex-direction:column; border-top:1px solid #E2DEF0; }
+  .ev-row{ display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; padding:clamp(20px,2vw,32px) clamp(8px,1.4vw,24px); border-bottom:1px solid #E2DEF0; border-radius:24px; cursor:pointer; transition:background .3s; }
+  .ev-row:hover{ background:#fff; }
+  .ev-row .t{ font-size:clamp(20px,1.8vw,30px); font-weight:600; letter-spacing:-0.035em; line-height:1.1; }
+  .ev-row .m{ font-size:15px; color:var(--ink-2); margin-top:6px; }
+  .badges{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .pill{ font-size:13px; font-weight:600; padding:7px 14px; border-radius:9999px; white-space:nowrap; }
+  .pill.web{ background:#F1ECFF; color:#4B3BB0; }
+  .pill.priv{ background:#ECEAF4; color:var(--ink-2); }
+  .pill.count{ background:var(--ink); color:#fff; font-family:var(--mono); font-weight:500; }
+  .empty{ padding:clamp(40px,4vw,72px) 0; font-size:clamp(20px,1.8vw,28px); font-weight:600; letter-spacing:-0.03em; color:var(--ink); max-width:34ch; }
 
-    /* Dashboard */
-    h1.page { font-size: 30px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.7px; margin-bottom: 4px; }
-    p.page-sub { color: var(--gray-light); margin-bottom: 28px; }
-    .ev-list { display: grid; gap: 14px; }
-    .ev-row { background: var(--white); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px; display: flex; align-items: center; justify-content: space-between; gap: 16px; cursor: pointer; transition: box-shadow .2s; }
-    .ev-row:hover { box-shadow: 0 6px 20px rgba(13,30,76,0.08); }
-    .ev-row .t { font-size: 16px; font-weight: 700; color: var(--primary-dark); }
-    .ev-row .m { font-size: 13px; color: var(--gray-light); margin-top: 2px; }
-    .badges { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-    .pill { font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 12px; }
-    .pill.web { background: var(--primary-light); color: var(--primary-dark); }
-    .pill.priv { background: var(--gray-bg); color: var(--gray-light); }
-    .pill.count { background: var(--primary-dark); color: #fff; }
-    .empty { text-align: center; padding: 60px 24px; color: var(--gray-light); background: var(--white); border: 1px solid var(--border); border-radius: 16px; }
-
-    /* Attendees */
-    .att-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
-    .att-head h1 { font-size: 24px; font-weight: 800; color: var(--primary-dark); letter-spacing: -0.5px; }
-    .table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 16px; overflow: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 640px; }
-    th, td { text-align: left; padding: 12px 16px; font-size: 14px; border-bottom: 1px solid var(--border); white-space: nowrap; }
-    th { font-size: 12px; text-transform: uppercase; letter-spacing: .5px; color: var(--gray-light); font-weight: 700; }
-    tr:last-child td { border-bottom: none; }
-    td.ans { white-space: normal; max-width: 320px; color: var(--gray); font-size: 13px; }
-    .src { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 10px; }
-    .src.web { background: var(--primary-light); color: var(--primary-dark); }
-    .src.app { background: var(--gray-bg); color: var(--gray); }
-    .toolbar { display: flex; gap: 10px; }
-    .btn-sm { padding: 9px 16px; border-radius: 12px; font-size: 14px; font-weight: 700; border: 1px solid var(--border); background: var(--white); color: var(--primary-dark); cursor: pointer; font-family: inherit; }
-    .doc-view { padding: 5px 12px; border-radius: 10px; font-size: 13px; font-weight: 700; border: 1px solid var(--border); background: var(--white); color: var(--primary-dark); cursor: pointer; font-family: inherit; }
-    .btn-sm.primary { background: var(--primary-dark); color: #fff; border-color: var(--primary-dark); }
-    .center-state { text-align: center; padding: 80px 24px; color: var(--gray-light); }
-    @media (max-width: 600px) { .ev-row { flex-direction: column; align-items: flex-start; } }
-  </style>
+  /* Attendees */
+  .back{ display:inline-block; margin-bottom:24px; font-family:var(--mono); font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); cursor:pointer; background:none; border:none; padding:0; }
+  .back:hover{ color:var(--ink); }
+  .att-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:clamp(24px,2.6vw,40px); }
+  .att-head h2{ font-size:clamp(32px,3.6vw,64px); letter-spacing:-0.05em; font-weight:700; line-height:0.98; overflow-wrap:anywhere; }
+  .att-head .cnt{ font-family:var(--mono); font-size:15px; color:var(--violet); margin-top:12px; }
+  .toolbar{ display:flex; gap:10px; flex-wrap:wrap; }
+  .btn-sm{ display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:9999px; font-size:15px; font-weight:600; border:1px solid #E2DEF0; background:#fff; color:var(--ink); cursor:pointer; font-family:inherit; transition:border-color .2s, background .2s; }
+  .btn-sm:hover{ border-color:var(--ink); }
+  .btn-sm.primary{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .btn-sm.primary:hover{ background:var(--violet); border-color:var(--violet); }
+  .btn-sm[disabled]{ opacity:.6; cursor:wait; }
+  .table-wrap{ background:#fff; border-radius:28px; overflow:auto; box-shadow:0 1px 2px rgba(15,16,32,0.04),0 24px 48px -28px rgba(60,40,140,0.25); }
+  table{ width:100%; border-collapse:collapse; min-width:720px; }
+  th, td{ text-align:left; padding:14px 18px; font-size:15px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th{ font-family:var(--mono); font-size:12px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); }
+  tr:last-child td{ border-bottom:none; }
+  td.num{ font-family:var(--mono); color:var(--muted); }
+  td.ans{ white-space:normal; max-width:320px; color:var(--ink-2); font-size:14px; }
+  .src{ font-size:12px; font-weight:600; padding:4px 10px; border-radius:9999px; }
+  .src.web{ background:#F1ECFF; color:#4B3BB0; }
+  .src.app{ background:#ECEAF4; color:var(--ink-2); }
+  .doc-view{ padding:6px 14px; border-radius:9999px; font-size:13px; font-weight:600; border:1px solid #E2DEF0; background:#fff; color:var(--ink); cursor:pointer; font-family:inherit; }
+  .doc-view:hover{ border-color:var(--ink); }
+  @media (max-width:640px){ .who{ display:none; } .table-wrap{ border-radius:20px; } }
+</style>
 </head>
 <body>
-  <nav class="nav">
-    <div class="nav-inner">
-      <a href="/" class="nav-logo"><img src="/logo-512.png" alt="MysMatch" width="36" height="36"><span>MysMatch</span></a>
-      <div class="nav-right" id="nav-right"></div>
+
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="/"><img src="/logo-512.png" alt="" width="36" height="36"><span>MysMatch</span></a>
+    <nav class="nav-links" id="nav-links">
+      <a href="/">Home</a>
+      <a href="/events">Events</a>
+      <a href="/jobs">Jobs</a>
+    </nav>
+    <div class="nav-right">
+      <span id="nav-right" style="display:flex;align-items:center;gap:14px"></span>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
     </div>
-  </nav>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
 
-  <main class="wrap">
+<!-- ════════ HERO ════════ -->
+<section class="page-hero short">
+  <div class="hero-stack">
+    <div class="hero-head">
+      <div class="kicker">/ Organizers</div>
+      <h1>Organizer <span class="grad-text">dashboard.</span></h1>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ CONTENT (rendered by the script below) ════════ -->
+<section class="sheet sheet-white dash">
+  <div class="in">
     <div id="root" class="center-state">Loading…</div>
-  </main>
+  </div>
+</section>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="/js/supabase.js"></script>
-  <script>
-    (function () {
-      const root = document.getElementById('root');
-      const navRight = document.getElementById('nav-right');
-      const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
-        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
-      if (!window.MM) { root.textContent = 'Could not connect. Please try again later.'; return; }
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+  <div class="in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="/"><img src="/logo-512.png" alt="" width="44" height="44"><span>MysMatch</span></a>
+        <p>Nobody studies alone.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col"><span class="kicker">Product</span><a href="/events">Events</a><a href="/jobs">Jobs</a><a href="/dashboard.html">Organizer login</a></div>
+        <div class="foot-col"><span class="kicker">Company</span><a href="mailto:contact@mys-match.com">Contact</a></div>
+        <div class="foot-col"><span class="kicker">Legal</span><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/support">Support</a></div>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">MysMatch</div>
+    <div class="foot-bottom"><span>© 2026 MysMatch. All rights reserved.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+  </div>
+</footer>
 
-      // Event date: real start moment in the event's own zone (e.date is the
-      // typed time stored as if UTC; late-evening events showed the wrong day).
-      function fmtEvent(e) { try { return new Date(e.starts_at).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric', timeZone: e.timezone || 'Europe/Berlin' }); } catch (x) { return ''; } }
-      function fmtDT(iso) { try { return new Date(iso).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/site.js"></script>
+<script>
+  (function () {
+    const root = document.getElementById('root');
+    const navRight = document.getElementById('nav-right');
+    const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    if (!window.MM) { root.textContent = 'Could not connect. Please try again later.'; return; }
 
-      MM.currentUser().then((user) => { user ? showDashboard(user) : showLogin(); });
+    // Event date: real start moment in the event's own zone (e.date is the
+    // typed time stored as if UTC; late-evening events showed the wrong day).
+    function fmtEvent(e) { try { return new Date(e.starts_at).toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric', timeZone: e.timezone || 'Europe/Berlin' }); } catch (x) { return ''; } }
+    function fmtDT(iso) { try { return new Date(iso).toLocaleString(undefined, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
 
-      // ---- Login -------------------------------------------------------------
-      function showLogin() {
-        navRight.innerHTML = '';
-        root.className = '';
-        root.innerHTML =
-          '<div class="login-box">'
-          + '<h1>Organizer sign in</h1>'
-          + '<p class="sub">Sign in with the same email & password you use in the MysMatch app to view your events and attendees.</p>'
-          + '<form id="login-form">'
-          + '<label for="le">Email</label><input id="le" type="email" autocomplete="email" required>'
-          + '<label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password" required>'
-          + '<div id="login-err" class="err" hidden></div>'
-          + '<button class="btn" id="login-btn" type="submit">Sign in</button>'
-          + '<p class="hint">Signed up with Apple/Google or don\'t have a password? Set one from <strong>Profile → Settings</strong> in the app, then sign in here.</p>'
-          + '</form></div>';
-        document.getElementById('login-form').addEventListener('submit', (e) => {
-          e.preventDefault();
-          const btn = document.getElementById('login-btn');
-          const errBox = document.getElementById('login-err');
-          errBox.hidden = true; btn.disabled = true; btn.textContent = 'Signing in…';
-          MM.signIn(document.getElementById('le').value.trim(), document.getElementById('lp').value).then((res) => {
-            if (!res.ok) { errBox.textContent = res.error || 'Sign in failed.'; errBox.hidden = false; btn.disabled = false; btn.textContent = 'Sign in'; return; }
-            showDashboard(res.user);
-          });
+    MM.currentUser().then((user) => { user ? showDashboard(user) : showLogin(); });
+
+    // ---- Login -------------------------------------------------------------
+    function showLogin() {
+      navRight.innerHTML = '';
+      root.className = '';
+      root.innerHTML =
+        '<div class="login-box">'
+        + '<h2>Organizer sign in</h2>'
+        + '<p class="sub">Sign in with the same email & password you use in the MysMatch app to view your events and attendees.</p>'
+        + '<form id="login-form">'
+        + '<label for="le">Email</label><input id="le" type="email" autocomplete="email" required>'
+        + '<label for="lp">Password</label><input id="lp" type="password" autocomplete="current-password" required>'
+        + '<div id="login-err" class="err" hidden></div>'
+        + '<button class="btn btn-dark" id="login-btn" type="submit">Sign in</button>'
+        + '<p class="hint">Signed up with Apple/Google or don\'t have a password? Set one from <strong>Profile → Settings</strong> in the app, then sign in here.</p>'
+        + '</form></div>';
+      document.getElementById('login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('login-btn');
+        const errBox = document.getElementById('login-err');
+        errBox.hidden = true; btn.disabled = true; btn.textContent = 'Signing in…';
+        MM.signIn(document.getElementById('le').value.trim(), document.getElementById('lp').value).then((res) => {
+          if (!res.ok) { errBox.textContent = res.error || 'Sign in failed.'; errBox.hidden = false; btn.disabled = false; btn.textContent = 'Sign in'; return; }
+          showDashboard(res.user);
         });
-      }
+      });
+    }
 
-      // ---- Dashboard: event list --------------------------------------------
-      function showDashboard(user) {
-        navRight.innerHTML = '<span class="who">' + esc(user.email || '') + '</span><button class="link-btn" id="signout">Sign out</button>';
-        document.getElementById('signout').addEventListener('click', () => { MM.signOut().then(showLogin); });
-        root.className = '';
-        root.innerHTML = '<div class="center-state">Loading your events…</div>';
-        MM.myEvents(user.id).then((events) => {
-          let html = '<h1 class="page">Your events</h1><p class="page-sub">View registrations and export attendee lists. To create or edit events, use the app.</p>';
-          if (!events.length) {
-            html += '<div class="empty">You haven\'t created any events yet. Create one in the MysMatch app and it\'ll appear here.</div>';
-            root.innerHTML = html; return;
-          }
-          html += '<div class="ev-list">' + events.map((e) => {
-            const c = e._counts || { total: 0 };
-            return '<div class="ev-row" data-id="' + esc(e.id) + '" data-title="' + esc(e.title) + '">'
-              + '<div><div class="t">' + esc(e.title) + '</div>'
-              + '<div class="m">' + esc(fmtEvent(e)) + (e.location || e.city ? ' · ' + esc(e.location || e.city) : '') + '</div></div>'
-              + '<div class="badges">'
-              // publish_to_web now means "register on web too" (every public
-              // event is shown on the website since Oct 2026).
-              + (e.publish_to_web ? '<span class="pill web">Web registration</span>' : '')
-              + (e.is_private ? '<span class="pill priv">Private</span>' : '')
-              + '<span class="pill count">' + c.total + (e.max_capacity != null ? '/' + e.max_capacity : '') + '</span>'
-              + '</div></div>';
-          }).join('') + '</div>';
-          root.innerHTML = html;
-          root.querySelectorAll('.ev-row').forEach((row) => {
-            row.addEventListener('click', () => showAttendees(user, row.getAttribute('data-id'), row.getAttribute('data-title')));
-          });
-        });
-      }
-
-      // ---- Dashboard: attendee list -----------------------------------------
-      function showAttendees(user, eventId, title) {
-        root.innerHTML = '<div class="center-state">Loading attendees…</div>';
-        // Fetch attendees + the event's questions (to label answer columns).
-        Promise.all([
-          MM.eventAttendees(eventId),
-          MM.db.from('events').select('questions').eq('id', eventId).maybeSingle(),
-        ]).then(([rows, evRes]) => {
-          const questions = (evRes && evRes.data && Array.isArray(evRes.data.questions)) ? evRes.data.questions : [];
-          renderAttendees(user, eventId, title, rows, questions);
-        });
-      }
-
-      function renderAttendees(user, eventId, title, rows, questions) {
-        const back = '<a class="back link-btn" id="back" style="display:inline-block;margin-bottom:14px;cursor:pointer">← Back to events</a>';
-        const head = '<div class="att-head"><div><h1>' + esc(title) + '</h1>'
-          + '<p class="page-sub" style="margin:0">' + rows.length + ' registration' + (rows.length === 1 ? '' : 's') + '</p></div>'
-          + '<div class="toolbar"><button class="btn-sm primary" id="csv">Export CSV</button></div></div>';
-
-        let table;
-        if (!rows.length) {
-          table = '<div class="empty">No registrations yet.</div>';
-        } else {
-          const qHeaders = questions.map((q) => '<th>' + esc(q.label) + '</th>').join('');
-          const body = rows.map((r, i) => {
-            const name = [r.first_name, r.last_name].filter(Boolean).join(' ') || '—';
-            const gender = r.user_gender || r.gender || '';
-            const ans = r.answers || {};
-            const qCells = questions.map((q) => '<td class="ans">' + esc(ans[q.id] || '') + '</td>').join('');
-            return '<tr><td>' + (i + 1) + '</td>'
-              + '<td>' + esc(name) + '</td>'
-              + '<td>' + esc(r.email || '') + '</td>'
-              + '<td>' + esc(gender) + '</td>'
-              + '<td><span class="src ' + (r.source === 'web' ? 'web' : 'app') + '">' + (r.source === 'web' ? 'Web' : 'App') + '</span></td>'
-              + '<td>' + esc(fmtDT(r.registered_at)) + '</td>'
-              + '<td>' + (r.document_url ? '<button class="doc-view" data-doc="' + esc(r.document_url) + '">View</button>' : '') + '</td>'
-              + qCells + '</tr>';
-          }).join('');
-          table = '<div class="table-wrap"><table><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Gender</th><th>Source</th><th>Registered</th><th>Doc</th>'
-            + qHeaders + '</tr></thead><tbody>' + body + '</tbody></table></div>';
+    // ---- Dashboard: event list --------------------------------------------
+    function showDashboard(user) {
+      navRight.innerHTML = '<span class="who">' + esc(user.email || '') + '</span><button class="signout" id="signout">Sign out</button>';
+      document.getElementById('signout').addEventListener('click', () => { MM.signOut().then(showLogin); });
+      root.className = '';
+      root.innerHTML = '<div class="center-state">Loading your events…</div>';
+      MM.myEvents(user.id).then((events) => {
+        let html = '<div class="list-head"><div class="kicker">/ Your events</div><h2>Your events</h2><p>View registrations and export attendee lists. To create or edit events, use the app.</p></div>';
+        if (!events.length) {
+          html += '<div class="empty">You haven\'t created any events yet. Create one in the MysMatch app and it\'ll appear here.</div>';
+          root.innerHTML = html; return;
         }
-        root.innerHTML = back + head + table;
-        document.getElementById('back').addEventListener('click', () => showDashboard(user));
-        const csvBtn = document.getElementById('csv');
-        if (csvBtn) csvBtn.addEventListener('click', () => downloadCsv(title, rows, questions));
-        // Document viewers: sign the private path on demand and open it.
-        root.querySelectorAll('.doc-view').forEach((b) => {
-          b.addEventListener('click', async () => {
-            b.textContent = 'Opening…';
-            const url = await MM.signEventDoc(b.getAttribute('data-doc'));
-            b.textContent = 'View';
-            if (url) window.open(url, '_blank', 'noopener'); else alert('Could not open document.');
-          });
+        html += '<div class="ev-list">' + events.map((e) => {
+          const c = e._counts || { total: 0 };
+          return '<div class="ev-row" data-id="' + esc(e.id) + '" data-title="' + esc(e.title) + '">'
+            + '<div><div class="t">' + esc(e.title) + '</div>'
+            + '<div class="m">' + esc(fmtEvent(e)) + (e.location || e.city ? ' · ' + esc(e.location || e.city) : '') + '</div></div>'
+            + '<div class="badges">'
+            // publish_to_web now means "register on web too" (every public
+            // event is shown on the website since Oct 2026).
+            + (e.publish_to_web ? '<span class="pill web">Web registration</span>' : '')
+            + (e.is_private ? '<span class="pill priv">Private</span>' : '')
+            + '<span class="pill count">' + c.total + (e.max_capacity != null ? '/' + e.max_capacity : '') + '</span>'
+            + '</div></div>';
+        }).join('') + '</div>';
+        root.innerHTML = html;
+        root.querySelectorAll('.ev-row').forEach((row) => {
+          row.addEventListener('click', () => showAttendees(user, row.getAttribute('data-id'), row.getAttribute('data-title')));
         });
-      }
+      });
+    }
 
-      function csvCell(v) { v = v == null ? '' : String(v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
-      function downloadCsv(title, rows, questions) {
-        const header = ['#', 'Name', 'Email', 'Gender', 'Source', 'Registered at'].concat(questions.map((q) => q.label));
-        const lines = [header.map(csvCell).join(',')];
-        rows.forEach((r, i) => {
-          const name = [r.first_name, r.last_name].filter(Boolean).join(' ');
+    // ---- Dashboard: attendee list -----------------------------------------
+    function showAttendees(user, eventId, title) {
+      root.innerHTML = '<div class="center-state">Loading attendees…</div>';
+      // Fetch attendees + the event's questions (to label answer columns).
+      Promise.all([
+        MM.eventAttendees(eventId),
+        MM.db.from('events').select('questions').eq('id', eventId).maybeSingle(),
+      ]).then(([rows, evRes]) => {
+        const questions = (evRes && evRes.data && Array.isArray(evRes.data.questions)) ? evRes.data.questions : [];
+        renderAttendees(user, eventId, title, rows, questions);
+      });
+    }
+
+    function renderAttendees(user, eventId, title, rows, questions) {
+      const people = rows.reduce((n, r) => n + (r.party_size || 1), 0);
+      const back = '<button class="back" id="back" type="button">← Back to events</button>';
+      const head = '<div class="att-head"><div><h2>' + esc(title) + '</h2>'
+        + '<div class="cnt">' + rows.length + ' registration' + (rows.length === 1 ? '' : 's')
+        + (people !== rows.length ? ' · ' + people + ' people' : '') + '</div></div>'
+        + (rows.length ? '<div class="toolbar"><button class="btn-sm" id="csv" type="button">Export CSV</button><button class="btn-sm primary" id="xlsx" type="button">Export Excel</button></div>' : '')
+        + '</div>';
+
+      let table;
+      if (!rows.length) {
+        table = '<div class="empty">No registrations yet.</div>';
+      } else {
+        const qHeaders = questions.map((q) => '<th>' + esc(q.label) + '</th>').join('');
+        const body = rows.map((r, i) => {
+          const name = [r.first_name, r.last_name].filter(Boolean).join(' ') || '—';
+          const gender = r.user_gender || r.gender || '';
           const ans = r.answers || {};
-          const cols = [i + 1, name, r.email || '', r.user_gender || r.gender || '', r.source === 'web' ? 'Web' : 'App', new Date(r.registered_at).toLocaleString()]
-            .concat(questions.map((q) => ans[q.id] || ''));
-          lines.push(cols.map(csvCell).join(','));
-        });
-        // Prepend a UTF-8 BOM so Excel renders accents correctly.
-        const blob = new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' });
-        const a = document.createElement('a');
-        a.href = URL.createObjectURL(blob);
-        a.download = (title || 'attendees').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '-attendees.csv';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          const qCells = questions.map((q) => '<td class="ans">' + esc(ans[q.id] || '') + '</td>').join('');
+          return '<tr><td class="num">' + (i + 1) + '</td>'
+            + '<td>' + esc(name) + '</td>'
+            + '<td>' + esc(r.email || '') + '</td>'
+            + '<td>' + esc(gender) + '</td>'
+            // WHY People (Oct 2026): party_size was already returned but never shown.
+            + '<td>' + (r.party_size || 1) + '</td>'
+            + '<td><span class="src ' + (r.source === 'web' ? 'web' : 'app') + '">' + (r.source === 'web' ? 'Web' : 'App') + '</span></td>'
+            + '<td>' + esc(fmtDT(r.registered_at)) + '</td>'
+            + '<td>' + (r.document_url ? '<button class="doc-view" data-doc="' + esc(r.document_url) + '">View</button>' : '') + '</td>'
+            + qCells + '</tr>';
+        }).join('');
+        table = '<div class="table-wrap"><table><thead><tr><th>#</th><th>Name</th><th>Email</th><th>Gender</th><th>People</th><th>Source</th><th>Registered</th><th>Doc</th>'
+          + qHeaders + '</tr></thead><tbody>' + body + '</tbody></table></div>';
       }
-    })();
-  </script>
+      root.innerHTML = back + head + table;
+      document.getElementById('back').addEventListener('click', () => showDashboard(user));
+      const csvBtn = document.getElementById('csv');
+      if (csvBtn) csvBtn.addEventListener('click', () => downloadCsv(title, rows, questions));
+      const xlsxBtn = document.getElementById('xlsx');
+      if (xlsxBtn) xlsxBtn.addEventListener('click', () => downloadXlsx(xlsxBtn, title, rows, questions));
+      // Document viewers: sign the private path on demand and open it.
+      root.querySelectorAll('.doc-view').forEach((b) => {
+        b.addEventListener('click', async () => {
+          b.textContent = 'Opening…';
+          const url = await MM.signEventDoc(b.getAttribute('data-doc'));
+          b.textContent = 'View';
+          if (url) window.open(url, '_blank', 'noopener'); else alert('Could not open document.');
+        });
+      });
+    }
+
+    // ---- Export (CSV + Excel share one table) -------------------------------
+    // WHY one builder: both files must always have the same columns.
+    function exportTable(rows, questions) {
+      const header = ['#', 'Name', 'Email', 'Gender', 'People', 'Source', 'Registered at'].concat(questions.map((q) => q.label));
+      const body = rows.map((r, i) => {
+        const ans = r.answers || {};
+        return [i + 1, [r.first_name, r.last_name].filter(Boolean).join(' '), r.email || '', r.user_gender || r.gender || '',
+          r.party_size || 1, r.source === 'web' ? 'Web' : 'App', new Date(r.registered_at).toLocaleString()]
+          .concat(questions.map((q) => ans[q.id] || ''));
+      });
+      return [header].concat(body);
+    }
+    function fileBase(title) { return (title || 'attendees').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '-attendees'; }
+    function saveBlob(blob, name) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+    }
+
+    function csvCell(v) { v = v == null ? '' : String(v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+    function downloadCsv(title, rows, questions) {
+      const lines = exportTable(rows, questions).map((cols) => cols.map(csvCell).join(','));
+      // Prepend a UTF-8 BOM so Excel renders accents correctly.
+      saveBlob(new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' }), fileBase(title) + '.csv');
+    }
+
+    // Excel (.xlsx) via SheetJS, loaded only when someone clicks the button so
+    // the dashboard itself stays light. Pinned version on cdnjs.
+    let xlsxLib = null;
+    function loadXlsx() {
+      if (window.XLSX) return Promise.resolve(window.XLSX);
+      if (xlsxLib) return xlsxLib;
+      xlsxLib = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+        s.onload = () => resolve(window.XLSX);
+        s.onerror = () => { xlsxLib = null; reject(new Error('xlsx load failed')); };
+        document.head.appendChild(s);
+      });
+      return xlsxLib;
+    }
+    function downloadXlsx(btn, title, rows, questions) {
+      const label = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Preparing…';
+      loadXlsx().then((XLSX) => {
+        const data = exportTable(rows, questions);
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        // Column widths from the longest value (capped) so the sheet opens readable.
+        ws['!cols'] = data[0].map((_, c) => ({ wch: Math.min(50, Math.max(6, ...data.map((r) => String(r[c] == null ? '' : r[c]).length + 2))) }));
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, 'Attendees');
+        const out = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        saveBlob(new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), fileBase(title) + '.xlsx');
+      }).catch((err) => {
+        console.error(err);
+        alert('Could not create the Excel file. Please try again, or use Export CSV.');
+      }).finally(() => { btn.disabled = false; btn.textContent = label; });
+    }
+  })();
+</script>
 </body>
 </html>
