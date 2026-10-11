@@ -346,7 +346,6 @@
   <div class="hero-glow"></div>
   <div class="hero-in">
     <div>
-      <div class="eyebrow" data-reveal><i></i><span>Made for university students</span></div>
       <h1 data-reveal>Nobody <span class="grad-text">studies alone.</span></h1>
     </div>
     <div class="hero-grid">
@@ -395,19 +394,19 @@
     <div class="shots">
       <div class="shot-item" data-reveal>
         <div class="phone"><img src="screenshots/cover-logo.webp" alt="MysMatch: Do not study alone" width="860" height="1861" loading="lazy"></div>
-        <div class="shot-cap"><span>01 / MysMatch</span><b>Do not study alone</b></div>
+        <div class="shot-cap"><span>MysMatch</span><b>Do not study alone</b></div>
       </div>
       <div class="shot-item" data-reveal>
         <div class="phone"><img src="screenshots/cover.webp" alt="Study partners and classmates, jobs and more: your campus, only in the app" width="860" height="1861" loading="lazy"></div>
-        <div class="shot-cap"><span>02 / Campus</span><b>Study partners and classmates, jobs and more</b></div>
+        <div class="shot-cap"><span>Campus</span><b>Study partners and classmates, jobs and more</b></div>
       </div>
       <div class="shot-item" data-reveal>
         <div class="phone"><img src="screenshots/discover.webp" alt="Discover: find study partners and classmates in your major" width="860" height="1861" loading="lazy"></div>
-        <div class="shot-cap"><span>03 / Discover</span><b>Find study partners and classmates in your major</b></div>
+        <div class="shot-cap"><span>Discover</span><b>Find study partners and classmates in your major</b></div>
       </div>
       <div class="shot-item" data-reveal>
         <div class="phone"><img src="screenshots/matches.webp" alt="Connections: connect by major and start talking" width="860" height="1861" loading="lazy"></div>
-        <div class="shot-cap"><span>04 / Connections</span><b>Connect by major and start talking</b></div>
+        <div class="shot-cap"><span>Connections</span><b>Connect by major and start talking</b></div>
       </div>
     </div>
   </div>
@@ -478,7 +477,7 @@
             <svg data-icon="5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v5.5c0 4.5-3.2 7.8-8 9.5-4.8-1.7-8-5-8-9.5V6l8-3z"></path><path d="M9.5 12.5l1.8 1.8 3.6-4"></path></svg>
           </div>
           <div class="feat-panel-title" id="feat-title">Smart Discovery</div>
-          <div class="feat-panel-foot"><span>MysMatch app</span><span id="feat-count">01 / 06</span></div>
+          <div class="feat-panel-foot"><span>MysMatch app</span></div>
         </div>
       </div>
     </div>
@@ -494,28 +493,28 @@
     </div>
     <div class="steps">
       <div class="step">
-        <div class="step-top"><span>/ Step</span><span>01 — 04</span></div>
+        <div class="step-top"><span>/ Step</span></div>
         <div class="step-row">
           <div class="step-txt"><h3>Create your profile</h3><p>Sign up with your university email. Add your photo, major, and a few details about yourself.</p></div>
           <span class="step-big">01</span>
         </div>
       </div>
       <div class="step">
-        <div class="step-top"><span>/ Step</span><span>02 — 04</span></div>
+        <div class="step-top"><span>/ Step</span></div>
         <div class="step-row">
           <div class="step-txt"><h3>Search or discover</h3><p>Browse auto-suggested study partners and classmates, or set your own search criteria: university, major, semester, city, and more.</p></div>
           <span class="step-big">02</span>
         </div>
       </div>
       <div class="step">
-        <div class="step-top"><span>/ Step</span><span>03 — 04</span></div>
+        <div class="step-top"><span>/ Step</span></div>
         <div class="step-row">
           <div class="step-txt"><h3>Send a connection request</h3><p>Found someone interesting? Send a connection request. They can accept or pass — no pressure.</p></div>
           <span class="step-big">03</span>
         </div>
       </div>
       <div class="step">
-        <div class="step-top"><span>/ Step</span><span>04 — 04</span></div>
+        <div class="step-top"><span>/ Step</span></div>
         <div class="step-row">
           <div class="step-txt"><h3>Start talking</h3><p>Once both sides agree, a private chat opens. Plan a study session, group project, or campus meetup.</p></div>
           <span class="step-big">04</span>
@@ -752,7 +751,8 @@
     feats.forEach(function (f, k) { f.classList.toggle('on', k === i); });
     icons.forEach(function (s, k) { s.classList.toggle('on', k === i); });
     title.textContent = feats[i].querySelector('h3').textContent;
-    count.textContent = '0' + (i + 1) + ' / 0' + feats.length;
+    // WHY guarded: the small "01 / 06" counter was removed (user, Oct 2026).
+    if (count) count.textContent = '0' + (i + 1) + ' / 0' + feats.length;
   }
   feats.forEach(function (f, i) {
     f.addEventListener('mouseenter', function () { pick(i); });
