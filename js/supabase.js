@@ -136,6 +136,58 @@
     return data || [];
   }
 
+  // --- Organization dashboard (Oct 11 2026) ---------------------------------
+  // Same reads the app's organization dashboard does, as the signed-in owner
+  // (RLS: is_org_owner). Perk data stays ANONYMOUS on the website (user
+  // decision): counts and redemption times only, never who claimed/redeemed.
+  async function myOrganization(userId) {
+    const { data, error } = await db.from('organizations')
+      .select('id,name,avatar_url,verified,follower_count')
+      .eq('owner_id', userId).eq('deleted', false).maybeSingle();
+    if (error) { console.error('[MM] myOrganization', error.message); return null; }
+    return data || null;
+  }
+  async function orgEvents(orgId) {
+    const { data, error } = await db.from('events')
+      .select('id,title,date,starts_at,timezone,location,city,publish_to_web,is_private,max_capacity')
+      .eq('organization_id', orgId).order('starts_at', { ascending: false });
+    if (error) { console.error('[MM] orgEvents', error.message); return []; }
+    const events = data || [];
+    const counts = await countsBatch(events.map((e) => e.id));
+    events.forEach((e) => { e._counts = counts[e.id] || { total: 0, male: 0, female: 0 }; });
+    return events;
+  }
+  // Live + retired perks (retired = soft-deleted; their counters are kept).
+  async function orgPerks(orgId) {
+    const { data, error } = await db.from('discounts')
+      .select('id,title,image_url,redeem_total,total_limit,per_user_limit,active,deleted,requires_qr,starts_at,ends_at,created_at')
+      .eq('organization_id', orgId).order('created_at', { ascending: false });
+    if (error) { console.error('[MM] orgPerks', error.message); return []; }
+    return data || [];
+  }
+  // Number of students holding a claim (QR) for a perk — a count, no ids.
+  async function perkClaimCount(discountId) {
+    const { count, error } = await db.from('discount_claims')
+      .select('id', { count: 'exact', head: true }).eq('discount_id', discountId);
+    if (error) { console.error('[MM] perkClaimCount', error.message); return null; }
+    return count || 0;
+  }
+  // Timestamps from the append-only redemption log (no person in that table).
+  async function orgRedemptions(orgId, sinceIso, discountId) {
+    let q = db.from('discount_redemptions').select('discount_id,redeemed_at').eq('organization_id', orgId);
+    if (sinceIso) q = q.gte('redeemed_at', sinceIso);
+    if (discountId) q = q.eq('discount_id', discountId);
+    const { data, error } = await q.order('redeemed_at', { ascending: false }).limit(5000);
+    if (error) { console.error('[MM] orgRedemptions', error.message); return []; }
+    return data || [];
+  }
+  async function orgFollows(orgId, sinceIso) {
+    const { data, error } = await db.from('organization_follows')
+      .select('created_at').eq('organization_id', orgId).gte('created_at', sinceIso).limit(10000);
+    if (error) { console.error('[MM] orgFollows', error.message); return []; }
+    return data || [];
+  }
+
   // Organizer check-in (Oct 11 2026): mark / unmark an attendee as arrived.
   // Creator-only on the server (set_event_check_in); the app's ticket scanner
   // calls the same RPC. attendeeId = get_event_attendees' user_id.
@@ -185,6 +237,7 @@
     listEvents, getEvent, getCounts, countsBatch, registerGuest,
     uploadGuestDocument, signEventDoc,
     signIn, signOut, currentUser, myEvents, eventAttendees, setCheckIn,
+    myOrganization, orgEvents, orgPerks, perkClaimCount, orgRedemptions, orgFollows,
     listJobs, getJob, JOB_TYPE_LABELS, postedAgo,
   };
 })();
