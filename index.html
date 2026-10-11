@@ -146,6 +146,7 @@
   .manifesto{ background:linear-gradient(135deg,#F4F5FF 0%,#FFFFFF 50%,#FEF5FA 100%); box-shadow:0 -24px 48px rgba(15,16,32,0.12); }
   .manifesto .in{ display:flex; flex-direction:column; gap:clamp(32px,3vw,56px); }
   .manifesto p{ font-size:clamp(36px,5.8vw,112px); line-height:1.02; letter-spacing:-0.05em; font-weight:600; text-wrap:pretty; }
+  .manifesto p .accent{ color:var(--violet); }
   .js .manifesto p span{ color:#DAD7E8; transition:color .35s; }
 
   /* ───────── glimpse ───────── */
@@ -384,7 +385,9 @@
 <section class="sheet manifesto">
   <div class="in">
     <div class="kicker">/ Why MysMatch</div>
-    <p id="manifesto" data-accent-from="Just">No endless swiping. No algorithms optimized for engagement. Just smart tools designed for students to find the right study partners and classmates.</p>
+    <!-- WHY a span too: the script lights words up from data-accent-from ("a") in violet; the span keeps
+         the same two colors when the script doesn't run (no JS / reduced motion). -->
+    <p id="manifesto" data-accent-from="a">Find your best study partners. Make your own study groups, <span class="accent">a smart platform designed for students to find the right study partners and classmates on Campus.</span></p>
   </div>
 </section>
 
