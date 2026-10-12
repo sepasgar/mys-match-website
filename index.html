@@ -675,11 +675,15 @@
       return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
     });
   };
-  function fmtDate(iso) {
+  // Formats the real start moment (starts_at) in the EVENT's timezone, like
+  // events/event.html. Never use e.date here: it holds the typed wall clock
+  // labelled as UTC, so the browser shifted it by the visitor's offset
+  // (+2 h in Berlin — the card said 19:00 while the event page said 17:00).
+  function fmtDate(ev) {
     try {
-      var d = new Date(iso);
-      return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short' })
-        + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+      var d = new Date(ev.starts_at), timeZone = ev.timezone || 'Europe/Berlin';
+      return d.toLocaleDateString(undefined, { weekday: 'short', day: 'numeric', month: 'short', timeZone })
+        + ' · ' + d.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit', timeZone });
     } catch (e) { return ''; }
   }
   var calSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2.5"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>';
@@ -713,9 +717,9 @@
       // In-app-only events arrive without a location (MM.listEvents, Oct 2026);
       // since Oct 11 2026 they include the date, so show it when present.
       + (e.web_registration === false
-        ? (e.date ? '<span>' + calSvg + esc(fmtDate(e.date)) + '</span>' + '<span>' + pinSvg + 'Location in the app</span>'
+        ? (e.starts_at ? '<span>' + calSvg + esc(fmtDate(e)) + '</span>' + '<span>' + pinSvg + 'Location in the app</span>'
                   : '<span>' + pinSvg + 'Download the app to see the location and time</span>')
-        : '<span>' + calSvg + esc(fmtDate(e.date)) + '</span>'
+        : '<span>' + calSvg + esc(fmtDate(e)) + '</span>'
           + (loc ? '<span>' + pinSvg + esc(loc) + '</span>' : ''))
       + '</div>'
       + '<div class="event-foot">'
