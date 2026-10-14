@@ -868,6 +868,7 @@
     if (!session) { show('c-app', false); show('c-auth', true); setMode(open ? 'up' : 'in'); return; }
     show('c-auth', false); show('c-app', true);
     $('me-email').textContent = session.user.email || '';
+    if ((session.user.app_metadata || {}).provider === 'google') await MMC.markNewWebAccount();
     await reload();
     if (pendingTrack) newForm(pendingTrack);
   }

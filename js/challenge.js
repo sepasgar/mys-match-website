@@ -85,6 +85,13 @@
     return { ok: true };
   }
   async function signOut() { await db.auth.signOut({ scope: 'local' }); }
+  // After a Google login: a brand-new account made by this login becomes a
+  // 'web' account (server checks it is <15 min old and never set up in the
+  // app). OAuth sign-ups can't carry signup_source, unlike email sign-ups.
+  async function markNewWebAccount() {
+    var r = await db.rpc('mark_new_web_account');
+    if (r.error) console.warn('[MMC] mark_new_web_account', r.error.message);
+  }
   function friendlyAuth(e) {
     var m = (e && e.message) || 'Something went wrong.';
     if (/invalid login credentials/i.test(m)) return 'Wrong email or password.';
@@ -265,7 +272,7 @@
   window.MMC = {
     TRACKS: TRACKS, STATUSES: STATUSES, SLOTS: SLOTS, GOOGLE_WEB_ENABLED: GOOGLE_WEB_ENABLED, extOf: extOf,
     getChallenge: getChallenge, isOpen: isOpen, session: session, onAuth: onAuth,
-    signUp: signUp, signIn: signIn, signInGoogle: signInGoogle, resetPassword: resetPassword, signOut: signOut,
+    signUp: signUp, signIn: signIn, signInGoogle: signInGoogle, markNewWebAccount: markNewWebAccount, resetPassword: resetPassword, signOut: signOut,
     myEntries: myEntries, saveEntry: saveEntry, withdraw: withdraw, fileUrl: fileUrl, friendlyError: friendlyError,
     isJudge: isJudge, judgeEntries: judgeEntries, setStatus: setStatus, saveNotes: saveNotes,
   };
