@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Creator Challenge — MysMatch</title>
+<meta name="description" content="Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. Submissions close 15 December 2026.">
+<meta name="theme-color" content="#0F1020">
+
+<meta property="og:title" content="Creator Challenge — MysMatch">
+<meta property="og:description" content="Make our feed. Join the team. Submissions close 15 December 2026.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.mysmatch.com/challenge/">
+<meta property="og:image" content="https://www.mysmatch.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" type="image/png" href="/logo-512.png">
+<link rel="canonical" href="https://www.mysmatch.com/challenge/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<!-- Creator / Ideation Challenge (Oct 2026), ported from the design export
+     "MysMatch Ideation Challenge.html". The form is real: entrants sign in,
+     entries + files go to Supabase (js/challenge.js), status follows here. -->
+<style>
+  /* gold "Ideation Challenge" pill from the design */
+  .nav-links a.gold{ padding:8px 16px; border-radius:9999px; background:linear-gradient(135deg,#FBE3A1 0%,#F2C75C 50%,#D9A63A 100%); color:#2A1F05; font-weight:600; box-shadow:0 4px 16px rgba(242,199,92,0.28),inset 0 1px 0 rgba(255,255,255,0.5); }
+  .nav-links a.gold::before{ content:""; width:6px; height:6px; border-radius:50%; background:#2A1F05; }
+  .nav-links a.gold:hover{ color:#2A1F05; }
+
+  /* hero */
+  .c-hero{ min-height:100vh; }
+  .c-hero::before{ left:auto; right:-12%; top:-25%; width:80vw; background:radial-gradient(closest-side,rgba(123,92,255,0.18),rgba(233,75,154,0.07) 55%,rgba(15,16,32,0) 75%); }
+  .c-hero h1{ font-size:clamp(60px,9.4vw,196px); line-height:0.88; letter-spacing:-0.065em; max-width:none; }
+  .c-kick{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .c-pill{ padding:7px 14px; border-radius:9999px; border:1px solid rgba(205,184,255,0.35); color:#CDB8FF; white-space:nowrap; }
+  .c-hero-l{ display:flex; flex-direction:column; gap:clamp(28px,2.6vw,40px); max-width:600px; }
+  .c-hero-l p{ font-size:clamp(19px,1.6vw,28px); line-height:1.45; color:var(--on-dark); letter-spacing:-0.01em; }
+  .c-btns{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-ghost{ background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.2); }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.08); color:#fff; }
+  .c-count-w{ display:flex; flex-direction:column; gap:18px; }
+  .c-count{ display:flex; gap:clamp(8px,0.8vw,14px); }
+  .c-unit{ display:flex; flex-direction:column; gap:10px; min-width:clamp(70px,7vw,128px); padding:clamp(14px,1.4vw,24px); border-radius:28px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); }
+  .c-unit b{ font-size:clamp(36px,4.2vw,80px); line-height:0.85; font-weight:700; letter-spacing:-0.05em; font-variant-numeric:tabular-nums; }
+  .c-unit span{ font-family:var(--mono); font-size:clamp(11px,0.8vw,13px); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); }
+
+  /* brief */
+  .c-sec{ display:flex; flex-direction:column; gap:clamp(56px,6vw,120px); }
+  .c-head{ display:flex; flex-direction:column; gap:clamp(20px,2vw,32px); }
+  .c-headrow{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .c-headrow p{ max-width:30ch; font-size:clamp(17px,1.3vw,22px); line-height:1.5; color:var(--ink-2); }
+  .sheet-dark .c-headrow p{ color:#B4B5C8; }
+  .c-brief h2{ font-size:clamp(44px,6.4vw,132px); line-height:0.94; letter-spacing:-0.06em; font-weight:700; max-width:15ch; }
+  .c-cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); border-top:1px solid #E2DEF0; }
+  .c-cols > div{ padding:clamp(28px,2.6vw,44px) clamp(0px,2vw,40px) 0 0; display:flex; flex-direction:column; gap:14px; }
+  .c-cols .kicker{ color:var(--violet); }
+  .c-cols p{ font-size:clamp(20px,1.7vw,30px); line-height:1.3; letter-spacing:-0.025em; font-weight:500; }
+
+  /* tracks */
+  .c-tracks{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .c-track{ border-radius:40px; padding:clamp(28px,3vw,56px); min-height:clamp(480px,38vw,640px); display:flex; flex-direction:column; justify-content:space-between; gap:40px; }
+  .c-track .num{ font-size:clamp(96px,8.4vw,168px); line-height:0.78; font-weight:700; letter-spacing:-0.07em; }
+  .c-track .tag{ font-family:var(--mono); font-size:clamp(11px,0.8vw,13px); letter-spacing:0.1em; text-transform:uppercase; padding:8px 14px; border-radius:9999px; border:1px solid; white-space:nowrap; }
+  .c-track .top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+  .c-track .body{ display:flex; flex-direction:column; gap:clamp(20px,1.8vw,28px); }
+  .c-track h3{ font-size:clamp(34px,3.2vw,60px); line-height:0.96; letter-spacing:-0.05em; font-weight:700; }
+  .c-track p{ font-size:clamp(17px,1.25vw,21px); line-height:1.55; }
+  .c-track .you{ display:flex; flex-direction:column; gap:6px; padding-top:20px; border-top:1px solid; }
+  .c-track .you span{ font-family:var(--mono); font-size:clamp(11px,0.8vw,13px); letter-spacing:0.1em; text-transform:uppercase; }
+  .c-track .you b{ font-size:clamp(17px,1.25vw,21px); font-weight:600; letter-spacing:-0.02em; }
+  .t1{ background:#17182C; color:#fff; border:1px solid rgba(255,255,255,0.12); } .t1 .num{ color:#2E2F52; }
+  .t2{ background:#1C1D36; color:#fff; border:1px solid rgba(255,255,255,0.12); } .t2 .num{ color:#3A3B66; }
+  .t1 p,.t2 p,.t1 .you span,.t2 .you span{ color:#B4B5C8; } .t1 .tag,.t2 .tag,.t1 .you,.t2 .you{ border-color:rgba(255,255,255,0.12); }
+  .t3{ background:linear-gradient(135deg,#ECEEFF 0%,#F4ECFF 50%,#FCEBF6 100%); color:var(--ink); border:1px solid #DCD3F2; } .t3 .num{ color:#C9BEF5; }
+  .t3 p,.t3 .you span{ color:var(--ink-2); } .t3 .tag,.t3 .you{ border-color:#DCD3F2; }
+
+  /* inspiration */
+  .c-insp{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr)); gap:clamp(56px,6vw,120px); align-items:start; }
+  .c-insp-l{ display:flex; flex-direction:column; gap:clamp(28px,2.6vw,44px); }
+  .c-insp-l .kicker{ color:var(--ink-2); }
+  .c-insp-l p{ max-width:32ch; font-size:clamp(18px,1.4vw,24px); line-height:1.5; color:var(--ink-2); }
+  .c-social{ display:flex; flex-direction:column; gap:clamp(12px,1.2vw,18px); }
+  .c-social a{ display:flex; justify-content:space-between; align-items:center; gap:24px; padding:clamp(24px,2.4vw,44px); border-radius:32px; background:#fff; color:var(--ink); transition:transform .5s cubic-bezier(.2,.7,.2,1); }
+  .c-social a:hover{ transform:translateX(8px); color:var(--ink); }
+  .c-social a > span:first-child{ display:flex; flex-direction:column; gap:8px; min-width:0; }
+  .c-social small{ font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .c-social b{ font-size:clamp(22px,2.4vw,44px); font-weight:600; letter-spacing:-0.045em; overflow-wrap:anywhere; }
+  .c-social i{ flex-shrink:0; width:clamp(48px,4vw,68px); height:clamp(48px,4vw,68px); border-radius:50%; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; font-style:normal; }
+
+  /* submit section */
+  .c-enter h2{ font-size:clamp(44px,6.4vw,132px); line-height:0.92; letter-spacing:-0.06em; font-weight:700; }
+  .c-card-dark{ border-radius:48px; background:linear-gradient(160deg,#12132C 0%,#0F1020 60%,#181026 100%); color:#fff; padding:clamp(32px,6vw,120px); display:flex; flex-direction:column; gap:clamp(24px,2.6vw,44px); }
+  .c-card-dark h3{ font-size:clamp(40px,6vw,120px); line-height:0.92; letter-spacing:-0.06em; font-weight:700; }
+  .c-card-dark p{ max-width:44ch; font-size:clamp(18px,1.4vw,24px); line-height:1.5; color:var(--on-dark); }
+  .c-card-dark .kicker{ color:#CDB8FF; }
+
+  /* auth card */
+  .c-auth{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:clamp(28px,4vw,80px); align-items:start; border-top:1px solid #E2DEF0; padding-top:clamp(40px,4vw,72px); }
+  .c-auth-l{ display:flex; flex-direction:column; gap:16px; }
+  .c-auth-l h3{ font-size:clamp(28px,2.6vw,48px); letter-spacing:-0.045em; font-weight:700; line-height:1.02; }
+  .c-auth-l p{ font-size:clamp(16px,1.15vw,19px); line-height:1.55; color:var(--ink-2); }
+  .c-tabs{ display:flex; gap:8px; margin-bottom:6px; }
+  .c-auth-form{ display:flex; flex-direction:column; gap:18px; }
+  .c-or{ display:flex; align-items:center; gap:14px; color:var(--muted); font-size:14px; }
+  .c-or::before,.c-or::after{ content:""; flex:1; height:1px; background:#E2DEF0; }
+  .c-msg{ font-size:16px; line-height:1.5; padding:14px 18px; border-radius:16px; }
+  .c-msg.err{ background:#FDECF2; color:#B4214F; }
+  .c-msg.ok{ background:#E8F8EF; color:#1C7A4A; }
+  .c-link{ background:none; border:none; padding:0; font:inherit; color:var(--violet); cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+
+  /* signed-in bar + entries */
+  .c-me{ display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; padding:18px 22px; border-radius:20px; background:#F4F1FD; font-size:16px; color:var(--ink-2); }
+  .c-me b{ color:var(--ink); }
+  .c-entries{ display:flex; flex-direction:column; gap:14px; }
+  .c-entries > .kicker{ margin-bottom:4px; }
+  .c-entry{ display:flex; flex-direction:column; gap:16px; padding:clamp(20px,2vw,32px); border-radius:28px; background:#fff; border:1px solid #E2DEF0; }
+  .c-entry-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+  .c-entry-top b{ font-size:clamp(20px,1.6vw,26px); letter-spacing:-0.03em; }
+  .c-entry-top .kicker{ color:var(--violet); }
+  .c-entry-act{ display:flex; gap:10px; flex-wrap:wrap; }
+  .c-entry-act .btn{ padding:12px 22px; font-size:16px; }
+  .c-steps{ display:flex; gap:6px; flex-wrap:wrap; }
+  .c-step{ font-size:14px; padding:8px 14px; border-radius:9999px; background:#F4F1FD; color:var(--muted); white-space:nowrap; }
+  .c-step.done{ background:#E9E3FF; color:#4B3BB0; }
+  .c-step.now{ background:var(--ink); color:#fff; }
+  .c-step.no{ background:#FDECF2; color:#B4214F; }
+  .c-draft{ font-size:15px; padding:12px 16px; border-radius:14px; background:#FFF6DD; color:#7A5600; }
+
+  /* form */
+  .c-form{ display:flex; flex-direction:column; border-top:1px solid #E2DEF0; }
+  .fs{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:clamp(28px,4vw,80px); padding:clamp(40px,4vw,72px) 0; border-bottom:1px solid #E2DEF0; }
+  .fs:last-child{ border-bottom:none; padding-bottom:0; }
+  .fs-l{ display:flex; flex-direction:column; gap:12px; max-width:380px; }
+  .fs-l .n{ font-size:clamp(56px,5vw,96px); line-height:0.8; font-weight:700; letter-spacing:-0.07em; color:#DCD3F2; }
+  .fs-l h3{ font-size:clamp(28px,2.6vw,48px); letter-spacing:-0.045em; font-weight:700; line-height:1; }
+  .fs-l p{ font-size:clamp(16px,1.15vw,19px); line-height:1.55; color:var(--ink-2); }
+  .fs-r{ display:flex; flex-direction:column; gap:clamp(22px,2vw,32px); min-width:0; }
+  .grid2{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:clamp(18px,1.6vw,28px); }
+  .fld{ display:flex; flex-direction:column; gap:10px; min-width:0; }
+  .lbl{ display:flex; justify-content:space-between; gap:12px; font-size:clamp(15px,1.05vw,17px); font-weight:600; }
+  .lbl em{ font-style:normal; color:#D6336C; font-weight:500; text-align:right; }
+  .inp{ width:100%; font-family:inherit; font-size:clamp(17px,1.2vw,20px); color:var(--ink); background:#fff; border:1.5px solid #E2DEF0; border-radius:20px; padding:18px 20px; outline:none; transition:border-color .2s, box-shadow .2s; }
+  textarea.inp{ resize:vertical; line-height:1.55; }
+  .inp:focus{ border-color:var(--violet); box-shadow:0 0 0 4px rgba(123,92,255,0.14); }
+  .inp.bad{ border-color:#D6336C; }
+  .inp::placeholder{ color:#A3A4B8; }
+  .hint{ font-size:15px; color:var(--muted); }
+  .chips{ display:flex; gap:8px; flex-wrap:wrap; }
+  .chip{ cursor:pointer; font-family:inherit; font-size:clamp(15px,1.05vw,17px); font-weight:500; padding:12px 20px; border-radius:9999px; white-space:nowrap; border:1.5px solid #E2DEF0; background:#fff; color:var(--ink-2); transition:background .2s; }
+  .chip.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .picks{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr)); gap:12px; }
+  .pick{ cursor:pointer; text-align:left; font-family:inherit; display:flex; flex-direction:column; gap:14px; padding:clamp(18px,1.6vw,28px); border-radius:24px; border:1.5px solid #E2DEF0; background:#fff; color:var(--ink); transition:background .25s, border-color .25s; }
+  .pick .row{ display:flex; justify-content:space-between; align-items:center; width:100%; }
+  .pick .num{ font-family:var(--mono); font-size:13px; letter-spacing:0.1em; opacity:0.7; }
+  .pick .dot{ width:22px; height:22px; border-radius:50%; border:1.5px solid #C9C9D9; }
+  .pick .t{ font-size:clamp(20px,1.6vw,28px); font-weight:600; letter-spacing:-0.035em; line-height:1.05; }
+  .pick.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pick.on .dot{ background:#CDB8FF; border-color:#CDB8FF; }
+  .pick.bad{ border-color:#D6336C; }
+  .pick[disabled]{ cursor:not-allowed; opacity:0.45; }
+  .pick .used{ font-size:13px; color:var(--muted); }
+  .dz{ cursor:pointer; display:flex; align-items:center; gap:18px; padding:clamp(16px,1.4vw,24px) clamp(18px,1.6vw,26px); border-radius:22px; border:2px dashed #CFC6EA; background:#fff; transition:background .2s, border-color .2s; }
+  .dz.big{ flex-direction:column; justify-content:center; text-align:center; min-height:clamp(200px,16vw,280px); padding:32px; border-radius:28px; }
+  .dz.over{ border-color:var(--violet); background:#F1ECFF; }
+  .dz.bad{ border-color:#D6336C; }
+  .dz input{ display:none; }
+  .dz .up{ flex-shrink:0; width:48px; height:48px; border-radius:50%; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .dz .tx{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+  .dz .tx b{ font-size:clamp(17px,1.25vw,21px); font-weight:600; letter-spacing:-0.02em; }
+  .dz .tx b span{ color:var(--violet); }
+  .dz .tx small{ font-size:14px; color:var(--muted); }
+  .doc{ display:flex; align-items:center; gap:14px; padding:12px 12px 12px 16px; border-radius:16px; background:#F4F1FD; }
+  .doc .ext{ flex-shrink:0; font-family:var(--mono); font-size:12px; font-weight:500; letter-spacing:0.06em; padding:6px 9px; border-radius:8px; background:#fff; color:#4B3BB0; }
+  .doc .nm{ flex:1; min-width:0; font-size:16px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .doc .sz{ flex-shrink:0; font-size:14px; color:var(--muted); }
+  .x{ cursor:pointer; flex-shrink:0; width:32px; height:32px; border-radius:50%; border:none; background:#fff; color:var(--ink); font-size:16px; line-height:1; }
+  .thumbs{ display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:12px; }
+  .thumb{ position:relative; border-radius:20px; overflow:hidden; background:#F1ECFF; aspect-ratio:4/5; background-size:cover; background-position:center; }
+  .thumb div{ position:absolute; left:8px; right:8px; bottom:8px; display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 8px 8px 12px; border-radius:14px; background:rgba(15,16,32,0.78); color:#fff; }
+  .thumb span{ font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .thumb .x{ width:26px; height:26px; font-size:14px; }
+  .info{ display:flex; gap:10px; align-items:flex-start; padding:16px 18px; border-radius:16px; background:#F1ECFF; color:#4B3BB0; font-size:15px; line-height:1.5; }
+  .check{ cursor:pointer; text-align:left; font-family:inherit; display:flex; gap:16px; align-items:flex-start; padding:0; border:none; background:none; color:var(--ink); }
+  .check .box{ flex-shrink:0; width:28px; height:28px; border-radius:9px; border:1.5px solid #C9C9D9; background:#fff; color:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; transition:background .2s; }
+  .check.on .box{ background:var(--violet); border-color:var(--violet); }
+  .check.bad .box{ border-color:#D6336C; }
+  .check .t{ display:flex; flex-direction:column; gap:6px; font-size:clamp(16px,1.15vw,19px); line-height:1.5; color:var(--ink-2); }
+  .check .t em{ font-style:normal; color:#D6336C; font-weight:500; }
+  .send-row{ display:flex; align-items:center; gap:24px; flex-wrap:wrap; }
+  .send{ font-size:clamp(18px,1.4vw,24px); padding:clamp(20px,1.8vw,30px) clamp(36px,3.4vw,64px); box-shadow:0 20px 50px -18px rgba(15,16,32,0.5); }
+  .send[disabled]{ opacity:0.6; cursor:progress; transform:none; }
+  .summary{ font-size:clamp(15px,1.05vw,17px); color:var(--muted); }
+  .summary.bad{ color:#D6336C; }
+
+  @media (max-width:900px){
+    .fs, .c-auth{ grid-template-columns:minmax(0,1fr); }
+  }
+  @media (max-width:640px){
+    .c-unit{ min-width:0; flex:1; border-radius:20px; }
+    .c-card-dark{ border-radius:32px; }
+    .c-track{ border-radius:32px; min-height:0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="/"><img src="/logo-512.png" alt="" width="36" height="36"><span>MysMatch</span></a>
+    <nav class="nav-links" id="nav-links">
+      <a href="/">Home</a>
+      <a href="/events">Events</a>
+      <a href="/jobs">Jobs</a>
+      <a href="/challenge/" class="gold" aria-current="page">Ideation Challenge</a>
+    </nav>
+    <div class="nav-right">
+      <a class="nav-cta" href="#enter">Submit entry</a>
+      <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<!-- ════════ HERO ════════ -->
+<section class="page-hero c-hero">
+  <div class="hero-stack">
+    <div class="hero-head">
+      <div class="kicker c-kick" data-reveal><span>/ Creator Challenge</span><span class="c-pill" id="season-pill">Season 01 · Open</span></div>
+      <h1 data-reveal>Make our feed.<br><span class="grad-text">Join the team.</span></h1>
+    </div>
+    <div class="hero-foot" data-reveal>
+      <div class="c-hero-l">
+        <p>Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. The strongest entries are invited to interview.</p>
+        <div class="c-btns">
+          <a class="btn btn-violet" href="#enter">Submit your entry ↓</a>
+          <a class="btn btn-ghost" href="#inspiration">Get inspired</a>
+        </div>
+      </div>
+      <div class="c-count-w">
+        <span class="kicker" style="color:var(--faint)">Submissions close · 15 Dec 2026</span>
+        <div class="c-count" id="countdown" aria-live="off">
+          <div class="c-unit"><b id="cd-d">--</b><span>Days</span></div>
+          <div class="c-unit"><b id="cd-h">--</b><span>Hours</span></div>
+          <div class="c-unit"><b id="cd-m">--</b><span>Min</span></div>
+          <div class="c-unit"><b id="cd-s">--</b><span>Sec</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ BRIEF ════════ -->
+<section class="sheet sheet-white c-brief">
+  <div class="in c-sec">
+    <div class="c-head">
+      <div class="kicker">/ The brief</div>
+      <h2 data-reveal>You're our new social media manager. <span class="dim">What do you post first?</span></h2>
+    </div>
+    <div class="c-cols">
+      <div data-reveal><span class="kicker">Audience</span><p>University students looking for study partners, classmates, events and jobs.</p></div>
+      <div data-reveal><span class="kicker">Message</span><p>Do not study alone. Make students want to download MysMatch.</p></div>
+      <div data-reveal><span class="kicker">We judge</span><p>The idea, the craft, and how well it fits our audience and channels.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ TRACKS ════════ -->
+<section class="sheet sheet-dark">
+  <div class="in c-sec">
+    <div class="c-headrow">
+      <div class="c-head">
+        <div class="kicker" style="color:var(--faint)">/ Three tracks</div>
+        <h2 class="h2" data-reveal>Pick your <span style="color:#CDB8FF">format.</span></h2>
+      </div>
+      <p>One entry per track. Want to try more than one? Send a separate entry for each.</p>
+    </div>
+    <div class="c-tracks">
+      <div class="c-track t1" data-reveal>
+        <div class="top"><span class="num">01</span><span class="tag">Writing</span></div>
+        <div class="body"><h3>Scenario</h3><p>Write the script for a Reel or TikTok about student life and MysMatch: the hook, the scenes, the punchline.</p>
+          <div class="you"><span>You submit</span><b>A written script, scene by scene</b></div>
+          <div><button class="btn btn-light" type="button" data-track-cta="scenario">Enter this track →</button></div></div>
+      </div>
+      <div class="c-track t2" data-reveal>
+        <div class="top"><span class="num">02</span><span class="tag">Static</span></div>
+        <div class="body"><h3>Creative post</h3><p>Design a single post or carousel that makes a student stop scrolling and want to download the app.</p>
+          <div class="you"><span>You submit</span><b>1–5 images (PNG, JPG or WebP)</b></div>
+          <div><button class="btn btn-light" type="button" data-track-cta="post">Enter this track →</button></div></div>
+      </div>
+      <div class="c-track t3" data-reveal>
+        <div class="top"><span class="num">03</span><span class="tag">Video</span></div>
+        <div class="body"><h3>Content creator</h3><p>Record a short video in your own style, as if you were already filming for our channels.</p>
+          <div class="you"><span>You submit</span><b>A Google Drive link to your video</b></div>
+          <div><button class="btn btn-dark" type="button" data-track-cta="video">Enter this track →</button></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ INSPIRATION ════════ -->
+<section class="sheet sheet-lilac" id="inspiration">
+  <div class="in c-insp">
+    <div class="c-insp-l">
+      <div class="kicker">/ Get inspired</div>
+      <h2 class="h2" data-reveal>Study our feed. <span style="color:var(--violet)">Then beat it.</span></h2>
+      <p>See what we post today, and try the app so you know what you're promoting.</p>
+      <div class="stores">
+        <a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" target="_blank" rel="noopener noreferrer"><span><small>Download on the</small><b>App Store</b></span></a>
+        <a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" target="_blank" rel="noopener noreferrer"><span><small>Get it on</small><b>Google Play</b></span></a>
+      </div>
+    </div>
+    <div class="c-social">
+      <a data-reveal href="https://www.instagram.com/mysmatchofficial/" target="_blank" rel="noopener noreferrer"><span><small>Instagram</small><b>@mysmatchofficial</b></span><i>↗</i></a>
+      <a data-reveal href="https://www.tiktok.com/@mysmatchofficial" target="_blank" rel="noopener noreferrer"><span><small>TikTok</small><b>@mysmatchofficial</b></span><i>↗</i></a>
+      <a data-reveal href="https://www.linkedin.com/company/mysmatch" target="_blank" rel="noopener noreferrer"><span><small>LinkedIn</small><b>MysMatch</b></span><i>↗</i></a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ SUBMIT (live) ════════ -->
+<section class="sheet sheet-white c-enter" id="enter">
+  <div class="in c-sec">
+    <div class="c-headrow">
+      <div class="c-head">
+        <div class="kicker">/ Submit your entry</div>
+        <h2 data-reveal>Your move.</h2>
+      </div>
+      <p id="enter-sub">Takes about five minutes. Fields marked * are required. <a href="/challenge/rules.html">Rules &amp; privacy</a></p>
+    </div>
+
+    <div id="c-loading" class="hint">Loading…</div>
+
+    <!-- After the deadline (server clock decides; this is just the message). -->
+    <div id="c-closed" class="c-card-dark" hidden>
+      <span class="kicker">Submissions closed</span>
+      <h3>That's a wrap. <span class="grad-text">Thank you.</span></h3>
+      <p>Submissions closed on 15 December 2026. If you sent an entry, sign in below to follow its status.</p>
+    </div>
+
+    <!-- Not signed in -->
+    <div id="c-auth" class="c-auth" hidden>
+      <div class="c-auth-l">
+        <h3 id="auth-title">Create your account to enter.</h3>
+        <p>An account lets you send entries, upload files, and follow your status until we announce the results. Already use the MysMatch app? Sign in with the same email and password.</p>
+      </div>
+      <div class="c-auth-form">
+        <div class="c-tabs" role="tablist">
+          <button type="button" class="chip on" id="tab-up" role="tab">Create account</button>
+          <button type="button" class="chip" id="tab-in" role="tab">Sign in</button>
+        </div>
+        <div id="auth-msg" class="c-msg" hidden></div>
+        <form id="auth-form" novalidate class="c-auth-form">
+          <label class="fld"><span class="lbl">Email</span><input class="inp" id="a-email" type="email" autocomplete="email" placeholder="alex@university.edu" required></label>
+          <label class="fld"><span class="lbl">Password</span><input class="inp" id="a-pass" type="password" autocomplete="new-password" placeholder="At least 6 characters" required></label>
+          <div class="send-row">
+            <button class="btn btn-dark" type="submit" id="auth-go">Create account →</button>
+            <button class="c-link" type="button" id="auth-forgot" hidden>Forgot password?</button>
+          </div>
+        </form>
+        <div id="google-wrap" hidden>
+          <div class="c-or">or</div>
+          <button class="btn btn-light" type="button" id="auth-google" style="width:100%">Continue with Google</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Signed in -->
+    <div id="c-app" hidden>
+      <div class="c-sec" style="gap:clamp(32px,3vw,56px)">
+        <div class="c-me"><span>Signed in as <b id="me-email"></b></span><button class="c-link" type="button" id="sign-out">Sign out</button></div>
+
+        <div class="c-entries" id="c-entries" hidden>
+          <div class="kicker">Your entries</div>
+          <div id="entries-list" class="c-entries"></div>
+        </div>
+
+        <div id="c-sent" class="c-card-dark" hidden>
+          <span class="kicker" id="sent-kick">Entry received</span>
+          <h3>Thanks, <span id="sent-name">there</span>. <span class="grad-text">You're in.</span></h3>
+          <p>We'll get back to you at <b id="sent-email"></b> after submissions close on 15 December. You can follow the status and edit your entry here until then.</p>
+          <div class="c-btns">
+            <button class="btn btn-light" type="button" id="sent-another">Submit another track</button>
+            <a class="btn btn-ghost" href="https://www.instagram.com/mysmatchofficial/" target="_blank" rel="noopener noreferrer">Follow us on Instagram ↗</a>
+          </div>
+        </div>
+
+        <form id="c-form" class="c-form" novalidate hidden>
+          <div class="fs">
+            <div class="fs-l"><span class="n">01</span><h3>About you</h3><p>How we'll reach you if your entry is shortlisted.</p></div>
+            <div class="fs-r">
+              <div class="grid2">
+                <label class="fld"><span class="lbl"><span>Full name *</span><em data-err="full_name"></em></span><input class="inp" name="full_name" autocomplete="name" placeholder="Alex Morgan" maxlength="100"></label>
+                <label class="fld"><span class="lbl"><span>Email *</span><em data-err="email"></em></span><input class="inp" name="email" type="email" autocomplete="email" placeholder="alex@university.edu" maxlength="200"></label>
+                <label class="fld"><span class="lbl">Phone</span><input class="inp" name="phone" type="tel" autocomplete="tel" placeholder="+49 151 2345 6789" maxlength="40"></label>
+                <label class="fld"><span class="lbl">City</span><input class="inp" name="city" placeholder="Berlin" maxlength="100"></label>
+                <label class="fld"><span class="lbl"><span>Country of residence *</span><em data-err="country"></em></span><input class="inp" name="country" autocomplete="country-name" placeholder="Germany" maxlength="100"></label>
+                <label class="fld"><span class="lbl"><span>Portfolio or LinkedIn</span><em data-err="portfolio_url"></em></span><input class="inp" name="portfolio_url" type="url" placeholder="https://" maxlength="300"></label>
+                <label class="fld"><span class="lbl">Instagram or TikTok handle</span><input class="inp" name="social_handle" placeholder="@yourhandle" maxlength="100"></label>
+              </div>
+              <div class="grid2">
+                <div class="fld"><span class="lbl">Right now I'm…</span><div class="chips" data-chips="right_now" data-single="1"></div></div>
+                <div class="fld"><span class="lbl">Open to</span><div class="chips" data-chips="open_to"></div></div>
+              </div>
+              <div class="grid2">
+                <div class="fld" data-slot-wrap="cv"><span class="lbl">CV</span></div>
+                <div class="fld" data-slot-wrap="extra"><span class="lbl">Additional documents</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="fs">
+            <div class="fs-l"><span class="n">02</span><h3>Your entry</h3><p>Choose a track, then share your work and the thinking behind it.</p></div>
+            <div class="fs-r">
+              <div class="fld"><span class="lbl"><span>Track *</span><em data-err="track"></em></span><div class="picks" id="picks"></div></div>
+              <label class="fld"><span class="lbl"><span>Entry title *</span><em data-err="title"></em></span><input class="inp" name="title" placeholder="e.g. “Finding my exam buddy in 24 hours”" maxlength="120"></label>
+              <div class="fld"><span class="lbl">Made for</span><div class="chips" data-chips="made_for"></div></div>
+
+              <div data-only="scenario" hidden class="fs-r">
+                <label class="fld"><span class="lbl"><span>Your scenario *</span><em data-err="scenario_text"></em></span>
+                  <textarea class="inp" name="scenario_text" rows="10" maxlength="10000" placeholder="Scene 1 — Library, 11pm. A student stares at a blank page…"></textarea>
+                  <span class="hint">Write it out scene by scene: what we see, what we hear, the caption. Or upload it as a PDF below.</span></label>
+                <div class="fld" data-slot-wrap="scenario"><span class="lbl">Or upload your scenario</span></div>
+              </div>
+
+              <div data-only="post" hidden class="fld" data-slot-wrap="post"><span class="lbl"><span>Upload your design *</span><em data-err="post"></em></span></div>
+
+              <div data-only="video" hidden class="fld">
+                <label class="fld"><span class="lbl"><span>Google Drive link to your video *</span><em data-err="drive_url"></em></span>
+                  <input class="inp" name="drive_url" type="url" maxlength="500" placeholder="https://drive.google.com/file/d/…"></label>
+                <span class="info"><b>i</b><span>In Google Drive, set sharing to “Anyone with the link can view” so our team can open it.</span></span>
+              </div>
+
+              <label class="fld"><span class="lbl"><span>Your concept *</span><em data-err="concept_text"></em></span>
+                <textarea class="inp" name="concept_text" rows="5" maxlength="5000" placeholder="What's the idea, who is it for, and why would a student stop scrolling?"></textarea>
+                <span class="hint" style="text-align:right" id="concept-count">0 characters</span></label>
+              <div class="fld" data-slot-wrap="concept"><span class="lbl">Or upload your concept</span></div>
+            </div>
+          </div>
+
+          <div class="fs">
+            <div class="fs-l"><span class="n">03</span><h3>Send</h3></div>
+            <div class="fs-r">
+              <label class="fld"><span class="lbl">Your questions for us</span>
+                <textarea class="inp" name="questions" rows="4" maxlength="2000" placeholder="Anything you'd like to know about the challenge, the role or the team?"></textarea></label>
+              <button type="button" class="check" data-check="eligible"><span class="box"></span><span class="t"><span>I'm 18 or older and I don't live in a country under comprehensive EU or US sanctions (e.g. Iran, North Korea, Syria, Cuba). *</span><em data-err="eligible"></em></span></button>
+              <button type="button" class="check" data-check="consent"><span class="box"></span><span class="t"><span>This is my original work. MysMatch may contact me about this challenge and related roles, and may feature my entry on its channels with credit. I've read the <a href="/challenge/rules.html" target="_blank">rules &amp; privacy notes</a>. *</span><em data-err="consent"></em></span></button>
+              <div id="form-msg" class="c-msg err" hidden></div>
+              <div class="send-row">
+                <button type="submit" class="btn btn-dark send" id="send-btn">Send entry →</button>
+                <button type="button" class="btn btn-light" id="cancel-edit" hidden>Cancel editing</button>
+                <span class="summary" id="summary">We reply after 15 December 2026.</span>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+  <div class="in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="/"><img src="/logo-512.png" alt="" width="44" height="44"><span>MysMatch</span></a>
+        <p>Do not study alone.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col"><span class="kicker">Product</span><a href="/events">Events</a><a href="/jobs">Jobs</a><a href="/challenge/">Ideation Challenge</a></div>
+        <div class="foot-col"><span class="kicker">Company</span><a href="mailto:contact@mys-match.com">Contact</a><a href="/dashboard.html">Organization login</a><a href="/organizations">Organization sign-up</a></div>
+        <div class="foot-col"><span class="kicker">Legal</span><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/challenge/rules.html">Challenge rules</a></div>
+        <div class="foot-col"><span class="kicker">Social</span><a href="https://www.instagram.com/mysmatchofficial/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.tiktok.com/@mysmatchofficial" target="_blank" rel="noopener noreferrer">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" target="_blank" rel="noopener noreferrer">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="wordmark" aria-hidden="true">MysMatch</div>
+    <div class="foot-bottom"><span>© 2026 MysMatch. All rights reserved.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/challenge.js"></script>
+<script src="/js/site.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+  var fmtSize = function (b) { return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; };
+  var DEADLINE = new Date('2026-12-15T23:59:59+01:00').getTime();
+  var OPTIONS = {
+    right_now: ['Studying', 'Graduated', 'Working', 'Freelancing'],
+    open_to: ['Full-time', 'Part-time', 'Freelance'],
+    made_for: ['Instagram', 'TikTok', 'LinkedIn'],
+  };
+
+  // ── Countdown (display only; the server clock decides what's accepted) ──
+  var pad = function (n) { return String(n).padStart(2, '0'); };
+  function tick() {
+    var ms = Math.max(0, DEADLINE - Date.now());
+    $('cd-d').textContent = pad(Math.floor(ms / 864e5)); $('cd-h').textContent = pad(Math.floor(ms / 36e5) % 24);
+    $('cd-m').textContent = pad(Math.floor(ms / 6e4) % 60); $('cd-s').textContent = pad(Math.floor(ms / 1e3) % 60);
+    if (!ms) $('season-pill').textContent = 'Season 01 · Closed';
+  }
+  tick(); setInterval(tick, 1000);
+
+  // ── State ──
+  var open = Date.now() < DEADLINE;
+  var entries = [];
+  var st = null; // form state
+  function blankState() {
+    return { entryId: null, track: null, chips: { right_now: [], open_to: [], made_for: [] }, checks: { eligible: false, consent: false },
+             docs: { cv: [], extra: [], scenario: [], concept: [], post: [] }, removed: [], tried: false };
+  }
+
+  function show(id, on) { $(id).hidden = !on; }
+
+  // ── Auth panel ──
+  var mode = 'up';
+  function setMode(m) {
+    mode = m;
+    $('tab-up').classList.toggle('on', m === 'up'); $('tab-in').classList.toggle('on', m === 'in');
+    $('auth-go').textContent = m === 'up' ? 'Create account →' : 'Sign in →';
+    $('auth-title').textContent = m === 'up' ? 'Create your account to enter.' : 'Welcome back.';
+    $('a-pass').setAttribute('autocomplete', m === 'up' ? 'new-password' : 'current-password');
+    $('auth-forgot').hidden = m !== 'in';
+    authMsg('');
+  }
+  function authMsg(text, ok) { var el = $('auth-msg'); el.hidden = !text; el.textContent = text || ''; el.className = 'c-msg ' + (ok ? 'ok' : 'err'); }
+  $('tab-up').onclick = function () { setMode('up'); };
+  $('tab-in').onclick = function () { setMode('in'); };
+  $('auth-form').onsubmit = async function (e) {
+    e.preventDefault();
+    var email = $('a-email').value.trim(), pass = $('a-pass').value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return authMsg('Please enter a valid email.');
+    if (pass.length < 6) return authMsg('Password must be at least 6 characters.');
+    $('auth-go').disabled = true;
+    var r = mode === 'up' ? await MMC.signUp(email, pass) : await MMC.signIn(email, pass);
+    $('auth-go').disabled = false;
+    if (!r.ok) return authMsg(r.error);
+    if (r.needsConfirm) {
+      authMsg('Almost there — we sent a confirmation link to ' + email + '. Open it to activate your account, then come back here. Can’t find it? Check your spam folder.', true);
+      $('a-pass').value = '';
+    }
+  };
+  $('auth-forgot').onclick = async function () {
+    var email = $('a-email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return authMsg('Type your email above first, then tap “Forgot password?”.');
+    var r = await MMC.resetPassword(email);
+    authMsg(r.ok ? 'If an account exists for ' + email + ', we sent a link to set a new password.' : r.error, r.ok);
+  };
+  if (MMC.GOOGLE_WEB_ENABLED) { $('google-wrap').hidden = false; $('auth-google').onclick = function () { MMC.signInGoogle(); }; }
+  $('sign-out').onclick = async function () { await MMC.signOut(); render(null); };
+
+  // ── Entries list ──
+  function trackOf(id) { return MMC.TRACKS.find(function (t) { return t.id === id; }) || { title: id }; }
+  function steps(e) {
+    var order = ['submitted', 'in_review', 'shortlisted', 'interview'];
+    var final = e.status === 'not_selected' ? 'not_selected' : 'selected';
+    var all = order.concat([final]);
+    var idx = all.indexOf(e.status);
+    return all.map(function (s, i) {
+      var label = MMC.STATUSES.find(function (x) { return x.id === s; }).label;
+      var cls = i < idx ? 'done' : (i === idx ? (s === 'not_selected' ? 'no' : 'now') : '');
+      return '<span class="c-step ' + cls + '">' + esc(label) + '</span>';
+    }).join('');
+  }
+  function renderEntries() {
+    var list = $('entries-list');
+    show('c-entries', entries.length > 0);
+    list.innerHTML = entries.map(function (e) {
+      var draft = !e.submitted_at;
+      return '<div class="c-entry">'
+        + '<div class="c-entry-top"><div style="display:flex;flex-direction:column;gap:8px;min-width:0"><span class="kicker">' + esc(trackOf(e.track).title) + '</span><b>' + esc(e.title) + '</b></div>'
+        + (open ? '<div class="c-entry-act"><button class="btn btn-light" type="button" data-edit="' + e.id + '">' + (draft ? 'Finish' : 'Edit') + '</button>'
+          + '<button class="btn btn-light" type="button" data-withdraw="' + e.id + '">Withdraw</button></div>' : '')
+        + '</div>'
+        + (draft ? '<div class="c-draft">Not sent yet — something was missing or the upload stopped. Tap “Finish” to complete it.</div>'
+                 : '<div class="c-steps">' + steps(e) + '</div>')
+        + '</div>';
+    }).join('');
+    list.querySelectorAll('[data-edit]').forEach(function (b) { b.onclick = function () { startEdit(b.getAttribute('data-edit')); }; });
+    list.querySelectorAll('[data-withdraw]').forEach(function (b) {
+      b.onclick = async function () {
+        if (!confirm('Withdraw this entry? It and its files will be deleted. You can send a new one before the deadline.')) return;
+        try { await MMC.withdraw(b.getAttribute('data-withdraw')); await reload(); } catch (err) { alert(MMC.friendlyError(err)); }
+      };
+    });
+  }
+
+  // ── Form ──
+  var form = $('c-form');
+  function field(name) { return form.querySelector('[name="' + name + '"]'); }
+
+  function renderChips() {
+    form.querySelectorAll('[data-chips]').forEach(function (box) {
+      var key = box.getAttribute('data-chips'), single = box.hasAttribute('data-single');
+      box.innerHTML = OPTIONS[key].map(function (o) {
+        return '<button type="button" class="chip' + (st.chips[key].indexOf(o) >= 0 ? ' on' : '') + '" data-v="' + esc(o) + '">' + esc(o) + '</button>';
+      }).join('');
+      box.querySelectorAll('.chip').forEach(function (c) {
+        c.onclick = function () {
+          var v = c.getAttribute('data-v'), cur = st.chips[key];
+          st.chips[key] = single ? (cur[0] === v ? [] : [v]) : (cur.indexOf(v) >= 0 ? cur.filter(function (x) { return x !== v; }) : cur.concat([v]));
+          renderChips();
+        };
+      });
+    });
+  }
+
+  function renderPicks() {
+    var used = {};
+    entries.forEach(function (e) { if (e.id !== st.entryId) used[e.track] = true; });
+    $('picks').innerHTML = MMC.TRACKS.map(function (t) {
+      var on = st.track === t.id, dis = used[t.id] || (st.entryId && !on);
+      return '<button type="button" class="pick' + (on ? ' on' : '') + (st.tried && !st.track ? ' bad' : '') + '" data-track="' + t.id + '"' + (dis ? ' disabled' : '') + '>'
+        + '<span class="row"><span class="num">' + t.num + '</span><span class="dot"></span></span><span class="t">' + esc(t.title) + '</span>'
+        + (used[t.id] ? '<span class="used">Already entered — edit it above</span>' : '') + '</button>';
+    }).join('');
+    $('picks').querySelectorAll('.pick:not([disabled])').forEach(function (b) {
+      b.onclick = function () { st.track = b.getAttribute('data-track'); renderPicks(); renderTrackParts(); };
+    });
+  }
+  function renderTrackParts() {
+    form.querySelectorAll('[data-only]').forEach(function (el) { el.hidden = el.getAttribute('data-only') !== st.track; });
+    var t = st.track ? trackOf(st.track).title.toLowerCase() : '';
+    $('send-btn').textContent = st.entryId ? 'Save changes →' : (t ? 'Send ' + t + ' entry →' : 'Send entry →');
+  }
+
+  // Drop zones: one per slot, existing (server) files + new local files.
+  function renderSlot(key) {
+    var wrap = form.querySelector('[data-slot-wrap="' + key + '"]'); if (!wrap) return;
+    var slot = MMC.SLOTS[key], list = st.docs[key], big = key === 'post';
+    var old = wrap.querySelectorAll('.dz, .doc, .thumbs'); old.forEach(function (n) { n.remove(); });
+    var accept = slot.exts.map(function (x) { return '.' + x; }).join(',');
+    var dz = document.createElement('label');
+    dz.className = 'dz' + (big ? ' big' : '') + (st.tried && key === 'post' && st.track === 'post' && !list.length ? ' bad' : '');
+    dz.innerHTML = '<input type="file" accept="' + accept + '"' + (slot.max > 1 ? ' multiple' : '') + '>'
+      + '<span class="up">↑</span><span class="tx"><b>' + (big ? 'Drop images here or ' : 'Drop file' + (slot.max > 1 ? 's' : '') + ' or ') + '<span>browse</span></b><small>' + esc(slot.hint) + '</small></span>';
+    var add = function (files) { addFiles(key, files); };
+    dz.querySelector('input').onchange = function (e) { add(e.target.files); e.target.value = ''; };
+    dz.ondragover = function (e) { e.preventDefault(); dz.classList.add('over'); };
+    dz.ondragleave = function () { dz.classList.remove('over'); };
+    dz.ondrop = function (e) { e.preventDefault(); dz.classList.remove('over'); add(e.dataTransfer.files); };
+    wrap.appendChild(dz);
+    if (big) {
+      var g = document.createElement('div'); g.className = 'thumbs';
+      list.forEach(function (d, i) {
+        var t = document.createElement('div'); t.className = 'thumb';
+        if (d.preview) t.style.backgroundImage = 'url("' + d.preview + '")';
+        t.innerHTML = '<div><span>' + esc(d.name) + '</span><button type="button" class="x" aria-label="Remove">×</button></div>';
+        t.querySelector('.x').onclick = function () { removeDoc(key, i); };
+        g.appendChild(t);
+      });
+      wrap.appendChild(g);
+    } else {
+      list.forEach(function (d, i) {
+        var r = document.createElement('div'); r.className = 'doc';
+        r.innerHTML = '<span class="ext">' + esc(MMC.extOf(d.name).toUpperCase()) + '</span><span class="nm">' + esc(d.name) + '</span><span class="sz">' + esc(fmtSize(d.size)) + '</span><button type="button" class="x" aria-label="Remove">×</button>';
+        r.querySelector('.x').onclick = function () { removeDoc(key, i); };
+        wrap.appendChild(r);
+      });
+    }
+  }
+  function renderSlots() { Object.keys(MMC.SLOTS).forEach(renderSlot); }
+  function addFiles(key, files) {
+    var slot = MMC.SLOTS[key], skipped = 0;
+    var ok = [].filter.call(files, function (f) {
+      var good = slot.exts.indexOf(MMC.extOf(f.name)) >= 0
+        // images are shrunk in the browser before upload, so allow bigger originals
+        && f.size <= (key === 'post' ? 25 : slot.mb) * 1048576;
+      if (!good) skipped++;
+      return good;
+    }).map(function (f) { return { file: f, name: f.name, size: f.size, preview: key === 'post' ? URL.createObjectURL(f) : null }; });
+    var cur = slot.max === 1 ? [] : st.docs[key];
+    if (slot.max === 1) st.docs[key].forEach(function (d) { if (d.id) st.removed.push(d.id); });
+    var next = cur.concat(ok);
+    if (next.length > slot.max) skipped += next.length - slot.max;
+    st.docs[key] = next.slice(0, slot.max);
+    renderSlot(key);
+    if (skipped) formMsg(skipped + ' file' + (skipped > 1 ? 's were' : ' was') + ' not added (type, size or number of files). ' + slot.hint + '.');
+  }
+  function removeDoc(key, i) {
+    var d = st.docs[key][i];
+    if (d.id) st.removed.push(d.id);
+    if (d.preview && d.file) URL.revokeObjectURL(d.preview);
+    st.docs[key].splice(i, 1);
+    renderSlot(key);
+  }
+
+  form.querySelectorAll('[data-check]').forEach(function (b) {
+    b.onclick = function (e) {
+      if (e.target.tagName === 'A') return;
+      var k = b.getAttribute('data-check'); st.checks[k] = !st.checks[k]; renderChecks();
+    };
+  });
+  function renderChecks() {
+    form.querySelectorAll('[data-check]').forEach(function (b) {
+      var k = b.getAttribute('data-check');
+      b.classList.toggle('on', st.checks[k]); b.querySelector('.box').textContent = st.checks[k] ? '✓' : '';
+      b.classList.toggle('bad', st.tried && !st.checks[k]);
+    });
+  }
+  field('concept_text').oninput = function () { $('concept-count').textContent = this.value.length + ' characters'; };
+
+  function values() {
+    var v = function (n) { var x = field(n).value.trim(); return x || null; };
+    return {
+      full_name: v('full_name') || '', email: v('email') || '', phone: v('phone'), city: v('city'), country: v('country'),
+      portfolio_url: v('portfolio_url'), social_handle: v('social_handle'),
+      right_now: st.chips.right_now[0] || null, open_to: st.chips.open_to, made_for: st.chips.made_for,
+      title: v('title') || '',
+      scenario_text: st.track === 'scenario' ? v('scenario_text') : null,
+      drive_url: st.track === 'video' ? v('drive_url') : null,
+      concept_text: v('concept_text'), questions: v('questions'),
+      consent: st.checks.consent, eligible: st.checks.eligible,
+    };
+  }
+  function validate(f) {
+    var e = {};
+    if (f.full_name.length < 2) e.full_name = 'Required';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = f.email ? 'Check your email' : 'Required';
+    if (!f.country) e.country = 'Required';
+    if (f.portfolio_url && !/^https?:\/\//i.test(f.portfolio_url)) e.portfolio_url = 'Start with https://';
+    if (!st.track) e.track = 'Pick a track';
+    if (f.title.length < 2) e.title = 'Required';
+    if (st.track === 'scenario' && (f.scenario_text || '').length < 40 && !st.docs.scenario.length) e.scenario_text = 'Write a few lines or upload a PDF';
+    if (st.track === 'post' && !st.docs.post.length) e.post = 'Add at least one image';
+    if (st.track === 'video' && !/^https:\/\/(drive|docs)\.google\.com\//i.test(f.drive_url || '')) e.drive_url = 'Paste a Google Drive link';
+    if ((f.concept_text || '').length < 20 && !st.docs.concept.length) e.concept_text = f.concept_text ? 'Tell us a bit more' : 'Write it or upload a PDF';
+    if (!f.eligible) e.eligible = 'Please confirm to send';
+    if (!f.consent) e.consent = 'Please confirm to send';
+    return e;
+  }
+  function showErrors(e) {
+    form.querySelectorAll('[data-err]').forEach(function (el) { el.textContent = e[el.getAttribute('data-err')] || ''; });
+    ['full_name', 'email', 'country', 'portfolio_url', 'title', 'scenario_text', 'drive_url', 'concept_text'].forEach(function (n) { field(n).classList.toggle('bad', !!e[n]); });
+    var n = Object.keys(e).length;
+    $('summary').textContent = n ? n + (n === 1 ? ' field needs' : ' fields need') + ' your attention' : 'We reply after 15 December 2026.';
+    $('summary').classList.toggle('bad', !!n);
+    renderPicks(); renderChecks(); renderSlot('post');
+  }
+  function formMsg(t) { var el = $('form-msg'); el.hidden = !t; el.textContent = t || ''; }
+
+  var PROBLEM = {
+    missing_scenario: { scenario_text: 'Write a few lines or upload a PDF' }, missing_images: { post: 'Add at least one image' },
+    missing_drive: { drive_url: 'Paste a Google Drive link' }, missing_concept: { concept_text: 'Write it or upload a PDF' },
+  };
+
+  form.onsubmit = async function (ev) {
+    ev.preventDefault();
+    st.tried = true; formMsg('');
+    var f = values(), errs = validate(f);
+    showErrors(errs);
+    if (Object.keys(errs).length) { var first = form.querySelector('.bad, em:not(:empty)'); if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    var btn = $('send-btn'), label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Sending…';
+    var fields = Object.assign({}, f);
+    if (!st.entryId) fields.track = st.track;
+    var newFiles = [];
+    Object.keys(st.docs).forEach(function (k) {
+      if (k === 'scenario' && st.track !== 'scenario') return;
+      if (k === 'post' && st.track !== 'post') return;
+      st.docs[k].forEach(function (d) { if (d.file) newFiles.push({ slot: k, file: d.file }); });
+    });
+    var savedId = st.entryId;
+    try {
+      var r = await MMC.saveEntry({
+        entryId: st.entryId, fields: fields, removeFileIds: st.removed, newFiles: newFiles,
+        onSaved: function (id) { savedId = id; },
+        onProgress: function (i, n) { btn.textContent = 'Uploading ' + i + ' of ' + n + '…'; },
+      });
+      if (!r.ok) {
+        // Saved as a draft; reload it from the server (files included) and
+        // say what's missing — the server is the referee.
+        await reload(true); await startEdit(r.entryId);
+        st.tried = true;
+        if (r.problem === 'closed') formMsg('Submissions are closed.');
+        else showErrors(PROBLEM[r.problem] || {});
+        btn.disabled = false; renderTrackParts();
+        return;
+      }
+      $('sent-kick').textContent = 'Entry received · ' + trackOf(st.track).title;
+      $('sent-name').textContent = f.full_name.split(' ')[0] || 'there';
+      $('sent-email').textContent = f.email;
+      st = blankState();
+      await reload();
+      form.hidden = true; show('c-sent', true);
+      $('c-sent').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (err) {
+      console.error('[challenge] save failed', err);
+      await reload(true);
+      // Part of it may be saved already: show the server's copy so nothing is
+      // uploaded twice; files that didn't make it need to be added again.
+      if (savedId) await startEdit(savedId);
+      formMsg(MMC.friendlyError(err) + (newFiles.length ? ' Please check your files and add any that are missing.' : ''));
+    }
+    btn.disabled = false; btn.textContent = label;
+  };
+  $('sent-another').onclick = function () { show('c-sent', false); newForm(); };
+  $('cancel-edit').onclick = function () { newForm(); };
+
+  function fill(e) {
+    ['full_name', 'email', 'phone', 'city', 'country', 'portfolio_url', 'social_handle', 'title', 'scenario_text', 'drive_url', 'concept_text', 'questions']
+      .forEach(function (n) { field(n).value = (e && e[n]) || ''; });
+    $('concept-count').textContent = field('concept_text').value.length + ' characters';
+  }
+  // Fresh form; "About you" is carried over from the last entry / account.
+  function newForm(trackHint) {
+    st = blankState();
+    var last = entries[entries.length - 1];
+    fill(null);
+    if (last) {
+      ['full_name', 'email', 'phone', 'city', 'country', 'portfolio_url', 'social_handle'].forEach(function (n) { field(n).value = last[n] || ''; });
+      st.chips.right_now = last.right_now ? [last.right_now] : []; st.chips.open_to = last.open_to || [];
+    } else if (window.__me) { field('email').value = window.__me.email || ''; }
+    var used = entries.map(function (e) { return e.track; });
+    if (trackHint && used.indexOf(trackHint) < 0) st.track = trackHint;
+    $('cancel-edit').hidden = true;
+    formMsg(''); showErrors({}); st.tried = false;
+    renderAll();
+    form.hidden = !open || used.length >= MMC.TRACKS.length;
+  }
+  async function startEdit(id) {
+    var e = entries.find(function (x) { return x.id === id; }); if (!e) return;
+    st = blankState(); st.entryId = e.id; st.track = e.track;
+    fill(e);
+    st.chips.right_now = e.right_now ? [e.right_now] : []; st.chips.open_to = e.open_to || []; st.chips.made_for = e.made_for || [];
+    st.checks.consent = !!e.consent; st.checks.eligible = !!e.eligible;
+    var slotOf = { cv: 'cv', extra: 'extra', scenario_pdf: 'scenario', concept_pdf: 'concept', post_image: 'post' };
+    for (var i = 0; i < (e.files || []).length; i++) {
+      var f = e.files[i], k = slotOf[f.kind];
+      var d = { id: f.id, name: f.file_name, size: f.size_bytes, path: f.path, preview: null };
+      if (k === 'post') d.preview = await MMC.fileUrl(f.path);
+      st.docs[k].push(d);
+    }
+    show('c-sent', false); form.hidden = false; $('cancel-edit').hidden = false;
+    formMsg(''); showErrors({}); st.tried = false;
+    renderAll();
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function renderAll() { renderChips(); renderPicks(); renderTrackParts(); renderSlots(); renderChecks(); }
+
+  async function reload(keepForm) {
+    try { entries = await MMC.myEntries(); } catch (e) { console.error('[challenge] load', e); entries = []; }
+    renderEntries();
+    if (!keepForm) newForm(); else renderPicks();
+  }
+
+  // Track buttons in the "Three tracks" section jump to the form with it picked.
+  document.querySelectorAll('[data-track-cta]').forEach(function (b) {
+    b.onclick = function () {
+      pendingTrack = b.getAttribute('data-track-cta');
+      if (window.__me && !st.entryId) { if (!form.hidden) { newForm(pendingTrack); } }
+      $('enter').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+  });
+  var pendingTrack = null;
+
+  async function render(session) {
+    show('c-loading', false);
+    window.__me = session ? session.user : null;
+    show('c-closed', !open);
+    if (!session) { show('c-app', false); show('c-auth', true); setMode(open ? 'up' : 'in'); return; }
+    show('c-auth', false); show('c-app', true);
+    $('me-email').textContent = session.user.email || '';
+    await reload();
+    if (pendingTrack) newForm(pendingTrack);
+  }
+
+  st = blankState();
+  var lastUid;
+  MMC.session().then(function (s) { lastUid = s ? s.user.id : null; render(s); });
+  // Back from the confirmation email / Google: go straight to the form.
+  if (/[?&]welcome=1/.test(location.search)) setTimeout(function () { $('enter').scrollIntoView({ block: 'start' }); }, 600);
+  MMC.onAuth(function (s) {
+    var uid = s ? s.user.id : null;
+    if (lastUid === undefined || uid === lastUid) return; lastUid = uid;
+    render(s);
+  });
+})();
+</script>
+</body>
+</html>

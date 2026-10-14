@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Challenge judging — MysMatch</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0F1020">
+<link rel="icon" type="image/png" href="/logo-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<!-- Creator Challenge judging (Oct 2026). Only the owner of the MysMatch
+     Official organization (can_broadcast) gets data: the server checks it
+     (is_challenge_admin in RLS + set_challenge_status), this page just asks. -->
+<style>
+  .j{ display:flex; flex-direction:column; gap:24px; }
+  .j-bar{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+  .j-bar select, .j-bar input{ font-family:inherit; font-size:16px; padding:12px 16px; border-radius:14px; border:1.5px solid #E2DEF0; background:#fff; color:var(--ink); }
+  .j-count{ font-family:var(--mono); color:var(--muted); font-size:14px; }
+  .j-list{ display:flex; flex-direction:column; gap:12px; }
+  .j-row{ background:#fff; border:1px solid #E2DEF0; border-radius:22px; }
+  .j-head{ cursor:pointer; display:grid; grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1fr) auto; gap:16px; align-items:center; padding:18px 22px; }
+  .j-head b{ font-size:18px; letter-spacing:-0.02em; display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .j-head small{ color:var(--muted); font-size:14px; }
+  .pill{ display:inline-block; font-size:13px; padding:6px 12px; border-radius:9999px; background:#F4F1FD; color:#4B3BB0; white-space:nowrap; }
+  .pill.selected{ background:#E8F8EF; color:#1C7A4A; } .pill.not_selected{ background:#FDECF2; color:#B4214F; }
+  .pill.shortlisted,.pill.interview{ background:#FFF6DD; color:#7A5600; }
+  .j-body{ border-top:1px solid #E2DEF0; padding:22px; display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:28px; }
+  .j-body h4{ margin:0 0 8px; font-family:var(--mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); font-weight:500; }
+  .j-txt{ white-space:pre-wrap; font-size:16px; line-height:1.6; color:var(--ink); margin:0 0 18px; overflow-wrap:anywhere; }
+  .j-kv{ display:grid; grid-template-columns:auto minmax(0,1fr); gap:6px 14px; font-size:15px; margin-bottom:18px; }
+  .j-kv span{ color:var(--muted); } .j-kv b{ font-weight:500; overflow-wrap:anywhere; }
+  .j-files{ display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
+  .j-files button{ text-align:left; font-family:inherit; font-size:15px; padding:10px 14px; border-radius:12px; border:1px solid #E2DEF0; background:#F8F6FE; cursor:pointer; color:var(--ink); }
+  .j-side{ display:flex; flex-direction:column; gap:12px; }
+  .j-side select, .j-side textarea{ font-family:inherit; font-size:16px; padding:12px 14px; border-radius:14px; border:1.5px solid #E2DEF0; width:100%; }
+  .j-msg{ font-size:14px; color:var(--muted); min-height:20px; }
+  .login{ max-width:460px; display:flex; flex-direction:column; gap:14px; }
+  .login input{ font-family:inherit; font-size:18px; padding:16px 18px; border-radius:16px; border:1.5px solid #E2DEF0; }
+  @media (max-width:900px){ .j-head{ grid-template-columns:minmax(0,1fr) auto; } .j-head .hide-s{ display:none; } .j-body{ grid-template-columns:minmax(0,1fr); } }
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="/"><img src="/logo-512.png" alt="" width="36" height="36"><span>MysMatch</span></a>
+    <div class="nav-right"><a class="nav-cta" href="/challenge/">Challenge page</a></div>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+<section class="page-hero short">
+  <div class="hero-stack"><div class="hero-head"><div class="kicker">/ Creator Challenge · Judging</div><h1>Entries.</h1></div></div>
+</section>
+<section class="sheet sheet-white">
+  <div class="in j">
+    <div id="msg" class="j-msg"></div>
+    <form id="login" class="login" hidden>
+      <p>Sign in with the MysMatch Official account.</p>
+      <input id="le" type="email" placeholder="Email" autocomplete="email">
+      <input id="lp" type="password" placeholder="Password" autocomplete="current-password">
+      <div><button class="btn btn-dark" type="submit">Sign in →</button></div>
+    </form>
+    <div id="app" class="j" hidden>
+      <div class="j-bar">
+        <select id="f-track"><option value="">All tracks</option></select>
+        <select id="f-status"><option value="">All statuses</option></select>
+        <input id="f-q" type="search" placeholder="Search name, email, title">
+        <button class="btn btn-light" type="button" id="export" style="padding:12px 20px;font-size:16px">Export CSV (Excel)</button>
+        <button class="btn btn-light" type="button" id="out" style="padding:12px 20px;font-size:16px">Sign out</button>
+        <span class="j-count" id="count"></span>
+      </div>
+      <div class="j-list" id="list"></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/challenge.js"></script>
+<script src="/js/site.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+  var fmtDate = function (iso) { return iso ? new Date(iso).toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }) : ''; };
+  var KIND = { cv: 'CV', extra: 'Document', scenario_pdf: 'Scenario PDF', concept_pdf: 'Concept PDF', post_image: 'Image' };
+  var all = [], openId = null;
+  var trackT = function (id) { var t = MMC.TRACKS.find(function (x) { return x.id === id; }); return t ? t.title : id; };
+  var statusT = function (id) { var t = MMC.STATUSES.find(function (x) { return x.id === id; }); return t ? t.label : id; };
+
+  MMC.TRACKS.forEach(function (t) { $('f-track').insertAdjacentHTML('beforeend', '<option value="' + t.id + '">' + esc(t.title) + '</option>'); });
+  MMC.STATUSES.forEach(function (s) { $('f-status').insertAdjacentHTML('beforeend', '<option value="' + s.id + '">' + esc(s.label) + '</option>'); });
+  ['f-track', 'f-status', 'f-q'].forEach(function (id) { $(id).oninput = draw; });
+
+  function filtered() {
+    var tr = $('f-track').value, stt = $('f-status').value, q = $('f-q').value.trim().toLowerCase();
+    return all.filter(function (e) {
+      if (tr && e.track !== tr) return false;
+      if (stt && e.status !== stt) return false;
+      if (q && [e.full_name, e.email, e.title].join(' ').toLowerCase().indexOf(q) < 0) return false;
+      return true;
+    });
+  }
+  function kv(label, val) { return val ? '<span>' + esc(label) + '</span><b>' + val + '</b>' : ''; }
+  function draw() {
+    var list = filtered();
+    $('count').textContent = list.length + ' of ' + all.length;
+    $('list').innerHTML = list.length ? list.map(function (e) {
+      var body = '';
+      if (openId === e.id) {
+        var link = function (u) { return '<a href="' + esc(u) + '" target="_blank" rel="noopener noreferrer">' + esc(u) + '</a>'; };
+        body = '<div class="j-body"><div>'
+          + '<h4>About</h4><div class="j-kv">'
+          + kv('Email', '<a href="mailto:' + esc(e.email) + '">' + esc(e.email) + '</a>') + kv('Phone', esc(e.phone)) + kv('City', esc(e.city)) + kv('Country', esc(e.country))
+          + kv('Portfolio', e.portfolio_url ? link(e.portfolio_url) : '') + kv('Handle', esc(e.social_handle)) + kv('Right now', esc(e.right_now))
+          + kv('Open to', esc((e.open_to || []).join(', '))) + kv('Made for', esc((e.made_for || []).join(', ')))
+          + kv('Sent', esc(fmtDate(e.submitted_at))) + kv('Last edit', esc(fmtDate(e.updated_at))) + '</div>'
+          + (e.drive_url ? '<h4>Video</h4><p class="j-txt">' + link(e.drive_url) + '</p>' : '')
+          + (e.scenario_text ? '<h4>Scenario</h4><p class="j-txt">' + esc(e.scenario_text) + '</p>' : '')
+          + (e.concept_text ? '<h4>Concept</h4><p class="j-txt">' + esc(e.concept_text) + '</p>' : '')
+          + (e.questions ? '<h4>Questions for us</h4><p class="j-txt">' + esc(e.questions) + '</p>' : '')
+          + (e.files.length ? '<h4>Files</h4><div class="j-files">' + e.files.map(function (f) {
+              return '<button type="button" data-path="' + esc(f.path) + '">' + esc(KIND[f.kind] || f.kind) + ' · ' + esc(f.file_name) + ' ↗</button>';
+            }).join('') + '</div>' : '')
+          + '</div><div class="j-side"><h4>Status</h4><select data-status="' + e.id + '">'
+          + MMC.STATUSES.map(function (s) { return '<option value="' + s.id + '"' + (s.id === e.status ? ' selected' : '') + '>' + esc(s.label) + '</option>'; }).join('')
+          + '</select><h4>Notes (only judges see these)</h4><textarea rows="6" data-notes="' + e.id + '">' + esc(e.notes) + '</textarea>'
+          + '<div><button class="btn btn-dark" type="button" data-save="' + e.id + '" style="padding:12px 22px;font-size:16px">Save notes</button></div>'
+          + '<div class="j-msg" data-m="' + e.id + '"></div></div></div>';
+      }
+      return '<div class="j-row"><div class="j-head" data-open="' + e.id + '">'
+        + '<div><b>' + esc(e.title) + '</b><small>' + esc(e.full_name) + '</small></div>'
+        + '<div class="hide-s"><small>' + esc(trackT(e.track)) + '</small></div>'
+        + '<div class="hide-s"><small>' + esc(fmtDate(e.submitted_at)) + '</small></div>'
+        + '<span class="pill ' + esc(e.status) + '">' + esc(statusT(e.status)) + '</span></div>' + body + '</div>';
+    }).join('') : '<p class="dim">No entries yet.</p>';
+
+    $('list').querySelectorAll('[data-open]').forEach(function (h) { h.onclick = function () { var id = h.getAttribute('data-open'); openId = openId === id ? null : id; draw(); }; });
+    $('list').querySelectorAll('[data-path]').forEach(function (b) {
+      b.onclick = async function () {
+        var w = window.open('', '_blank');
+        var u = await MMC.fileUrl(b.getAttribute('data-path'));
+        if (u && w) w.location = u; else if (w) { w.close(); alert('Could not open the file.'); }
+      };
+    });
+    $('list').querySelectorAll('[data-status]').forEach(function (s) {
+      s.onchange = async function () {
+        var id = s.getAttribute('data-status'), m = $('list').querySelector('[data-m="' + id + '"]');
+        try { await MMC.setStatus(id, s.value); var e = all.find(function (x) { return x.id === id; }); e.status = s.value; m.textContent = 'Status saved — the entrant sees it on the challenge page.'; draw(); }
+        catch (err) { m.textContent = 'Could not save: ' + (err.message || err); }
+      };
+    });
+    $('list').querySelectorAll('[data-save]').forEach(function (b) {
+      b.onclick = async function () {
+        var id = b.getAttribute('data-save'), t = $('list').querySelector('[data-notes="' + id + '"]').value, m = $('list').querySelector('[data-m="' + id + '"]');
+        try { await MMC.saveNotes(id, t); all.find(function (x) { return x.id === id; }).notes = t; m.textContent = 'Notes saved.'; }
+        catch (err) { m.textContent = 'Could not save: ' + (err.message || err); }
+      };
+    });
+  }
+
+  // CSV with ; separator + BOM so Excel (German locale) opens it correctly.
+  $('export').onclick = function () {
+    var cols = [['Title', 'title'], ['Track', function (e) { return trackT(e.track); }], ['Status', function (e) { return statusT(e.status); }],
+      ['Name', 'full_name'], ['Email', 'email'], ['Phone', 'phone'], ['City', 'city'], ['Country', 'country'], ['Portfolio', 'portfolio_url'],
+      ['Handle', 'social_handle'], ['Right now', 'right_now'], ['Open to', function (e) { return (e.open_to || []).join(', '); }],
+      ['Made for', function (e) { return (e.made_for || []).join(', '); }], ['Video', 'drive_url'], ['Files', function (e) { return e.files.length; }],
+      ['Sent', function (e) { return fmtDate(e.submitted_at); }], ['Notes', 'notes']];
+    var cell = function (v) { v = v == null ? '' : String(v); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+    var rows = [cols.map(function (c) { return c[0]; }).join(';')].concat(filtered().map(function (e) {
+      return cols.map(function (c) { return cell(typeof c[1] === 'function' ? c[1](e) : e[c[1]]); }).join(';');
+    }));
+    var blob = new Blob(['﻿' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+    var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'creator-challenge-entries.csv'; a.click();
+  };
+
+  async function start() {
+    var s = await MMC.session();
+    if (!s) { $('login').hidden = false; $('app').hidden = true; return; }
+    if (!(await MMC.isJudge())) { $('msg').textContent = 'This account is not a challenge judge.'; $('login').hidden = true; $('app').hidden = false; $('list').innerHTML = ''; return; }
+    $('login').hidden = true; $('app').hidden = false; $('msg').textContent = 'Loading…';
+    try { all = await MMC.judgeEntries(); $('msg').textContent = ''; } catch (e) { $('msg').textContent = 'Could not load entries: ' + (e.message || e); }
+    draw();
+  }
+  $('login').onsubmit = async function (e) {
+    e.preventDefault();
+    var r = await MMC.signIn($('le').value.trim(), $('lp').value);
+    if (!r.ok) { $('msg').textContent = r.error; return; }
+    start();
+  };
+  $('out').onclick = async function () { await MMC.signOut(); location.reload(); };
+  start();
+})();
+</script>
+</body>
+</html>

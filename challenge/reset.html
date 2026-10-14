@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Set a new password — MysMatch</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0F1020">
+<link rel="icon" type="image/png" href="/logo-512.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/site.css">
+<!-- Password reset for website accounts (Ideation Challenge, Oct 2026). The
+     reset email goes through the auth-callback edge function, which sends
+     resets that were requested on the website here (?token_hash&type=recovery)
+     and every other reset into the app as before. -->
+<style>
+  .r-wrap{ max-width:560px; display:flex; flex-direction:column; gap:22px; }
+  .fld{ display:flex; flex-direction:column; gap:10px; }
+  .lbl{ font-size:17px; font-weight:600; }
+  .inp{ width:100%; font-family:inherit; font-size:19px; color:var(--ink); background:#fff; border:1.5px solid #E2DEF0; border-radius:20px; padding:18px 20px; outline:none; }
+  .inp:focus{ border-color:var(--violet); box-shadow:0 0 0 4px rgba(123,92,255,0.14); }
+  .c-msg{ font-size:16px; line-height:1.5; padding:14px 18px; border-radius:16px; }
+  .c-msg.err{ background:#FDECF2; color:#B4214F; } .c-msg.ok{ background:#E8F8EF; color:#1C7A4A; }
+</style>
+</head>
+<body>
+<header class="nav" id="nav">
+  <div class="nav-in">
+    <a class="brand" href="/"><img src="/logo-512.png" alt="" width="36" height="36"><span>MysMatch</span></a>
+    <div class="nav-right"><a class="nav-cta" href="/challenge/">Creator Challenge</a></div>
+  </div>
+  <div class="progress" id="progress"></div>
+</header>
+
+<section class="page-hero short">
+  <div class="hero-stack"><div class="hero-head"><div class="kicker">/ Account</div><h1>Set a new password.</h1></div></div>
+</section>
+
+<section class="sheet sheet-white">
+  <div class="in">
+    <div class="r-wrap">
+      <div id="msg" class="c-msg" hidden></div>
+      <form id="form" novalidate class="r-wrap" hidden>
+        <label class="fld"><span class="lbl">New password</span><input class="inp" id="p1" type="password" autocomplete="new-password" placeholder="At least 6 characters"></label>
+        <label class="fld"><span class="lbl">Repeat it</span><input class="inp" id="p2" type="password" autocomplete="new-password"></label>
+        <div><button class="btn btn-dark" type="submit" id="go">Save password →</button></div>
+      </form>
+      <div id="done" hidden><a class="btn btn-violet" href="/challenge/#enter">Back to the challenge →</a></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/site.js"></script>
+<script>
+(async function () {
+  var $ = function (id) { return document.getElementById(id); };
+  function msg(t, ok) { $('msg').hidden = !t; $('msg').textContent = t || ''; $('msg').className = 'c-msg ' + (ok ? 'ok' : 'err'); }
+  var q = new URLSearchParams(location.search);
+  var hash = q.get('token_hash'), type = q.get('type');
+  if (!hash || type !== 'recovery') { msg('This link is incomplete. Please request a new one from the challenge page (“Forgot password?”).'); return; }
+  // Exchange the one-time token for a session (it can only be used once).
+  var v = await MM.db.auth.verifyOtp({ token_hash: hash, type: 'recovery' });
+  if (v.error) { msg('This link has expired or was already used. Please request a new one from the challenge page.'); $('done').hidden = false; return; }
+  history.replaceState(null, '', location.pathname); // don't keep the token in the address bar
+  $('form').hidden = false;
+  $('form').onsubmit = async function (e) {
+    e.preventDefault();
+    var a = $('p1').value, b = $('p2').value;
+    if (a.length < 6) return msg('Password must be at least 6 characters.');
+    if (a !== b) return msg('The two passwords don’t match.');
+    $('go').disabled = true;
+    var r = await MM.db.auth.updateUser({ password: a });
+    $('go').disabled = false;
+    if (r.error) {
+      var m = r.error.message || '';
+      return msg(/known to be weak|pwned|leaked/i.test(m) ? 'This password appeared in a data leak. Please choose a different one.' : m);
+    }
+    $('form').hidden = true; $('done').hidden = false;
+    msg('Your password has been updated. You are signed in.', true);
+  };
+})();
+</script>
+</body>
+</html>
