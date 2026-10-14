@@ -8,10 +8,12 @@
   var db = MM.db;
   var SLUG = 'creator-2026';
   var BUCKET = 'challenge-files';
-  // Google sign-in on the website needs the Google provider's web client +
-  // secret in Supabase and the redirect in Google Cloud. Off until that is set up.
-  var GOOGLE_WEB_ENABLED = false;
-  var SITE = 'https://www.mysmatch.com';
+  // Google sign-in on the website: web client + secret in Supabase, redirect
+  // URI + www.mysmatch.com origin in Google Cloud (set up 2026-10-14).
+  var GOOGLE_WEB_ENABLED = true;
+  // Return links follow the page's own address when testing on this computer
+  // (localhost must then be in Supabase's Redirect URLs); live = mysmatch.com.
+  var SITE = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(location.origin) ? location.origin : 'https://www.mysmatch.com';
 
   var TRACKS = [
     { id: 'scenario', num: '01', tag: 'Writing', title: 'Scenario', desc: 'Write the script for a Reel or TikTok about student life and MysMatch: the hook, the scenes, the punchline.', deliver: 'A written script, scene by scene' },
@@ -87,7 +89,8 @@
   async function resetPassword(email) {
     // The reset email's link carries redirect_to → auth-callback sends website
     // resets to /challenge/reset.html (app resets still open the app).
-    var r = await db.auth.resetPasswordForEmail(email, { redirectTo: SITE + '/challenge/reset.html' });
+    // Always the live page: auth-callback only forwards to exactly that URL.
+    var r = await db.auth.resetPasswordForEmail(email, { redirectTo: 'https://www.mysmatch.com/challenge/reset.html' });
     if (r.error) return { ok: false, error: friendlyAuth(r.error) };
     return { ok: true };
   }
