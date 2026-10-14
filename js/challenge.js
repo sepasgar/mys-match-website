@@ -67,6 +67,13 @@
     }
     return { ok: true, needsConfirm: !r.data.session };
   }
+  // Send the sign-up confirmation email again (page allows it once a minute;
+  // Supabase itself also refuses more than one per 60 s per address).
+  async function resendSignup(email) {
+    var r = await db.auth.resend({ type: 'signup', email: email, options: { emailRedirectTo: SITE + '/challenge/?welcome=1' } });
+    if (r.error) return { ok: false, error: friendlyAuth(r.error) };
+    return { ok: true };
+  }
   async function signIn(email, password) {
     var r = await db.auth.signInWithPassword({ email: email, password: password });
     if (r.error) return { ok: false, error: friendlyAuth(r.error) };
@@ -98,7 +105,7 @@
     if (/email not confirmed/i.test(m)) return 'Please confirm your email first — check your inbox (and spam).';
     if (/known to be weak|pwned|leaked/i.test(m)) return 'This password appeared in a data leak. Please choose a different one.';
     if (/at least 6/i.test(m)) return 'Password must be at least 6 characters.';
-    if (/rate limit|too many/i.test(m)) return 'Too many attempts. Please wait a minute and try again.';
+    if (/rate limit|too many|only request this after/i.test(m)) return 'Too many attempts. Please wait a minute and try again.';
     return m;
   }
 
@@ -272,7 +279,7 @@
   window.MMC = {
     TRACKS: TRACKS, STATUSES: STATUSES, SLOTS: SLOTS, GOOGLE_WEB_ENABLED: GOOGLE_WEB_ENABLED, extOf: extOf,
     getChallenge: getChallenge, isOpen: isOpen, session: session, onAuth: onAuth,
-    signUp: signUp, signIn: signIn, signInGoogle: signInGoogle, markNewWebAccount: markNewWebAccount, resetPassword: resetPassword, signOut: signOut,
+    signUp: signUp, resendSignup: resendSignup, signIn: signIn, signInGoogle: signInGoogle, markNewWebAccount: markNewWebAccount, resetPassword: resetPassword, signOut: signOut,
     myEntries: myEntries, saveEntry: saveEntry, withdraw: withdraw, fileUrl: fileUrl, friendlyError: friendlyError,
     isJudge: isJudge, judgeEntries: judgeEntries, setStatus: setStatus, saveNotes: saveNotes,
   };

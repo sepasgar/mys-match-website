@@ -353,6 +353,9 @@
           <button type="button" class="chip" id="tab-in" role="tab">Sign in</button>
         </div>
         <div id="auth-msg" class="c-msg" hidden></div>
+        <!-- Shown after sign-up / an "email not confirmed" sign-in: resend the
+             confirmation email, enabled 60 s after the last one was sent. -->
+        <div id="resend-wrap" hidden><button class="btn btn-light" type="button" id="resend-btn" disabled>Resend email</button></div>
         <form id="auth-form" novalidate class="c-auth-form">
           <label class="fld"><span class="lbl">Email</span><input class="inp" id="a-email" type="email" autocomplete="email" placeholder="alex@university.edu" required></label>
           <label class="fld"><span class="lbl">Password</span><input class="inp" id="a-pass" type="password" autocomplete="new-password" placeholder="At least 6 characters" required></label>
@@ -528,8 +531,31 @@
     $('auth-title').textContent = m === 'up' ? 'Create your account to enter.' : 'Welcome back.';
     $('a-pass').setAttribute('autocomplete', m === 'up' ? 'new-password' : 'current-password');
     $('auth-forgot').hidden = m !== 'in';
-    authMsg('');
+    authMsg(''); hideResend();
   }
+  // ── Resend confirmation email (once a minute) ──
+  var resendEmail = '', resendTimer = null;
+  function startResendCooldown(email, secondsLeft) {
+    resendEmail = email;
+    $('resend-wrap').hidden = false;
+    var left = secondsLeft, b = $('resend-btn');
+    clearInterval(resendTimer);
+    var paint = function () {
+      b.disabled = left > 0;
+      b.textContent = left > 0 ? 'Resend email in ' + left + ' s' : 'Resend email';
+    };
+    paint();
+    resendTimer = setInterval(function () { left--; paint(); if (left <= 0) clearInterval(resendTimer); }, 1000);
+  }
+  function hideResend() { clearInterval(resendTimer); $('resend-wrap').hidden = true; }
+  $('resend-btn').onclick = async function () {
+    if (!resendEmail) return;
+    $('resend-btn').disabled = true;
+    var r = await MMC.resendSignup(resendEmail);
+    authMsg(r.ok ? 'Sent again to ' + resendEmail + '. It can take a few minutes — check your spam folder too.' : r.error, r.ok);
+    startResendCooldown(resendEmail, 60);
+  };
+
   function authMsg(text, ok) { var el = $('auth-msg'); el.hidden = !text; el.textContent = text || ''; el.className = 'c-msg ' + (ok ? 'ok' : 'err'); }
   $('tab-up').onclick = function () { setMode('up'); };
   $('tab-in').onclick = function () { setMode('in'); };
@@ -541,10 +567,16 @@
     $('auth-go').disabled = true;
     var r = mode === 'up' ? await MMC.signUp(email, pass) : await MMC.signIn(email, pass);
     $('auth-go').disabled = false;
-    if (!r.ok) return authMsg(r.error);
+    if (!r.ok) {
+      authMsg(r.error);
+      // Signed up but never confirmed → offer the email again right away.
+      if (/confirm your email/i.test(r.error)) startResendCooldown(email, 0);
+      return;
+    }
     if (r.needsConfirm) {
       authMsg('Almost there — we sent a confirmation link to ' + email + '. Open it to activate your account, then come back here. Can’t find it? Check your spam folder.', true);
       $('a-pass').value = '';
+      startResendCooldown(email, 60);
     }
   };
   $('auth-forgot').onclick = async function () {
