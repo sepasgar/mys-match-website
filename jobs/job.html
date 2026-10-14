@@ -147,7 +147,7 @@
       }).catch((err) => { console.error(err); stateEl.textContent = 'Could not load this job.'; });
 
       function render(j) {
-        const typeLabel = MM.JOB_TYPE_LABELS[j.employment_type] || j.employment_type;
+        const typeLabel = MM.jobTypeLabel(j);
         // WHY: organizations type "-" when there's no fixed city; don't show it.
         const loc = [(j.city || '').trim() === '-' ? '' : j.city, j.country].filter(Boolean).join(', ');
         const logoUrl = j.company_logo || j.org_avatar_url;
@@ -195,7 +195,8 @@
           // Google accepts HTML here; escaped text with line breaks kept.
           description: esc(j.description).replace(/\n/g, '<br>'),
           datePosted: String(j.created_at).slice(0, 10),
-          employmentType: types[j.employment_type] || 'OTHER',
+          // Temporary jobs (Oct 2026) are TEMPORARY for Google.
+          employmentType: j.duration_days != null ? 'TEMPORARY' : (types[j.employment_type] || 'OTHER'),
           hiringOrganization: Object.assign({ '@type': 'Organization', name: j.company }, logoUrl ? { logo: logoUrl } : {}),
           jobLocation: {
             '@type': 'Place',

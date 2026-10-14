@@ -255,14 +255,14 @@
     return '<a class="row" data-reveal href="/jobs/job.html?id=' + encodeURIComponent(j.id) + '">'
       + '<div class="row-l">' + tile + '<div class="row-txt"><span class="row-title">' + esc(j.title) + '</span>'
       + '<span class="row-org">' + esc(j.company) + (j.org_verified ? ' <b title="Verified organization">✓</b>' : '') + '</span></div></div>'
-      + '<div class="row-r"><span class="type-pill">' + esc(MM.JOB_TYPE_LABELS[j.employment_type] || j.employment_type) + '</span>'
+      + '<div class="row-r"><span class="type-pill">' + esc(MM.jobTypeLabel(j)) + '</span>'
       + '<span class="row-city">' + esc(loc || 'Flexible location') + '</span>'
       + '<span class="row-age">' + esc(MM.postedAgo(j.created_at)) + '</span>'
       + (j.salary ? '<span class="row-pay">' + esc(j.salary) + '</span>' : '')
       + '<span class="row-go" aria-hidden="true">→</span></div></a>';
   }
   function render() {
-    var shown = jobs.filter(function (j) { return (!state.type || j.employment_type === state.type) && (!state.city || cityOf(j) === state.city); });
+    var shown = jobs.filter(function (j) { return (!state.type || MM.jobType(j) === state.type) && (!state.city || cityOf(j) === state.city); });
     chipsEl.querySelectorAll('.chip').forEach(function (b) { b.classList.toggle('on', b.dataset.type === state.type); });
     fCity.value = state.city;
     countEl.textContent = pad(shown.length) + (shown.length === 1 ? ' role' : ' roles');

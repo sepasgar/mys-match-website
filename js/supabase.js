@@ -217,7 +217,15 @@
   // Same labels as the app's jobs board.
   const JOB_TYPE_LABELS = {
     full_time: 'Full-time', part_time: 'Part-time', mini_job: 'Mini-job',
-    internship: 'Internship', volunteer: 'Volunteer',
+    temporary: 'Temporary', internship: 'Internship', volunteer: 'Volunteer',
+  };
+  // Temporary jobs (Oct 2026): stored as a duration (1-100 days) on a
+  // stand-in type, see MyApp lib/jobs.ts JobType. Shown type + label:
+  const jobType = (j) => (j && j.duration_days != null ? 'temporary' : j.employment_type);
+  const jobTypeLabel = (j) => {
+    const t = jobType(j);
+    if (t === 'temporary') { const n = j.duration_days; return 'Temporary · ' + n + (n === 1 ? ' day' : ' days'); }
+    return JOB_TYPE_LABELS[t] || t;
   };
 
   // "Posted today" / "Posted 3 days ago" — jobs have no closing date yet, so
@@ -238,6 +246,6 @@
     uploadGuestDocument, signEventDoc,
     signIn, signOut, currentUser, myEvents, eventAttendees, setCheckIn,
     myOrganization, orgEvents, orgPerks, perkClaimCount, orgRedemptions, orgFollows,
-    listJobs, getJob, JOB_TYPE_LABELS, postedAgo,
+    listJobs, getJob, JOB_TYPE_LABELS, jobType, jobTypeLabel, postedAgo,
   };
 })();
