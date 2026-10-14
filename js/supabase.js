@@ -222,6 +222,16 @@
   // Temporary jobs (Oct 2026): stored as a duration (1-100 days) on a
   // stand-in type, see MyApp lib/jobs.ts JobType. Shown type + label:
   const jobType = (j) => (j && j.duration_days != null ? 'temporary' : j.employment_type);
+  // Work dates (Oct 2026): "2026-11-01" -> "1 Nov 2026" (calendar day, no TZ shift).
+  const fmtJobDate = (d, withYear) => {
+    const m = String(d || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (!m) return d || '';
+    return new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString('en-GB',
+      withYear === false ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short', year: 'numeric' });
+  };
+  const jobDatesLabel = (j) => [j.start_date ? 'Start: ' + fmtJobDate(j.start_date) : '', j.end_date ? 'End: ' + fmtJobDate(j.end_date) : '']
+    .filter(Boolean).join(' \u00b7 ');
+  const jobStartsShort = (j) => (j.start_date ? 'Starts ' + fmtJobDate(j.start_date, false) : '');
   const jobTypeLabel = (j) => {
     const t = jobType(j);
     if (t === 'temporary') { const n = j.duration_days; return 'Temporary · ' + n + (n === 1 ? ' day' : ' days'); }
@@ -246,6 +256,6 @@
     uploadGuestDocument, signEventDoc,
     signIn, signOut, currentUser, myEvents, eventAttendees, setCheckIn,
     myOrganization, orgEvents, orgPerks, perkClaimCount, orgRedemptions, orgFollows,
-    listJobs, getJob, JOB_TYPE_LABELS, jobType, jobTypeLabel, postedAgo,
+    listJobs, getJob, JOB_TYPE_LABELS, jobType, jobTypeLabel, jobDatesLabel, jobStartsShort, postedAgo,
   };
 })();

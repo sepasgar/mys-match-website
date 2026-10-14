@@ -34,6 +34,8 @@
     .center-state a{ color:#CDB8FF; }
     .job-main .in{ display:grid; grid-template-columns:minmax(0,1.3fr) minmax(0,1fr); gap:clamp(32px,4vw,80px); align-items:start; }
     #job-content{ display:flex; flex-direction:column; gap:16px; }
+    .reqs{ display:flex; flex-wrap:wrap; gap:10px; margin-bottom:40px; }
+    .req{ padding:9px 16px; border-radius:9999px; background:#F1ECFF; color:#7B5CFF; font-weight:700; font-size:15px; }
     .desc, .contact{ font-size:clamp(17px,1.25vw,20px); color:var(--ink-2); line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; }
     .apply{ background:var(--ink); color:#fff; border-radius:36px; padding:clamp(28px,3vw,48px); position:relative; overflow:hidden; }
     .apply::before{ content:""; position:absolute; right:-30%; top:-50%; width:90%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.28),rgba(15,16,32,0)); pointer-events:none; }
@@ -169,11 +171,17 @@
           + '<div class="facts">'
           + (loc ? fact(loc) : '')
           + (j.salary ? fact(j.salary) : '')
+          + (MM.jobDatesLabel(j) ? fact(MM.jobDatesLabel(j)) : '')
           + fact(MM.postedAgo(j.created_at))
           + '</div>';
         head.hidden = false;
         document.getElementById('job-content').innerHTML =
           '<div class="kicker">/ About the role</div>'
+          // Requirements (Oct 2026), only when set.
+          + ((j.requirements || []).length
+              ? '<div class="kicker" style="margin-bottom:16px">/ Requirements</div><div class="reqs">'
+                + j.requirements.map(function (r) { return '<span class="req">' + esc(r) + '</span>'; }).join('') + '</div>'
+              : '')
           + '<div class="desc">' + esc(j.description) + '</div>'
           // Contact details are public by owner decision; the app's "Post a
           // job" form tells organizations this.
@@ -203,6 +211,9 @@
             address: { '@type': 'PostalAddress', addressLocality: j.city, addressCountry: j.country },
           },
           identifier: { '@type': 'PropertyValue', name: 'MysMatch', value: j.id },
+          // The job is removed after its end date (Oct 2026), so that's when
+          // the posting expires for Google too.
+          ...(j.end_date ? { validThrough: j.end_date + 'T23:59:59+01:00' } : {}),
           // Applying happens in the app, not on this page.
           directApply: false,
         };

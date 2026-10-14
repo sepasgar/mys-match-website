@@ -257,7 +257,8 @@
       + '<span class="row-org">' + esc(j.company) + (j.org_verified ? ' <b title="Verified organization">✓</b>' : '') + '</span></div></div>'
       + '<div class="row-r"><span class="type-pill">' + esc(MM.jobTypeLabel(j)) + '</span>'
       + '<span class="row-city">' + esc(loc || 'Flexible location') + '</span>'
-      + '<span class="row-age">' + esc(MM.postedAgo(j.created_at)) + '</span>'
+      // Start date (Oct 2026) when set, else the posted age.
+      + '<span class="row-age">' + esc(MM.jobStartsShort(j) || MM.postedAgo(j.created_at)) + '</span>'
       + (j.salary ? '<span class="row-pay">' + esc(j.salary) + '</span>' : '')
       + '<span class="row-go" aria-hidden="true">→</span></div></a>';
   }
