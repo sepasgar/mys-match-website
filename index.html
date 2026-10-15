@@ -115,6 +115,15 @@
      at 125% scaling) that spread left a big gap above the title and pushed the buttons and
      stats below the fold. Content now stacks from the top and fits the first screen. */
   .hero{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%); color:#fff; position:relative; overflow:hidden; display:flex; flex-direction:column; padding-bottom:48px; }
+  /* Hero background video (Oct 2026). The blur is baked into the file
+     (640 px, ~95 KB) instead of CSS filter:blur — a live blur over a video is
+     slow on phones, and blur hides the low resolution. A dark tint keeps the
+     text readable. Loaded only after the page has finished loading. */
+  .hero-video{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+  .hero-video img, .hero-video video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.06); }
+  .hero-video video{ opacity:0; transition:opacity 1.2s ease; }
+  .hero-video video.on{ opacity:1; }
+  .hero-video::after{ content:""; position:absolute; inset:0; background:linear-gradient(160deg,rgba(18,19,44,0.68) 0%,rgba(15,16,32,0.55) 55%,rgba(24,16,38,0.78) 100%); }
   .hero-spot{ position:absolute; left:0; top:0; width:800px; height:800px; margin:-400px 0 0 -400px; border-radius:50%; background:radial-gradient(closest-side,rgba(233,75,154,0.1),rgba(15,16,32,0)); pointer-events:none; opacity:0; transition:opacity .5s; }
   .hero-glow{ position:absolute; right:-10%; top:-25%; width:80vw; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.16),rgba(233,75,154,0.06) 55%,rgba(15,16,32,0) 75%); pointer-events:none; }
   .hero-in{ position:relative; flex:1; display:flex; flex-direction:column; justify-content:flex-start; gap:clamp(28px,3vw,48px); padding:clamp(112px,9vw,150px) var(--pad-x) 0; }
@@ -357,6 +366,10 @@
 
 <!-- ════════ HERO ════════ -->
 <section class="hero" id="top">
+  <div class="hero-video" aria-hidden="true">
+    <img src="/media/hero-poster.jpg" alt="" width="640" height="362" fetchpriority="low" decoding="async">
+    <video id="hero-video" muted playsinline loop preload="none" disablepictureinpicture></video>
+  </div>
   <div class="hero-spot" id="hero-spot"></div>
   <div class="hero-glow"></div>
   <div class="hero-in">
@@ -835,6 +848,28 @@
     spot.style.opacity = '1';
   });
   hero.addEventListener('mouseleave', function () { spot.style.opacity = '0'; });
+
+  // Hero video: start only after the page has loaded (never competes with the
+  // text/images), skip it for reduced motion / data saver / 2G (the blurred
+  // still stays), and pause it while off-screen or in a background tab.
+  var vid = document.getElementById('hero-video');
+  var conn = navigator.connection || {};
+  var skip = window.matchMedia('(prefers-reduced-motion: reduce)').matches || conn.saveData || /2g/.test(conn.effectiveType || '');
+  if (vid && !skip) {
+    var visible = true;
+    var sync = function () { if (!vid.src) return; if (visible && !document.hidden) vid.play().catch(function () {}); else vid.pause(); };
+    var start = function () {
+      vid.src = '/media/hero.mp4';
+      vid.addEventListener('playing', function () { vid.classList.add('on'); }, { once: true });
+      sync();
+    };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; sync(); }).observe(hero);
+    }
+    document.addEventListener('visibilitychange', sync);
+    if (document.readyState === 'complete') setTimeout(start, 300);
+    else window.addEventListener('load', function () { setTimeout(start, 300); });
+  }
 })();
 </script>
 
