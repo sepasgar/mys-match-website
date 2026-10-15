@@ -367,7 +367,7 @@
 <!-- ════════ HERO ════════ -->
 <section class="hero" id="top">
   <div class="hero-video" aria-hidden="true">
-    <img src="/media/hero-poster-v2.jpg" alt="" width="640" height="362" fetchpriority="low" decoding="async">
+    <img src="/media/hero-poster.jpg" alt="" width="640" height="362" fetchpriority="low" decoding="async">
     <video id="hero-video" muted playsinline loop preload="none" disablepictureinpicture></video>
   </div>
   <div class="hero-spot" id="hero-spot"></div>
@@ -859,8 +859,7 @@
     var visible = true;
     var sync = function () { if (!vid.src) return; if (visible && !document.hidden) vid.play().catch(function () {}); else vid.pause(); };
     var start = function () {
-      // v2 (Oct 2026): last second dissolves into the first → no jump at the loop.
-      vid.src = '/media/hero-v2.mp4';
+      vid.src = '/media/hero.mp4';
       vid.addEventListener('playing', function () { vid.classList.add('on'); }, { once: true });
       sync();
     };
