@@ -1,0 +1,2449 @@
+{
+ "text": {
+  "MysMatch — Do Not Study Alone": [
+   "index.html"
+  ],
+  "MysMatch": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Features": [
+   "index.html"
+  ],
+  "How it works": [
+   "index.html"
+  ],
+  "Events": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Jobs": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Safety": [
+   "index.html"
+  ],
+  "Get the app": [
+   "index.html",
+   "events/index.html",
+   "jobs/index.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Open menu": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Do not <span class=\"grad-text\">study alone.</span>": [
+   "index.html"
+  ],
+  "Find study partners and classmates in your own program and semester. See who takes the same courses as you, then send a study request.": [
+   "index.html"
+  ],
+  "Download free": [
+   "index.html"
+  ],
+  "See how it works →": [
+   "index.html"
+  ],
+  "Find your classmates even before going to the class!": [
+   "index.html"
+  ],
+  "+4500 universities": [
+   "index.html"
+  ],
+  "Study partners and classmates, jobs and more: your campus, only in the app": [
+   "index.html"
+  ],
+  "Discover: find study partners and classmates in your major": [
+   "index.html"
+  ],
+  "/ Why MysMatch": [
+   "index.html"
+  ],
+  "Create your own study circle, <span class=\"accent\">Smart platform designed for students to find the right study partners and classmates on Campus</span>": [
+   "index.html"
+  ],
+  "/ See it in action": [
+   "index.html"
+  ],
+  "A glimpse <span class=\"dim\">inside MysMatch.</span>": [
+   "index.html"
+  ],
+  "Find study partners and classmates, student jobs and events — with real students around you.": [
+   "index.html"
+  ],
+  "MysMatch: Do not study alone": [
+   "index.html"
+  ],
+  "Do not study alone": [
+   "index.html"
+  ],
+  "Campus": [
+   "index.html"
+  ],
+  "Study partners and classmates, jobs and more": [
+   "index.html"
+  ],
+  "Discover": [
+   "index.html"
+  ],
+  "Find study partners and classmates in your major": [
+   "index.html"
+  ],
+  "Connections: connect by major and start talking": [
+   "index.html"
+  ],
+  "Connections": [
+   "index.html"
+  ],
+  "Connect by major and start talking": [
+   "index.html"
+  ],
+  "/ Features": [
+   "index.html"
+  ],
+  "Everything you need, <span class=\"dim\">nothing you don't.</span>": [
+   "index.html"
+  ],
+  "Smart Discovery": [
+   "index.html"
+  ],
+  "/ Discovery": [
+   "index.html"
+  ],
+  "Automatically discover students who share your university, major, and semester — organized in tiers from closest connection to broadest.": [
+   "index.html"
+  ],
+  "Search Preferences": [
+   "index.html"
+  ],
+  "Set your own criteria — university, major, semester, city, or gender — and browse students to connect with. Your search, your way.": [
+   "index.html"
+  ],
+  "Instant Chat": [
+   "index.html"
+  ],
+  "/ Connection": [
+   "index.html"
+  ],
+  "Once connected, start chatting right away. Real-time messages with read receipts.": [
+   "index.html"
+  ],
+  "Student Events": [
+   "index.html"
+  ],
+  "Browse and join campus events, or create your own. See who's organizing, track your registrations, and get QR tickets on the day.": [
+   "index.html"
+  ],
+  "Biometric Security": [
+   "index.html"
+  ],
+  "/ Control": [
+   "index.html"
+  ],
+  "Lock the app with Face ID, fingerprint, or a custom PIN. Your privacy is non-negotiable.": [
+   "index.html"
+  ],
+  "Report &amp; Block": [
+   "index.html"
+  ],
+  "Instantly block or report anyone. We review every report and take action fast.": [
+   "index.html"
+  ],
+  "MysMatch app": [
+   "index.html"
+  ],
+  "/ How it works": [
+   "index.html"
+  ],
+  "From sign-up <span style=\"color:var(--violet-soft)\">to connected in minutes.</span>": [
+   "index.html"
+  ],
+  "/ Step": [
+   "index.html"
+  ],
+  "Create your profile": [
+   "index.html"
+  ],
+  "Sign up with your university email. Add your photo, major, and a few details about yourself.": [
+   "index.html"
+  ],
+  "Search or discover": [
+   "index.html"
+  ],
+  "Browse auto-suggested study partners and classmates, or set your own search criteria: university, major, semester, city, and more.": [
+   "index.html"
+  ],
+  "Send a connection request": [
+   "index.html"
+  ],
+  "Found someone interesting? Send a connection request. They can accept or pass — no pressure.": [
+   "index.html"
+  ],
+  "Start talking": [
+   "index.html"
+  ],
+  "Once both sides agree, a private chat opens. Plan a study session, group project, or campus meetup.": [
+   "index.html"
+  ],
+  "/ Next on campus": [
+   "index.html"
+  ],
+  "Loading the latest event…": [
+   "index.html"
+  ],
+  "/ Events": [
+   "index.html",
+   "events/index.html"
+  ],
+  "Meet people <span class=\"dim\">beyond connections.</span>": [
+   "index.html"
+  ],
+  "Create and join campus events. The best connections happen in person.": [
+   "index.html"
+  ],
+  "Music": [
+   "index.html"
+  ],
+  "Sports": [
+   "index.html"
+  ],
+  "Tech": [
+   "index.html"
+  ],
+  "Food": [
+   "index.html"
+  ],
+  "Art": [
+   "index.html"
+  ],
+  "Networking": [
+   "index.html"
+  ],
+  "Your campus, your events": [
+   "index.html"
+  ],
+  "See the organizer's profile on every event": [
+   "index.html"
+  ],
+  "Track all your registered events in one place": [
+   "index.html"
+  ],
+  "Gender-balanced capacity controls": [
+   "index.html"
+  ],
+  "QR code ticket scanning for organizers": [
+   "index.html"
+  ],
+  "Free and paid event support": [
+   "index.html"
+  ],
+  "Show more events →": [
+   "index.html"
+  ],
+  "/ Safety first": [
+   "index.html"
+  ],
+  "Built with your safety <span class=\"dim\">in mind.</span>": [
+   "index.html"
+  ],
+  "Every feature is designed to keep you safe and in control of your experience.": [
+   "index.html"
+  ],
+  "Phone verification": [
+   "index.html"
+  ],
+  "Verify your phone number by SMS to get a verified badge on your profile. Phone verification is required to create events — keeping the community trustworthy.": [
+   "index.html"
+  ],
+  "End-to-end privacy": [
+   "index.html"
+  ],
+  "Your data stays yours. We never sell your information or share it with third parties.": [
+   "index.html"
+  ],
+  "Zero tolerance": [
+   "index.html"
+  ],
+  "Harassment, hate speech, and inappropriate behavior result in immediate account removal.": [
+   "index.html"
+  ],
+  "Ready to find your <span style=\"color:var(--violet-soft)\">study partners and classmates?</span>": [
+   "index.html"
+  ],
+  "Join thousands of university students already connecting on MysMatch. Free, safe, and made for you.": [
+   "index.html"
+  ],
+  "<small>Download on the</small><b>App Store</b>": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html"
+  ],
+  "<small>Get it on</small><b>Google Play</b>": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html"
+  ],
+  "Do not study alone.": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Product": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Company": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Contact": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Organization login": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Organization sign-up": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Legal": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Privacy Policy": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Terms of Service": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Support": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Social": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Instagram": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "TikTok": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "LinkedIn": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "© 2026 MysMatch. All rights reserved.": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "contact@mys-match.com": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "MysMatch helps university students find study partners and classmates in their own program and semester, plus campus events and student jobs. Free.": [
+   "index.html"
+  ],
+  "Find study partners and classmates in your own program and semester, plus campus events and student jobs. Free.": [
+   "index.html"
+  ],
+  "Find study partners and classmates in your own program and semester. Free.": [
+   "index.html"
+  ],
+  "Events — MysMatch": [
+   "events/index.html"
+  ],
+  "Home": [
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "Your campus,<br/><span class=\"grad-text\">in real life.</span>": [
+   "events/index.html"
+  ],
+  "Discover campus events, meet new people, and build your community in real life.": [
+   "events/index.html"
+  ],
+  "See upcoming events ↓": [
+   "events/index.html"
+  ],
+  "/ Upcoming": [
+   "events/index.html"
+  ],
+  "Upcoming events": [
+   "events/index.html"
+  ],
+  "<span class=\"free-track\"></span><span>Free only</span>": [
+   "events/index.html"
+  ],
+  "Loading events…": [
+   "events/index.html"
+  ],
+  "No events are open for online registration right now. Check back soon — or get the app to see everything happening near you.": [
+   "events/index.html"
+  ],
+  "No upcoming events match these filters.": [
+   "events/index.html"
+  ],
+  "Clear filters": [
+   "events/index.html",
+   "jobs/index.html"
+  ],
+  "/ In the app": [
+   "events/index.html"
+  ],
+  "For guests.<br/><span style=\"color:#CDB8FF\">For organizers.</span>": [
+   "events/index.html"
+  ],
+  "/ Going to events": [
+   "events/index.html"
+  ],
+  "See who's organizing": [
+   "events/index.html"
+  ],
+  "Every event shows the organizer's profile. Tap to view their full profile before you register.": [
+   "events/index.html"
+  ],
+  "Track your registrations": [
+   "events/index.html"
+  ],
+  "See all your registered events — past and upcoming — in one place from your profile.": [
+   "events/index.html"
+  ],
+  "Filter &amp; discover": [
+   "events/index.html"
+  ],
+  "Find events by city, date, category, or price. Past events are automatically hidden — only upcoming events are shown.": [
+   "events/index.html"
+  ],
+  "Fully booked indicator": [
+   "events/index.html"
+  ],
+  "Full events are clearly marked with a visual indicator so you know at a glance what's still available.": [
+   "events/index.html"
+  ],
+  "/ Hosting events": [
+   "events/index.html"
+  ],
+  "Create events": [
+   "events/index.html"
+  ],
+  "Set up your own campus events with custom capacity, pricing, and gender-balance controls.": [
+   "events/index.html"
+  ],
+  "Verified creators": [
+   "events/index.html"
+  ],
+  "Only phone-verified users can create events, keeping the community safe and trustworthy.": [
+   "events/index.html"
+  ],
+  "QR ticket scanning": [
+   "events/index.html"
+  ],
+  "Organizers can scan QR tickets at the door for fast, secure check-in.": [
+   "events/index.html"
+  ],
+  "Free &amp; paid events": [
+   "events/index.html"
+  ],
+  "Support both free community events and paid ticketed experiences.": [
+   "events/index.html"
+  ],
+  "Organization login →": [
+   "events/index.html",
+   "organizations/index.html"
+  ],
+  "/ Get the app": [
+   "events/index.html"
+  ],
+  "Register.<br/>Show up.<br/><span style=\"color:var(--violet)\">Meet people.</span>": [
+   "events/index.html"
+  ],
+  "Download MysMatch to discover events near your campus, register with one tap, track your upcoming events, and create your own.": [
+   "events/index.html"
+  ],
+  "Discover and join student events on MysMatch. From study sessions to campus parties, find what's happening near you.": [
+   "events/index.html"
+  ],
+  "Discover student events on MysMatch. Find what's happening near you.": [
+   "events/index.html"
+  ],
+  "Discover student events on MysMatch.": [
+   "events/index.html"
+  ],
+  "Event — MysMatch": [
+   "events/event.html"
+  ],
+  "All events": [
+   "events/event.html"
+  ],
+  "← All events": [
+   "events/event.html"
+  ],
+  "Loading event…": [
+   "events/event.html"
+  ],
+  "Register": [
+   "events/event.html"
+  ],
+  "Reserve your spot — it only takes a moment.": [
+   "events/event.html"
+  ],
+  "Full name <span class=\"req\">*</span>": [
+   "events/event.html"
+  ],
+  "Email <span class=\"req\">*</span>": [
+   "events/event.html"
+  ],
+  "Gender": [
+   "events/event.html"
+  ],
+  "Prefer not to say": [
+   "events/event.html"
+  ],
+  "Male": [
+   "events/event.html"
+  ],
+  "Female": [
+   "events/event.html"
+  ],
+  "Number of people": [
+   "events/event.html"
+  ],
+  "By registering you agree to our <a href=\"/terms\">Terms</a> and <a href=\"/privacy-policy\">Privacy Policy</a>. We'll share your details with the event organizer.": [
+   "events/event.html"
+  ],
+  "Close": [
+   "events/event.html"
+  ],
+  "Download the app to be informed about all events — and much more": [
+   "events/event.html"
+  ],
+  "Get notified about new events near you, register in one tap, chat with organizers, and find study partners and classmates.": [
+   "events/event.html"
+  ],
+  "Continue on web": [
+   "events/event.html"
+  ],
+  "Register for this MysMatch event.": [
+   "events/event.html"
+  ],
+  "Jobs — MysMatch": [
+   "jobs/index.html"
+  ],
+  "/ Jobs": [
+   "jobs/index.html"
+  ],
+  "Student jobs<br/><span class=\"grad-text\">that fit your studies.</span>": [
+   "jobs/index.html"
+  ],
+  "Student jobs, internships and mini-jobs from organizations on MysMatch.": [
+   "jobs/index.html"
+  ],
+  "<i></i>Applications are sent through the MysMatch app": [
+   "jobs/index.html"
+  ],
+  "Browse positions ↓": [
+   "jobs/index.html"
+  ],
+  "/ Open positions": [
+   "jobs/index.html"
+  ],
+  "Open positions": [
+   "jobs/index.html"
+  ],
+  "City": [
+   "jobs/index.html"
+  ],
+  "All cities": [
+   "jobs/index.html"
+  ],
+  "Loading jobs…": [
+   "jobs/index.html"
+  ],
+  "No jobs listed right now. Check back soon — new ones are posted in the app regularly.": [
+   "jobs/index.html"
+  ],
+  "No positions match these filters yet.": [
+   "jobs/index.html"
+  ],
+  "/ How to apply": [
+   "jobs/index.html"
+  ],
+  "Apply in the <span style=\"color:#CDB8FF\">MysMatch app.</span>": [
+   "jobs/index.html"
+  ],
+  "Apply with your CV": [
+   "jobs/index.html"
+  ],
+  "Send your application with your CV straight from the MysMatch app.": [
+   "jobs/index.html"
+  ],
+  "Answer their questions": [
+   "jobs/index.html"
+  ],
+  "Respond to the organization's questions right in the app.": [
+   "jobs/index.html"
+  ],
+  "Chat with employers": [
+   "jobs/index.html"
+  ],
+  "Talk directly with the organization once they review your application.": [
+   "jobs/index.html"
+  ],
+  "/ For organizations": [
+   "jobs/index.html",
+   "organizations/index.html"
+  ],
+  "Hiring students?<br/><span style=\"color:var(--violet)\">Post a job.</span>": [
+   "jobs/index.html"
+  ],
+  "Create your organization's page in the MysMatch app and post jobs yourself — no need to contact us.": [
+   "jobs/index.html"
+  ],
+  "<b>Get the app</b> from the App Store or Google Play.": [
+   "jobs/index.html"
+  ],
+  "<b>Sign up as Partner / Service Provider</b> to create your organization's page.": [
+   "jobs/index.html"
+  ],
+  "<b>Post a job</b> and chat with applicants in one place.": [
+   "jobs/index.html"
+  ],
+  "Organization sign-up →": [
+   "jobs/index.html"
+  ],
+  "Student jobs, internships and mini-jobs from organizations on MysMatch. Browse here, apply in the MysMatch app.": [
+   "jobs/index.html"
+  ],
+  "Student jobs, internships and mini-jobs. Apply in the MysMatch app.": [
+   "jobs/index.html"
+  ],
+  "Job — MysMatch": [
+   "jobs/job.html"
+  ],
+  "All jobs": [
+   "jobs/job.html"
+  ],
+  "← All jobs": [
+   "jobs/job.html"
+  ],
+  "Loading job…": [
+   "jobs/job.html"
+  ],
+  "Apply in the MysMatch app": [
+   "jobs/job.html"
+  ],
+  "Applications — with your CV and the organization's questions — are sent through the app.": [
+   "jobs/job.html"
+  ],
+  "Already have the app? Open this job →": [
+   "jobs/job.html"
+  ],
+  "After installing, find this job in the app's Jobs tab.": [
+   "jobs/job.html"
+  ],
+  "Student job on MysMatch. Apply in the MysMatch app.": [
+   "jobs/job.html"
+  ],
+  "For Organizations — MysMatch": [
+   "organizations/index.html"
+  ],
+  "Bring your organization<br/><span class=\"grad-text\">to campus.</span>": [
+   "organizations/index.html"
+  ],
+  "Post events, perks and student jobs on MysMatch — and see how students respond.": [
+   "organizations/index.html"
+  ],
+  "How to sign up ↓": [
+   "organizations/index.html"
+  ],
+  "/ Organization sign-up": [
+   "organizations/index.html"
+  ],
+  "Sign up in<br/><span class=\"dim\">three steps.</span>": [
+   "organizations/index.html"
+  ],
+  "Download MysMatch from the App Store or Google Play.": [
+   "organizations/index.html"
+  ],
+  "Choose your account type": [
+   "organizations/index.html"
+  ],
+  "Create an account and pick <b>Partner / Service Provider</b>. You can't change this later, so use a separate account from your personal one.": [
+   "organizations/index.html"
+  ],
+  "Set up your page": [
+   "organizations/index.html"
+  ],
+  "Add your name, logo and photos. Then post your first event, perk or job.": [
+   "organizations/index.html"
+  ],
+  "/ What you can do": [
+   "organizations/index.html"
+  ],
+  "One page.<br/><span style=\"color:#CDB8FF\">Everything students need.</span>": [
+   "organizations/index.html"
+  ],
+  "Create events with capacity, pricing and QR tickets you scan at the door.": [
+   "organizations/index.html"
+  ],
+  "Perks": [
+   "organizations/index.html"
+  ],
+  "Offer discounts students redeem with a QR code or a simple in-store offer.": [
+   "organizations/index.html"
+  ],
+  "Post student jobs, internships and mini-jobs, and receive applications with CVs.": [
+   "organizations/index.html"
+  ],
+  "Announcements": [
+   "organizations/index.html"
+  ],
+  "Reach your followers with updates right in the app.": [
+   "organizations/index.html"
+  ],
+  "Chat": [
+   "organizations/index.html"
+  ],
+  "Talk with students and applicants in one place.": [
+   "organizations/index.html"
+  ],
+  "Insights on the web": [
+   "organizations/index.html"
+  ],
+  "Sign in with Organization login to see followers, redemptions, events and attendees — and export lists.": [
+   "organizations/index.html"
+  ],
+  "/ Get started": [
+   "organizations/index.html"
+  ],
+  "Ready?<br/><span style=\"color:var(--violet)\">Sign up in the app.</span>": [
+   "organizations/index.html"
+  ],
+  "Already have an organization account? Sign in on the web to see your stats.": [
+   "organizations/index.html"
+  ],
+  "Create an organization account on MysMatch to post events, perks and student jobs, and see your followers and redemptions.": [
+   "organizations/index.html"
+  ],
+  "Post events, perks and student jobs on MysMatch.": [
+   "organizations/index.html"
+  ],
+  "Team — MysMatch": [
+   "team/index.html"
+  ],
+  "Toggle menu": [
+   "team/index.html"
+  ],
+  "Blog": [
+   "team/index.html"
+  ],
+  "Get the App": [
+   "team/index.html"
+  ],
+  "Our Team": [
+   "team/index.html"
+  ],
+  "The people building meaningful connections for university students everywhere.": [
+   "team/index.html"
+  ],
+  "Team Member": [
+   "team/index.html"
+  ],
+  "Founder &amp; CEO": [
+   "team/index.html"
+  ],
+  "Passionate about connecting students and building communities on campus.": [
+   "team/index.html"
+  ],
+  "Design Lead": [
+   "team/index.html"
+  ],
+  "Crafting intuitive experiences that make every interaction feel natural.": [
+   "team/index.html"
+  ],
+  "Lead Engineer": [
+   "team/index.html"
+  ],
+  "Building the technology that powers reliable, real-time student connections.": [
+   "team/index.html"
+  ],
+  "Want to join us?": [
+   "team/index.html"
+  ],
+  "We're always looking for talented, passionate people to join our mission.": [
+   "team/index.html"
+  ],
+  "View open positions": [
+   "team/index.html"
+  ],
+  "Meet the people behind MysMatch. Our team is passionate about building meaningful connections for university students.": [
+   "team/index.html"
+  ],
+  "Meet the people behind MysMatch.": [
+   "team/index.html"
+  ],
+  "Support — MysMatch": [
+   "support/index.html"
+  ],
+  "/ Support": [
+   "support/index.html"
+  ],
+  "Questions, feedback, or trouble with the app? We're here to help.": [
+   "support/index.html"
+  ],
+  "Contact us": [
+   "support/index.html"
+  ],
+  "Reach our team directly by email. Please include your account email and a short description of the issue.": [
+   "support/index.html"
+  ],
+  "We typically respond within 2 business days.": [
+   "support/index.html"
+  ],
+  "Frequently asked questions": [
+   "support/index.html"
+  ],
+  "How do I create an account?": [
+   "support/index.html"
+  ],
+  "Open MysMatch, tap <strong>Sign up</strong>, and enter your email, password, and basic profile details (name, university, major). You can also verify your phone number via SMS to get a verified badge on your profile; it's required if you want to create events.": [
+   "support/index.html"
+  ],
+  "How do connections work?": [
+   "support/index.html"
+  ],
+  "MysMatch suggests students based on your university, major, study level, and nearby city. Send a connection request — if the other person accepts, you can start chatting.": [
+   "support/index.html"
+  ],
+  "I didn't receive my SMS verification code.": [
+   "support/index.html"
+  ],
+  "Check that your phone number is correct and has signal. Wait 60 seconds before requesting a new code. If it still doesn't arrive, email us at <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> with your number and country.": [
+   "support/index.html"
+  ],
+  "How do I reset my password?": [
+   "support/index.html"
+  ],
+  "On the login screen, tap <strong>Forgot password</strong> and enter your account email. You'll receive a reset link within a few minutes. Check your spam folder if you don't see it.": [
+   "support/index.html"
+  ],
+  "How do I report or block another user?": [
+   "support/index.html"
+  ],
+  "Open the user's profile or chat, tap the menu icon, and choose <strong>Report</strong> or <strong>Block</strong>. Reports are reviewed within 24 hours. Blocked users can no longer see your profile or contact you.": [
+   "support/index.html"
+  ],
+  "How do I delete my account?": [
+   "support/index.html"
+  ],
+  "In the app, go to <strong>Profile → Ownership</strong>, tap your account card, then <strong>Delete my account</strong>. Your account is permanently deleted after a 30-day grace period (signing in again cancels it). You can also request deletion by emailing <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> from your account email. Details: <a href=\"/delete-account\">Delete your account</a>.": [
+   "support/index.html"
+  ],
+  "How do I change my email, university, or profile photo?": [
+   "support/index.html"
+  ],
+  "Go to <strong>Profile → Edit Profile</strong>. Most fields can be updated directly. If you need to change your registered email address, contact support.": [
+   "support/index.html"
+  ],
+  "Can I use MysMatch if my university isn't listed?": [
+   "support/index.html"
+  ],
+  "We're continually adding universities. If yours is missing, email us at <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> and we'll add it.": [
+   "support/index.html"
+  ],
+  "How do I stop receiving push notifications?": [
+   "support/index.html"
+  ],
+  "Disable notifications in your device settings (iOS: Settings → Notifications → MysMatch; Android: Settings → Apps → MysMatch → Notifications). You can also manage preferences inside the app under Settings.": [
+   "support/index.html"
+  ],
+  "Is MysMatch free?": [
+   "support/index.html"
+  ],
+  "Yes, MysMatch is free to download and use for core connection and messaging features.": [
+   "support/index.html"
+  ],
+  "I found a bug or have a feature request.": [
+   "support/index.html"
+  ],
+  "We'd love to hear it. Email <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> with a short description and, if possible, a screenshot or the steps to reproduce.": [
+   "support/index.html"
+  ],
+  "More resources": [
+   "support/index.html"
+  ],
+  "<strong>Privacy Policy</strong> <span>How we collect, use, and protect your data.</span>": [
+   "support/index.html"
+  ],
+  "<strong>Terms of Service</strong> <span>The rules of using MysMatch.</span>": [
+   "support/index.html"
+  ],
+  "<strong>Account Deletion</strong> <span>How to permanently delete your account.</span>": [
+   "support/index.html"
+  ],
+  "Get help with MysMatch. Contact support, browse FAQs, and learn how to manage your account, connections, and privacy.": [
+   "support/index.html"
+  ],
+  "Get help with MysMatch. Contact support, browse FAQs, and learn how to manage your account.": [
+   "support/index.html"
+  ],
+  "Get help with MysMatch. Contact support and browse FAQs.": [
+   "support/index.html"
+  ],
+  "Delete your account — MysMatch": [
+   "delete-account/index.html"
+  ],
+  "/ Account": [
+   "delete-account/index.html"
+  ],
+  "Delete your account": [
+   "delete-account/index.html"
+  ],
+  "Last updated: September 28, 2026": [
+   "delete-account/index.html",
+   "privacy-policy/index.html"
+  ],
+  "This page explains how to delete your <strong>MysMatch</strong> account (the MysMatch app for iOS and Android) and what happens to your data.": [
+   "delete-account/index.html"
+  ],
+  "1. Delete your account in the app": [
+   "delete-account/index.html"
+  ],
+  "Open the MysMatch app and sign in.": [
+   "delete-account/index.html"
+  ],
+  "Go to the <strong>Profile</strong> tab and tap <strong>Ownership</strong>.": [
+   "delete-account/index.html"
+  ],
+  "Tap your account card, tell us briefly why you're leaving (at least 5 words), then tap <strong>Delete my account</strong> and confirm.": [
+   "delete-account/index.html"
+  ],
+  "Your account is deactivated immediately and permanently deleted after <strong>30 days</strong>. If you sign in again during those 30 days, the deletion is cancelled and your account is restored.": [
+   "delete-account/index.html"
+  ],
+  "2. Request deletion by email": [
+   "delete-account/index.html"
+  ],
+  "If you can't use the app, or you manage an organization account, email <a href=\"mailto:contact@mys-match.com?subject=Delete%20my%20MysMatch%20account\">contact@mys-match.com</a> from the email address of your MysMatch account with the subject <strong>“Delete my account”</strong>. We confirm your request and complete the deletion within 30 days.": [
+   "delete-account/index.html"
+  ],
+  "3. What is deleted": [
+   "delete-account/index.html"
+  ],
+  "Your profile: name, photos, university, major, semester, bio and preferences": [
+   "delete-account/index.html"
+  ],
+  "Your login credentials (email address and phone number)": [
+   "delete-account/index.html",
+   "privacy-policy/index.html"
+  ],
+  "Your event registrations and any documents you uploaded for events": [
+   "delete-account/index.html"
+  ],
+  "Your job applications and uploaded CVs": [
+   "delete-account/index.html",
+   "privacy-policy/index.html"
+  ],
+  "If you own an organization: its page, events, job postings and perks": [
+   "delete-account/index.html",
+   "privacy-policy/index.html"
+  ],
+  "After deletion your profile is anonymized: other users see you only as a “Deleted account”.": [
+   "delete-account/index.html"
+  ],
+  "4. What is kept, and for how long": [
+   "delete-account/index.html"
+  ],
+  "<strong>Messages you sent</strong> stay in the other person’s conversation so their chat history remains intact. They are shown as coming from a “Deleted account” and are no longer linked to you.": [
+   "delete-account/index.html"
+  ],
+  "<strong>Safety retention:</strong> messages, conversations or profiles connected to a report or a block are kept in full for 60 days from that report or block, to investigate abuse and to establish, exercise or defend legal claims. After that, the rules above apply.": [
+   "delete-account/index.html"
+  ],
+  "<strong>Crash reports</strong> are deleted after 90 days; <strong>analytics</strong> data is anonymized after 12 months.": [
+   "delete-account/index.html"
+  ],
+  "Data we are required to keep by law may be kept for longer.": [
+   "delete-account/index.html"
+  ],
+  "Full details are in our <a href=\"/privacy-policy#account-deletion\">Privacy Policy</a> (Sections 7 and 12). Questions: <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a>.": [
+   "delete-account/index.html"
+  ],
+  "How to delete your MysMatch account and data, in the app or by email, and what is deleted or kept.": [
+   "delete-account/index.html"
+  ],
+  "How to delete your MysMatch account and data.": [
+   "delete-account/index.html"
+  ],
+  "Privacy Policy — MysMatch": [
+   "privacy-policy/index.html"
+  ],
+  "/ Legal": [
+   "privacy-policy/index.html",
+   "terms/index.html"
+  ],
+  "1. Controller and Contact Information": [
+   "privacy-policy/index.html"
+  ],
+  "MysMatch is operated by Sepehr Asgari (\"MysMatch\", \"we\", \"us\", \"our\"), based in Germany.": [
+   "privacy-policy/index.html"
+  ],
+  "For any privacy-related inquiries or to exercise your rights under applicable data protection law, please contact us at:": [
+   "privacy-policy/index.html"
+  ],
+  "Email: <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a>": [
+   "privacy-policy/index.html"
+  ],
+  "Website: <a href=\"https://www.mysmatch.com\">https://www.mysmatch.com</a>": [
+   "privacy-policy/index.html"
+  ],
+  "2. Information We Collect": [
+   "privacy-policy/index.html"
+  ],
+  "We collect the following categories of personal data:": [
+   "privacy-policy/index.html"
+  ],
+  "a) Information you provide directly:": [
+   "privacy-policy/index.html"
+  ],
+  "Account data: email address, password (hashed), first name, last name, gender, date of birth": [
+   "privacy-policy/index.html"
+  ],
+  "Profile data: university, major, semester, study level, study description, city, profile photo": [
+   "privacy-policy/index.html"
+  ],
+  "Phone number: for identity verification via SMS": [
+   "privacy-policy/index.html"
+  ],
+  "Communications: messages you send to other users through the app": [
+   "privacy-policy/index.html"
+  ],
+  "Event data: events you create or register for": [
+   "privacy-policy/index.html"
+  ],
+  "Job applications: when you apply for a job posted by an organization in the app, the CV file you upload (PDF, JPEG or PNG, max. 10 MB) and your answers to the organization’s application questions": [
+   "privacy-policy/index.html"
+  ],
+  "Reports: information you provide when reporting other users": [
+   "privacy-policy/index.html"
+  ],
+  "b) Information collected automatically:": [
+   "privacy-policy/index.html"
+  ],
+  "Device information: device type, operating system, app version, unique device identifiers": [
+   "privacy-policy/index.html"
+  ],
+  "Usage data: app interactions, screens viewed, features used, search and connection history, session duration": [
+   "privacy-policy/index.html"
+  ],
+  "Location data: city-level location (only when you grant permission)": [
+   "privacy-policy/index.html"
+  ],
+  "Crash data: technical error logs, stack traces, device state at time of crash": [
+   "privacy-policy/index.html"
+  ],
+  "Analytics data: anonymized interaction patterns, feature usage statistics": [
+   "privacy-policy/index.html"
+  ],
+  "c) Information from third parties:": [
+   "privacy-policy/index.html"
+  ],
+  "Google Places API: city and address suggestions based on your search input": [
+   "privacy-policy/index.html"
+  ],
+  "Authentication providers: email verification status from Supabase Auth": [
+   "privacy-policy/index.html"
+  ],
+  "3. Legal Basis for Processing (GDPR Art. 6)": [
+   "privacy-policy/index.html"
+  ],
+  "We process your personal data on the following legal bases:": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Contract performance (Art. 6(1)(b) GDPR):</strong> processing necessary to provide the MysMatch service, including account creation, profile management, connections, messaging, event features, and sending the job applications you choose to submit": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Consent (Art. 6(1)(a) GDPR):</strong> analytics tracking (Mixpanel), push notifications (OneSignal), location access, and app tracking transparency (iOS). You may withdraw consent at any time": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Legitimate interest (Art. 6(1)(f) GDPR):</strong> crash monitoring (Sentry), fraud prevention, security measures, and service improvement": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Legal obligation (Art. 6(1)(c) GDPR):</strong> compliance with applicable laws, responding to lawful requests from authorities": [
+   "privacy-policy/index.html"
+  ],
+  "4. How We Use Your Information": [
+   "privacy-policy/index.html"
+  ],
+  "We use your personal data for the following purposes:": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Providing the service:</strong> creating and managing your account, displaying your profile to potential connections, facilitating connections and messaging, enabling event discovery and registration": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Communication:</strong> sending push notifications about new connections, messages, and connection requests; sending transactional emails (password reset, email verification)": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Safety and security:</strong> verifying identities via phone number, processing user reports and blocks, detecting and preventing abuse, enforcing our Terms of Service": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Improvement:</strong> analyzing aggregated usage patterns, monitoring app stability and performance, identifying and fixing bugs": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Legal compliance:</strong> responding to lawful data requests, maintaining records as required by law": [
+   "privacy-policy/index.html"
+  ],
+  "5. Data Sharing and Third-Party Services": [
+   "privacy-policy/index.html"
+  ],
+  "We do not sell, rent, or trade your personal data. We share data only in the following circumstances:": [
+   "privacy-policy/index.html"
+  ],
+  "a) With other users:": [
+   "privacy-policy/index.html"
+  ],
+  "Your profile information (name, photo, university, major, age, city) is visible to users who may be potential connections": [
+   "privacy-policy/index.html"
+  ],
+  "Your messages are visible to the recipient": [
+   "privacy-policy/index.html"
+  ],
+  "Event creators can see the list of registered attendees": [
+   "privacy-policy/index.html"
+  ],
+  "When you apply for a job, your CV, your answers, and your profile name and photo are shared only with the organization that posted that job. CVs are stored in private storage and are not visible to any other user": [
+   "privacy-policy/index.html"
+  ],
+  "b) With service providers (data processors):": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Supabase</strong> (Supabase Inc., USA): database hosting, user authentication, file storage": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>OneSignal</strong> (OneSignal Inc., USA): push notification delivery. Receives your device token and user ID": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Mixpanel</strong> (Mixpanel Inc., USA): analytics and event tracking. Receives anonymized usage data": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Sentry</strong> (Functional Software Inc., USA): crash reporting and error monitoring. Receives device and error data": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Twilio</strong> (Twilio Inc., USA): SMS verification. Receives your phone number": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Google Places API</strong> (Google LLC, USA): address and city autocomplete. Receives search queries": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Firebase Cloud Messaging</strong> (Google LLC, USA): push notification infrastructure for Android": [
+   "privacy-policy/index.html"
+  ],
+  "c) With authorities:": [
+   "privacy-policy/index.html"
+  ],
+  "When required by law, court order, or governmental regulation": [
+   "privacy-policy/index.html"
+  ],
+  "To protect the safety of our users or the public": [
+   "privacy-policy/index.html"
+  ],
+  "To protect our legal rights": [
+   "privacy-policy/index.html"
+  ],
+  "All service providers are contractually bound to process your data only on our behalf and in accordance with this Privacy Policy and applicable data protection law.": [
+   "privacy-policy/index.html"
+  ],
+  "6. International Data Transfers": [
+   "privacy-policy/index.html"
+  ],
+  "Some of our service providers are based in the United States. When your data is transferred outside the European Economic Area (EEA), we ensure adequate protection through:": [
+   "privacy-policy/index.html"
+  ],
+  "EU Standard Contractual Clauses (SCCs) agreed with each provider": [
+   "privacy-policy/index.html"
+  ],
+  "The provider's certification under applicable data protection frameworks": [
+   "privacy-policy/index.html"
+  ],
+  "By using MysMatch, you acknowledge that some data processing occurs outside the EEA under these safeguards.": [
+   "privacy-policy/index.html"
+  ],
+  "7. Data Retention": [
+   "privacy-policy/index.html"
+  ],
+  "We retain your personal data as follows:": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Active accounts:</strong> your data is retained for as long as your account is active": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Deleted accounts:</strong> after you delete your account, we retain your data for 30 days to allow account restoration. After that, your profile is anonymized into a “Deleted account” and your login credentials (email, phone) are permanently removed": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Messages you sent:</strong> retained even after your account is anonymized so the other participant’s conversation history stays intact; they appear to that person as coming from a “Deleted account”. Message content is not deleted together with the account": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Deleting a conversation</strong> in the app hides it from your own view only (see Section 5) — the messages remain visible to the other participant. A conversation that both participants have deleted is permanently removed 30 days later": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Safety retention:</strong> where a message, conversation, or profile is connected to a report or a block, we retain it in full for 60 days from that report or block to investigate and act on harassment, bullying, or other abuse, and to establish, exercise, or defend legal claims (Art. 17(3) GDPR). After that period the standard rules above apply": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Job applications and CVs:</strong> kept while the application exists. Your CV is permanently deleted when you withdraw the application, when the organization deletes the job posting, or 30 days after you delete your account": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Organization pages:</strong> an organization’s page, events, job postings and perks are permanently removed together with the organization owner’s account, 30 days after the owner deletes it": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Crash reports:</strong> retained for 90 days, then automatically deleted": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Analytics data:</strong> retained in identifiable form for 12 months, then aggregated and anonymized": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Legal holds:</strong> data may be retained longer if required by law or ongoing legal proceedings": [
+   "privacy-policy/index.html"
+  ],
+  "8. Your Rights Under GDPR": [
+   "privacy-policy/index.html"
+  ],
+  "As a user based in the EEA, you have the following rights under the General Data Protection Regulation:": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Right of access (Art. 15):</strong> request a copy of all personal data we hold about you": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Right to rectification (Art. 16):</strong> correct inaccurate or incomplete data via your profile settings or by contacting us": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Right to erasure (Art. 17):</strong> delete your account and all associated data directly from the app (Profile → Ownership → your account → Delete my account), subject to the retention described in Section 7 — see <a href=\"/delete-account\">www.mysmatch.com/delete-account</a>": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Right to restrict processing (Art. 18):</strong> request that we limit how we use your data": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Right to data portability (Art. 20):</strong> receive your data in a structured, machine-readable format": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Right to object (Art. 21):</strong> object to processing based on legitimate interest": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Right to withdraw consent (Art. 7(3)):</strong> withdraw consent for analytics, notifications, or location at any time via your device settings or by contacting us. Withdrawal does not affect the lawfulness of prior processing": [
+   "privacy-policy/index.html"
+  ],
+  "To exercise any of these rights, contact us at <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a>. We will respond within 30 days.": [
+   "privacy-policy/index.html"
+  ],
+  "If you believe your data protection rights have been violated, you have the right to lodge a complaint with your local data protection supervisory authority. In Germany, this is the relevant state data protection authority (Landesdatenschutzbeauftragter) for your federal state.": [
+   "privacy-policy/index.html"
+  ],
+  "9. Data Security": [
+   "privacy-policy/index.html"
+  ],
+  "We implement appropriate technical and organizational measures to protect your personal data, including:": [
+   "privacy-policy/index.html"
+  ],
+  "All data transmitted between your device and our servers is encrypted using TLS/HTTPS": [
+   "privacy-policy/index.html"
+  ],
+  "Passwords are hashed and never stored in plain text": [
+   "privacy-policy/index.html"
+  ],
+  "Row-level security (RLS) policies on our database ensure users can only access their own data": [
+   "privacy-policy/index.html"
+  ],
+  "Secure token-based authentication with automatic session expiry": [
+   "privacy-policy/index.html"
+  ],
+  "Optional biometric authentication (Face ID, fingerprint) or PIN lock within the app": [
+   "privacy-policy/index.html"
+  ],
+  "Regular security audits of our database policies, functions, and access controls": [
+   "privacy-policy/index.html"
+  ],
+  "Service provider access is limited to the minimum necessary for their function": [
+   "privacy-policy/index.html"
+  ],
+  "No system is 100% secure. If you become aware of a security vulnerability, please report it to <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> immediately.": [
+   "privacy-policy/index.html"
+  ],
+  "10. Cookies and Tracking Technologies": [
+   "privacy-policy/index.html"
+  ],
+  "The MysMatch mobile app does not use browser cookies. However, we use the following technologies:": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Mixpanel SDK:</strong> uses local storage to track anonymized usage events and session data. You can opt out via iOS App Tracking Transparency or by contacting us": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>OneSignal SDK:</strong> stores a device token for push notification delivery. You can disable notifications in your device settings": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Sentry SDK:</strong> collects crash data automatically. This is based on our legitimate interest in maintaining app stability": [
+   "privacy-policy/index.html"
+  ],
+  "On our website (www.mysmatch.com), we do not use cookies or third-party tracking scripts.": [
+   "privacy-policy/index.html"
+  ],
+  "11. Age Requirement": [
+   "privacy-policy/index.html"
+  ],
+  "MysMatch is designed for university students. You must be at least 16 years old to create an account and use the service, in accordance with Art. 8 GDPR as implemented by German law (§ 8 TTDSG).": [
+   "privacy-policy/index.html"
+  ],
+  "We do not knowingly collect personal data from anyone under 16. If we learn that we have collected data from a user under 16, we will promptly delete the account and associated data. If you believe a person under 16 is using MysMatch, please contact us at <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a>.": [
+   "privacy-policy/index.html"
+  ],
+  "12. Account Deletion": [
+   "privacy-policy/index.html"
+  ],
+  "You can delete your MysMatch account in two ways (step-by-step guide: <a href=\"/delete-account\">www.mysmatch.com/delete-account</a>):": [
+   "privacy-policy/index.html"
+  ],
+  "a) In the app:": [
+   "privacy-policy/index.html"
+  ],
+  "Go to <strong>Profile → Ownership</strong>, tap your account card, then <strong>Delete my account</strong>. Your account is deactivated immediately and permanently deleted after a 30-day grace period. Signing in again during those 30 days cancels the deletion.": [
+   "privacy-policy/index.html"
+  ],
+  "b) By email:": [
+   "privacy-policy/index.html"
+  ],
+  "Send a deletion request to <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> from the email address associated with your account. We will process your request within 30 days.": [
+   "privacy-policy/index.html"
+  ],
+  "What gets deleted:": [
+   "privacy-policy/index.html"
+  ],
+  "Your profile information (name, photos, university, major, semester, bio, preferences); your profile is anonymized into a “Deleted account”": [
+   "privacy-policy/index.html"
+  ],
+  "Your event registrations and uploaded event documents": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>What may be retained</strong> (see Section 7):": [
+   "privacy-policy/index.html"
+  ],
+  "Messages you sent, so the other participant’s conversation stays intact; they appear as coming from a “Deleted account”": [
+   "privacy-policy/index.html"
+  ],
+  "Messages, conversations or profiles connected to a report or block, for 60 days from that report or block (safety and legal claims, Art. 17(3) GDPR)": [
+   "privacy-policy/index.html"
+  ],
+  "Crash reports (up to 90 days) and analytics data (anonymized after 12 months)": [
+   "privacy-policy/index.html"
+  ],
+  "Data required to be retained by law": [
+   "privacy-policy/index.html"
+  ],
+  "13. Changes to This Privacy Policy": [
+   "privacy-policy/index.html"
+  ],
+  "We may update this Privacy Policy from time to time to reflect changes in our practices, technologies, legal requirements, or other factors.": [
+   "privacy-policy/index.html"
+  ],
+  "For significant changes, we will notify you through:": [
+   "privacy-policy/index.html"
+  ],
+  "An in-app notification": [
+   "privacy-policy/index.html"
+  ],
+  "An email to the address associated with your account": [
+   "privacy-policy/index.html"
+  ],
+  "The \"Last updated\" date at the top indicates when the policy was last revised. Continued use of MysMatch after the effective date of changes constitutes your acceptance of the revised policy. If you do not agree with the changes, you may delete your account.": [
+   "privacy-policy/index.html"
+  ],
+  "14. Contact Us": [
+   "privacy-policy/index.html"
+  ],
+  "If you have any questions, concerns, or requests regarding this Privacy Policy or our data practices, please contact us:": [
+   "privacy-policy/index.html"
+  ],
+  "Operated by Sepehr Asgari": [
+   "privacy-policy/index.html"
+  ],
+  "We aim to respond to all inquiries within 30 days.": [
+   "privacy-policy/index.html"
+  ],
+  "MysMatch Privacy Policy. Learn how we collect, use, and protect your personal data in compliance with GDPR.": [
+   "privacy-policy/index.html"
+  ],
+  "Terms of Service - MysMatch": [
+   "terms/index.html"
+  ],
+  "Last updated: August 14, 2026": [
+   "terms/index.html"
+  ],
+  "1. Acceptance of Terms": [
+   "terms/index.html"
+  ],
+  "By creating an account, accessing, or using MysMatch (\"the App\", \"the Service\"), you agree to be bound by these Terms of Service (\"Terms\"). These Terms constitute a legally binding agreement between you and MysMatch, operated by Sepehr Asgari, based in Germany.": [
+   "terms/index.html"
+  ],
+  "If you do not agree to these Terms, you must not create an account or use the Service. Please also review our <a href=\"https://www.mysmatch.com/privacy-policy\">Privacy Policy</a>, which describes how we collect and process your personal data.": [
+   "terms/index.html"
+  ],
+  "2. Eligibility": [
+   "terms/index.html"
+  ],
+  "To use MysMatch, you must:": [
+   "terms/index.html"
+  ],
+  "Be at least 16 years of age (in compliance with Art. 8 GDPR and § 8 TTDSG under German law)": [
+   "terms/index.html"
+  ],
+  "Be currently enrolled at, or affiliated with, a recognized university or higher education institution": [
+   "terms/index.html"
+  ],
+  "Be legally capable of entering into a binding agreement under applicable law": [
+   "terms/index.html"
+  ],
+  "Not have been previously banned or removed from MysMatch": [
+   "terms/index.html"
+  ],
+  "By creating an account, you represent and warrant that you meet all of the above requirements. We reserve the right to request verification of your eligibility at any time and to suspend or terminate accounts that do not meet these criteria.": [
+   "terms/index.html"
+  ],
+  "3. Account Registration and Security": [
+   "terms/index.html"
+  ],
+  "When you create an account, you agree to:": [
+   "terms/index.html"
+  ],
+  "Provide accurate, current, and complete information during registration and in your profile": [
+   "terms/index.html"
+  ],
+  "Maintain and promptly update your information to keep it accurate": [
+   "terms/index.html"
+  ],
+  "Keep your login credentials confidential and not share them with any third party": [
+   "terms/index.html"
+  ],
+  "Create only one account per person — duplicate accounts will be removed": [
+   "terms/index.html"
+  ],
+  "Notify us immediately at <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> if you suspect unauthorized access to your account": [
+   "terms/index.html"
+  ],
+  "You are solely responsible for all activity that occurs under your account. MysMatch is not liable for any loss or damage arising from unauthorized use of your account.": [
+   "terms/index.html"
+  ],
+  "4. The Service": [
+   "terms/index.html"
+  ],
+  "MysMatch provides a platform for university students to:": [
+   "terms/index.html"
+  ],
+  "Create a personal profile with academic and personal information": [
+   "terms/index.html"
+  ],
+  "Discover and connect with other students through our connection system": [
+   "terms/index.html"
+  ],
+  "Communicate with connected users via in-app messaging": [
+   "terms/index.html"
+  ],
+  "Discover, create, and register for campus events": [
+   "terms/index.html"
+  ],
+  "MysMatch acts solely as a platform facilitating connections between users. We do not participate in, mediate, or guarantee any interactions, meetings, or relationships between users. We are not responsible for the conduct of any user, whether online or offline.": [
+   "terms/index.html"
+  ],
+  "5. Study Partner and Classmate Connections": [
+   "terms/index.html"
+  ],
+  "Our connection system helps students find study partners and classmates:": [
+   "terms/index.html"
+  ],
+  "Users set their profile information including university, major, and study details": [
+   "terms/index.html"
+  ],
+  "The system suggests potential study partners and classmates based on availability": [
+   "terms/index.html"
+  ],
+  "A connection is established only when both parties have mutually agreed": [
+   "terms/index.html"
+  ],
+  "Once connected, a private chat is created between the two users": [
+   "terms/index.html"
+  ],
+  "We do not guarantee the accuracy of user profiles, the quality of connections, or the outcome of any interaction. You are responsible for verifying the suitability of any study partner or classmate.": [
+   "terms/index.html"
+  ],
+  "6. Acceptable Use Policy": [
+   "terms/index.html"
+  ],
+  "You agree to use MysMatch in a lawful and respectful manner. You must NOT:": [
+   "terms/index.html"
+  ],
+  "Harass, bully, stalk, threaten, or intimidate any user": [
+   "terms/index.html"
+  ],
+  "Post hateful, discriminatory, racist, or violent content": [
+   "terms/index.html"
+  ],
+  "Impersonate any person or entity, or falsely claim an affiliation": [
+   "terms/index.html"
+  ],
+  "Upload false, misleading, or deceptive profile information or photos": [
+   "terms/index.html"
+  ],
+  "Use the Service for commercial purposes, advertising, or solicitation without our written consent": [
+   "terms/index.html"
+  ],
+  "Attempt to collect, harvest, or scrape other users' personal data": [
+   "terms/index.html"
+  ],
+  "Use automated systems, bots, or scripts to access or interact with the Service": [
+   "terms/index.html"
+  ],
+  "Interfere with, disrupt, or place an undue burden on the Service or its infrastructure": [
+   "terms/index.html"
+  ],
+  "Reverse-engineer, decompile, or attempt to extract the source code of the App": [
+   "terms/index.html"
+  ],
+  "Upload viruses, malware, or any harmful code": [
+   "terms/index.html"
+  ],
+  "Circumvent or attempt to circumvent any security measures": [
+   "terms/index.html"
+  ],
+  "Violate any applicable local, national, or international law or regulation": [
+   "terms/index.html"
+  ],
+  "Violation of this policy may result in immediate account suspension or permanent termination, at our sole discretion and without prior notice.": [
+   "terms/index.html"
+  ],
+  "7. User Content": [
+   "terms/index.html"
+  ],
+  "\"User Content\" refers to any information, text, photos, or other material you upload, post, or transmit through MysMatch.": [
+   "terms/index.html"
+  ],
+  "a) Ownership: you retain all ownership rights to your User Content.": [
+   "terms/index.html"
+  ],
+  "b) License: by posting User Content, you grant MysMatch a worldwide, non-exclusive, royalty-free, transferable license to use, display, reproduce, and distribute your User Content solely for the purpose of operating and providing the Service. This license ends when you delete your content or your account, except where your content has been shared with other users and they have not deleted it.": [
+   "terms/index.html"
+  ],
+  "c) Responsibility: you are solely responsible for your User Content. You represent that you have the right to share it and that it does not violate any third party's rights or applicable laws.": [
+   "terms/index.html"
+  ],
+  "d) Moderation: we reserve the right, but have no obligation, to review, monitor, or remove User Content that violates these Terms. Reported content will be reviewed and appropriate action will be taken, which may include content removal and account termination.": [
+   "terms/index.html"
+  ],
+  "8. Events": [
+   "terms/index.html"
+  ],
+  "MysMatch allows users to create and register for campus events.": [
+   "terms/index.html"
+  ],
+  "Event creators are solely responsible for the accuracy of event details (title, description, date, location, pricing, capacity)": [
+   "terms/index.html"
+  ],
+  "MysMatch is not an organizer, sponsor, or participant in any event listed on the platform": [
+   "terms/index.html"
+  ],
+  "MysMatch is not responsible for the cancellation, postponement, or any outcome of events": [
+   "terms/index.html"
+  ],
+  "Registration data (attendee name and profile) is shared with event creators for event management purposes": [
+   "terms/index.html"
+  ],
+  "Events that violate these Terms or our community guidelines will be removed": [
+   "terms/index.html"
+  ],
+  "Event creators must comply with all applicable local laws and regulations regarding their events": [
+   "terms/index.html"
+  ],
+  "9. Reporting, Blocking, and Enforcement": [
+   "terms/index.html"
+  ],
+  "MysMatch provides tools to help keep the community safe:": [
+   "terms/index.html"
+  ],
+  "Block: you may block any user at any time. Blocked users cannot see your profile or contact you": [
+   "terms/index.html"
+  ],
+  "Report: you may report users for violations of these Terms. All reports are reviewed by our team": [
+   "terms/index.html"
+  ],
+  "Enforcement: we may take action against accounts that violate these Terms, including warnings, temporary suspension, or permanent termination": [
+   "terms/index.html"
+  ],
+  "Appeals: if your account is suspended or terminated, you may contact us at <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> to request a review": [
+   "terms/index.html"
+  ],
+  "We reserve the right to take any action we deem necessary to protect the safety and integrity of our community, including cooperating with law enforcement where appropriate.": [
+   "terms/index.html"
+  ],
+  "10. Account Deletion": [
+   "terms/index.html"
+  ],
+  "You may delete your account at any time directly from within the App (Profile → Delete Account).": [
+   "terms/index.html"
+  ],
+  "Upon deletion:": [
+   "terms/index.html"
+  ],
+  "Your account is immediately deactivated and hidden from other users": [
+   "terms/index.html"
+  ],
+  "Your data is retained for 30 days to allow for account restoration if you change your mind": [
+   "terms/index.html"
+  ],
+  "After 30 days, your profile is anonymized into a “Deleted account” and your login credentials (email, phone) and records such as event registrations are permanently deleted": [
+   "terms/index.html"
+  ],
+  "To preserve the other participant’s conversation history, your messages and the conversations they belong to are retained in anonymized form rather than deleted, and appear to that person as coming from a “Deleted account”": [
+   "terms/index.html"
+  ],
+  "Content connected to a report or a block may be retained in full for up to 60 days for safety purposes and to establish, exercise, or defend legal claims. See our <a href=\"/privacy-policy/\">Privacy Policy</a> for details": [
+   "terms/index.html"
+  ],
+  "Deletion of your account does not affect messages already delivered to other users": [
+   "terms/index.html"
+  ],
+  "We may also delete accounts that have been inactive for an extended period after providing reasonable notice.": [
+   "terms/index.html"
+  ],
+  "11. Intellectual Property": [
+   "terms/index.html"
+  ],
+  "The MysMatch name, logo, branding, design, software, and all associated intellectual property are owned by MysMatch and protected by applicable copyright, trademark, and other intellectual property laws.": [
+   "terms/index.html"
+  ],
+  "You may not:": [
+   "terms/index.html"
+  ],
+  "Copy, modify, or distribute any part of the App without our written consent": [
+   "terms/index.html"
+  ],
+  "Use the MysMatch name or logo without prior authorization": [
+   "terms/index.html"
+  ],
+  "Create derivative works based on the App or its content": [
+   "terms/index.html"
+  ],
+  "All rights not expressly granted in these Terms are reserved.": [
+   "terms/index.html"
+  ],
+  "12. Fees and Future Subscriptions": [
+   "terms/index.html"
+  ],
+  "MysMatch is currently free to use. We may introduce optional paid features or subscription plans in the future.": [
+   "terms/index.html"
+  ],
+  "If we introduce paid features:": [
+   "terms/index.html"
+  ],
+  "We will clearly disclose pricing before any purchase": [
+   "terms/index.html"
+  ],
+  "Subscriptions may be managed and cancelled through the Apple App Store or Google Play Store": [
+   "terms/index.html"
+  ],
+  "Refund policies will follow the respective app store's guidelines": [
+   "terms/index.html"
+  ],
+  "Free features will remain available": [
+   "terms/index.html"
+  ],
+  "We will notify users of any changes to pricing or the introduction of paid features in advance.": [
+   "terms/index.html"
+  ],
+  "13. Disclaimers": [
+   "terms/index.html"
+  ],
+  "TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW:": [
+   "terms/index.html"
+  ],
+  "The Service is provided on an \"AS IS\" and \"AS AVAILABLE\" basis, without warranties of any kind, whether express, implied, or statutory": [
+   "terms/index.html"
+  ],
+  "We do not warrant that the Service will be uninterrupted, error-free, secure, or free of viruses or other harmful components": [
+   "terms/index.html"
+  ],
+  "We do not warrant the accuracy, completeness, or reliability of any user profiles, content, or information on the Service": [
+   "terms/index.html"
+  ],
+  "We make no representations or warranties regarding the conduct, behavior, or intentions of other users": [
+   "terms/index.html"
+  ],
+  "We are not responsible for any interactions between users, whether online or offline": [
+   "terms/index.html"
+  ],
+  "We do not conduct criminal background checks on users": [
+   "terms/index.html"
+  ],
+  "You use the Service at your own risk. You are solely responsible for your interactions with other users. We strongly recommend meeting in public places and informing a trusted person of your plans when meeting someone from the App for the first time.": [
+   "terms/index.html"
+  ],
+  "14. Limitation of Liability": [
+   "terms/index.html"
+  ],
+  "MysMatch, its operator, and its affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of the Service": [
+   "terms/index.html"
+  ],
+  "Our total cumulative liability shall not exceed the amount you have paid to MysMatch in the 12 months preceding the claim, or EUR 50, whichever is greater": [
+   "terms/index.html"
+  ],
+  "This limitation applies regardless of the legal theory (contract, tort, negligence, strict liability, or otherwise)": [
+   "terms/index.html"
+  ],
+  "Nothing in these Terms excludes or limits liability for death or personal injury caused by negligence, fraud, or any other liability that cannot be excluded under applicable law.": [
+   "terms/index.html"
+  ],
+  "15. Indemnification": [
+   "terms/index.html"
+  ],
+  "You agree to indemnify, defend, and hold harmless MysMatch, its operator (Sepehr Asgari), and any affiliated parties from and against any claims, damages, losses, liabilities, costs, and expenses (including reasonable legal fees) arising out of or related to:": [
+   "terms/index.html"
+  ],
+  "Your use of the Service": [
+   "terms/index.html"
+  ],
+  "Your violation of these Terms": [
+   "terms/index.html"
+  ],
+  "Your violation of any rights of a third party": [
+   "terms/index.html"
+  ],
+  "Any User Content you post or transmit through the Service": [
+   "terms/index.html"
+  ],
+  "16. Governing Law and Dispute Resolution": [
+   "terms/index.html"
+  ],
+  "These Terms are governed by and construed in accordance with the laws of the Federal Republic of Germany, without regard to its conflict of law provisions.": [
+   "terms/index.html"
+  ],
+  "For users residing in the European Union, nothing in these Terms affects your rights under mandatory consumer protection laws of your country of residence.": [
+   "terms/index.html"
+  ],
+  "The European Commission provides an online dispute resolution platform at <a href=\"https://ec.europa.eu/consumers/odr\" rel=\"noopener noreferrer\" target=\"_blank\">https://ec.europa.eu/consumers/odr</a>. We are not obligated to participate in dispute resolution proceedings before a consumer arbitration body, but we are willing to engage in good-faith discussions to resolve disputes.": [
+   "terms/index.html"
+  ],
+  "Any disputes that cannot be resolved amicably shall be subject to the exclusive jurisdiction of the courts of Germany.": [
+   "terms/index.html"
+  ],
+  "17. Severability": [
+   "terms/index.html"
+  ],
+  "If any provision of these Terms is found to be invalid, illegal, or unenforceable by a court of competent jurisdiction, the remaining provisions shall continue in full force and effect. The invalid provision shall be modified to the minimum extent necessary to make it valid and enforceable while preserving its original intent.": [
+   "terms/index.html"
+  ],
+  "18. Changes to These Terms": [
+   "terms/index.html"
+  ],
+  "We reserve the right to modify these Terms at any time. When we make material changes, we will notify you by:": [
+   "terms/index.html"
+  ],
+  "Displaying a prominent notice within the App": [
+   "terms/index.html"
+  ],
+  "Sending an email to the address associated with your account": [
+   "terms/index.html"
+  ],
+  "The updated Terms will indicate the new \"Last updated\" date at the top. Your continued use of MysMatch after the effective date of the revised Terms constitutes your acceptance of the changes. If you do not agree to the revised Terms, you must stop using the Service and delete your account.": [
+   "terms/index.html"
+  ],
+  "19. Contact Information": [
+   "terms/index.html"
+  ],
+  "For any questions, concerns, or feedback regarding these Terms of Service, please contact us:": [
+   "terms/index.html"
+  ],
+  "MysMatch<br/> Operated by Sepehr Asgari<br/> Email: <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a><br/> Website: <a href=\"https://www.mysmatch.com\">https://www.mysmatch.com</a>": [
+   "terms/index.html"
+  ],
+  "MysMatch Terms of Service. Read about the rules and guidelines for using MysMatch, the platform that helps university students find study partners and classmates, events and student jobs.": [
+   "terms/index.html"
+  ],
+  "Read the MysMatch Terms of Service. Learn about the rules and guidelines for using MysMatch.": [
+   "terms/index.html"
+  ],
+  "Read the MysMatch Terms of Service.": [
+   "terms/index.html"
+  ]
+ },
+ "js": {
+  "Europe/Berlin": [
+   "index.html",
+   "events/index.html",
+   "events/event.html"
+  ],
+  "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2.5\"></rect><path d=\"M16 2v4M8 2v4M3 10h18\"></path></svg>": [
+   "index.html"
+  ],
+  "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"3\"></circle></svg>": [
+   "index.html"
+  ],
+  "<div class=\"event-skeleton\">": [
+   "index.html"
+  ],
+  "<img src=\"": [
+   "index.html",
+   "jobs/index.html"
+  ],
+  "<div class=\"ph\">🎉</div>": [
+   "index.html"
+  ],
+  "Open registration": [
+   "index.html",
+   "events/event.html"
+  ],
+  "Fully booked": [
+   "index.html",
+   "events/event.html"
+  ],
+  " spots left": [
+   "index.html"
+  ],
+  "Free": [
+   "index.html",
+   "events/index.html",
+   "events/event.html"
+  ],
+  "<a class=\"event-media\" href=\"": [
+   "index.html"
+  ],
+  "<div class=\"event-body\">": [
+   "index.html"
+  ],
+  "<span class=\"event-tag\">": [
+   "index.html"
+  ],
+  "<div class=\"event-meta\">": [
+   "index.html"
+  ],
+  "Location in the app</span>": [
+   "index.html"
+  ],
+  "Download the app to see the location and time</span>": [
+   "index.html"
+  ],
+  "<div class=\"event-foot\">": [
+   "index.html"
+  ],
+  "<div class=\"event-foot-info\">": [
+   "index.html"
+  ],
+  "<span class=\"event-price\">": [
+   "index.html"
+  ],
+  "<span class=\"event-spots": [
+   "index.html"
+  ],
+  "<a class=\"btn btn-violet\" href=\"": [
+   "index.html"
+  ],
+  "\">View event</a>": [
+   "index.html"
+  ],
+  "No events to show yet — check back soon.": [
+   "index.html"
+  ],
+  "Head to the Events page to see what’s on.": [
+   "index.html"
+  ],
+  "IntersectionObserver": [
+   "index.html"
+  ],
+  "Music": [
+   "events/index.html"
+  ],
+  "Music & Parties": [
+   "events/index.html"
+  ],
+  "Sports": [
+   "events/index.html"
+  ],
+  "Tech": [
+   "events/index.html"
+  ],
+  "Tech & Hackathons": [
+   "events/index.html"
+  ],
+  "Food": [
+   "events/index.html"
+  ],
+  "Food & Social": [
+   "events/index.html"
+  ],
+  "Art": [
+   "events/index.html"
+  ],
+  "Art & Culture": [
+   "events/index.html"
+  ],
+  "Networking": [
+   "events/index.html"
+  ],
+  "Other": [
+   "events/index.html"
+  ],
+  "All": [
+   "events/index.html"
+  ],
+  "<span class=\"ev-badge full\">Fully booked</span>": [
+   "events/index.html"
+  ],
+  "<span class=\"ev-badge\">": [
+   "events/index.html"
+  ],
+  " spots left</span>": [
+   "events/index.html"
+  ],
+  "<span class=\"ev-date-l\"><span class=\"ev-day\">": [
+   "events/index.html"
+  ],
+  "</span><span class=\"ev-mon\"><span>": [
+   "events/index.html"
+  ],
+  "<span class=\"ev-noday\">": [
+   "events/index.html"
+  ],
+  "Date &amp; place in the app": [
+   "events/index.html"
+  ],
+  "Date to be announced": [
+   "events/index.html"
+  ],
+  "<span class=\"ev-cat\">": [
+   "events/index.html"
+  ],
+  "Event": [
+   "events/index.html"
+  ],
+  "Location in the app": [
+   "events/index.html"
+  ],
+  "Download the app to see the location and time": [
+   "events/index.html",
+   "events/event.html"
+  ],
+  "<a class=\"ev-card": [
+   "events/index.html"
+  ],
+  "\" data-reveal href=\"/events/event.html?id=": [
+   "events/index.html"
+  ],
+  "<div class=\"ev-top": [
+   "events/index.html"
+  ],
+  "<div class=\"ev-photo\"><img src=\"": [
+   "events/index.html"
+  ],
+  "\" alt=\"\" loading=\"lazy\"><div class=\"ev-row\">": [
+   "events/index.html"
+  ],
+  "<div class=\"ev-row\">": [
+   "events/index.html"
+  ],
+  "<div class=\"ev-date\">": [
+   "events/index.html"
+  ],
+  "<div class=\"ev-body\"><span class=\"ev-title\">": [
+   "events/index.html"
+  ],
+  "<div class=\"ev-foot\"><span>": [
+   "events/index.html"
+  ],
+  "</span><span class=\"ev-price\">": [
+   "events/index.html"
+  ],
+  "All events": [
+   "events/index.html"
+  ],
+  "<button class=\"cat-chip\" type=\"button\" data-cat=\"": [
+   "events/index.html"
+  ],
+  "Could not load events.": [
+   "events/index.html"
+  ],
+  "Escape": [
+   "events/event.html"
+  ],
+  "No event specified.": [
+   "events/event.html"
+  ],
+  "Could not connect. Please try again later.": [
+   "events/event.html",
+   "jobs/job.html"
+  ],
+  "This event is not available.<br>It may be private or no longer published.": [
+   "events/event.html"
+  ],
+  "Could not load this event.": [
+   "events/event.html"
+  ],
+  "<img class=\"hero-img\" src=\"": [
+   "events/event.html"
+  ],
+  "<div class=\"hero-img placeholder\">🎉</div>": [
+   "events/event.html"
+  ],
+  "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2.5\"></rect><path d=\"M16 2v4M8 2v4M3 10h18\"></path></svg>": [
+   "events/event.html"
+  ],
+  "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z\"></path><circle cx=\"12\" cy=\"10\" r=\"3\"></circle></svg>": [
+   "events/event.html"
+  ],
+  "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 22V4M4 4h12l-2 4 2 4H4\"></path></svg>": [
+   "events/event.html"
+  ],
+  "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M3 9V6a1 1 0 011-1h16a1 1 0 011 1v3a3 3 0 000 6v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3a3 3 0 000-6z\"></path></svg>": [
+   "events/event.html"
+  ],
+  "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"6\" y=\"2\" width=\"12\" height=\"20\" rx=\"2.5\"></rect><path d=\"M11 18h2\"></path></svg>": [
+   "events/event.html"
+  ],
+  "<svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"9\" cy=\"8\" r=\"3.5\"></circle><path d=\"M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5M16 4.8a3.5 3.5 0 010 6.4M18.5 14.8c1.6.8 2.7 2.6 3 5.2\"></path></svg>": [
+   "events/event.html"
+  ],
+  "<span class=\"fact": [
+   "events/event.html"
+  ],
+  "<div style=\"display:flex;flex-direction:column;gap:clamp(24px,2.4vw,40px)\">": [
+   "events/event.html"
+  ],
+  "<div class=\"kicker\">/ ": [
+   "events/event.html",
+   "jobs/job.html"
+  ],
+  "<div class=\"facts\">": [
+   "events/event.html",
+   "jobs/job.html"
+  ],
+  "Download the app to see the location": [
+   "events/event.html"
+  ],
+  "<div class=\"desc-wrap\"><div class=\"kicker\">/ About this event</div><div class=\"desc\">": [
+   "events/event.html"
+  ],
+  "<h2>Registration only on app for this event</h2>": [
+   "events/event.html"
+  ],
+  "<div class=\"sub\">Download MysMatch to see the location": [
+   "events/event.html"
+  ],
+  " and time": [
+   "events/event.html"
+  ],
+  " and to register.</div>": [
+   "events/event.html"
+  ],
+  "<a class=\"open-app\" href=\"https://www.mysmatch.com/event/": [
+   "events/event.html"
+  ],
+  "\">Already have the app? Open this event →</a>": [
+   "events/event.html"
+  ],
+  "<h2>Register</h2><div class=\"sub\">Registration for this event is handled on the organizer\\'s site.</div>": [
+   "events/event.html"
+  ],
+  "<a class=\"btn btn-dark\" href=\"": [
+   "events/event.html"
+  ],
+  "\" target=\"_blank\" rel=\"noopener noreferrer\">Go to registration ↗</a>": [
+   "events/event.html"
+  ],
+  "This event is fully booked.": [
+   "events/event.html"
+  ],
+  " <span class=\"req\">*</span>": [
+   "events/event.html"
+  ],
+  "<option value=\"": [
+   "events/event.html",
+   "jobs/index.html"
+  ],
+  "<label for=\"": [
+   "events/event.html"
+  ],
+  "<select id=\"": [
+   "events/event.html"
+  ],
+  "<option value=\"\">Select…</option>": [
+   "events/event.html"
+  ],
+  "<textarea id=\"": [
+   "events/event.html"
+  ],
+  "<label for=\"f-doc\">Document": [
+   "events/event.html"
+  ],
+  " <span style=\"color:var(--gray-light);font-weight:600\">(optional)</span>": [
+   "events/event.html"
+  ],
+  "<input id=\"f-doc\" type=\"file\" accept=\"image/png,image/jpeg,image/webp\">": [
+   "events/event.html"
+  ],
+  "<p class=\"hint\">Upload an image (e.g. payment receipt or proof). Max 5 MB.</p>": [
+   "events/event.html"
+  ],
+  "Please answer: ": [
+   "events/event.html"
+  ],
+  "Please upload the required document.": [
+   "events/event.html"
+  ],
+  "Document must be 5 MB or smaller.": [
+   "events/event.html"
+  ],
+  "Document must be a PNG, JPG, or WEBP image.": [
+   "events/event.html"
+  ],
+  "Uploading…": [
+   "events/event.html"
+  ],
+  "Registering…": [
+   "events/event.html"
+  ],
+  "Registration failed. Please try again.": [
+   "events/event.html"
+  ],
+  "Register": [
+   "events/event.html"
+  ],
+  "<div class=\"success\"><div class=\"check\">✓</div>": [
+   "events/event.html"
+  ],
+  "<h2>You\\'re registered!</h2>": [
+   "events/event.html"
+  ],
+  "<p class=\"sub\">Your spot for <strong>": [
+   "events/event.html"
+  ],
+  "</strong> is confirmed. Show this QR code at the door.</p>": [
+   "events/event.html"
+  ],
+  "<div class=\"qr-box\"><img id=\"qr-img\" width=\"220\" height=\"220\" alt=\"Your ticket QR code\"></div>": [
+   "events/event.html"
+  ],
+  "<div class=\"qr-warn\">⚠️ <strong>Save your QR code now — it won\\'t be shown again.</strong><br>": [
+   "events/event.html"
+  ],
+  "To cancel your registration, log in to the MysMatch app.</div>": [
+   "events/event.html"
+  ],
+  "<a class=\"btn\" id=\"qr-dl\" download=\"mysmatch-ticket.png\">Save QR code</a>": [
+   "events/event.html"
+  ],
+  "<a class=\"btn secondary\" href=\"/events\">Browse more events</a></div>": [
+   "events/event.html"
+  ],
+  "Something went wrong. Please try again.": [
+   "events/event.html"
+  ],
+  "Could not upload your document. Please try again.": [
+   "events/event.html"
+  ],
+  "QR code unavailable — please screenshot this page.": [
+   "events/event.html"
+  ],
+  "<span class=\"logo-tile\" style=\"background:": [
+   "jobs/index.html"
+  ],
+  "<a class=\"row\" data-reveal href=\"/jobs/job.html?id=": [
+   "jobs/index.html"
+  ],
+  "<div class=\"row-l\">": [
+   "jobs/index.html"
+  ],
+  "<div class=\"row-txt\"><span class=\"row-title\">": [
+   "jobs/index.html"
+  ],
+  "<span class=\"row-org\">": [
+   "jobs/index.html"
+  ],
+  " <b title=\"Verified organization\">✓</b>": [
+   "jobs/index.html"
+  ],
+  "<div class=\"row-r\"><span class=\"type-pill\">": [
+   "jobs/index.html"
+  ],
+  "<span class=\"row-city\">": [
+   "jobs/index.html"
+  ],
+  "Flexible location": [
+   "jobs/index.html"
+  ],
+  "<span class=\"row-age\">": [
+   "jobs/index.html"
+  ],
+  "<span class=\"row-pay\">": [
+   "jobs/index.html"
+  ],
+  "<span class=\"row-go\" aria-hidden=\"true\">→</span></div></a>": [
+   "jobs/index.html"
+  ],
+  "All types": [
+   "jobs/index.html"
+  ],
+  "<button class=\"chip\" type=\"button\" data-type=\"": [
+   "jobs/index.html"
+  ],
+  "Could not load jobs.": [
+   "jobs/index.html"
+  ],
+  "No job specified.": [
+   "jobs/job.html"
+  ],
+  "This job is no longer available.<br><a href=\"/jobs\">See all jobs</a>": [
+   "jobs/job.html"
+  ],
+  "Could not load this job.": [
+   "jobs/job.html"
+  ],
+  "<span class=\"fact\">": [
+   "jobs/job.html"
+  ],
+  "<div class=\"job-co\">": [
+   "jobs/job.html"
+  ],
+  "<img class=\"logo\" src=\"": [
+   "jobs/job.html"
+  ],
+  "<div class=\"logo\">💼</div>": [
+   "jobs/job.html"
+  ],
+  "<div class=\"company\">": [
+   "jobs/job.html"
+  ],
+  " <span class=\"verified\">✓ Verified</span>": [
+   "jobs/job.html"
+  ],
+  "<div class=\"kicker\">/ About the role</div>": [
+   "jobs/job.html"
+  ],
+  "<div class=\"kicker\" style=\"margin-bottom:16px\">/ Requirements</div><div class=\"reqs\">": [
+   "jobs/job.html"
+  ],
+  "<span class=\"req\">": [
+   "jobs/job.html"
+  ],
+  "<div class=\"desc\">": [
+   "jobs/job.html"
+  ],
+  "<div class=\"kicker\" style=\"margin-top:40px\">/ Contact</div><div class=\"contact\">": [
+   "jobs/job.html"
+  ],
+  "JobPosting": [
+   "jobs/job.html"
+  ],
+  "Organization": [
+   "jobs/job.html"
+  ],
+  "Place": [
+   "jobs/job.html"
+  ],
+  "PostalAddress": [
+   "jobs/job.html"
+  ],
+  "PropertyValue": [
+   "jobs/job.html"
+  ],
+  "MysMatch": [
+   "jobs/job.html"
+  ]
+ }
+}

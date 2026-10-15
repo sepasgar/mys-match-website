@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Support — MysMatch</title>
+<meta content="Hilfe zu MysMatch. Kontaktiere den Support, lies die häufigen Fragen und erfahre, wie du Konto, Verbindungen und Privatsphäre verwaltest." name="description"/>
+<meta content="#0F1020" name="theme-color"/>
+<!-- Open Graph -->
+<meta content="Support — MysMatch" property="og:title"/>
+<meta content="Hilfe zu MysMatch. Kontaktiere den Support, lies die häufigen Fragen und erfahre, wie du dein Konto verwaltest." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://www.mysmatch.com/de/support/" property="og:url"/>
+<meta content="https://www.mysmatch.com/og-image.png" property="og:image"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Support — MysMatch" name="twitter:title"/>
+<meta content="Hilfe zu MysMatch. Kontaktiere den Support und lies die häufigen Fragen." name="twitter:description"/>
+<link href="/logo-512.png" rel="icon" type="image/png"/>
+<link href="https://www.mysmatch.com/de/support/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/css/site.css" rel="stylesheet"/>
+<style>
+    /* Page-specific bits on top of /css/site.css (Oct 2026 redesign). */
+    /* WHY left-aligned: lines the text up with the hero title above it. */
+    .text-page .in{ display:flex; justify-content:flex-start; }
+    .text-page .prose{ width:100%; }
+    /* Support: contact card, FAQ list, resource links */
+    .contact-card{ background:var(--ink); color:#fff; border-radius:32px; padding:clamp(28px,3.4vw,56px); margin:0 0 clamp(56px,5vw,88px); position:relative; overflow:hidden; }
+    .contact-card::before{ content:""; position:absolute; right:-20%; top:-60%; width:80%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.25),rgba(15,16,32,0)); pointer-events:none; }
+    .contact-card > *{ position:relative; }
+    .prose .contact-card h2{ color:#fff; margin-top:0; }
+    .contact-card p{ color:var(--on-dark); }
+    .prose .contact-btn{ display:inline-flex; margin:8px 0 14px; padding:16px 28px; border-radius:9999px; background:#fff; color:var(--ink); font-weight:600; text-decoration:none; transition:transform .3s, background .3s; }
+    .prose .contact-btn:hover{ background:#F1ECFF; color:var(--ink); transform:translateY(-2px); }
+    .response-time{ font-family:var(--mono); font-size:13px; letter-spacing:0.06em; color:var(--faint) !important; margin:0 !important; }
+    .faq-item{ border-top:1px solid var(--line-violet); padding:22px 0 8px; }
+    .faq-item:last-of-type{ border-bottom:1px solid var(--line-violet); margin-bottom:8px; }
+    .prose .faq-item h3{ margin:0 0 10px; }
+    .resource-links{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr)); gap:14px; }
+    .prose .resource-link{ display:flex; flex-direction:column; gap:6px; padding:24px; border-radius:24px; background:#fff; text-decoration:none; box-shadow:0 1px 2px rgba(15,16,32,0.04),0 24px 48px -28px rgba(60,40,140,0.25); transition:transform .4s cubic-bezier(.2,.7,.2,1); }
+    .prose .resource-link:hover{ transform:translateY(-4px); }
+    .resource-link strong{ font-size:18px; letter-spacing:-0.02em; }
+    .resource-link span{ font-size:15px; color:var(--ink-2); line-height:1.5; }
+    /* Privacy: contact block */
+    .contact-block{ background:#fff; border-radius:24px; padding:24px 28px; margin:8px 0 20px; box-shadow:0 1px 2px rgba(15,16,32,0.04),0 24px 48px -28px rgba(60,40,140,0.25); }
+    .contact-block p{ margin:0 0 6px; }
+  </style>
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://www.mysmatch.com/support/">
+<link rel="alternate" hreflang="de" href="https://www.mysmatch.com/de/support/">
+<link rel="alternate" hreflang="fa" href="https://www.mysmatch.com/fa/support/">
+<link rel="alternate" hreflang="x-default" href="https://www.mysmatch.com/support/">
+<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style>
+<!-- /i18n:head -->
+</head>
+<body>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+<div class="nav-in">
+<a class="brand" href="/de/"><img alt="" height="36" src="/logo-512.png" width="36"/><span>MysMatch</span></a>
+<nav class="nav-links" id="nav-links">
+<a href="/de/">Start</a>
+<a href="/de/events">Events</a>
+<a href="/de/jobs">Jobs</a>
+<!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
+<!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/support/" hreflang="en" lang="en">EN</a><a href="/de/support/" hreflang="de" lang="de" aria-current="true">DE</a><a href="/fa/support/" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --></nav>
+<div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/support/" hreflang="en" lang="en">EN</a><a href="/de/support/" hreflang="de" lang="de" aria-current="true">DE</a><a href="/fa/support/" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --> <a class="nav-cta" href="/de/#download">App holen</a>
+<button aria-controls="nav-links" aria-expanded="false" aria-label="Menü öffnen" class="menu-btn" id="menu-btn" type="button"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</header>
+<!-- ════════ HERO ════════ -->
+<section class="page-hero short">
+<div class="hero-stack">
+<div class="hero-head">
+<div class="kicker" data-reveal="">/ Support</div>
+<h1 data-reveal="">Support</h1>
+</div>
+<p class="hero-sub" data-reveal="">Fragen, Feedback oder Probleme mit der App? Wir helfen dir gern.</p>
+</div>
+</section>
+<!-- ════════ CONTENT ════════ -->
+<section class="sheet sheet-white text-page">
+<div class="in">
+<div class="prose">
+<!-- Contact card -->
+<div class="contact-card">
+<h2>Kontakt</h2>
+<p>Erreiche unser Team direkt per E-Mail. Bitte gib deine Konto-E-Mail und eine kurze Beschreibung des Problems an.</p>
+<a class="contact-btn" href="mailto:contact@mys-match.com?subject=MysMatch%20Support">contact@mys-match.com</a>
+<p class="response-time">Wir antworten in der Regel innerhalb von 2 Werktagen.</p>
+</div>
+<!-- FAQ -->
+<h2>Häufige Fragen</h2>
+<div class="faq-item">
+<h3>Wie erstelle ich ein Konto?</h3>
+<p>Öffne MysMatch, tippe auf <strong>Registrieren</strong> und gib deine E-Mail, ein Passwort und ein paar Profilangaben ein (Name, Uni, Studiengang). Du kannst außerdem deine Telefonnummer per SMS bestätigen und erhältst dann ein Abzeichen in deinem Profil; das ist Pflicht, wenn du Events erstellen willst.</p>
+<!-- WHY reworded: phone verification isn't part of signup, it's optional (badge) and only gates event creation. -->
+</div>
+<div class="faq-item">
+<h3>Wie funktionieren Verbindungen?</h3>
+<p>MysMatch schlägt Studierende anhand deiner Uni, deines Studiengangs, Abschlusses und deiner Stadt vor. Schick eine Verbindungsanfrage – wenn die andere Person annimmt, könnt ihr chatten.</p>
+</div>
+<div class="faq-item">
+<h3>Ich habe meinen SMS-Code nicht erhalten.</h3>
+<p>Prüf, ob deine Telefonnummer stimmt und du Empfang hast. Warte 60 Sekunden, bevor du einen neuen Code anforderst. Kommt er trotzdem nicht an, schreib uns an <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> mit deiner Nummer und deinem Land.</p>
+</div>
+<div class="faq-item">
+<h3>Wie setze ich mein Passwort zurück?</h3>
+<p>Tippe auf dem Anmeldebildschirm auf <strong>Passwort vergessen?</strong> und gib die E-Mail deines Kontos ein. Du erhältst innerhalb weniger Minuten einen Link zum Zurücksetzen. Schau auch in deinen Spam-Ordner.</p>
+</div>
+<div class="faq-item">
+<h3>Wie melde oder blockiere ich andere Nutzer?</h3>
+<p>Öffne das Profil oder den Chat der Person, tippe auf das Menü-Symbol und wähl <strong>Melden</strong> oder <strong>Blockieren</strong>. Meldungen werden innerhalb von 24 Stunden geprüft. Blockierte Nutzer sehen dein Profil nicht mehr und können dich nicht kontaktieren.</p>
+</div>
+<div class="faq-item">
+<h3>Wie lösche ich mein Konto?</h3>
+<p>Geh in der App zu <strong>Profil → Deine Daten</strong>, tippe auf deine Kontokarte und dann auf <strong>Mein Konto löschen</strong>. Dein Konto wird nach 30 Tagen endgültig gelöscht (eine erneute Anmeldung in dieser Zeit bricht die Löschung ab). Du kannst die Löschung auch per E-Mail von deiner Konto-E-Mail an <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> beantragen. Details: <a href="/de/delete-account">Konto löschen</a>.</p>
+</div>
+<div class="faq-item">
+<h3>Wie ändere ich E-Mail, Uni oder Profilfoto?</h3>
+<p>Geh zu <strong>Profil → Profil bearbeiten</strong>. Die meisten Felder kannst du direkt ändern. Wenn du deine registrierte E-Mail-Adresse ändern musst, kontaktiere den Support.</p>
+</div>
+<div class="faq-item">
+<h3>Kann ich MysMatch nutzen, wenn meine Uni nicht aufgeführt ist?</h3>
+<p>Wir fügen laufend Universitäten hinzu. Fehlt deine, schreib uns an <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> und wir fügen sie hinzu.</p>
+</div>
+<div class="faq-item">
+<h3>Wie stelle ich Push-Benachrichtigungen ab?</h3>
+<p>Deaktiviere Benachrichtigungen in den Geräteeinstellungen (iOS: Einstellungen → Mitteilungen → MysMatch; Android: Einstellungen → Apps → MysMatch → Benachrichtigungen). Du kannst die Einstellungen auch in der App verwalten.</p>
+</div>
+<div class="faq-item">
+<h3>Ist MysMatch kostenlos?</h3>
+<p>Ja, MysMatch ist kostenlos – zum Herunterladen und für die zentralen Funktionen wie Verbindungen und Nachrichten.</p>
+</div>
+<div class="faq-item">
+<h3>Ich habe einen Fehler gefunden oder einen Funktionswunsch.</h3>
+<p>Erzähl es uns gern. Schreib an <a href="mailto:contact@mys-match.com">contact@mys-match.com</a> mit einer kurzen Beschreibung und, wenn möglich, einem Screenshot oder den Schritten zum Nachstellen.</p>
+</div>
+<!-- Resources -->
+<h2>Weitere Infos</h2>
+<div class="resource-links">
+<a class="resource-link" href="/de/privacy-policy"><strong>Datenschutzerklärung</strong> <span>Wie wir deine Daten erheben, nutzen und schützen.</span></a>
+<a class="resource-link" href="/de/terms"><strong>Nutzungsbedingungen</strong> <span>Die Regeln für die Nutzung von MysMatch.</span></a>
+<a class="resource-link" href="/de/delete-account"><strong>Konto löschen</strong> <span>So löschst du dein Konto endgültig.</span></a>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+<div class="in">
+<div class="foot-top">
+<div class="foot-brand">
+<a class="brand" href="/de/"><img alt="" height="44" src="/logo-512.png" width="44"/><span>MysMatch</span></a>
+<p>Lern nicht allein.</p>
+</div>
+<div class="foot-cols">
+<div class="foot-col"><span class="kicker">Produkt</span><a href="/de/events">Events</a><a href="/de/jobs">Jobs</a></div>
+<div class="foot-col"><span class="kicker">Unternehmen</span><a href="mailto:contact@mys-match.com">Kontakt</a><a href="/dashboard.html">Login für Organisationen</a><a href="/de/organizations">Registrierung für Organisationen</a></div>
+<div class="foot-col"><span class="kicker">Rechtliches</span><a href="/de/privacy-policy">Datenschutzerklärung</a><a href="/de/terms">Nutzungsbedingungen</a><a href="/de/support">Support</a></div>
+<div class="foot-col"><span class="kicker">Social Media</span><a href="https://www.instagram.com/mysmatchofficial/" rel="noopener noreferrer" target="_blank">Instagram</a><a href="https://www.tiktok.com/@mysmatchofficial" rel="noopener noreferrer" target="_blank">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" rel="noopener noreferrer" target="_blank">LinkedIn</a></div>
+</div>
+</div>
+<div aria-hidden="true" class="wordmark">MysMatch</div>
+<div class="foot-bottom"><span>© 2026 MysMatch. Alle Rechte vorbehalten.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+</div>
+</footer>
+<script src="/js/site.js"></script>
+</body>
+</html>

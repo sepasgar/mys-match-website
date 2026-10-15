@@ -39,6 +39,13 @@
   .what-list p{ font-size:clamp(16px,1.15vw,19px); line-height:1.55; color:#B4B5C8; max-width:34ch; }
   @media (max-width:640px){ .step3{ border-radius:28px; } }
 </style>
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://www.mysmatch.com/organizations/">
+<link rel="alternate" hreflang="de" href="https://www.mysmatch.com/de/organizations/">
+<link rel="alternate" hreflang="fa" href="https://www.mysmatch.com/fa/organizations/">
+<link rel="alternate" hreflang="x-default" href="https://www.mysmatch.com/organizations/">
+<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style>
+<!-- /i18n:head -->
 </head>
 <body>
 
@@ -50,9 +57,8 @@
       <a href="/">Home</a>
       <a href="/events">Events</a>
       <a href="/jobs">Jobs</a>
-    </nav>
-    <div class="nav-right">
-      <a class="nav-cta" href="#get-app">Get the app</a>
+    <!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/organizations/" hreflang="en" lang="en" aria-current="true">EN</a><a href="/de/organizations/" hreflang="de" lang="de">DE</a><a href="/fa/organizations/" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --></nav>
+    <div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/organizations/" hreflang="en" lang="en" aria-current="true">EN</a><a href="/de/organizations/" hreflang="de" lang="de">DE</a><a href="/fa/organizations/" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch -->      <a class="nav-cta" href="#get-app">Get the app</a>
       <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
     </div>
   </div>

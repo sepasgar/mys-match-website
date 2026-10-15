@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="fa">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>رویداد — MysMatch</title>
+<meta content="برای این رویداد MysMatch ثبت‌نام کن." name="description"/>
+<meta content="#0F1020" name="theme-color"/>
+<meta content="noindex" name="robots"/><!-- query-string detail page; the listing is the canonical index -->
+<link href="/logo-512.png" rel="icon" type="image/png"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/css/site.css" rel="stylesheet"/>
+<style>
+  /* ───────── hero (title + key facts, filled by JS) ───────── */
+  .ev-hero{ min-height:0; padding-bottom:clamp(100px,9vw,160px); }
+  .ev-hero h1{ font-size:clamp(44px,6.4vw,124px); max-width:18ch; overflow-wrap:anywhere; }
+  .back{ color:var(--faint); font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; }
+  .back:hover{ color:#fff; }
+  .facts{ display:flex; flex-wrap:wrap; gap:12px; }
+  .fact{ display:inline-flex; align-items:center; gap:10px; padding:12px 20px; border-radius:9999px; border:1px solid rgba(255,255,255,0.14); color:var(--on-dark); font-size:clamp(15px,1.1vw,18px); }
+  .fact svg{ flex-shrink:0; color:var(--violet-soft); }
+  .fact.full{ border-color:rgba(233,75,154,0.5); color:#F5BCE4; }
+  .center-state{ font-size:clamp(20px,1.8vw,30px); color:var(--on-dark); letter-spacing:-0.02em; line-height:1.4; }
+
+  /* ───────── body: photo + description | register card ───────── */
+  .ev-main .in{ display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,1fr); gap:clamp(32px,4vw,80px); align-items:start; }
+  .ev-left{ display:flex; flex-direction:column; gap:clamp(28px,3vw,48px); }
+  /* WHY natural height: covers are often posters with text; a fixed crop cut it off. */
+  .hero-img{ width:100%; height:auto; max-height:min(110vh,1100px); object-fit:cover; border-radius:36px; background:#ECEAF4; display:block; box-shadow:0 40px 80px -30px rgba(60,40,140,0.3); }
+  .hero-img.placeholder{ aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; font-size:72px; background:linear-gradient(135deg,rgba(123,92,255,0.10),rgba(233,75,154,0.10)); }
+  .desc-wrap{ display:flex; flex-direction:column; gap:16px; }
+  .desc{ font-size:clamp(17px,1.25vw,20px); color:var(--ink-2); line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; }
+  @media (min-width:961px){ #register-card{ position:sticky; top:120px; } }
+  @media (max-width:960px){
+    .ev-main .in{ grid-template-columns:1fr; }
+    /* WHY reorder: in one column the form sat below long descriptions; put it right under the photo. */
+    .ev-left{ display:contents; }
+    .ev-left > .hero-img{ order:1; }
+    #register-card{ order:2; }
+    .ev-left > .desc-wrap{ order:3; }
+  }
+  /* WHY smaller on phones: long single-word titles (e.g. German compounds) broke mid-word. */
+  @media (max-width:640px){ .ev-hero h1{ font-size:clamp(30px,9vw,44px); } }
+
+  /* ───────── register card + form ───────── */
+  #register-card h2{ font-size:clamp(28px,2.4vw,40px); letter-spacing:-0.045em; font-weight:600; line-height:1.05; margin-bottom:8px; }
+  #register-card .sub{ font-size:16px; color:var(--ink-2); line-height:1.55; margin-bottom:12px; }
+  /* App-only card content is centred (user, Oct 2026): store buttons in the
+     middle with heading, text and the open-in-app link centred above/below. */
+  #register-card.app-only{ text-align:center; }
+  #register-card.app-only .stores{ justify-content:center; margin-top:20px; }
+  /* Same thin brand-gradient frame as in-app-only cards on /events. */
+  #register-card.app-only{ border:2px solid transparent; background:linear-gradient(#fff,#fff) padding-box, linear-gradient(100deg,#7B5CFF,#E94B9A) border-box; }
+  .open-app{ display:inline-block; margin-top:20px; font-size:15px; font-weight:600; color:var(--violet); }
+  .open-app:hover{ color:var(--pink); }
+  label{ display:block; font-size:14px; font-weight:600; color:var(--ink); margin:18px 0 8px; }
+  label .req{ color:var(--pink); }
+  input, select, textarea{ width:100%; border:1px solid #E2DEF0; border-radius:16px; padding:14px 16px; font-size:16px; font-family:inherit; color:var(--ink); background:#fff; transition:border-color .2s, box-shadow .2s; }
+  textarea{ min-height:96px; resize:vertical; }
+  input:focus, select:focus, textarea:focus{ outline:none; border-color:var(--violet); box-shadow:0 0 0 4px rgba(123,92,255,0.12); }
+  input:disabled, select:disabled{ background:#F7F6FB; color:var(--muted); }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  #register-card .btn{ width:100%; margin-top:24px; }
+  #register-card .btn[disabled]{ opacity:0.5; cursor:not-allowed; transform:none; }
+  #submit-btn, #qr-dl{ background:var(--ink); color:#fff; }
+  #submit-btn:hover:not([disabled]), #qr-dl:hover{ background:var(--violet); color:#fff; }
+  .btn.secondary{ background:#fff; color:var(--ink); border:1px solid #E2DEF0; margin-top:12px; }
+  .btn.secondary:hover{ border-color:var(--ink); color:var(--ink); }
+  .hint{ font-size:13px; color:var(--muted); margin-top:10px; line-height:1.5; }
+  .hint a{ color:var(--ink-2); text-decoration:underline; }
+  .form-error{ background:#FDECF4; color:#B3246B; border:1px solid #F6C2DD; border-radius:16px; padding:12px 16px; font-size:14px; font-weight:600; margin-top:18px; }
+  .success{ text-align:center; }
+  .success .check{ width:64px; height:64px; border-radius:50%; background:var(--green); color:#fff; font-size:32px; display:flex; align-items:center; justify-content:center; margin:0 auto 18px; }
+  .qr-box{ display:flex; justify-content:center; margin:12px 0 16px; }
+  .qr-box img{ width:220px; height:220px; border:1px solid #E2DEF0; border-radius:20px; padding:10px; background:#fff; }
+  .qr-warn{ background:#FFF6E5; border:1px solid #F4D58B; color:#8A6100; border-radius:16px; padding:12px 16px; font-size:14px; line-height:1.55; text-align:left; }
+  @media (max-width:600px){ .row2{ grid-template-columns:1fr; } .hero-img{ border-radius:28px; } }
+
+  /* ───────── app-download prompt (dismissible, once per session) ───────── */
+  .app-card-backdrop{ position:fixed; inset:0; z-index:200; padding:20px; background:rgba(15,16,32,0.6); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; opacity:0; transition:opacity .25s ease; }
+  .app-card-backdrop.show{ opacity:1; }
+  /* The `display:flex` above overrides the [hidden] attribute, so "closed"
+     only faded the backdrop to opacity 0 — it stayed on top of the page and
+     taps where the App Store button had been still opened the store (Sept
+     2026). Honour [hidden], and don't take taps unless it's actually shown
+     (covers the fade-in/out moments too). */
+  .app-card-backdrop[hidden]{ display:none; }
+  .app-card-backdrop:not(.show){ pointer-events:none; }
+  .app-card{ position:relative; background:var(--ink); color:#fff; border-radius:36px; max-width:460px; width:100%; padding:40px 32px 28px; text-align:center; overflow:hidden; box-shadow:0 40px 100px rgba(0,0,0,0.5); transform:translateY(12px) scale(0.98); transition:transform .25s ease; }
+  .app-card::before{ content:""; position:absolute; right:-30%; top:-50%; width:90%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.28),rgba(15,16,32,0)); pointer-events:none; }
+  .app-card > *{ position:relative; }
+  .app-card-backdrop.show .app-card{ transform:none; }
+  .app-card-close{ position:absolute; top:14px; right:16px; background:none; border:none; font-size:28px; line-height:1; color:var(--faint); cursor:pointer; padding:4px; }
+  .app-card-close:hover{ color:#fff; }
+  .app-card-logo{ width:56px; height:56px; border-radius:16px; margin-bottom:18px; }
+  .app-card h3{ font-size:clamp(22px,2vw,28px); font-weight:600; letter-spacing:-0.035em; line-height:1.15; margin:0 0 12px; }
+  .app-card > p{ font-size:15px; color:var(--on-dark); line-height:1.6; margin-bottom:24px; }
+  .app-card .stores{ justify-content:center; }
+  .app-card-dismiss{ display:inline-block; margin-top:18px; background:none; border:none; font-family:inherit; color:var(--faint); font-size:14px; font-weight:500; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+  .app-card-dismiss:hover{ color:#fff; }
+</style>
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://www.mysmatch.com/events/event">
+<link rel="alternate" hreflang="de" href="https://www.mysmatch.com/de/events/event">
+<link rel="alternate" hreflang="fa" href="https://www.mysmatch.com/fa/events/event">
+<link rel="alternate" hreflang="x-default" href="https://www.mysmatch.com/events/event">
+<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>html[lang=fa] body,html[lang=fa] button,html[lang=fa] input,html[lang=fa] textarea{font-family:Vazirmatn,'Geist',sans-serif}html[lang=fa] .h2,html[lang=fa] h1,html[lang=fa] h2{letter-spacing:0!important}html[lang=fa] .kicker{letter-spacing:0}</style>
+<!-- /i18n:head -->
+</head>
+<body>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+<div class="nav-in">
+<a class="brand" href="/fa/"><img alt="" height="36" src="/logo-512.png" width="36"/><span>MysMatch</span></a>
+<nav class="nav-links" id="nav-links">
+<a href="/fa/">خانه</a>
+<a class="on" href="/fa/events">رویدادها</a>
+<a href="/fa/jobs">کارها</a>
+<!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/events/event" hreflang="en" lang="en">EN</a><a href="/de/events/event" hreflang="de" lang="de">DE</a><a href="/fa/events/event" hreflang="fa" lang="fa" aria-current="true">فا</a></div><!-- /i18n:switch --></nav>
+<div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/events/event" hreflang="en" lang="en">EN</a><a href="/de/events/event" hreflang="de" lang="de">DE</a><a href="/fa/events/event" hreflang="fa" lang="fa" aria-current="true">فا</a></div><!-- /i18n:switch --> <a class="nav-cta" href="/fa/events">همهٔ رویدادها</a>
+<button aria-controls="nav-links" aria-expanded="false" aria-label="باز کردن منو" class="menu-btn" id="menu-btn" type="button"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</header>
+<!-- ════════ HERO (title + facts, filled by JS) ════════ -->
+<section class="page-hero ev-hero">
+<div class="hero-stack">
+<div class="hero-head">
+<a class="back" href="/fa/events">→ همهٔ رویدادها</a>
+<div class="center-state" id="state">در حال بارگذاری رویداد…</div>
+<div hidden="" id="ev-head"></div>
+</div>
+</div>
+</section>
+<!-- ════════ BODY ════════ -->
+<section class="sheet sheet-white ev-main" hidden="" id="event">
+<div class="in">
+<div class="ev-left" id="event-content"></div>
+<div class="card" id="register-card">
+<h2>ثبت‌نام</h2>
+<div class="sub" id="register-sub">جایت را رزرو کن — فقط یک لحظه طول می‌کشد.</div>
+<form id="reg-form">
+<div class="row2">
+<div>
+<label for="f-name">نام کامل <span class="req">*</span></label>
+<input autocomplete="name" id="f-name" name="name" required="" type="text"/>
+</div>
+<div>
+<label for="f-email">ایمیل <span class="req">*</span></label>
+<input autocomplete="email" id="f-email" name="email" required="" type="email"/>
+</div>
+</div>
+<div class="row2">
+<div id="gender-wrap">
+<label for="f-gender">جنسیت</label>
+<select id="f-gender" name="gender">
+<option value="">ترجیح می‌دهم نگویم</option>
+<option value="Male">مرد</option>
+<option value="Female">زن</option>
+</select>
+</div>
+<div>
+<label for="f-party">تعداد نفرات</label>
+<input id="f-party" max="10" min="1" name="party" type="number" value="1"/>
+</div>
+</div>
+<div id="questions"></div>
+<div id="doc-field"></div>
+<div class="form-error" hidden="" id="form-error"></div>
+<button class="btn" id="submit-btn" type="submit">ثبت‌نام</button>
+<p class="hint">با ثبت‌نام، <a href="/fa/terms">شرایط استفاده</a> و <a href="/fa/privacy-policy">سیاست حفظ حریم خصوصی</a> ما را می‌پذیری. اطلاعاتت را با برگزارکنندهٔ رویداد به اشتراک می‌گذاریم.</p>
+</form>
+</div>
+</div>
+</section>
+<!-- App-download prompt (dismissible). Independent of the event load so it still
+     nudges even if the event fails to render. Shown once per browser session. -->
+<div class="app-card-backdrop" hidden="" id="app-card-backdrop">
+<div aria-labelledby="app-card-title" aria-modal="true" class="app-card" role="dialog">
+<button aria-label="بستن" class="app-card-close" id="app-card-close">×</button>
+<img alt="MysMatch" class="app-card-logo" height="56" src="/logo-512.png" width="56"/>
+<h3 id="app-card-title">اپ را دانلود کن تا از همهٔ رویدادها باخبر شوی — و خیلی چیزهای دیگر</h3>
+<p>از رویدادهای جدید اطرافت باخبر شو، با یک لمس ثبت‌نام کن، با برگزارکنندگان چت کن و هم‌درس و هم‌کلاسی پیدا کن.</p>
+<!-- WHY both classes: .stores styles it; .app-card-stores is what the in-app-only
+         register card copies (see setupRegistration). -->
+<div class="stores light app-card-stores">
+<a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 0 24 24" width="24"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
+<span><small>دریافت از</small><b>App Store</b></span>
+</a>
+<a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
+<span><small>دریافت از</small><b>Google Play</b></span>
+</a>
+</div>
+<button class="app-card-dismiss" id="app-card-dismiss">ادامه در وب</button>
+</div>
+</div>
+<script>
+  // Dismissible app-download prompt. Once dismissed, stays closed for the rest
+  // of the browser session so it never blocks someone mid-registration.
+  (function () {
+    var KEY = 'mm_app_prompt_dismissed';
+    var backdrop = document.getElementById('app-card-backdrop');
+    if (!backdrop) return;
+    try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
+    function close() {
+      backdrop.classList.remove('show');
+      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      setTimeout(function () { backdrop.hidden = true; }, 260);
+    }
+    function open() {
+      // In-app-only event: the page's own card already shows the store
+      // buttons ("Registration only on app…"), so don't repeat them in a
+      // pop-up covering it.
+      var reg = document.getElementById('register-card');
+      if (reg && reg.classList.contains('app-only')) return;
+      backdrop.hidden = false;
+      requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    }
+    document.getElementById('app-card-close').addEventListener('click', close);
+    document.getElementById('app-card-dismiss').addEventListener('click', close);
+    backdrop.addEventListener('click', function (e) { if (e.target === backdrop) close(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !backdrop.hidden) close(); });
+    // Let the event content paint first.
+    setTimeout(open, 900);
+  })();
+</script>
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+<div class="in">
+<div class="foot-top">
+<div class="foot-brand">
+<a class="brand" href="/fa/"><img alt="" height="44" src="/logo-512.png" width="44"/><span>MysMatch</span></a>
+<p>تنها درس نخوان.</p>
+</div>
+<div class="foot-cols">
+<div class="foot-col"><span class="kicker">محصول</span><a href="/fa/events">رویدادها</a><a href="/fa/jobs">کارها</a></div>
+<div class="foot-col"><span class="kicker">شرکت</span><a href="mailto:contact@mys-match.com">تماس</a><a href="/dashboard.html">ورود سازمان‌ها</a><a href="/fa/organizations">ثبت‌نام سازمان‌ها</a></div>
+<div class="foot-col"><span class="kicker">حقوقی</span><a href="/fa/privacy-policy">سیاست حفظ حریم خصوصی</a><a href="/fa/terms">شرایط استفاده</a><a href="/fa/support">پشتیبانی</a></div>
+<div class="foot-col"><span class="kicker">شبکه‌های اجتماعی</span><a href="https://www.instagram.com/mysmatchofficial/" rel="noopener noreferrer" target="_blank">Instagram</a><a href="https://www.tiktok.com/@mysmatchofficial" rel="noopener noreferrer" target="_blank">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" rel="noopener noreferrer" target="_blank">LinkedIn</a></div>
+</div>
+</div>
+<div aria-hidden="true" class="wordmark">MysMatch</div>
+<div class="foot-bottom"><span>© ۲۰۲۶ MysMatch. همهٔ حقوق محفوظ است.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/site.js"></script>
+<script>
+    (function () {
+      const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+      const stateEl = document.getElementById('state');
+      const eventEl = document.getElementById('event');
+      const id = new URLSearchParams(location.search).get('id');
+
+      if (!id) { stateEl.textContent = 'رویدادی مشخص نشده است.'; return; }
+      if (!window.MM) { stateEl.textContent = 'اتصال برقرار نشد. لطفاً بعداً دوباره تلاش کن.'; return; }
+
+      // Formats the real start moment in the EVENT's timezone, so every visitor
+      // sees the time the organizer entered (not converted to their own zone).
+      // `ev.date` is the typed time stored as if UTC; don't pass it to Date().
+      function fmtDate(ev) {
+        try {
+          const d = new Date(ev.starts_at);
+          const timeZone = ev.timezone || 'Europe/Berlin';
+          return d.toLocaleDateString('fa-IR-u-ca-gregory', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone })
+            + ' · ' + d.toLocaleTimeString('fa-IR-u-ca-gregory', { hour: '2-digit', minute: '2-digit', timeZone });
+        } catch (e) { return ''; }
+      }
+
+      Promise.all([MM.getEvent(id), MM.getCounts(id)]).then(([ev, counts]) => {
+        if (!ev) { stateEl.innerHTML = 'این رویداد در دسترس نیست.<br>ممکن است خصوصی باشد یا دیگر منتشر نشود.'; return; }
+        document.title = ev.title + ' — MysMatch';
+        renderEvent(ev, counts);
+      }).catch((err) => { console.error(err); stateEl.textContent = 'بارگذاری این رویداد ممکن نشد.'; });
+
+      function renderEvent(ev, counts) {
+        const full = ev.max_capacity != null && counts.total >= ev.max_capacity;
+        const left = ev.max_capacity == null ? null : Math.max(0, ev.max_capacity - counts.total);
+        const price = (!ev.price || ev.price == 0) ? 'رایگان' : '€' + ev.price;
+        const loc = ev.location || ev.city || '';
+        const img = ev.event_image
+          ? '<img class="hero-img" src="' + esc(ev.event_image) + '" alt="' + esc(ev.title) + '">'
+          : '<div class="hero-img placeholder">🎉</div>';
+        // Facts as pills in the dark hero (Oct 2026 redesign); same data as before.
+        const ic = {
+          cal: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2.5"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>',
+          pin: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>',
+          flag: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22V4M4 4h12l-2 4 2 4H4"></path></svg>',
+          ticket: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9V6a1 1 0 011-1h16a1 1 0 011 1v3a3 3 0 000 6v3a1 1 0 01-1 1H4a1 1 0 01-1-1v-3a3 3 0 000-6z"></path></svg>',
+          phone: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"></rect><path d="M11 18h2"></path></svg>',
+          people: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"></circle><path d="M2.5 20c.8-3.5 3.4-5.5 6.5-5.5s5.7 2 6.5 5.5M16 4.8a3.5 3.5 0 010 6.4M18.5 14.8c1.6.8 2.7 2.6 3 5.2"></path></svg>',
+        };
+        const fact = (icon, text, extra) => '<span class="fact' + (extra || '') + '">' + ic[icon] + esc(text) + '</span>';
+        let spots = '';
+        if (ev.max_capacity == null) spots = fact('people', 'ثبت‌نام باز است');
+        else if (full) spots = fact('people', 'ظرفیت تکمیل', ' full');
+        else spots = fact('people', left + ' spot' + (left === 1 ? '' : 's') + ' left');
+
+        // In-app-only event (Oct 2026): the server sends no date / time /
+        // location for it (get_web_event), so say where to find them instead.
+        const appOnly = ev.web_registration === false;
+        const head = document.getElementById('ev-head');
+        head.innerHTML =
+          '<div style="display:flex;flex-direction:column;gap:clamp(24px,2.4vw,40px)">'
+          + (ev.category ? '<div class="kicker">/ ' + esc(ev.category) + '</div>' : '')
+          + '<h1>' + esc(ev.title) + '</h1>'
+          + '<div class="facts">'
+          + (appOnly
+            // Date is public for in-app-only events since Oct 11 2026; location stays in the app.
+            ? (ev.starts_at ? fact('cal', fmtDate(ev)) + fact('phone', 'برای دیدن مکان اپ را دانلود کن')
+                            : fact('phone', 'برای دیدن مکان و زمان اپ را دانلود کن'))
+            : fact('cal', fmtDate(ev))
+              + (loc ? fact('pin', loc) : '')
+              + (ev.starting_point ? fact('flag', ev.starting_point) : ''))
+          + fact('ticket', price) + spots
+          + '</div></div>';
+        head.hidden = false;
+        document.getElementById('event-content').innerHTML =
+          img
+          + (ev.description ? '<div class="desc-wrap"><div class="kicker">/ دربارهٔ این رویداد</div><div class="desc">' + esc(ev.description) + '</div></div>' : '');
+
+        eventEl.hidden = false;
+        stateEl.hidden = true;
+
+        setupRegistration(ev, full);
+      }
+
+      function setupRegistration(ev, full) {
+        const card = document.getElementById('register-card');
+
+        // In-app-only event: no web form — store buttons (same as the app
+        // prompt below) plus a link that opens this event in the installed app
+        // (www.mysmatch.com/event/<id> is an app link from 1.5.0; without the
+        // app it lands on the "Open in MysMatch" fallback page).
+        if (ev.web_registration === false) {
+          const stores = document.querySelector('.app-card-stores');
+          card.classList.add('app-only');
+          card.innerHTML = '<h2>ثبت‌نام این رویداد فقط در اپ</h2>'
+            + '<div class="sub">MysMatch را دانلود کن تا مکان' + (ev.starts_at ? '' : ' و زمان') + ' را ببینی و ثبت‌نام کنی.</div>'
+            // WHY drop .light: dark store buttons read better on this white card.
+            + (stores ? stores.outerHTML.replace(' light', '') : '')
+            + '<a class="open-app" href="https://www.mysmatch.com/event/' + encodeURIComponent(ev.id) + '">اپ را داری؟ این رویداد را باز کن ←</a>';
+          return;
+        }
+
+        // External-registration events: link out instead of collecting here.
+        if (ev.external_url) {
+          card.innerHTML = '<h2>ثبت‌نام</h2><div class="sub">ثبت‌نام این رویداد در سایت برگزارکننده انجام می‌شود.</div>'
+            + '<a class="btn btn-dark" href="' + esc(ev.external_url) + '" target="_blank" rel="noopener noreferrer">رفتن به ثبت‌نام ↗</a>';
+          return;
+        }
+        if (full) {
+          document.getElementById('register-sub').textContent = 'ظرفیت این رویداد تکمیل است.';
+          document.getElementById('submit-btn').disabled = true;
+          document.getElementById('submit-btn').textContent = 'ظرفیت تکمیل';
+          ['f-name', 'f-email', 'f-gender', 'f-party'].forEach((x) => { const el = document.getElementById(x); if (el) el.disabled = true; });
+          return;
+        }
+
+        // Hide the gender field unless the event uses gender-based capacity.
+        if (ev.max_capacity_male == null && ev.max_capacity_female == null) {
+          document.getElementById('gender-wrap').hidden = true;
+        }
+
+        // Build creator questions.
+        const questions = Array.isArray(ev.questions) ? ev.questions : [];
+        const qWrap = document.getElementById('questions');
+        qWrap.innerHTML = questions.map((q) => {
+          const reqMark = q.required ? ' <span class="req">*</span>' : '';
+          const fid = 'q_' + esc(q.id);
+          if (q.type === 'choice') {
+            const opts = (q.options || []).map((o) => '<option value="' + esc(o) + '">' + esc(o) + '</option>').join('');
+            return '<label for="' + fid + '">' + esc(q.label) + reqMark + '</label>'
+              + '<select id="' + fid + '" data-qid="' + esc(q.id) + '"' + (q.required ? ' required' : '') + '>'
+              + '<option value="">انتخاب کنید…</option>' + opts + '</select>';
+          }
+          return '<label for="' + fid + '">' + esc(q.label) + reqMark + '</label>'
+            + '<textarea id="' + fid + '" data-qid="' + esc(q.id) + '"' + (q.required ? ' required' : '') + '></textarea>';
+        }).join('');
+
+        // Document upload field — shown when the event enables or requires it.
+        if (ev.document_upload_enabled || ev.document_upload_required) {
+          const req = ev.document_upload_required;
+          document.getElementById('doc-field').innerHTML =
+            '<label for="f-doc">سند'
+            + (req ? ' <span class="req">*</span>' : ' <span style="color:var(--gray-light);font-weight:600">(اختیاری)</span>')
+            + '</label>'
+            + '<input id="f-doc" type="file" accept="image/png,image/jpeg,image/webp">'
+            + '<p class="hint">یک تصویر بارگذاری کن (مثلاً رسید پرداخت یا مدرک). حداکثر ۵ مگابایت.</p>';
+        }
+
+        document.getElementById('reg-form').addEventListener('submit', (e) => {
+          e.preventDefault();
+          submitRegistration(ev);
+        });
+      }
+
+      function submitRegistration(ev) {
+        const errBox = document.getElementById('form-error');
+        const btn = document.getElementById('submit-btn');
+        errBox.hidden = true;
+
+        const name = document.getElementById('f-name').value.trim();
+        const email = document.getElementById('f-email').value.trim();
+        const gender = document.getElementById('f-gender').value || null;
+        const party = parseInt(document.getElementById('f-party').value, 10) || 1;
+
+        const answers = {};
+        let missing = null;
+        document.querySelectorAll('#questions [data-qid]').forEach((el) => {
+          const qid = el.getAttribute('data-qid');
+          const val = (el.value || '').trim();
+          if (el.hasAttribute('required') && !val && !missing) missing = el.previousElementSibling.textContent.replace(' *', '');
+          if (val) answers[qid] = val;
+        });
+        if (missing) { errBox.textContent = 'لطفاً پاسخ بده: ' + missing; errBox.hidden = false; return; }
+
+        // Document handling (optional or required) — validate, then upload first.
+        const fileInput = document.getElementById('f-doc');
+        const file = fileInput && fileInput.files && fileInput.files[0];
+        if (ev.document_upload_required && !file) { errBox.textContent = 'لطفاً سند لازم را بارگذاری کن.'; errBox.hidden = false; return; }
+        if (file && file.size > 5 * 1024 * 1024) { errBox.textContent = 'حجم سند باید ۵ مگابایت یا کمتر باشد.'; errBox.hidden = false; return; }
+        if (file && ['image/png', 'image/jpeg', 'image/webp'].indexOf(file.type) === -1) { errBox.textContent = 'سند باید تصویر PNG، JPG یا WEBP باشد.'; errBox.hidden = false; return; }
+
+        btn.disabled = true; btn.textContent = file ? 'در حال بارگذاری…' : 'در حال ثبت‌نام…';
+
+        const register = (documentUrl) => {
+          btn.textContent = 'در حال ثبت‌نام…';
+          return MM.registerGuest({ eventId: ev.id, name: name, email: email, answers: answers, gender: gender, partySize: party, documentUrl: documentUrl })
+          .then((res) => {
+            if (!res.ok) {
+              errBox.textContent = res.error || 'ثبت‌نام انجام نشد. لطفاً دوباره تلاش کن.';
+              errBox.hidden = false;
+              btn.disabled = false; btn.textContent = 'ثبت‌نام';
+              return;
+            }
+            // Ticket QR. Encodes exactly what the app's door scanner expects:
+            // { eventId, userId }, where userId is this guest registration's id
+            // (the scanner resolves web guests by that id via get_event_attendees).
+            const payload = JSON.stringify({ eventId: ev.id, userId: res.id });
+            document.getElementById('register-card').innerHTML =
+              '<div class="success"><div class="check">✓</div>'
+              + '<h2>ثبت‌نامت انجام شد!</h2>'
+              + '<p class="sub">جای تو در <strong>' + esc(ev.title) + '</strong> تأیید شد. این کد QR را دم در نشان بده.</p>'
+              + '<div class="qr-box"><img id="qr-img" width="220" height="220" alt="Your ticket QR code"></div>'
+              + '<div class="qr-warn">⚠️ <strong>همین حالا کد QR را ذخیره کن — دوباره نمایش داده نمی‌شود.</strong><br>'
+              + 'برای لغو ثبت‌نام، وارد اپ MysMatch شو.</div>'
+              + '<a class="btn" id="qr-dl" download="mysmatch-ticket.png">ذخیرهٔ کد QR</a>'
+              + '<a class="btn secondary" href="/fa/events">رویدادهای بیشتر</a></div>';
+            renderTicketQr(payload);
+          })
+          .catch((err) => {
+            console.error(err);
+            errBox.textContent = 'مشکلی پیش آمد. لطفاً دوباره تلاش کن.';
+            errBox.hidden = false;
+            btn.disabled = false; btn.textContent = 'ثبت‌نام';
+          });
+        };
+
+        if (file) {
+          MM.uploadGuestDocument(ev.id, file).then((up) => {
+            if (!up.ok) {
+              errBox.textContent = up.error || 'بارگذاری سندت ممکن نشد. لطفاً دوباره تلاش کن.';
+              errBox.hidden = false; btn.disabled = false; btn.textContent = 'ثبت‌نام';
+              return;
+            }
+            register(up.path);
+          });
+        } else {
+          register(null);
+        }
+      }
+
+      // Generate the ticket QR (qrcodejs) into a throwaway node, then lift the
+      // canvas data-URL into a clean <img> so it's easy to save (long-press on
+      // mobile) and the "Save QR code" link can download it.
+      function renderTicketQr(payload) {
+        const img = document.getElementById('qr-img');
+        const dl = document.getElementById('qr-dl');
+        const unavailable = () => { if (img) img.alt = 'کد QR در دسترس نیست — لطفاً از این صفحه اسکرین‌شات بگیر.'; if (dl) dl.style.display = 'none'; };
+        if (!window.QRCode || !img) { unavailable(); return; }
+        try {
+          const tmp = document.createElement('div');
+          tmp.style.display = 'none';
+          document.body.appendChild(tmp);
+          // qrcodejs draws synchronously into `tmp` (canvas + fallback img).
+          new window.QRCode(tmp, {
+            text: payload, width: 440, height: 440,
+            colorDark: '#0D1E4C', colorLight: '#FFFFFF',
+            correctLevel: window.QRCode.CorrectLevel.M,
+          });
+          const canvas = tmp.querySelector('canvas');
+          let url = '';
+          if (canvas) {
+            // qrcodejs draws with NO quiet zone; QR spec needs a ~4-module white
+            // border or scanners (and saved screenshots) read unreliably. Re-draw
+            // onto a padded canvas so the border is baked into the saved image.
+            const margin = 40;
+            const out = document.createElement('canvas');
+            out.width = canvas.width + margin * 2;
+            out.height = canvas.height + margin * 2;
+            const ctx = out.getContext('2d');
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, out.width, out.height);
+            ctx.drawImage(canvas, margin, margin);
+            url = out.toDataURL('image/png');
+          } else {
+            const fallbackImg = tmp.querySelector('img');
+            url = fallbackImg ? fallbackImg.src : '';
+          }
+          document.body.removeChild(tmp);
+          if (url) { img.src = url; if (dl) dl.href = url; } else { unavailable(); }
+        } catch (e) { console.error(e); unavailable(); }
+      }
+    })();
+  </script>
+</body>
+</html>

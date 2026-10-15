@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="fa">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>کارها — MysMatch</title>
+<meta content="کار دانشجویی، کارآموزی و مینی‌جاب از سازمان‌های حاضر در MysMatch. اینجا ببین، در اپ MysMatch درخواست بده." name="description"/>
+<meta content="#0F1020" name="theme-color"/>
+<meta content="کارها — MysMatch" property="og:title"/>
+<meta content="کار دانشجویی، کارآموزی و مینی‌جاب. درخواست در اپ MysMatch." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://www.mysmatch.com/fa/jobs/" property="og:url"/>
+<meta content="https://www.mysmatch.com/og-image.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="کارها — MysMatch" name="twitter:title"/>
+<meta content="کار دانشجویی، کارآموزی و مینی‌جاب. درخواست در اپ MysMatch." name="twitter:description"/>
+<link href="/logo-512.png" rel="icon" type="image/png"/>
+<link href="https://www.mysmatch.com/fa/jobs/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/css/site.css" rel="stylesheet"/>
+<!-- Jobs board on the web (Sept 2026; Oct 2026 redesign). Every job from the app
+     is listed (via the get_public_jobs RPC); applying happens only in the app,
+     so there's no apply form here — just store buttons. -->
+<style>
+  .hero-right{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .hero-pill{ display:flex; align-items:center; gap:10px; padding:14px 22px; border-radius:9999px; border:1px solid rgba(255,255,255,0.14); font-size:clamp(15px,1.05vw,17px); color:var(--on-dark); }
+  .hero-pill i{ width:8px; height:8px; border-radius:50%; background:#CDB8FF; flex-shrink:0; }
+
+  /* ───────── open positions ───────── */
+  .positions .in{ display:flex; flex-direction:column; gap:clamp(40px,4vw,72px); }
+  .pos-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .pos-head-l{ display:flex; flex-direction:column; gap:clamp(16px,1.6vw,28px); }
+  .pos-head .h2{ font-size:clamp(44px,5.6vw,112px); display:flex; align-items:baseline; gap:clamp(14px,1.4vw,28px); flex-wrap:wrap; }
+  .count{ font-family:var(--mono); font-size:clamp(16px,1.4vw,24px); letter-spacing:0; font-weight:500; color:var(--violet); }
+  .city-pick{ display:flex; align-items:center; gap:12px; padding:6px 6px 6px 22px; border-radius:9999px; background:#fff; border:1px solid #E2DEF0; }
+  .city-pick span{ font-family:var(--mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .city-pick select{ appearance:none; -webkit-appearance:none; border:none; outline:none; background:#F4F1FD; color:var(--ink); font-family:inherit; font-size:clamp(15px,1.05vw,17px); font-weight:500; padding:12px 40px 12px 18px; border-radius:9999px; cursor:pointer; background-image:linear-gradient(45deg,transparent 50%,#4B4C63 50%),linear-gradient(135deg,#4B4C63 50%,transparent 50%); background-position:calc(100% - 20px) 52%,calc(100% - 15px) 52%; background-size:5px 5px,5px 5px; background-repeat:no-repeat; }
+  .chips{ display:flex; gap:10px; flex-wrap:wrap; }
+  .chip{ cursor:pointer; font-family:inherit; font-size:clamp(15px,1.1vw,18px); font-weight:500; padding:clamp(12px,0.9vw,15px) clamp(20px,1.6vw,28px); white-space:nowrap; border-radius:9999px; border:1px solid #E2DEF0; background:#fff; color:var(--ink-2); transition:background .25s, color .25s, border-color .25s; }
+  .chip:hover{ border-color:var(--ink); }
+  .chip.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .rows{ display:flex; flex-direction:column; border-top:1px solid #E2DEF0; }
+  .row{ display:flex; align-items:center; gap:clamp(20px,2.4vw,48px); flex-wrap:wrap; padding:clamp(24px,2.2vw,40px) clamp(8px,1.4vw,28px); border-bottom:1px solid #E2DEF0; color:var(--ink); border-radius:24px; transition:background .3s; }
+  .row:hover{ background:#fff; color:var(--ink); }
+  .row-l{ display:flex; align-items:center; gap:clamp(16px,1.6vw,28px); flex:1 1 380px; min-width:0; }
+  .logo-tile{ flex-shrink:0; width:clamp(52px,4.4vw,76px); height:clamp(52px,4.4vw,76px); border-radius:clamp(16px,1.4vw,24px); display:flex; align-items:center; justify-content:center; font-weight:700; font-size:clamp(17px,1.4vw,24px); letter-spacing:-0.03em; color:var(--ink-2); overflow:hidden; }
+  .logo-tile img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .row-txt{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+  .row-title{ font-size:clamp(22px,2.2vw,40px); font-weight:600; letter-spacing:-0.04em; line-height:1.05; }
+  .row-org{ font-size:clamp(15px,1.15vw,19px); color:var(--ink-2); }
+  .row-org b{ color:var(--violet); font-weight:600; }
+  .row-r{ display:flex; align-items:center; gap:clamp(12px,1.6vw,32px); flex-wrap:wrap; font-size:clamp(15px,1.1vw,18px); color:var(--ink-2); }
+  .type-pill{ padding:8px 16px; border-radius:9999px; background:#F1ECFF; color:#4B3BB0; font-weight:500; white-space:nowrap; }
+  .row-city{ min-width:110px; }
+  .row-age{ min-width:150px; }
+  .row-pay{ font-weight:600; color:var(--ink); }
+  .row-go{ width:clamp(44px,3.4vw,56px); height:clamp(44px,3.4vw,56px); border-radius:50%; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; flex-shrink:0; transition:background .3s; }
+  .row:hover .row-go{ background:var(--violet); }
+  .state{ padding:clamp(56px,6vw,96px) 0; display:flex; flex-direction:column; align-items:flex-start; gap:20px; }
+  .state span{ font-size:clamp(24px,2.2vw,38px); font-weight:600; letter-spacing:-0.04em; line-height:1.2; max-width:30ch; }
+
+  /* ───────── how to apply ───────── */
+  .apply-sec .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .apply-sec .kicker{ color:var(--faint); }
+  .apply-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; }
+  .apply-head .h2{ max-width:12ch; }
+  .steps3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .step3{ background:#17182C; border:1px solid rgba(255,255,255,0.08); border-radius:40px; padding:clamp(32px,3.4vw,64px); min-height:clamp(320px,26vw,460px); display:flex; flex-direction:column; justify-content:space-between; gap:40px; }
+  .step3:nth-child(2){ background:#1C1D36; }
+  .step3:nth-child(3){ background:linear-gradient(135deg,#ECEEFF 0%,#F4ECFF 50%,#FCEBF6 100%); color:var(--ink); border:none; }
+  .step3 .n{ font-size:clamp(80px,7vw,140px); line-height:0.8; font-weight:700; letter-spacing:-0.07em; color:#2E2F52; }
+  .step3:nth-child(2) .n{ color:#34355C; }
+  .step3:nth-child(3) .n{ color:#C9BEF5; }
+  .step3 h3{ font-size:clamp(28px,2.6vw,48px); line-height:1; letter-spacing:-0.045em; font-weight:600; margin-bottom:14px; }
+  .step3 p{ font-size:clamp(17px,1.25vw,21px); line-height:1.55; color:#B4B5C8; }
+  .step3:nth-child(3) p{ color:var(--ink-2); }
+
+  .org-steps{ margin:0; padding:0; list-style:none; counter-reset:st; display:flex; flex-direction:column; border-top:1px solid #DCD3F2; }
+  .org-steps li{ counter-increment:st; display:flex; gap:14px; padding:14px 0; border-bottom:1px solid #DCD3F2; font-size:clamp(16px,1.15vw,18px); line-height:1.5; color:var(--ink-2); }
+  .org-steps li::before{ content:counter(st); flex-shrink:0; width:28px; height:28px; border-radius:50%; background:var(--ink); color:#fff; font-size:13px; font-weight:600; display:flex; align-items:center; justify-content:center; margin-top:1px; }
+  /* WHY a span per step: a flex <li> split the bold words and the rest into two columns. */
+  .org-steps b{ color:var(--ink); font-weight:600; }
+
+  @media (max-width:760px){
+    /* WHY stacked rows on phones: the design's one-line row has no room below ~760px. */
+    .row{ align-items:flex-start; gap:16px; }
+    .row-l{ flex:1 1 100%; }
+    .row-r{ gap:10px 14px; }
+    .row-city, .row-age{ min-width:0; }
+    .row-go{ display:none; }
+  }
+  @media (max-width:640px){ .step3{ border-radius:28px; } }
+</style>
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://www.mysmatch.com/jobs/">
+<link rel="alternate" hreflang="de" href="https://www.mysmatch.com/de/jobs/">
+<link rel="alternate" hreflang="fa" href="https://www.mysmatch.com/fa/jobs/">
+<link rel="alternate" hreflang="x-default" href="https://www.mysmatch.com/jobs/">
+<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>html[lang=fa] body,html[lang=fa] button,html[lang=fa] input,html[lang=fa] textarea{font-family:Vazirmatn,'Geist',sans-serif}html[lang=fa] .h2,html[lang=fa] h1,html[lang=fa] h2{letter-spacing:0!important}html[lang=fa] .kicker{letter-spacing:0}</style>
+<!-- /i18n:head -->
+</head>
+<body>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+<div class="nav-in">
+<a class="brand" href="/fa/"><img alt="" height="36" src="/logo-512.png" width="36"/><span>MysMatch</span></a>
+<nav class="nav-links" id="nav-links">
+<a href="/fa/">خانه</a>
+<a href="/fa/events">رویدادها</a>
+<a aria-current="page" class="on" href="/fa/jobs">کارها</a>
+<!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
+<!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/jobs/" hreflang="en" lang="en">EN</a><a href="/de/jobs/" hreflang="de" lang="de">DE</a><a href="/fa/jobs/" hreflang="fa" lang="fa" aria-current="true">فا</a></div><!-- /i18n:switch --></nav>
+<div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/jobs/" hreflang="en" lang="en">EN</a><a href="/de/jobs/" hreflang="de" lang="de">DE</a><a href="/fa/jobs/" hreflang="fa" lang="fa" aria-current="true">فا</a></div><!-- /i18n:switch --> <a class="nav-cta" href="#get-app">دریافت اپ</a>
+<button aria-controls="nav-links" aria-expanded="false" aria-label="باز کردن منو" class="menu-btn" id="menu-btn" type="button"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</header>
+<!-- ════════ HERO ════════ -->
+<section class="page-hero">
+<div class="hero-stack">
+<div class="hero-head">
+<div class="kicker" data-reveal="">/ کارها</div>
+<h1 data-reveal="">کار دانشجویی<br/><span class="grad-text">متناسب با درست.</span></h1>
+</div>
+<div class="hero-foot" data-reveal="">
+<p class="hero-sub">کار دانشجویی، کارآموزی و مینی‌جاب از سازمان‌های حاضر در MysMatch.</p>
+<div class="hero-right">
+<span class="hero-pill"><i></i>درخواست‌ها از طریق اپ MysMatch ارسال می‌شوند</span>
+<a class="btn btn-violet" href="#positions">دیدن موقعیت‌ها ↓</a>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ OPEN POSITIONS (live from Supabase: get_public_jobs) ════════ -->
+<section class="sheet sheet-white positions" id="positions">
+<div class="in">
+<div class="pos-head">
+<div class="pos-head-l">
+<div class="kicker">/ موقعیت‌های باز</div>
+<h2 class="h2" data-reveal=""><span>موقعیت‌های باز</span><span class="count" id="jobs-count"></span></h2>
+</div>
+<label class="city-pick"><span>شهر</span><select aria-label="شهر" id="f-city"><option value="">همهٔ شهرها</option></select></label>
+</div>
+<div class="chips" id="type-chips"></div>
+<div>
+<div class="state" id="jobs-loading"><span>در حال بارگذاری کارها…</span></div>
+<div class="rows" hidden="" id="jobs-list"></div>
+<div class="state" hidden="" id="jobs-empty"><span>فعلاً کاری ثبت نشده. به‌زودی دوباره سر بزن — کارهای جدید مرتب در اپ منتشر می‌شوند.</span></div>
+<div class="state" hidden="" id="jobs-nomatch">
+<span>هنوز موقعیتی با این فیلترها نمی‌خواند.</span>
+<button class="btn btn-dark" id="clear-filters" type="button">پاک کردن فیلترها</button>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ HOW TO APPLY ════════ -->
+<section class="sheet sheet-dark apply-sec" id="get-app">
+<div class="in">
+<div class="apply-head">
+<div class="pos-head-l">
+<div class="kicker">/ نحوهٔ درخواست</div>
+<h2 class="h2" data-reveal="">در <span style="color:#CDB8FF">اپ MysMatch</span> درخواست بده.</h2>
+</div>
+<div class="stores light">
+<a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 0 24 24" width="24"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
+<span><small>دریافت از</small><b>App Store</b></span>
+</a>
+<a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
+<span><small>دریافت از</small><b>Google Play</b></span>
+</a>
+</div>
+</div>
+<div class="steps3">
+<div class="step3" data-reveal=""><span class="n">01</span><div><h3>درخواست با رزومه</h3><p>درخواستت را همراه رزومه مستقیم از اپ MysMatch بفرست.</p></div></div>
+<div class="step3" data-reveal=""><span class="n">02</span><div><h3>پاسخ به سؤال‌ها</h3><p>به سؤال‌های سازمان مستقیم در اپ پاسخ بده.</p></div></div>
+<div class="step3" data-reveal=""><span class="n">03</span><div><h3>چت با کارفرما</h3><p>وقتی سازمان درخواستت را بررسی کرد، مستقیم با آن گفتگو کن.</p></div></div>
+</div>
+</div>
+</section>
+<!-- ════════ FOR ORGANIZATIONS ════════ -->
+<section class="sheet app-band">
+<div class="in">
+<div class="pos-head-l">
+<div class="kicker" style="color:var(--ink-2)">/ برای سازمان‌ها</div>
+<h2 data-reveal="">دنبال نیروی دانشجو هستی؟<br/><span style="color:var(--violet)">آگهی کار بگذار.</span></h2>
+</div>
+<div class="app-band-r">
+<!-- WHY not the design's "Reach verified students": student status isn't checked (claims removed site-wide). -->
+<p>صفحهٔ سازمانت را در اپ MysMatch بساز و خودت آگهی کار منتشر کن — بدون نیاز به تماس با ما.</p>
+<!-- WHY steps instead of "Get in touch" (user, Oct 2026): organizations post jobs themselves
+           from their own page; the full guide is /organizations. -->
+<ol class="org-steps">
+<li><span><b>اپ را دریافت کن</b> از App Store یا Google Play.</span></li>
+<li><span><b>به‌عنوان Partner / Service Provider ثبت‌نام کن</b> تا صفحهٔ سازمانت را بسازی.</span></li>
+<li><span><b>آگهی کار بگذار</b> و با متقاضیان یک‌جا گفتگو کن.</span></li>
+</ol>
+<div><a class="btn btn-dark" href="/fa/organizations">ثبت‌نام سازمان‌ها ←</a></div>
+</div>
+</div>
+</section>
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+<div class="in">
+<div class="foot-top">
+<div class="foot-brand">
+<a class="brand" href="/fa/"><img alt="" height="44" src="/logo-512.png" width="44"/><span>MysMatch</span></a>
+<p>تنها درس نخوان.</p>
+</div>
+<div class="foot-cols">
+<div class="foot-col"><span class="kicker">محصول</span><a href="/fa/events">رویدادها</a><a href="/fa/jobs">کارها</a></div>
+<div class="foot-col"><span class="kicker">شرکت</span><a href="mailto:contact@mys-match.com">تماس</a><a href="/dashboard.html">ورود سازمان‌ها</a><a href="/fa/organizations">ثبت‌نام سازمان‌ها</a></div>
+<div class="foot-col"><span class="kicker">حقوقی</span><a href="/fa/privacy-policy">سیاست حفظ حریم خصوصی</a><a href="/fa/terms">شرایط استفاده</a><a href="/fa/support">پشتیبانی</a></div>
+<div class="foot-col"><span class="kicker">شبکه‌های اجتماعی</span><a href="https://www.instagram.com/mysmatchofficial/" rel="noopener noreferrer" target="_blank">Instagram</a><a href="https://www.tiktok.com/@mysmatchofficial" rel="noopener noreferrer" target="_blank">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" rel="noopener noreferrer" target="_blank">LinkedIn</a></div>
+</div>
+</div>
+<div aria-hidden="true" class="wordmark">MysMatch</div>
+<div class="foot-bottom"><span>© ۲۰۲۶ MysMatch. همهٔ حقوق محفوظ است.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/site.js"></script>
+<script>
+// Live jobs list + filters (type chips, city select). Pure string templating.
+(function () {
+  var list = document.getElementById('jobs-list'), loading = document.getElementById('jobs-loading');
+  var empty = document.getElementById('jobs-empty'), noMatch = document.getElementById('jobs-nomatch');
+  var countEl = document.getElementById('jobs-count'), chipsEl = document.getElementById('type-chips');
+  var fCity = document.getElementById('f-city');
+  var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var TINTS = ['linear-gradient(135deg,#E6E9FF,#F1E8FF)', 'linear-gradient(135deg,#F1E8FF,#FCE6F3)', 'linear-gradient(135deg,#E9EEFF,#FCE9F4)'];
+  // WHY: organizations type "-" when a job has no fixed city; treat it as empty.
+  var cityOf = function (j) { var c = (j.city || '').trim(); return c === '-' ? '' : c; };
+  var jobs = [], state = { type: '', city: '' };
+
+  function initials(name) {
+    return String(name || '?').split(/\s+/).filter(Boolean).map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase();
+  }
+  function row(j, i) {
+    var logoUrl = j.company_logo || j.org_avatar_url;
+    var tile = '<span class="logo-tile" style="background:' + TINTS[i % TINTS.length] + '">'
+      + (logoUrl ? '<img src="' + esc(logoUrl) + '" alt="" loading="lazy">' : esc(initials(j.company))) + '</span>';
+    var loc = [cityOf(j), j.country].filter(Boolean).join(', ');
+    return '<a class="row" data-reveal href="/fa/jobs/job.html?id=' + encodeURIComponent(j.id) + '">'
+      + '<div class="row-l">' + tile + '<div class="row-txt"><span class="row-title">' + esc(j.title) + '</span>'
+      + '<span class="row-org">' + esc(j.company) + (j.org_verified ? ' <b title="Verified organization">✓</b>' : '') + '</span></div></div>'
+      + '<div class="row-r"><span class="type-pill">' + esc(MM.jobTypeLabel(j)) + '</span>'
+      + '<span class="row-city">' + esc(loc || 'مکان منعطف') + '</span>'
+      // Start date (Oct 2026) when set, else the posted age.
+      + '<span class="row-age">' + esc(MM.jobStartsShort(j) || MM.postedAgo(j.created_at)) + '</span>'
+      + (j.salary ? '<span class="row-pay">' + esc(j.salary) + '</span>' : '')
+      + '<span class="row-go" aria-hidden="true">→</span></div></a>';
+  }
+  function render() {
+    var shown = jobs.filter(function (j) { return (!state.type || MM.jobType(j) === state.type) && (!state.city || cityOf(j) === state.city); });
+    chipsEl.querySelectorAll('.chip').forEach(function (b) { b.classList.toggle('on', b.dataset.type === state.type); });
+    fCity.value = state.city;
+    countEl.textContent = pad(shown.length) + (shown.length === 1 ? ' role' : ' roles');
+    if (!jobs.length) { list.hidden = true; noMatch.hidden = true; empty.hidden = false; return; }
+    empty.hidden = true;
+    noMatch.hidden = shown.length > 0;
+    list.hidden = shown.length === 0;
+    list.innerHTML = shown.map(row).join('');
+    if (window.MMReveal) window.MMReveal(list);
+  }
+  function buildFilters() {
+    // Chips: every job type the app has (same labels as the app's jobs board).
+    chipsEl.innerHTML = [['', 'همهٔ انواع']].concat(Object.keys(MM.JOB_TYPE_LABELS).map(function (k) { return [k, MM.JOB_TYPE_LABELS[k]]; }))
+      .map(function (t) { return '<button class="chip" type="button" data-type="' + esc(t[0]) + '">' + esc(t[1]) + '</button>'; }).join('');
+    var cities = jobs.map(cityOf).filter(Boolean).filter(function (c, i, a) { return a.indexOf(c) === i; }).sort();
+    cities.forEach(function (c) { fCity.insertAdjacentHTML('beforeend', '<option value="' + esc(c) + '">' + esc(c) + '</option>'); });
+  }
+  chipsEl.addEventListener('click', function (e) { var b = e.target.closest('.chip'); if (b) { state.type = b.dataset.type; render(); } });
+  fCity.addEventListener('change', function () { state.city = fCity.value; render(); });
+  document.getElementById('clear-filters').addEventListener('click', function () { state = { type: '', city: '' }; render(); });
+
+  if (!window.MM) { loading.firstChild.textContent = 'بارگذاری کارها ممکن نشد.'; return; }
+  MM.listJobs().then(function (data) {
+    jobs = data || [];
+    loading.hidden = true;
+    buildFilters();
+    render();
+  }).catch(function (err) { loading.firstChild.textContent = 'بارگذاری کارها ممکن نشد.'; console.error(err); });
+})();
+</script>
+</body>
+</html>

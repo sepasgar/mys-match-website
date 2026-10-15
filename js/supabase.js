@@ -214,11 +214,23 @@
     return (Array.isArray(data) ? data[0] : data) || null;
   }
 
+  // Page language (Oct 2026): the /de/ and /fa/ copies of the site set
+  // <html lang>, and these shared job labels follow it. English is unchanged.
+  const LANG = String(document.documentElement.lang || 'en').slice(0, 2);
+  const L = {
+    en: { types: { full_time: 'Full-time', part_time: 'Part-time', mini_job: 'Mini-job', temporary: 'Temporary', internship: 'Internship', volunteer: 'Volunteer' },
+      locale: 'en-GB', start: 'Start: ', end: 'End: ', starts: 'Starts ', temp: (n) => 'Temporary · ' + n + (n === 1 ? ' day' : ' days'),
+      today: 'Posted today', yesterday: 'Posted yesterday', days: (n) => 'Posted ' + n + ' days ago', months: (n) => 'Posted ' + n + (n === 1 ? ' month' : ' months') + ' ago' },
+    de: { types: { full_time: 'Vollzeit', part_time: 'Teilzeit', mini_job: 'Minijob', temporary: 'Befristet', internship: 'Praktikum', volunteer: 'Ehrenamt' },
+      locale: 'de-DE', start: 'Beginn: ', end: 'Ende: ', starts: 'Ab ', temp: (n) => 'Befristet · ' + n + (n === 1 ? ' Tag' : ' Tage'),
+      today: 'Heute veröffentlicht', yesterday: 'Gestern veröffentlicht', days: (n) => 'Vor ' + n + ' Tagen veröffentlicht', months: (n) => 'Vor ' + n + (n === 1 ? ' Monat' : ' Monaten') + ' veröffentlicht' },
+    fa: { types: { full_time: 'تمام‌وقت', part_time: 'پاره‌وقت', mini_job: 'مینی‌جاب', temporary: 'موقت', internship: 'کارآموزی', volunteer: 'داوطلبانه' },
+      locale: 'fa-IR-u-ca-gregory', start: 'شروع: ', end: 'پایان: ', starts: 'از ', temp: (n) => 'موقت · ' + n + ' روز',
+      today: 'امروز منتشر شده', yesterday: 'دیروز منتشر شده', days: (n) => n + ' روز پیش منتشر شده', months: (n) => n + ' ماه پیش منتشر شده' },
+  }[LANG] || null;
+  const T = L || { types: {}, locale: 'en-GB' };
   // Same labels as the app's jobs board.
-  const JOB_TYPE_LABELS = {
-    full_time: 'Full-time', part_time: 'Part-time', mini_job: 'Mini-job',
-    temporary: 'Temporary', internship: 'Internship', volunteer: 'Volunteer',
-  };
+  const JOB_TYPE_LABELS = T.types;
   // Temporary jobs (Oct 2026): stored as a duration (1-100 days) on a
   // stand-in type, see MyApp lib/jobs.ts JobType. Shown type + label:
   const jobType = (j) => (j && j.duration_days != null ? 'temporary' : j.employment_type);
@@ -226,15 +238,15 @@
   const fmtJobDate = (d, withYear) => {
     const m = String(d || '').match(/^(\d{4})-(\d{2})-(\d{2})$/);
     if (!m) return d || '';
-    return new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString('en-GB',
+    return new Date(+m[1], +m[2] - 1, +m[3]).toLocaleDateString(T.locale,
       withYear === false ? { day: 'numeric', month: 'short' } : { day: 'numeric', month: 'short', year: 'numeric' });
   };
-  const jobDatesLabel = (j) => [j.start_date ? 'Start: ' + fmtJobDate(j.start_date) : '', j.end_date ? 'End: ' + fmtJobDate(j.end_date) : '']
+  const jobDatesLabel = (j) => [j.start_date ? T.start + fmtJobDate(j.start_date) : '', j.end_date ? T.end + fmtJobDate(j.end_date) : '']
     .filter(Boolean).join(' \u00b7 ');
-  const jobStartsShort = (j) => (j.start_date ? 'Starts ' + fmtJobDate(j.start_date, false) : '');
+  const jobStartsShort = (j) => (j.start_date ? T.starts + fmtJobDate(j.start_date, false) : '');
   const jobTypeLabel = (j) => {
     const t = jobType(j);
-    if (t === 'temporary') { const n = j.duration_days; return 'Temporary · ' + n + (n === 1 ? ' day' : ' days'); }
+    if (t === 'temporary') return T.temp(j.duration_days);
     return JOB_TYPE_LABELS[t] || t;
   };
 
@@ -243,11 +255,10 @@
   function postedAgo(iso) {
     const days = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
     if (!(days >= 0)) return '';
-    if (days === 0) return 'Posted today';
-    if (days === 1) return 'Posted yesterday';
-    if (days < 30) return 'Posted ' + days + ' days ago';
-    const months = Math.floor(days / 30);
-    return 'Posted ' + months + (months === 1 ? ' month' : ' months') + ' ago';
+    if (days === 0) return T.today;
+    if (days === 1) return T.yesterday;
+    if (days < 30) return T.days(days);
+    return T.months(Math.floor(days / 30));
   }
 
   window.MM = {

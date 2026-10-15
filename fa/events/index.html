@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="fa">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>رویدادها — MysMatch</title>
+<meta content="رویدادهای دانشجویی را در MysMatch کشف کن و در آن‌ها شرکت کن. از جلسه‌های درس تا مهمانی‌های دانشگاه، ببین اطرافت چه خبر است." name="description"/>
+<meta content="#0F1020" name="theme-color"/>
+<meta content="رویدادها — MysMatch" property="og:title"/>
+<meta content="رویدادهای دانشجویی را در MysMatch کشف کن. ببین اطرافت چه خبر است." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://www.mysmatch.com/fa/events/" property="og:url"/>
+<meta content="https://www.mysmatch.com/og-image.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="رویدادها — MysMatch" name="twitter:title"/>
+<meta content="رویدادهای دانشجویی را در MysMatch کشف کن." name="twitter:description"/>
+<link href="/logo-512.png" rel="icon" type="image/png"/>
+<link href="https://www.mysmatch.com/fa/events/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/css/site.css" rel="stylesheet"/>
+<style>
+  /* ───────── upcoming (filters + date cards) ───────── */
+  .upcoming .in{ display:flex; flex-direction:column; gap:clamp(40px,4vw,72px); }
+  .up-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .up-head-l{ display:flex; flex-direction:column; gap:clamp(16px,1.6vw,28px); }
+  .up-head .h2{ font-size:clamp(44px,5.6vw,112px); display:flex; align-items:baseline; gap:clamp(14px,1.4vw,28px); flex-wrap:wrap; }
+  .count{ font-family:var(--mono); font-size:clamp(16px,1.4vw,24px); letter-spacing:0; font-weight:500; color:var(--violet); }
+  .free-toggle{ cursor:pointer; display:flex; align-items:center; gap:14px; padding:8px 20px 8px 8px; border-radius:9999px; background:#fff; border:1px solid #E2DEF0; font-family:inherit; font-size:clamp(15px,1.05vw,17px); color:var(--ink); font-weight:500; }
+  .free-track{ width:52px; height:30px; border-radius:9999px; background:#E2DEF0; position:relative; transition:background .25s; }
+  .free-track::after{ content:""; position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(15,16,32,0.2); transition:left .25s; }
+  .free-toggle[aria-pressed="true"] .free-track{ background:var(--violet); }
+  .free-toggle[aria-pressed="true"] .free-track::after{ left:25px; }
+  .cat-chips{ display:flex; gap:10px; flex-wrap:wrap; }
+  .cat-chip{ cursor:pointer; font-family:inherit; font-size:clamp(15px,1.1vw,18px); font-weight:500; padding:clamp(12px,0.9vw,15px) clamp(20px,1.6vw,28px); white-space:nowrap; border-radius:9999px; border:1px solid #E2DEF0; background:#fff; color:var(--ink-2); transition:background .25s, color .25s, border-color .25s; }
+  .cat-chip:hover{ border-color:var(--ink); }
+  .cat-chip.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .ev-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .ev-card{ display:flex; flex-direction:column; border-radius:36px; overflow:hidden; background:#fff; color:var(--ink); box-shadow:0 1px 2px rgba(15,16,32,0.04),0 24px 48px -28px rgba(60,40,140,0.25); transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s; }
+  .ev-card:hover{ transform:translateY(-8px); box-shadow:0 40px 70px -30px rgba(60,40,140,0.35); color:var(--ink); }
+  /* In-app-only event (Oct 2026): thin brand-gradient frame so the preview reads
+     differently from events you can register for here (same idea as before). */
+  .ev-card.app-only{ border:2px solid transparent; background:linear-gradient(#fff,#fff) padding-box, linear-gradient(100deg,#7B5CFF,#E94B9A) border-box; }
+  .ev-top{ position:relative; padding:clamp(24px,2vw,36px); min-height:clamp(220px,17vw,300px); display:flex; flex-direction:column; justify-content:space-between; gap:20px; }
+  .ev-row{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .ev-cat{ font-family:var(--mono); font-size:clamp(11px,0.8vw,13px); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-2); }
+  .ev-badge{ padding:6px 12px; border-radius:9999px; background:rgba(255,255,255,0.75); color:var(--ink); font-size:13px; font-weight:600; white-space:nowrap; }
+  .ev-badge.full{ background:var(--ink); color:#fff; }
+  .ev-date{ display:flex; align-items:flex-end; justify-content:space-between; gap:14px; }
+  .ev-date-l{ display:flex; align-items:flex-end; gap:14px; min-width:0; }
+  .ev-day{ font-size:clamp(88px,7.6vw,148px); line-height:0.78; font-weight:700; letter-spacing:-0.07em; }
+  .ev-mon{ display:flex; flex-direction:column; gap:2px; padding-bottom:4px; font-size:clamp(16px,1.2vw,20px); font-weight:600; letter-spacing:-0.02em; }
+  .ev-mon span:last-child{ color:var(--ink-2); font-weight:500; }
+  .ev-noday{ font-size:clamp(26px,2.2vw,36px); line-height:1.05; font-weight:600; letter-spacing:-0.04em; max-width:10ch; }
+  /* WHY a big photo (user, Oct 2026): the cover photo fills ~60% of the card's top
+     block; category + badge sit on it and the design's big date stays below. */
+  .ev-top.has-photo{ padding:0; min-height:clamp(340px,26vw,440px); gap:0; }
+  .ev-photo{ position:relative; flex:0 0 60%; overflow:hidden; background:#E6E3F3; }
+  .ev-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s cubic-bezier(.2,.7,.2,1); }
+  .ev-card:hover .ev-photo img{ transform:scale(1.04); }
+  .ev-photo .ev-row{ position:absolute; left:0; right:0; top:0; padding:clamp(18px,1.6vw,26px); }
+  .ev-photo .ev-cat{ padding:6px 12px; border-radius:9999px; background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  .ev-top.has-photo .ev-date{ flex:1; align-items:flex-end; padding:clamp(18px,1.6vw,28px) clamp(24px,2vw,36px); }
+  .ev-top.has-photo .ev-day{ font-size:clamp(64px,5.4vw,104px); }
+  .ev-body{ padding:clamp(22px,1.8vw,32px) clamp(24px,2vw,36px) clamp(26px,2vw,36px); display:flex; flex-direction:column; gap:18px; flex:1; }
+  .ev-title{ font-size:clamp(22px,1.9vw,32px); font-weight:600; letter-spacing:-0.04em; line-height:1.08; }
+  .ev-foot{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:clamp(15px,1.05vw,17px); color:var(--ink-2); }
+  .ev-price{ padding:8px 16px; border-radius:9999px; background:#F1ECFF; color:#4B3BB0; font-weight:600; white-space:nowrap; }
+  .ev-state{ padding:clamp(40px,4vw,72px) 0; display:flex; flex-direction:column; align-items:flex-start; gap:20px; }
+  .ev-state span{ font-size:clamp(24px,2.2vw,38px); font-weight:600; letter-spacing:-0.04em; line-height:1.2; max-width:30ch; }
+
+  /* ───────── guests / organizers ───────── */
+  .both .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .both .kicker{ color:var(--faint); }
+  .both .h2{ max-width:13ch; }
+  .both-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .both-card{ background:#17182C; border:1px solid rgba(255,255,255,0.08); border-radius:40px; padding:clamp(28px,3.4vw,64px); display:flex; flex-direction:column; gap:clamp(28px,2.6vw,44px); }
+  .both-card.light{ background:linear-gradient(135deg,#ECEEFF 0%,#F4ECFF 50%,#FCEBF6 100%); color:var(--ink); border:none; }
+  .both-card.light .kicker{ color:var(--ink-2); }
+  .both-list{ display:flex; flex-direction:column; border-top:1px solid rgba(255,255,255,0.1); }
+  .both-list > div{ padding:clamp(20px,1.8vw,32px) 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; gap:8px; }
+  .both-list > div:last-child{ border-bottom:none; }
+  .both-list h3{ font-size:clamp(22px,2vw,34px); letter-spacing:-0.035em; font-weight:600; }
+  .both-list p{ font-size:clamp(16px,1.2vw,20px); line-height:1.55; color:#B4B5C8; }
+  .both-card.light .both-list, .both-card.light .both-list > div{ border-color:#DCD3F2; }
+  .both-card.light .both-list p{ color:var(--ink-2); }
+
+  @media (max-width:640px){
+    .ev-card{ border-radius:28px; }
+    .both-card{ border-radius:28px; }
+    .free-toggle{ padding-right:16px; }
+  }
+</style>
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://www.mysmatch.com/events/">
+<link rel="alternate" hreflang="de" href="https://www.mysmatch.com/de/events/">
+<link rel="alternate" hreflang="fa" href="https://www.mysmatch.com/fa/events/">
+<link rel="alternate" hreflang="x-default" href="https://www.mysmatch.com/events/">
+<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style><link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>html[lang=fa] body,html[lang=fa] button,html[lang=fa] input,html[lang=fa] textarea{font-family:Vazirmatn,'Geist',sans-serif}html[lang=fa] .h2,html[lang=fa] h1,html[lang=fa] h2{letter-spacing:0!important}html[lang=fa] .kicker{letter-spacing:0}</style>
+<!-- /i18n:head -->
+</head>
+<body>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+<div class="nav-in">
+<a class="brand" href="/fa/"><img alt="" height="36" src="/logo-512.png" width="36"/><span>MysMatch</span></a>
+<nav class="nav-links" id="nav-links">
+<a href="/fa/">خانه</a>
+<a aria-current="page" class="on" href="/fa/events">رویدادها</a>
+<a href="/fa/jobs">کارها</a>
+<!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
+<!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/events/" hreflang="en" lang="en">EN</a><a href="/de/events/" hreflang="de" lang="de">DE</a><a href="/fa/events/" hreflang="fa" lang="fa" aria-current="true">فا</a></div><!-- /i18n:switch --></nav>
+<div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/events/" hreflang="en" lang="en">EN</a><a href="/de/events/" hreflang="de" lang="de">DE</a><a href="/fa/events/" hreflang="fa" lang="fa" aria-current="true">فا</a></div><!-- /i18n:switch --> <a class="nav-cta" href="#app">دریافت اپ</a>
+<button aria-controls="nav-links" aria-expanded="false" aria-label="باز کردن منو" class="menu-btn" id="menu-btn" type="button"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</header>
+<!-- ════════ HERO ════════ -->
+<section class="page-hero">
+<div class="hero-stack">
+<div class="hero-head">
+<div class="kicker" data-reveal="">/ رویدادها</div>
+<h1 data-reveal="">دانشگاهت،<br/><span class="grad-text">در دنیای واقعی.</span></h1>
+</div>
+<div class="hero-foot" data-reveal="">
+<p class="hero-sub">رویدادهای دانشگاه را کشف کن، آدم‌های تازه ببین و جامعه‌ات را در دنیای واقعی بساز.</p>
+<a class="btn btn-violet" href="#upcoming">دیدن رویدادهای پیش رو ↓</a>
+</div>
+</div>
+</section>
+<!-- ════════ UPCOMING (live from Supabase: every non-private upcoming event) ════════ -->
+<section class="sheet sheet-white upcoming" id="upcoming">
+<div class="in">
+<div class="up-head">
+<div class="up-head-l">
+<div class="kicker">/ پیش رو</div>
+<h2 class="h2" data-reveal=""><span>رویدادهای پیش رو</span><span class="count" id="events-count"></span></h2>
+</div>
+<button aria-pressed="false" class="free-toggle" id="free-toggle" type="button"><span class="free-track"></span><span>فقط رایگان</span></button>
+</div>
+<div class="cat-chips" id="cat-chips"></div>
+<div class="ev-state" id="events-loading"><span>در حال بارگذاری رویدادها…</span></div>
+<div class="ev-grid" hidden="" id="events-grid"></div>
+<div class="ev-state" hidden="" id="events-empty">
+<span>در حال حاضر رویدادی برای ثبت‌نام آنلاین باز نیست. به‌زودی دوباره سر بزن — یا اپ را بگیر تا همهٔ رویدادهای اطرافت را ببینی.</span>
+</div>
+<div class="ev-state" hidden="" id="events-nomatch">
+<span>هیچ رویداد پیش رویی با این فیلترها نمی‌خواند.</span>
+<button class="btn btn-dark" id="clear-filters" type="button">پاک کردن فیلترها</button>
+</div>
+</div>
+</section>
+<!-- ════════ FOR GUESTS / FOR ORGANIZERS ════════ -->
+<section class="sheet sheet-dark both">
+<div class="in">
+<div class="up-head-l">
+<div class="kicker">/ در اپ</div>
+<h2 class="h2" data-reveal="">برای مهمان‌ها.<br/><span style="color:#CDB8FF">برای برگزارکنندگان.</span></h2>
+</div>
+<div class="both-grid">
+<div class="both-card" data-reveal="">
+<div class="kicker">/ رفتن به رویدادها</div>
+<div class="both-list">
+<div><h3>ببین برگزارکننده کیست</h3><p>هر رویداد پروفایل برگزارکننده را نشان می‌دهد. قبل از ثبت‌نام، روی آن بزن و پروفایل کاملش را ببین.</p></div>
+<div><h3>ثبت‌نام‌هایت را دنبال کن</h3><p>همهٔ رویدادهای ثبت‌نام‌شده‌ات — گذشته و پیش رو — را یک‌جا در پروفایلت ببین.</p></div>
+<div><h3>فیلتر و کشف</h3><p>رویدادها را بر اساس شهر، تاریخ، دسته یا قیمت پیدا کن. رویدادهای گذشته خودکار پنهان می‌شوند — فقط رویدادهای پیش رو نمایش داده می‌شوند.</p></div>
+<div><h3>نشانگر تکمیل ظرفیت</h3><p>رویدادهای پر به‌وضوح علامت‌گذاری شده‌اند تا در یک نگاه بدانی چه چیزی هنوز جا دارد.</p></div>
+</div>
+</div>
+<div class="both-card light" data-reveal="">
+<div class="kicker">/ برگزاری رویداد</div>
+<div class="both-list">
+<div><h3>ساختن رویداد</h3><p>رویدادهای دانشگاهی خودت را با ظرفیت، قیمت و تعادل جنسیتی دلخواه راه بینداز.</p></div>
+<div><h3>برگزارکنندگان تأییدشده</h3><p>فقط کاربرانی که شماره تلفنشان تأیید شده می‌توانند رویداد بسازند — تا جامعه امن و قابل اعتماد بماند.</p></div>
+<div><h3>اسکن بلیت QR</h3><p>برگزارکنندگان بلیت‌های QR را دم در اسکن می‌کنند تا ورود سریع و امن باشد.</p></div>
+<div><h3>رویدادهای رایگان و پولی</h3><p>هم برای رویدادهای رایگان جمعی و هم برای رویدادهای بلیت‌دار.</p></div>
+</div>
+<div><a class="btn btn-dark" href="/dashboard.html">ورود سازمان‌ها ←</a></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ GET THE APP ════════ -->
+<section class="sheet app-band" id="app">
+<div class="in">
+<div class="up-head-l">
+<div class="kicker" style="color:var(--ink-2)">/ دریافت اپ</div>
+<h2 data-reveal="">ثبت‌نام کن.<br/>برو.<br/><span style="color:var(--violet)">آدم‌ها را ببین.</span></h2>
+</div>
+<div class="app-band-r">
+<p>MysMatch را دانلود کن تا رویدادهای نزدیک دانشگاهت را کشف کنی، با یک لمس ثبت‌نام کنی، رویدادهایت را دنبال کنی و رویداد خودت را بسازی.</p>
+<div class="stores">
+<a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 0 24 24" width="24"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
+<span><small>دریافت از</small><b>App Store</b></span>
+</a>
+<a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
+<span><small>دریافت از</small><b>Google Play</b></span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+<div class="in">
+<div class="foot-top">
+<div class="foot-brand">
+<a class="brand" href="/fa/"><img alt="" height="44" src="/logo-512.png" width="44"/><span>MysMatch</span></a>
+<p>تنها درس نخوان.</p>
+</div>
+<div class="foot-cols">
+<div class="foot-col"><span class="kicker">محصول</span><a href="/fa/events">رویدادها</a><a href="/fa/jobs">کارها</a></div>
+<div class="foot-col"><span class="kicker">شرکت</span><a href="mailto:contact@mys-match.com">تماس</a><a href="/dashboard.html">ورود سازمان‌ها</a><a href="/fa/organizations">ثبت‌نام سازمان‌ها</a></div>
+<div class="foot-col"><span class="kicker">حقوقی</span><a href="/fa/privacy-policy">سیاست حفظ حریم خصوصی</a><a href="/fa/terms">شرایط استفاده</a><a href="/fa/support">پشتیبانی</a></div>
+<div class="foot-col"><span class="kicker">شبکه‌های اجتماعی</span><a href="https://www.instagram.com/mysmatchofficial/" rel="noopener noreferrer" target="_blank">Instagram</a><a href="https://www.tiktok.com/@mysmatchofficial" rel="noopener noreferrer" target="_blank">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" rel="noopener noreferrer" target="_blank">LinkedIn</a></div>
+</div>
+</div>
+<div aria-hidden="true" class="wordmark">MysMatch</div>
+<div class="foot-bottom"><span>© ۲۰۲۶ MysMatch. همهٔ حقوق محفوظ است.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/site.js"></script>
+<script>
+// Live events grid + filters. Pure string templating (no framework) to keep the
+// static-site footprint tiny. Data: MM.listEvents (every non-private upcoming
+// event; in-app-only ones arrive without date/location — Oct 2026).
+(function () {
+  // WHY these keys: they are the app's real event categories (create-event.tsx);
+  // the labels are the friendlier names the site already used.
+  var CATS = [
+    { key: 'Music', label: 'موسیقی و مهمانی' },
+    { key: 'Sports', label: 'ورزش' },
+    { key: 'Tech', label: 'فناوری و هکاتون' },
+    { key: 'Food', label: 'غذا و دورهمی' },
+    { key: 'Art', label: 'هنر و فرهنگ' },
+    { key: 'Networking', label: 'شبکه‌سازی' },
+    { key: 'Other', label: 'سایر' },
+  ];
+  var TINTS = ['linear-gradient(150deg,#E8EAFF,#F1E8FF)', 'linear-gradient(150deg,#E6F0FF,#ECEBFF)', 'linear-gradient(150deg,#ECE9FF,#E6EEFF)',
+    'linear-gradient(150deg,#FDEBF4,#F6E9FF)', 'linear-gradient(150deg,#F3E8FF,#FDE9F3)', 'linear-gradient(150deg,#EFEAFF,#FBEAF5)', 'linear-gradient(150deg,#E9E8FF,#FCE8F2)'];
+  var catIndex = function (key) { for (var i = 0; i < CATS.length; i++) if (CATS[i].key === key) return i; return -1; };
+
+  var grid = document.getElementById('events-grid'), loading = document.getElementById('events-loading');
+  var empty = document.getElementById('events-empty'), noMatch = document.getElementById('events-nomatch');
+  var countEl = document.getElementById('events-count'), chipsEl = document.getElementById('cat-chips');
+  var freeBtn = document.getElementById('free-toggle');
+  var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var plural = function (n) { return pad(n) + (n === 1 ? ' رویداد' : ' رویداد'); };
+
+  var all = [], state = { cat: 'All', free: false };
+  var isFree = function (e) { return !e.price || e.price == 0; };
+
+  // Date parts of the real start moment, in the EVENT's timezone (see event.html).
+  function dateParts(e) {
+    try {
+      var d = new Date(e.starts_at), tz = e.timezone || 'Europe/Berlin';
+      var get = function (o) { return d.toLocaleString('fa-IR-u-ca-gregory', Object.assign({ timeZone: tz }, o)); };
+      return { day: get({ day: '2-digit' }), mon: get({ month: 'long' }), wd: get({ weekday: 'short' }), time: get({ hour: '2-digit', minute: '2-digit' }) };
+    } catch (err) { return null; }
+  }
+
+  function card(e) {
+    var ci = catIndex(e.category), cat = ci >= 0 ? CATS[ci] : null;
+    var total = (e._counts && e._counts.total) || 0;
+    var full = e.max_capacity != null && total >= e.max_capacity;
+    var badge = e.max_capacity == null ? '' : (full ? '<span class="ev-badge full">ظرفیت تکمیل</span>' : '<span class="ev-badge">' + (e.max_capacity - total) + ' جای خالی</span>');
+    // In-app-only events arrive without a location (server-side, see MM.listEvents).
+    // Since Oct 11 2026 they include the date; the "in the app" fallback covers
+    // responses from before that server change.
+    var appOnly = e.web_registration === false;
+    var dp = e.starts_at ? dateParts(e) : null;
+    var date = dp
+      ? '<span class="ev-date-l"><span class="ev-day">' + esc(dp.day) + '</span><span class="ev-mon"><span>' + esc(dp.mon) + '</span><span>' + esc(dp.wd) + ' · ' + esc(dp.time) + '</span></span></span>'
+      : '<span class="ev-noday">' + (appOnly ? 'تاریخ و مکان در اپ' : 'تاریخ اعلام می‌شود') + '</span>';
+    var row = '<span class="ev-cat">' + esc(cat ? cat.label : (e.category || 'رویداد')) + '</span>' + badge;
+    var place = appOnly ? (dp ? 'مکان در اپ' : 'برای دیدن مکان و زمان اپ را دانلود کن') : (e.city || e.location || '');
+    return '<a class="ev-card' + (appOnly ? ' app-only' : '') + '" data-reveal href="/fa/events/event.html?id=' + encodeURIComponent(e.id) + '">'
+      + '<div class="ev-top' + (e.event_image ? ' has-photo' : '') + '" style="background:' + TINTS[ci >= 0 ? ci : 0] + '">'
+      + (e.event_image
+        ? '<div class="ev-photo"><img src="' + esc(e.event_image) + '" alt="" loading="lazy"><div class="ev-row">' + row + '</div></div>'
+        : '<div class="ev-row">' + row + '</div>')
+      + '<div class="ev-date">' + date + '</div></div>'
+      + '<div class="ev-body"><span class="ev-title">' + esc(e.title) + '</span>'
+      + '<div class="ev-foot"><span>' + esc(place) + '</span><span class="ev-price">' + (isFree(e) ? 'رایگان' : '€' + esc(e.price)) + '</span></div></div></a>';
+  }
+
+  function render() {
+    var list = all.filter(function (e) { return (state.cat === 'All' || e.category === state.cat) && (!state.free || isFree(e)); });
+    chipsEl.querySelectorAll('.cat-chip').forEach(function (b) { b.classList.toggle('on', b.dataset.cat === state.cat); });
+    freeBtn.setAttribute('aria-pressed', state.free ? 'true' : 'false');
+    countEl.textContent = plural(list.length);
+    if (!all.length) { grid.hidden = true; noMatch.hidden = true; empty.hidden = false; return; }
+    empty.hidden = true;
+    noMatch.hidden = list.length > 0;
+    grid.hidden = list.length === 0;
+    grid.innerHTML = list.map(card).join('');
+    if (window.MMReveal) window.MMReveal(grid);
+  }
+
+  function setCat(c) { state.cat = c; render(); }
+  chipsEl.innerHTML = [{ key: 'All', label: 'همهٔ رویدادها' }].concat(CATS).map(function (c) {
+    return '<button class="cat-chip" type="button" data-cat="' + esc(c.key) + '">' + esc(c.label) + '</button>';
+  }).join('');
+  chipsEl.addEventListener('click', function (ev) { var b = ev.target.closest('.cat-chip'); if (b) setCat(b.dataset.cat); });
+  freeBtn.addEventListener('click', function () { state.free = !state.free; render(); });
+  document.getElementById('clear-filters').addEventListener('click', function () { state = { cat: 'All', free: false }; render(); });
+
+  if (!window.MM) { loading.firstChild.textContent = 'بارگذاری رویدادها ممکن نشد.'; return; }
+  MM.listEvents().then(function (events) {
+    all = events || [];
+    loading.hidden = true;
+    render();
+  }).catch(function (err) { loading.firstChild.textContent = 'بارگذاری رویدادها ممکن نشد.'; console.error(err); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+
+<!--
+  MysMatch landing page.
+  WHY this rewrite (Oct 2026): adopted the dark/editorial "MysMatch Home" design (Claude Design
+  export). Style only; copy is the existing study-first text. Changes vs. the raw export:
+   - The export is a React/"dc-runtime" bundle with <image-slot> components that only run inside
+     the design tool; rebuilt as static HTML + CSS + a small vanilla script.
+   - Design copy that read as dating or wasn't true ("match your vibe", "4,300+ Universities",
+     "100% Student-verified", "Unverified strangers", "Host. Hire. Partner.") is not used; the
+     "Today vs MysMatch" contrast section was dropped because the current site has no copy for it.
+   - Phone slots use our own screenshots; the events panel shows the live latest-event card.
+   - Added a mobile menu and phone-width layouts (the export's nav overflows below ~900px).
+   - Kept the production SEO/OG/Twitter/canonical/favicon head.
+-->
+<html dir="ltr" lang="de">
+<head>
+<meta charset="utf-8"/>
+<!-- WHY study-first wording everywhere (title, descriptions, hero): "match your vibe" / "find your match"
+     made Google and the app stores file MysMatch under dating. Brand playbook: say "study" first.
+     No "verified students" anywhere: we don't check student status (emails aren't evaluated). -->
+<title>MysMatch — Lern nicht allein</title>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="MysMatch hilft Studierenden, Lernpartner und Kommilitonen in ihrem Studiengang und Semester zu finden – dazu Campus-Events und Studentenjobs. Kostenlos." name="description"/>
+<meta content="#0F1020" name="theme-color"/>
+<!-- Open Graph -->
+<meta content="MysMatch — Lern nicht allein" property="og:title"/>
+<meta content="Finde Lernpartner und Kommilitonen in deinem Studiengang und Semester – dazu Campus-Events und Studentenjobs. Kostenlos." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://www.mysmatch.com/de/" property="og:url"/>
+<meta content="https://www.mysmatch.com/og-image.png" property="og:image"/>
+<!-- Twitter -->
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="MysMatch — Lern nicht allein" name="twitter:title"/>
+<meta content="Finde Lernpartner und Kommilitonen in deinem Studiengang und Semester. Kostenlos." name="twitter:description"/>
+<!-- WHY logo-512.png everywhere (logo + favicon): the original logo.png/favicon.png are
+     2000px / 1.1 MB each; 512px (30 KB) is sharp at every size we render. The old
+     files stay on the server for any external links to them. -->
+<link href="/logo-512.png" rel="icon" type="image/png"/>
+<link href="https://www.mysmatch.com/de/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --ink:#0F1020; --ink-2:#4B4C63; --muted:#8E8FA6; --faint:#A9AAC0; --on-dark:#C9C9D9;
+    --violet:#7B5CFF; --violet-soft:#B7A6FF; --pink:#E94B9A; --green:#34C77B;
+    --line:#ECEAF4; --line-violet:#D9D1F5;
+    --accent-grad:linear-gradient(100deg,#B3B8FF,#CDB8FF 45%,#F5BCE4);
+    --pad-x:clamp(20px,5vw,96px);
+    --sec-y:clamp(96px,12vw,220px);
+    --mono:'Geist Mono',ui-monospace,monospace;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  html,body{ margin:0; padding:0; background:#0F1020; }
+  body{ font-family:'Geist',-apple-system,BlinkMacSystemFont,sans-serif; color:var(--ink); -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a{ color:var(--violet); text-decoration:none; }
+  img{ max-width:100%; }
+  h1,h2,h3,p{ margin:0; }
+
+  /* Shared bits */
+  .kicker{ font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .dim{ color:var(--muted); }
+  .lead{ max-width:30ch; font-size:clamp(18px,1.5vw,26px); line-height:1.45; color:var(--ink-2); letter-spacing:-0.01em; text-wrap:pretty; }
+  /* WHY no text-wrap:balance: Chrome drew an empty line inside two-part headings (span + max-width in ch). */
+  .h2{ font-size:clamp(40px,6vw,120px); line-height:0.94; letter-spacing:-0.055em; font-weight:700; }
+  .btn{ display:inline-flex; align-items:center; gap:8px; font-weight:600; font-size:clamp(16px,1.15vw,19px); padding:18px 32px; border-radius:9999px; white-space:nowrap; transition:transform .3s, background .3s, border-color .3s; }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-violet{ background:var(--violet); color:#fff; box-shadow:0 14px 40px rgba(123,92,255,0.22); }
+  .btn-violet:hover{ background:#9B5BFF; color:#fff; }
+  .btn-ghost{ color:#fff; font-weight:500; border:1px solid rgba(255,255,255,0.22); }
+  .btn-ghost:hover{ border-color:#fff; color:#fff; }
+  .btn-dark{ background:var(--ink); color:#fff; }
+  .btn-dark:hover{ background:var(--violet); color:#fff; }
+  .sec-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; }
+  .sec-head-l{ display:flex; flex-direction:column; gap:clamp(20px,2vw,32px); }
+  .dash-list{ display:flex; flex-direction:column; border-top:1px solid var(--line); list-style:none; margin:0; padding:0; }
+  .dash-list li{ padding:clamp(16px,1.4vw,24px) 0; border-bottom:1px solid var(--line); display:flex; gap:20px; font-size:clamp(17px,1.3vw,22px); color:var(--ink); }
+  .dash-list li::before{ content:"—"; color:var(--violet); }
+
+  /* Stacked sheets: each section slides over the previous one with rounded top corners */
+  .sheet{ position:relative; margin-top:-48px; border-radius:48px 48px 0 0; box-shadow:0 -24px 48px rgba(15,16,32,0.08); }
+  .sheet > .in{ padding:var(--sec-y) var(--pad-x); }
+
+  /* Scroll reveal. WHY .js gate: without JS (or with reduced motion) everything stays visible. */
+  .js [data-reveal]{ opacity:0; transform:translateY(56px); filter:blur(10px); transition:opacity 1.2s cubic-bezier(.2,.7,.2,1), transform 1.2s cubic-bezier(.2,.7,.2,1), filter 1.2s cubic-bezier(.2,.7,.2,1); }
+  /* WHY "shown", not "in": .in is the section wrapper class; reusing it made revealed headings flex columns. */
+  .js [data-reveal].shown{ opacity:1; transform:none; filter:none; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .js [data-reveal]{ opacity:1; transform:none; filter:none; transition:none; }
+  }
+
+  /* ───────── header (floating pill) ───────── */
+  .nav{ position:sticky; top:16px; z-index:50; margin:16px 16px -88px; background:rgba(15,16,32,0.78); backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px); border:1px solid rgba(255,255,255,0.08); border-radius:36px; box-shadow:0 12px 40px rgba(15,16,32,0.25); overflow:hidden; }
+  .nav-in{ padding:12px 12px 12px 24px; display:flex; align-items:center; justify-content:space-between; gap:32px; }
+  .brand{ display:flex; align-items:center; gap:12px; color:#fff; font-weight:700; font-size:19px; letter-spacing:-0.02em; }
+  .brand:hover{ color:#fff; }
+  .brand img{ width:36px; height:36px; border-radius:10px; }
+  .nav-links{ display:flex; align-items:center; gap:clamp(18px,2.2vw,40px); white-space:nowrap; font-size:clamp(14px,1.05vw,16px); }
+  .nav-links a{ color:var(--on-dark); }
+  .nav-links a:hover{ color:#fff; }
+  .nav-cta{ background:#fff; color:var(--ink); font-weight:600; font-size:16px; padding:14px 26px; border-radius:9999px; white-space:nowrap; transition:transform .3s, background .3s; }
+  .nav-cta:hover{ background:#F1ECFF; color:var(--ink); transform:translateY(-1px); }
+  .menu-btn{ display:none; width:46px; height:46px; border-radius:50%; border:1px solid rgba(255,255,255,0.18); background:transparent; cursor:pointer; padding:0; align-items:center; justify-content:center; flex-direction:column; gap:5px; }
+  .menu-btn span{ display:block; width:18px; height:2px; background:#fff; border-radius:2px; }
+  .progress{ position:absolute; left:0; bottom:0; height:2px; width:0; background:linear-gradient(90deg,#B3B8FF,#CDB8FF,#F5BCE4); }
+
+  /* ───────── hero ───────── */
+  /* WHY no min-height:100vh + space-between (Oct 2026): on laptop screens (e.g. 1536×730
+     at 125% scaling) that spread left a big gap above the title and pushed the buttons and
+     stats below the fold. Content now stacks from the top and fits the first screen. */
+  .hero{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%); color:#fff; position:relative; overflow:hidden; display:flex; flex-direction:column; padding-bottom:48px; }
+  /* Hero background video (Oct 2026). The blur is baked into the file
+     (640 px, ~95 KB) instead of CSS filter:blur — a live blur over a video is
+     slow on phones, and blur hides the low resolution. A dark tint keeps the
+     text readable. Loaded only after the page has finished loading. */
+  .hero-video{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
+  .hero-video img, .hero-video video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.06); }
+  .hero-video video{ opacity:0; transition:opacity 1.2s ease; }
+  .hero-video video.on{ opacity:1; }
+  /* Lighter tint (Oct 2026) → soft shadow behind the hero text so it stays
+     readable over the brighter parts of the video. */
+  .hero h1, .hero-sub, .hero .stat b, .hero .stat span{ text-shadow:0 2px 18px rgba(15,16,32,0.55), 0 1px 3px rgba(15,16,32,0.35); }
+  /* gradient words have see-through glyphs: a text-shadow would show through and muddy them */
+  .hero h1 .grad-text{ text-shadow:none; }
+  .hero-video::after{ content:""; position:absolute; inset:0; background:linear-gradient(160deg,rgba(18,19,44,0.52) 0%,rgba(15,16,32,0.38) 55%,rgba(24,16,38,0.62) 100%); }
+  .hero-spot{ position:absolute; left:0; top:0; width:800px; height:800px; margin:-400px 0 0 -400px; border-radius:50%; background:radial-gradient(closest-side,rgba(233,75,154,0.1),rgba(15,16,32,0)); pointer-events:none; opacity:0; transition:opacity .5s; }
+  .hero-glow{ position:absolute; right:-10%; top:-25%; width:80vw; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.16),rgba(233,75,154,0.06) 55%,rgba(15,16,32,0) 75%); pointer-events:none; }
+  .hero-in{ position:relative; flex:1; display:flex; flex-direction:column; justify-content:flex-start; gap:clamp(28px,3vw,48px); padding:clamp(112px,9vw,150px) var(--pad-x) 0; }
+  .eyebrow{ font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); display:flex; align-items:center; gap:12px; }
+  .eyebrow i{ width:9px; height:9px; border-radius:50%; background:var(--green); box-shadow:0 0 0 6px rgba(52,199,123,0.15); }
+  /* WHY min(vw, vh) + no 14ch cap: on short laptop screens the title wrapped to two big lines
+     and pushed the buttons below the fold; now it stays one line wherever it fits. */
+  .hero h1{ margin-top:0; font-size:clamp(48px,min(8.6vw,15vh),176px); line-height:0.9; letter-spacing:-0.06em; font-weight:700; text-wrap:balance; }
+  .grad-text{ background:var(--accent-grad); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(48px,5vw,96px); align-items:end; }
+  .hero-copy{ display:flex; flex-direction:column; gap:clamp(24px,2.4vw,40px); padding-bottom:clamp(32px,4vw,72px); }
+  .hero-sub{ max-width:34ch; font-size:clamp(19px,1.6vw,28px); line-height:1.45; color:var(--on-dark); letter-spacing:-0.01em; text-wrap:pretty; }
+  .hero-ctas{ display:flex; gap:14px; flex-wrap:wrap; }
+  .stats{ display:flex; gap:clamp(32px,4vw,72px); flex-wrap:wrap; padding-top:clamp(24px,2.4vw,40px); border-top:1px solid rgba(255,255,255,0.1); }
+  .stat{ display:flex; flex-direction:column; gap:8px; }
+  .stat b{ font-size:clamp(34px,3.6vw,68px); font-weight:700; letter-spacing:-0.045em; line-height:1; }
+  /* A sentence, not a number: smaller than the stat figures so it stays 1–2 lines. */
+  .stat-wide b{ font-size:clamp(26px,2.5vw,44px); line-height:1.08; letter-spacing:-0.04em; max-width:22ch; }
+  .stat span{ font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); }
+  .hero-phones{ display:flex; justify-content:flex-end; gap:clamp(16px,2vw,36px); align-items:flex-start; margin-bottom:-48px; }
+  .phone{ aspect-ratio:860/1861; overflow:hidden; background:#1A1B30; }
+  .phone img{ width:100%; height:100%; object-fit:cover; display:block; }
+  /* WHY min(…vw, …vh): the phones set the hero height; capping by screen height keeps short laptop screens above the fold. */
+  .hero-phones .phone{ width:clamp(130px,min(16vw,30vh),320px); border-radius:clamp(26px,2.6vw,52px); border:1px solid rgba(255,255,255,0.14); box-shadow:0 50px 100px rgba(0,0,0,0.55); }
+  .hero-phones .phone:first-child{ transform:translateY(6%) rotate(-4deg); }
+  .hero-phones .phone:last-child{ transform:translateY(18%) rotate(3deg); }
+
+  /* ───────── manifesto (words light up while scrolling) ───────── */
+  .manifesto{ background:linear-gradient(135deg,#F4F5FF 0%,#FFFFFF 50%,#FEF5FA 100%); box-shadow:0 -24px 48px rgba(15,16,32,0.12); }
+  .manifesto .in{ display:flex; flex-direction:column; gap:clamp(32px,3vw,56px); }
+  .manifesto p{ font-size:clamp(36px,5.8vw,112px); line-height:1.02; letter-spacing:-0.05em; font-weight:600; text-wrap:pretty; }
+  .manifesto p .accent{ color:var(--violet); }
+  .js .manifesto p span{ color:#DAD7E8; transition:color .35s; }
+
+  /* ───────── glimpse ───────── */
+  .glimpse{ background:linear-gradient(180deg,#FFFFFF 0%,#F8F4FF 100%); }
+  .glimpse .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .glimpse .h2{ max-width:12ch; }
+  .shots{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:clamp(16px,1.8vw,36px); align-items:start; }
+  .shot-item{ display:flex; flex-direction:column; gap:24px; }
+  .shot-item:nth-child(even){ margin-top:clamp(0px,6vw,140px); }
+  .shot-item .phone{ border-radius:clamp(24px,2.4vw,48px); background:#ECEAF4; transition:transform .7s cubic-bezier(.2,.7,.2,1), box-shadow .7s; }
+  .shot-item .phone:hover{ transform:translateY(-14px); box-shadow:0 40px 80px rgba(15,16,32,0.16); }
+  .shot-cap{ display:flex; flex-direction:column; gap:8px; }
+  .shot-cap span{ font-family:var(--mono); font-size:clamp(11px,0.85vw,14px); letter-spacing:0.1em; text-transform:uppercase; color:var(--violet); }
+  .shot-cap b{ font-size:clamp(17px,1.6vw,28px); font-weight:600; letter-spacing:-0.025em; }
+
+  /* ───────── features (list + sticky panel) ───────── */
+  .features{ background:linear-gradient(135deg,#EEF0FF 0%,#F4EEFF 50%,#FBEEF7 100%); }
+  .features .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .features .h2{ max-width:13ch; }
+  .feat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,560px),1fr)); gap:clamp(48px,5vw,112px); align-items:start; }
+  .feat-list{ display:flex; flex-direction:column; border-top:1px solid var(--line-violet); }
+  .feat{ cursor:pointer; border-bottom:1px solid var(--line-violet); padding:clamp(24px,2.6vw,48px) 0; display:grid; grid-template-columns:clamp(48px,5vw,96px) minmax(0,1fr); gap:12px 16px; }
+  .feat-n{ font-family:var(--mono); font-size:clamp(13px,1vw,16px); padding-top:clamp(10px,1vw,18px); color:#B4ADD0; transition:color .3s; }
+  .feat-body{ display:flex; flex-direction:column; gap:18px; }
+  .feat-top{ display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap; }
+  .feat h3{ font-size:clamp(28px,3.4vw,64px); line-height:1; letter-spacing:-0.045em; font-weight:600; color:#B4ADD0; transition:color .3s; }
+  .feat-tag{ font-family:var(--mono); font-size:clamp(11px,0.85vw,14px); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+  .feat p{ max-width:40ch; font-size:clamp(17px,1.35vw,23px); line-height:1.5; color:var(--ink-2); text-wrap:pretty; display:none; }
+  .feat.on .feat-n{ color:var(--violet); }
+  .feat.on h3{ color:var(--ink); }
+  .feat.on p{ display:block; }
+  .feat-panel-wrap{ position:sticky; top:120px; }
+  .feat-panel{ position:relative; border-radius:40px; overflow:hidden; background:#fff; height:calc(100vh - 160px); min-height:520px; max-height:900px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px; box-shadow:0 40px 80px -30px rgba(60,40,140,0.25); padding:48px; text-align:center; }
+  .feat-panel::before{ content:""; position:absolute; left:-20%; bottom:-35%; width:100%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.18),rgba(255,255,255,0)); pointer-events:none; }
+  /* WHY icons, not screenshots: we only have 4 store panels, not one per feature; mismatched
+     screenshots would mislead, so the panel shows the feature's icon instead. */
+  .feat-icon{ position:relative; width:clamp(140px,14vw,220px); aspect-ratio:1; border-radius:28%; display:flex; align-items:center; justify-content:center; color:#fff; background:linear-gradient(135deg,#7B5CFF 0%,#B55BE8 55%,#E94B9A 100%); box-shadow:0 40px 80px rgba(123,92,255,0.3); }
+  .feat-icon svg{ width:44%; height:44%; }
+  .feat-icon [data-icon]{ display:none; }
+  .feat-icon [data-icon].on{ display:block; }
+  .feat-panel-title{ position:relative; font-size:clamp(26px,2.4vw,40px); font-weight:600; letter-spacing:-0.04em; }
+  .feat-panel-foot{ position:absolute; left:32px; right:32px; bottom:28px; display:flex; justify-content:space-between; font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-2); }
+
+  /* ───────── how it works (stacking cards) ───────── */
+  .how{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#171027 100%); color:#fff; box-shadow:0 -24px 48px rgba(15,16,32,0.2); }
+  .how .in{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(48px,5vw,112px); align-items:start; }
+  .how-head{ display:flex; flex-direction:column; gap:clamp(20px,2vw,32px); }
+  .how-head .kicker{ color:var(--faint); }
+  .how-head .h2{ max-width:10ch; }
+  .steps{ display:flex; flex-direction:column; gap:24px; padding-bottom:48px; }
+  .step{ background:#17182C; border:1px solid rgba(255,255,255,0.08); border-radius:40px; padding:clamp(28px,3.4vw,64px); min-height:clamp(300px,30vw,480px); display:flex; flex-direction:column; justify-content:space-between; gap:40px; box-shadow:0 -24px 48px rgba(10,10,22,0.45); }
+  .step:nth-child(2){ background:#1C1D36; }
+  .step:nth-child(3){ background:#232442; }
+  .step:nth-child(4){ background:linear-gradient(135deg,#ECEEFF 0%,#F4ECFF 50%,#FCEBF6 100%); color:var(--ink); border-color:rgba(255,255,255,0.4); }
+  .step-top{ display:flex; justify-content:space-between; font-family:var(--mono); font-size:clamp(12px,0.9vw,15px); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); }
+  .step:nth-child(4) .step-top{ color:var(--ink-2); }
+  /* WHY nowrap + shrink-proof number: with wrap the big step number dropped under longer texts. */
+  .step-row{ display:flex; align-items:flex-end; justify-content:space-between; gap:24px; }
+  .step-txt{ display:flex; flex-direction:column; gap:16px; max-width:30ch; flex:1 1 auto; min-width:0; }
+  .step h3{ font-size:clamp(30px,3.2vw,60px); line-height:1; letter-spacing:-0.045em; font-weight:600; }
+  .step p{ font-size:clamp(17px,1.3vw,22px); line-height:1.5; color:#B4B5C8; }
+  .step:nth-child(4) p{ color:var(--ink-2); }
+  .step-big{ flex-shrink:0; font-size:clamp(88px,10vw,200px); line-height:0.78; font-weight:700; letter-spacing:-0.07em; color:#2E2F52; }
+  .step:nth-child(2) .step-big{ color:#34355C; }
+  .step:nth-child(3) .step-big{ color:#3B3C68; }
+  .step:nth-child(4) .step-big{ color:#C9BEF5; }
+  /* Stacking cards on every screen (user, Oct 2026: phones too). In one column only the cards
+     stick — a sticky heading would sit on top of them — just below the floating header. */
+  .step{ position:sticky; top:84px; }
+  .step:nth-child(2){ top:100px; } .step:nth-child(3){ top:116px; } .step:nth-child(4){ top:132px; }
+  @media (min-width:1100px){
+    .how-head{ position:sticky; top:140px; }
+    .step{ top:140px; }
+    .step:nth-child(2){ top:172px; } .step:nth-child(3){ top:204px; } .step:nth-child(4){ top:236px; }
+  }
+
+  /* ───────── events ───────── */
+  .events{ background:linear-gradient(200deg,#FDF3F9 0%,#FFFFFF 50%,#F4F5FF 100%); box-shadow:0 -24px 48px rgba(15,16,32,0.12); }
+  .events .in{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(48px,5vw,112px); align-items:center; }
+  .event-stage{ position:relative; border-radius:40px; overflow:hidden; background:linear-gradient(160deg,#EBEEFF 0%,#F3EBFF 50%,#FCEAF5 100%); padding:clamp(28px,5vw,88px); display:flex; flex-direction:column; align-items:stretch; justify-content:center; gap:24px; min-height:clamp(480px,46vw,860px); }
+  .event-stage::before{ content:""; position:absolute; right:-25%; top:-25%; width:90%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(233,75,154,0.08),rgba(241,236,255,0)); pointer-events:none; }
+  .event-stage .kicker{ position:relative; }
+  .event-copy{ display:flex; flex-direction:column; gap:clamp(24px,2.6vw,44px); }
+  .chips{ display:flex; flex-wrap:wrap; gap:10px; }
+  .chip{ padding:clamp(9px,0.8vw,14px) clamp(16px,1.4vw,26px); border-radius:9999px; border:1px solid #E2DEF0; font-size:clamp(15px,1.1vw,19px); color:var(--ink-2); }
+  .events h4{ margin:0; font-size:clamp(20px,1.6vw,28px); font-weight:600; letter-spacing:-0.025em; }
+  /* Live latest-event card (filled by JS from the same Supabase feed as /events) */
+  .event-card{ position:relative; background:#fff; border-radius:32px; overflow:hidden; box-shadow:0 40px 80px rgba(15,16,32,0.14); }
+  /* In-app-only event (Oct 2026): thin brand-gradient frame, same as the /events list. */
+  .event-card.app-only{ border:2px solid transparent; background:linear-gradient(#fff,#fff) padding-box, linear-gradient(100deg,#7B5CFF,#E94B9A) border-box; }
+  .event-card .event-media{ display:block; }
+  .event-card img{ width:100%; height:clamp(200px,20vw,300px); object-fit:cover; display:block; }
+  .event-card .ph{ width:100%; height:clamp(200px,20vw,300px); display:flex; align-items:center; justify-content:center; font-size:54px; background:linear-gradient(135deg,rgba(123,92,255,0.10),rgba(233,75,154,0.10)); }
+  .event-body{ padding:24px 26px 26px; }
+  .event-tag{ display:inline-flex; font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--violet); border:1px solid var(--line-violet); border-radius:999px; padding:5px 12px; margin-bottom:14px; }
+  .event-body h3{ margin:0 0 8px; font-size:clamp(20px,1.6vw,26px); font-weight:600; letter-spacing:-0.03em; }
+  .event-meta{ font-size:14px; color:var(--ink-2); display:flex; gap:14px; flex-wrap:wrap; }
+  .event-meta span{ display:inline-flex; align-items:center; gap:6px; }
+  .event-foot{ margin-top:18px; padding-top:18px; border-top:1px solid var(--line); display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .event-foot-info{ display:flex; flex-direction:column; gap:2px; }
+  .event-price{ font-size:16px; font-weight:700; letter-spacing:-0.01em; }
+  .event-spots{ font-size:13px; font-weight:500; color:var(--ink-2); }
+  .event-spots.full{ color:var(--pink); }
+  .event-foot .btn{ padding:11px 20px; font-size:14px; }
+  .event-skeleton{ padding:72px 24px; text-align:center; color:var(--muted); font-size:15px; }
+
+  /* ───────── safety ───────── */
+  .safety{ background:linear-gradient(160deg,#F2F3FF 0%,#F8F2FF 55%,#FDF2F8 100%); }
+  .safety .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .safety .h2{ max-width:12ch; }
+  .safe-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .safe-card{ background:#fff; border-radius:40px; padding:clamp(28px,3.4vw,64px); display:flex; flex-direction:column; gap:20px; min-height:clamp(320px,30vw,520px); }
+  .safe-card .kicker{ color:var(--violet); }
+  .safe-card h3{ margin-top:auto; font-size:clamp(28px,2.6vw,48px); line-height:1; letter-spacing:-0.045em; font-weight:600; }
+  .safe-card p{ font-size:clamp(17px,1.25vw,21px); line-height:1.55; color:var(--ink-2); }
+
+  /* ───────── download ───────── */
+  .download{ background:linear-gradient(135deg,#EDEFFF 0%,#F5EDFF 50%,#FCEDF6 100%); }
+  .cta-card{ background:var(--ink); color:#fff; border-radius:40px; padding:clamp(36px,5vw,96px); display:flex; flex-direction:column; justify-content:space-between; gap:56px; min-height:clamp(440px,38vw,680px); position:relative; overflow:hidden; }
+  .cta-card::before{ content:""; position:absolute; right:-15%; top:-45%; width:70%; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.22),rgba(15,16,32,0)); pointer-events:none; }
+  .cta-card h2{ position:relative; font-size:clamp(44px,6.8vw,136px); line-height:0.92; letter-spacing:-0.06em; font-weight:700; max-width:14ch; }
+  .cta-bottom{ position:relative; display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .cta-bottom p{ max-width:32ch; font-size:clamp(18px,1.4vw,24px); line-height:1.5; color:var(--on-dark); }
+  .stores{ display:flex; gap:14px; flex-wrap:wrap; }
+  .store{ background:#fff; color:var(--ink); padding:14px 26px 14px 20px; border-radius:18px; display:flex; align-items:center; gap:12px; line-height:1.15; white-space:nowrap; transition:transform .3s, background .3s; }
+  .store:hover{ background:#F1ECFF; color:var(--ink); transform:translateY(-2px); }
+  .store span{ display:flex; flex-direction:column; }
+  .store small{ font-size:13px; color:var(--ink-2); }
+  .store b{ font-size:clamp(19px,1.4vw,24px); font-weight:600; letter-spacing:-0.02em; }
+
+  /* ───────── footer ───────── */
+  .footer{ background:var(--ink); color:#fff; overflow:hidden; box-shadow:0 -24px 48px rgba(15,16,32,0.2); }
+  .footer .in{ padding:clamp(88px,8vw,140px) var(--pad-x) 40px; display:flex; flex-direction:column; gap:clamp(56px,7vw,120px); }
+  .foot-top{ display:flex; justify-content:space-between; gap:56px; flex-wrap:wrap; }
+  .foot-brand{ display:flex; flex-direction:column; gap:20px; max-width:420px; }
+  .foot-brand .brand{ font-size:24px; gap:14px; }
+  .foot-brand .brand img{ width:44px; height:44px; border-radius:12px; }
+  .foot-brand p{ font-size:clamp(17px,1.3vw,22px); line-height:1.5; color:var(--faint); }
+  .foot-cols{ display:grid; grid-template-columns:repeat(4,minmax(110px,auto)); gap:clamp(32px,5vw,96px); font-size:clamp(16px,1.2vw,20px); }
+  .foot-col{ display:flex; flex-direction:column; gap:16px; }
+  .foot-col a{ color:#E4E4EE; }
+  .foot-col a:hover{ color:#fff; }
+  /* WHY 18.5vw (design had 21.5vw): at our side padding the last letter got clipped. */
+  .wordmark{ font-size:clamp(60px,18.5vw,400px); line-height:0.78; font-weight:800; letter-spacing:-0.07em; background:linear-gradient(180deg,#26274A,#141528); -webkit-background-clip:text; background-clip:text; color:transparent; user-select:none; margin-left:-0.04em; white-space:nowrap;
+    /* WHY padding + negative margin: with line-height .78 the gradient (background-clip:text)
+       ended above the y's descender and cut it off; extend the box, keep the spacing. */
+    padding-bottom:0.16em; margin-bottom:-0.16em; }
+  .foot-bottom{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); color:var(--muted); border-top:1px solid rgba(255,255,255,0.08); padding-top:28px; }
+  .foot-bottom a{ color:var(--muted); }
+  .foot-bottom a:hover{ color:#fff; }
+
+  /* ───────── tablet / phone ───────── */
+  @media (max-width:1100px){
+    /* WHY: the export's nav doesn't fit below ~1100px; collapse links into a dropdown. */
+    .menu-btn{ display:flex; }
+    .nav-links{ display:none; position:absolute; left:0; right:0; top:100%; }
+    .nav.open{ border-radius:28px; }
+    .nav.open .nav-links{ display:flex; position:static; flex-direction:column; align-items:flex-start; gap:4px; padding:4px 24px 20px; font-size:18px; }
+    .nav.open .nav-links a{ padding:10px 0; }
+    .nav-in{ flex-wrap:wrap; gap:12px; }
+    .nav-right{ display:flex; align-items:center; gap:10px; }
+    .shots{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    /* Features: no sticky panel; every description visible. */
+    .feat-panel-wrap{ display:none; }
+    .feat p{ display:block; }
+    .feat h3{ color:var(--ink); }
+    .feat-n{ color:var(--violet); }
+  }
+  @media (max-width:640px){
+    .nav{ margin:12px 12px -80px; top:12px; }
+    .nav-in{ padding:10px 10px 10px 16px; }
+    .nav-cta{ padding:12px 18px; font-size:15px; }
+    .brand{ font-size:17px; }
+    .brand img{ width:32px; height:32px; }
+    .hero-phones{ justify-content:center; margin-bottom:-24px; }
+    .hero-phones .phone{ width:42vw; }
+    .sheet{ border-radius:32px 32px 0 0; margin-top:-32px; }
+    .step, .safe-card, .cta-card, .event-stage, .feat-panel{ border-radius:28px; }
+    .foot-cols{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .store{ flex:1 1 auto; }
+  }
+</style>
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://www.mysmatch.com/">
+<link rel="alternate" hreflang="de" href="https://www.mysmatch.com/de/">
+<link rel="alternate" hreflang="fa" href="https://www.mysmatch.com/fa/">
+<link rel="alternate" hreflang="x-default" href="https://www.mysmatch.com/">
+<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style>
+<!-- /i18n:head -->
+</head>
+<body>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+<div class="nav-in">
+<a class="brand" href="/de/">
+<img alt="" height="36" src="/logo-512.png" width="36"/>
+<span>MysMatch</span>
+</a>
+<nav class="nav-links" id="nav-links">
+<a href="#features">Funktionen</a>
+<a href="#how">So funktioniert's</a>
+<a href="/de/events">Events</a>
+<a href="/de/jobs">Jobs</a>
+<a href="#safety">Sicherheit</a>
+<!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
+<!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/" hreflang="en" lang="en">EN</a><a href="/de/" hreflang="de" lang="de" aria-current="true">DE</a><a href="/fa/" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --></nav>
+<div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/" hreflang="en" lang="en">EN</a><a href="/de/" hreflang="de" lang="de" aria-current="true">DE</a><a href="/fa/" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --> <a class="nav-cta" href="#download">App holen</a>
+<button aria-controls="nav-links" aria-expanded="false" aria-label="Menü öffnen" class="menu-btn" id="menu-btn" type="button"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</header>
+<!-- ════════ HERO ════════ -->
+<section class="hero" id="top">
+<div aria-hidden="true" class="hero-video">
+<img alt="" decoding="async" fetchpriority="low" height="362" src="/media/hero-poster.jpg" width="640"/>
+<video disablepictureinpicture="" id="hero-video" loop="" muted="" playsinline="" preload="none"></video>
+</div>
+<div class="hero-spot" id="hero-spot"></div>
+<div class="hero-glow"></div>
+<div class="hero-in">
+<div>
+<h1 data-reveal="">Lern nicht <span class="grad-text">allein.</span></h1>
+</div>
+<div class="hero-grid">
+<div class="hero-copy">
+<p class="hero-sub" data-reveal="">Finde Lernpartner und Kommilitonen in deinem Studiengang und Semester. Sieh, wer dieselben Kurse belegt wie du, und schick eine Lernanfrage.</p>
+<div class="hero-ctas" data-reveal="">
+<a class="btn btn-violet" href="#download">Kostenlos laden</a>
+<a class="btn btn-ghost" href="#how">So funktioniert's →</a>
+</div>
+<div class="stats" data-reveal="">
+<!-- WHY one line (user, Oct 2026) replacing "Your courses" / "Free". "+4500" = the
+               sign-up university list (4,533 rows in public.universities), not active users;
+               "Student-verified" stays out (student status isn't checked). -->
+<div class="stat stat-wide"><b>Finde deine Kommilitonen, noch bevor die Vorlesung beginnt!</b><span>+4500 Universitäten</span></div>
+</div>
+</div>
+<div class="hero-phones" data-reveal="">
+<div class="phone"><img alt="Lernpartner und Kommilitonen, Jobs und mehr: dein Campus, nur in der App" height="1861" src="/screenshots/cover.webp" width="860"/></div>
+<div class="phone"><img alt="Entdecken: Finde Lernpartner und Kommilitonen in deinem Studiengang" height="1861" src="/screenshots/discover.webp" width="860"/></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ MANIFESTO ════════ -->
+<!-- WHY this text: it's the existing features intro; the design's own manifesto ("best time to meet
+     people … their vibe") read as dating. -->
+<section class="sheet manifesto">
+<div class="in">
+<div class="kicker">/ Warum MysMatch</div>
+<!-- WHY a span too: the script lights words up from data-accent-from ("Smart") in violet; the span keeps
+         the same two colors when the script doesn't run (no JS / reduced motion). -->
+<p data-accent-from="Smart" id="manifesto">Bau deinen eigenen Lernkreis auf, <span class="accent">die smarte Plattform, mit der Studierende die passenden Lernpartner und Kommilitonen auf dem Campus finden</span></p>
+</div>
+</section>
+<!-- ════════ GLIMPSE ════════ -->
+<section class="sheet glimpse">
+<div class="in">
+<div class="sec-head">
+<div class="sec-head-l">
+<div class="kicker">/ So sieht's aus</div>
+<h2 class="h2" data-reveal="">Ein Blick <span class="dim">in MysMatch.</span></h2>
+</div>
+<p class="lead">Finde Lernpartner und Kommilitonen, Studentenjobs und Events – mit echten Studierenden um dich herum.</p>
+</div>
+<!-- Store panels (Oct 2026): source PNGs 1284x2778 resized to 860 wide, WebP q80. -->
+<div class="shots">
+<div class="shot-item" data-reveal="">
+<div class="phone"><img alt="MysMatch: Lern nicht allein" height="1861" loading="lazy" src="/screenshots/cover-logo.webp" width="860"/></div>
+<div class="shot-cap"><span>MysMatch</span><b>Lern nicht allein</b></div>
+</div>
+<div class="shot-item" data-reveal="">
+<div class="phone"><img alt="Lernpartner und Kommilitonen, Jobs und mehr: dein Campus, nur in der App" height="1861" loading="lazy" src="/screenshots/cover.webp" width="860"/></div>
+<div class="shot-cap"><span>Campus</span><b>Lernpartner und Kommilitonen, Jobs und mehr</b></div>
+</div>
+<div class="shot-item" data-reveal="">
+<div class="phone"><img alt="Entdecken: Finde Lernpartner und Kommilitonen in deinem Studiengang" height="1861" loading="lazy" src="/screenshots/discover.webp" width="860"/></div>
+<div class="shot-cap"><span>Entdecken</span><b>Finde Lernpartner und Kommilitonen in deinem Studiengang</b></div>
+</div>
+<div class="shot-item" data-reveal="">
+<div class="phone"><img alt="Verbindungen: Vernetz dich nach Studiengang und kommt ins Gespräch" height="1861" loading="lazy" src="/screenshots/matches.webp" width="860"/></div>
+<div class="shot-cap"><span>Verbindungen</span><b>Vernetz dich nach Studiengang und kommt ins Gespräch</b></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ FEATURES ════════ -->
+<section class="sheet features" id="features">
+<div class="in">
+<div class="sec-head">
+<div class="sec-head-l">
+<div class="kicker">/ Funktionen</div>
+<h2 class="h2" data-reveal="">Alles, was du brauchst, <span class="dim">nichts, was du nicht brauchst.</span></h2>
+</div>
+</div>
+<div class="feat-grid">
+<div class="feat-list" id="feat-list">
+<div class="feat on" data-i="0" tabindex="0">
+<span class="feat-n">01</span>
+<div class="feat-body">
+<div class="feat-top"><h3>Smartes Entdecken</h3><span class="feat-tag">/ Entdecken</span></div>
+<p>Entdecke automatisch Studierende mit derselben Uni, demselben Studiengang und Semester – sortiert von der engsten bis zur breitesten Verbindung.</p>
+</div>
+</div>
+<div class="feat" data-i="1" tabindex="0">
+<span class="feat-n">02</span>
+<div class="feat-body">
+<div class="feat-top"><h3>Sucheinstellungen</h3><span class="feat-tag">/ Entdecken</span></div>
+<p>Leg deine eigenen Kriterien fest – Uni, Studiengang, Semester, Stadt oder Geschlecht – und finde Studierende zum Vernetzen. Deine Suche, dein Weg.</p>
+</div>
+</div>
+<div class="feat" data-i="2" tabindex="0">
+<span class="feat-n">03</span>
+<div class="feat-body">
+<div class="feat-top"><h3>Sofort-Chat</h3><span class="feat-tag">/ Verbindung</span></div>
+<p>Sobald ihr verbunden seid, könnt ihr direkt chatten. Nachrichten in Echtzeit mit Lesebestätigung.</p>
+</div>
+</div>
+<div class="feat" data-i="3" tabindex="0">
+<span class="feat-n">04</span>
+<div class="feat-body">
+<div class="feat-top"><h3>Studi-Events</h3><span class="feat-tag">/ Verbindung</span></div>
+<p>Entdecke Campus-Events und mach mit – oder erstelle eigene. Sieh, wer veranstaltet, behalte deine Anmeldungen im Blick und erhalte am Tag QR-Tickets.</p>
+</div>
+</div>
+<div class="feat" data-i="4" tabindex="0">
+<span class="feat-n">05</span>
+<div class="feat-body">
+<div class="feat-top"><h3>Biometrische Sicherheit</h3><span class="feat-tag">/ Kontrolle</span></div>
+<p>Sperr die App mit Face ID, Fingerabdruck oder eigener PIN. Deine Privatsphäre ist nicht verhandelbar.</p>
+</div>
+</div>
+<div class="feat" data-i="5" tabindex="0">
+<span class="feat-n">06</span>
+<div class="feat-body">
+<div class="feat-top"><h3>Melden &amp; Blockieren</h3><span class="feat-tag">/ Kontrolle</span></div>
+<p>Blockiere oder melde jeden sofort. Wir prüfen jede Meldung und handeln schnell.</p>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="feat-panel-wrap">
+<div class="feat-panel">
+<div class="feat-icon">
+<svg class="on" data-icon="0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><path d="M22 9L12 4 2 9l10 5 10-5z"></path><path d="M6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5"></path><path d="M22 9v5"></path></svg>
+<svg data-icon="1" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="M21 21l-4.3-4.3"></path><path d="M8 11h6M11 8v6"></path></svg>
+<svg data-icon="2" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 01-9 8.35 8.5 8.5 0 01-3.5-.75L3 21l1.9-5.5a8.38 8.38 0 01-.75-3.5 8.5 8.5 0 018.35-9 8.5 8.5 0 018.5 8.5z"></path><path d="M8 11h8M8 14h5"></path></svg>
+<svg data-icon="3" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><rect height="18" rx="2.5" width="18" x="3" y="4"></rect><path d="M16 2v4M8 2v4M3 10h18"></path><path d="M9.5 15.5l2 2 3.5-4"></path></svg>
+<svg data-icon="4" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><rect height="11" rx="2.5" width="16" x="4" y="10"></rect><path d="M8 10V7a4 4 0 018 0v3"></path><circle cx="12" cy="15.5" r="1.6"></circle></svg>
+<svg data-icon="5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewbox="0 0 24 24"><path d="M12 3l8 3v5.5c0 4.5-3.2 7.8-8 9.5-4.8-1.7-8-5-8-9.5V6l8-3z"></path><path d="M9.5 12.5l1.8 1.8 3.6-4"></path></svg>
+</div>
+<div class="feat-panel-title" id="feat-title">Smartes Entdecken</div>
+<div class="feat-panel-foot"><span>MysMatch-App</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ HOW IT WORKS ════════ -->
+<section class="sheet how" id="how">
+<div class="in">
+<div class="how-head">
+<div class="kicker">/ So funktioniert's</div>
+<h2 class="h2" data-reveal="">Von der Anmeldung <span style="color:var(--violet-soft)">zur Verbindung in Minuten.</span></h2>
+</div>
+<div class="steps">
+<div class="step">
+<div class="step-top"><span>/ Schritt</span></div>
+<div class="step-row">
+<div class="step-txt"><h3>Profil erstellen</h3><p>Registrier dich mit deiner Uni-E-Mail. Füg ein Foto, deinen Studiengang und ein paar Infos über dich hinzu.</p></div>
+<span class="step-big">01</span>
+</div>
+</div>
+<div class="step">
+<div class="step-top"><span>/ Schritt</span></div>
+<div class="step-row">
+<div class="step-txt"><h3>Suchen oder entdecken</h3><p>Stöbere durch vorgeschlagene Lernpartner und Kommilitonen oder leg eigene Suchkriterien fest: Uni, Studiengang, Semester, Stadt und mehr.</p></div>
+<span class="step-big">02</span>
+</div>
+</div>
+<div class="step">
+<div class="step-top"><span>/ Schritt</span></div>
+<div class="step-row">
+<div class="step-txt"><h3>Verbindungsanfrage senden</h3><p>Jemand Interessantes gefunden? Schick eine Verbindungsanfrage. Die Person kann annehmen oder ablehnen – ganz ohne Druck.</p></div>
+<span class="step-big">03</span>
+</div>
+</div>
+<div class="step">
+<div class="step-top"><span>/ Schritt</span></div>
+<div class="step-row">
+<div class="step-txt"><h3>Losreden</h3><p>Sobald beide zustimmen, öffnet sich ein privater Chat. Plant eine Lernsession, ein Gruppenprojekt oder ein Treffen auf dem Campus.</p></div>
+<span class="step-big">04</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ EVENTS ════════ -->
+<section class="sheet events" id="events">
+<div class="in">
+<!-- WHY the live card instead of the design's screenshot: same latest-event feed as before. -->
+<div class="event-stage" data-reveal="">
+<div class="kicker">/ Demnächst auf dem Campus</div>
+<!-- Latest real event, loaded from Supabase — same source as the /events tab.
+           JS fills #latest-event with the soonest upcoming published event. -->
+<div class="event-card" id="latest-event">
+<div class="event-skeleton">Neuestes Event wird geladen…</div>
+</div>
+</div>
+<div class="event-copy">
+<div class="kicker">/ Events</div>
+<h2 class="h2" data-reveal="">Triff Leute <span class="dim">über Verbindungen hinaus.</span></h2>
+<p class="lead">Erstelle Campus-Events und mach mit. Die besten Verbindungen entstehen persönlich.</p>
+<div class="chips">
+<span class="chip">Musik</span><span class="chip">Sport</span><span class="chip">Technik</span>
+<span class="chip">Essen</span><span class="chip">Kunst</span><span class="chip">Networking</span>
+</div>
+<h4>Dein Campus, deine Events</h4>
+<ul class="dash-list">
+<li>Sieh bei jedem Event das Profil des Veranstalters</li>
+<li>Behalte alle Anmeldungen an einem Ort im Blick</li>
+<li>Plätze ausgewogen nach Geschlecht steuern</li>
+<li>QR-Ticket-Scan für Veranstalter</li>
+<li>Kostenlose und kostenpflichtige Events</li>
+</ul>
+<div><a class="btn btn-dark" href="/de/events">Mehr Events ansehen →</a></div>
+</div>
+</div>
+</section>
+<!-- ════════ SAFETY ════════ -->
+<section class="sheet safety" id="safety">
+<div class="in">
+<div class="sec-head">
+<div class="sec-head-l">
+<div class="kicker">/ Sicherheit zuerst</div>
+<h2 class="h2" data-reveal="">Mit Blick auf deine Sicherheit <span class="dim">gebaut.</span></h2>
+</div>
+<p class="lead">Jede Funktion ist so gestaltet, dass du sicher bist und die Kontrolle behältst.</p>
+</div>
+<div class="safe-grid">
+<div class="safe-card" data-reveal="">
+<span class="kicker">/ 01</span>
+<h3>Telefonbestätigung</h3>
+<!-- WHY reworded: phone verification is optional (it earns a profile badge), only creating events requires it. -->
+<p>Bestätige deine Telefonnummer per SMS und erhalte ein Abzeichen in deinem Profil. Zum Erstellen von Events ist die Bestätigung Pflicht – so bleibt die Community vertrauenswürdig.</p>
+</div>
+<div class="safe-card" data-reveal="">
+<span class="kicker">/ 02</span>
+<h3>Durchgängige Privatsphäre</h3>
+<p>Deine Daten gehören dir. Wir verkaufen deine Daten nie und geben sie nicht an Dritte weiter.</p>
+</div>
+<div class="safe-card" data-reveal="">
+<span class="kicker">/ 03</span>
+<h3>Null Toleranz</h3>
+<p>Belästigung, Hassrede und unangemessenes Verhalten führen zur sofortigen Kontolöschung.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ DOWNLOAD ════════ -->
+<section class="sheet download" id="download">
+<div class="in">
+<div class="cta-card" data-reveal="">
+<h2>Bereit, deine <span style="color:var(--violet-soft)">Lernpartner und Kommilitonen zu finden?</span></h2>
+<div class="cta-bottom">
+<p>Schließ dich tausenden Studierenden an, die sich schon auf MysMatch vernetzen. Kostenlos, sicher und für dich gemacht.</p>
+<div class="stores">
+<a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 0 24 24" width="24"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
+<span><small>Laden im</small><b>App Store</b></span>
+</a>
+<a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app">
+<svg aria-hidden="true" fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
+<span><small>Jetzt bei</small><b>Google Play</b></span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+<div class="in">
+<div class="foot-top">
+<div class="foot-brand">
+<a class="brand" href="/de/"><img alt="" height="44" src="/logo-512.png" width="44"/><span>MysMatch</span></a>
+<p>Lern nicht allein.</p>
+</div>
+<div class="foot-cols">
+<div class="foot-col">
+<span class="kicker">Produkt</span>
+<a href="/de/events">Events</a><a href="/de/jobs">Jobs</a><a href="#safety">Sicherheit</a>
+</div>
+<div class="foot-col">
+<span class="kicker">Unternehmen</span>
+<a href="mailto:contact@mys-match.com">Kontakt</a><a href="/dashboard.html">Login für Organisationen</a><a href="/de/organizations">Registrierung für Organisationen</a>
+</div>
+<div class="foot-col">
+<span class="kicker">Rechtliches</span>
+<a href="/de/privacy-policy">Datenschutzerklärung</a><a href="/de/terms">Nutzungsbedingungen</a><a href="/de/support">Support</a>
+</div>
+<div class="foot-col"><span class="kicker">Social Media</span><a href="https://www.instagram.com/mysmatchofficial/" rel="noopener noreferrer" target="_blank">Instagram</a><a href="https://www.tiktok.com/@mysmatchofficial" rel="noopener noreferrer" target="_blank">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" rel="noopener noreferrer" target="_blank">LinkedIn</a></div>
+</div>
+</div>
+<div aria-hidden="true" class="wordmark">MysMatch</div>
+<div class="foot-bottom">
+<span>© 2026 MysMatch. Alle Rechte vorbehalten.</span>
+<a href="mailto:contact@mys-match.com">contact@mys-match.com</a>
+</div>
+</div>
+</footer>
+<!-- Supabase client + shared helpers (same MM.listEvents feed the /events tab uses) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script>
+// Latest real event on the landing page. Pulls from the exact same source as the
+// /events tab (MM.listEvents = every non-private upcoming event, soonest first;
+// in-app-only ones as previews without date/location — Oct 2026)
+// and shows events[0]. Card + detail link mirror the events tab for consistency.
+(function () {
+  var host = document.getElementById('latest-event');
+  if (!host) return;
+  var esc = function (s) {
+    return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) {
+      return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c];
+    });
+  };
+  // Formats the real start moment (starts_at) in the EVENT's timezone, like
+  // events/event.html. Never use e.date here: it holds the typed wall clock
+  // labelled as UTC, so the browser shifted it by the visitor's offset
+  // (+2 h in Berlin — the card said 19:00 while the event page said 17:00).
+  function fmtDate(ev) {
+    try {
+      var d = new Date(ev.starts_at), timeZone = ev.timezone || 'Europe/Berlin';
+      return d.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short', timeZone })
+        + ' · ' + d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit', timeZone });
+    } catch (e) { return ''; }
+  }
+  var calSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2.5"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>';
+  var pinSvg = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>';
+  function fallback(msg) { host.innerHTML = '<div class="event-skeleton">' + esc(msg) + '</div>'; }
+  function render(e) {
+    var href = '/de/events/event.html?id=' + encodeURIComponent(e.id);
+    var media = e.event_image
+      ? '<img src="' + esc(e.event_image) + '" alt="' + esc(e.title) + '" loading="lazy">'
+      : '<div class="ph">🎉</div>';
+    var loc = e.city || e.location || '';
+    var total = (e._counts && e._counts.total) || 0;
+    var full = e.max_capacity != null && total >= e.max_capacity;
+    // TEMPORARY (Sept 25 2026): the "N going" count is hidden, matching the
+    // app (SHOW_ATTENDANCE_PUBLICLY in MyApp lib/events.ts). Set to true to
+    // show it again. Unlimited events then read "Open registration" like the
+    // event page; capped events keep "N spots left" / "Fully booked".
+    var SHOW_ATTENDANCE_PUBLICLY = false;
+    var spots = e.max_capacity == null
+      ? (SHOW_ATTENDANCE_PUBLICLY ? (total ? total + ' going' : '') : 'Anmeldung offen')
+      : (full ? 'Ausgebucht' : (e.max_capacity - total) + ' Plätze frei');
+    var price = (!e.price || e.price == 0) ? 'Kostenlos' : '€' + e.price;
+    // Gradient frame for in-app-only previews (see .event-card.app-only).
+    host.classList.toggle('app-only', e.web_registration === false);
+    host.innerHTML =
+      '<a class="event-media" href="' + href + '">' + media + '</a>'
+      + '<div class="event-body">'
+      + (e.category ? '<span class="event-tag">' + esc(e.category) + '</span>' : '')
+      + '<h3>' + esc(e.title) + '</h3>'
+      + '<div class="event-meta">'
+      // In-app-only events arrive without a location (MM.listEvents, Oct 2026);
+      // since Oct 11 2026 they include the date, so show it when present.
+      + (e.web_registration === false
+        ? (e.starts_at ? '<span>' + calSvg + esc(fmtDate(e)) + '</span>' + '<span>' + pinSvg + 'Ort in der App</span>'
+                  : '<span>' + pinSvg + 'Hol dir die App, um Ort und Uhrzeit zu sehen</span>')
+        : '<span>' + calSvg + esc(fmtDate(e)) + '</span>'
+          + (loc ? '<span>' + pinSvg + esc(loc) + '</span>' : ''))
+      + '</div>'
+      + '<div class="event-foot">'
+      + '<div class="event-foot-info">'
+      + '<span class="event-price">' + price + '</span>'
+      + (spots ? '<span class="event-spots' + (full ? ' full' : '') + '">' + esc(spots) + '</span>' : '')
+      + '</div>'
+      + '<a class="btn btn-violet" href="' + href + '">Event ansehen</a>'
+      + '</div></div>';
+  }
+  // No upcoming events -> fall back to the most recent event by date, so the
+  // landing card is never empty while any web-published event exists.
+  function showMostRecent() {
+    MM.db.from('events')
+      .select('id,title,location,city,date,event_image,category,price,max_capacity')
+      .eq('publish_to_web', true).eq('is_private', false)
+      .order('date', { ascending: false }).limit(1)
+      .then(function (res) {
+        var rows = res && res.data;
+        if (!rows || !rows.length) { fallback('Noch keine Events – schau bald wieder vorbei.'); return; }
+        var e = rows[0];
+        MM.getCounts(e.id).then(function (c) { e._counts = c; render(e); })
+          .catch(function () { e._counts = { total: 0 }; render(e); });
+      })
+      .catch(function (err) { console.error(err); fallback('Auf der Events-Seite siehst du, was los ist.'); });
+  }
+  if (!window.MM) { fallback('Auf der Events-Seite siehst du, was los ist.'); return; }
+  MM.listEvents().then(function (events) {
+    if (events && events.length) { render(events[0]); return; }
+    showMostRecent();
+  }).catch(function (err) { console.error(err); showMostRecent(); });
+})();
+</script>
+<script>
+// Page motion + small interactions (vanilla port of the design export's React logic).
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Mobile menu: toggle, and close after tapping a link.
+  var nav = document.getElementById('nav'), btn = document.getElementById('menu-btn');
+  function setMenu(open) { nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
+  btn.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
+  document.querySelectorAll('#nav-links a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
+
+  // Features: hover/click/focus picks which feature the sticky panel shows.
+  var feats = [].slice.call(document.querySelectorAll('.feat'));
+  var icons = [].slice.call(document.querySelectorAll('.feat-icon [data-icon]'));
+  var title = document.getElementById('feat-title'), count = document.getElementById('feat-count');
+  function pick(i) {
+    feats.forEach(function (f, k) { f.classList.toggle('on', k === i); });
+    icons.forEach(function (s, k) { s.classList.toggle('on', k === i); });
+    title.textContent = feats[i].querySelector('h3').textContent;
+    // WHY guarded: the small "01 / 06" counter was removed (user, Oct 2026).
+    if (count) count.textContent = '0' + (i + 1) + ' / 0' + feats.length;
+  }
+  feats.forEach(function (f, i) {
+    f.addEventListener('mouseenter', function () { pick(i); });
+    f.addEventListener('click', function () { pick(i); });
+    f.addEventListener('focus', function () { pick(i); });
+  });
+
+  // Manifesto: split into words (JS only, so no-JS readers get the plain sentence);
+  // words from data-accent-from onwards light up violet, the rest ink.
+  var man = document.getElementById('manifesto'), words = [];
+  if (man && !reduce) {
+    var accentFrom = man.getAttribute('data-accent-from'), accent = false;
+    var parts = man.textContent.trim().split(/\s+/);
+    man.textContent = '';
+    parts.forEach(function (w) {
+      if (w === accentFrom) accent = true;
+      var s = document.createElement('span');
+      s.textContent = w + ' ';
+      s.dataset.w = accent ? '#7B5CFF' : '#0F1020';
+      man.appendChild(s); words.push(s);
+    });
+  }
+
+  if (reduce) return;
+  document.documentElement.classList.add('js');
+
+  // Scroll reveals, staggered among siblings.
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) {
+      if (!en.isIntersecting) return;
+      var el = en.target; io.unobserve(el);
+      var sibs = [].filter.call(el.parentElement.children, function (c) { return c.hasAttribute('data-reveal'); });
+      el.style.transitionDelay = Math.max(0, sibs.indexOf(el)) * 110 + 'ms';
+      el.classList.add('shown');
+    });
+  }, { rootMargin: '0px 0px -8% 0px' });
+  document.querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+
+  // Header progress bar + manifesto word lighting.
+  var bar = document.getElementById('progress');
+  var manSec = man ? man.closest('section') : null;
+  function onScroll() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+    if (!manSec || !words.length) return;
+    var r = manSec.getBoundingClientRect(), vh = window.innerHeight;
+    var p = Math.min(1, Math.max(0, (vh * 0.85 - r.top) / (r.height * 0.75)));
+    var n = Math.round(p * words.length);
+    words.forEach(function (s, i) { s.style.color = i < n ? s.dataset.w : ''; });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Hero spotlight follows the mouse.
+  var hero = document.getElementById('top'), spot = document.getElementById('hero-spot');
+  hero.addEventListener('mousemove', function (e) {
+    var r = hero.getBoundingClientRect();
+    spot.style.transform = 'translate(' + (e.clientX - r.left) + 'px,' + (e.clientY - r.top) + 'px)';
+    spot.style.opacity = '1';
+  });
+  hero.addEventListener('mouseleave', function () { spot.style.opacity = '0'; });
+
+  // Hero video: start only after the page has loaded (never competes with the
+  // text/images), skip it for reduced motion / data saver / 2G (the blurred
+  // still stays), and pause it while off-screen or in a background tab.
+  var vid = document.getElementById('hero-video');
+  var conn = navigator.connection || {};
+  var skip = window.matchMedia('(prefers-reduced-motion: reduce)').matches || conn.saveData || /2g/.test(conn.effectiveType || '');
+  if (vid && !skip) {
+    var visible = true;
+    var sync = function () { if (!vid.src) return; if (visible && !document.hidden) vid.play().catch(function () {}); else vid.pause(); };
+    var start = function () {
+      vid.src = '/media/hero.mp4';
+      vid.addEventListener('playing', function () { vid.classList.add('on'); }, { once: true });
+      sync();
+    };
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (en) { visible = en[0].isIntersecting; sync(); }).observe(hero);
+    }
+    document.addEventListener('visibilitychange', sync);
+    if (document.readyState === 'complete') setTimeout(start, 300);
+    else window.addEventListener('load', function () { setTimeout(start, 300); });
+  }
+})();
+</script>
+</body>
+</html>
