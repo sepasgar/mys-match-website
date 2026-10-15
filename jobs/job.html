@@ -9,7 +9,7 @@
   <!-- Unlike events/event.html this page must stay indexable: Google for Jobs
        only lists postings whose detail page can be indexed. The JobPosting
        JSON-LD is injected by the script below once the job has loaded. -->
-  <link rel="canonical" id="canonical" href="https://www.mysmatch.com/jobs">
+  <link rel="canonical" id="canonical" href="https://www.mysmatch.com/jobs/">
   <link rel="icon" type="image/png" href="/logo-512.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -65,10 +65,10 @@
     <a class="brand" href="/"><img src="/logo-512.png" alt="" width="36" height="36"><span>MysMatch</span></a>
     <nav class="nav-links" id="nav-links">
       <a href="/">Home</a>
-      <a href="/events">Events</a>
-      <a href="/jobs" class="on">Jobs</a>
+      <a href="/events/">Events</a>
+      <a href="/jobs/" class="on">Jobs</a>
     <!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/jobs/job" hreflang="en" lang="en" aria-current="true">EN</a><a href="/de/jobs/job" hreflang="de" lang="de">DE</a><a href="/fa/jobs/job" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --></nav>
-    <div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/jobs/job" hreflang="en" lang="en" aria-current="true">EN</a><a href="/de/jobs/job" hreflang="de" lang="de">DE</a><a href="/fa/jobs/job" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch -->      <a class="nav-cta" href="/jobs">All jobs</a>
+    <div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/jobs/job" hreflang="en" lang="en" aria-current="true">EN</a><a href="/de/jobs/job" hreflang="de" lang="de">DE</a><a href="/fa/jobs/job" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch -->      <a class="nav-cta" href="/jobs/">All jobs</a>
       <button class="menu-btn" id="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -79,7 +79,7 @@
 <section class="page-hero job-hero">
   <div class="hero-stack">
     <div class="hero-head">
-      <a href="/jobs" class="back">← All jobs</a>
+      <a href="/jobs/" class="back">← All jobs</a>
       <div id="state" class="center-state">Loading job…</div>
       <div id="job-head" hidden></div>
     </div>
@@ -120,9 +120,9 @@
         <p>Do not study alone.</p>
       </div>
       <div class="foot-cols">
-        <div class="foot-col"><span class="kicker">Product</span><a href="/events">Events</a><a href="/jobs">Jobs</a></div>
-        <div class="foot-col"><span class="kicker">Company</span><a href="mailto:contact@mys-match.com">Contact</a><a href="/dashboard.html">Organization login</a><a href="/organizations">Organization sign-up</a></div>
-        <div class="foot-col"><span class="kicker">Legal</span><a href="/privacy-policy">Privacy Policy</a><a href="/terms">Terms of Service</a><a href="/support">Support</a></div>
+        <div class="foot-col"><span class="kicker">Product</span><a href="/events/">Events</a><a href="/jobs/">Jobs</a></div>
+        <div class="foot-col"><span class="kicker">Company</span><a href="mailto:contact@mys-match.com">Contact</a><a href="/dashboard.html">Organization login</a><a href="/organizations/">Organization sign-up</a></div>
+        <div class="foot-col"><span class="kicker">Legal</span><a href="/privacy-policy/">Privacy Policy</a><a href="/terms/">Terms of Service</a><a href="/support/">Support</a></div>
         <div class="foot-col"><span class="kicker">Social</span><a href="https://www.instagram.com/mysmatchofficial/" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.tiktok.com/@mysmatchofficial" target="_blank" rel="noopener noreferrer">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" target="_blank" rel="noopener noreferrer">LinkedIn</a></div>
       </div>
     </div>
@@ -149,7 +149,7 @@
       document.getElementById('open-app').setAttribute('href', 'mysmatch://job/' + encodeURIComponent(id));
 
       MM.getJob(id).then((j) => {
-        if (!j) { stateEl.innerHTML = 'This job is no longer available.<br><a href="/jobs">See all jobs</a>'; return; }
+        if (!j) { stateEl.innerHTML = 'This job is no longer available.<br><a href="/jobs/">See all jobs</a>'; return; }
         render(j);
         addStructuredData(j);
       }).catch((err) => { console.error(err); stateEl.textContent = 'Could not load this job.'; });
