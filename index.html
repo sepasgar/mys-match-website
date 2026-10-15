@@ -123,7 +123,12 @@
   .hero-video img, .hero-video video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.06); }
   .hero-video video{ opacity:0; transition:opacity 1.2s ease; }
   .hero-video video.on{ opacity:1; }
-  .hero-video::after{ content:""; position:absolute; inset:0; background:linear-gradient(160deg,rgba(18,19,44,0.68) 0%,rgba(15,16,32,0.55) 55%,rgba(24,16,38,0.78) 100%); }
+  /* Lighter tint (Oct 2026) → soft shadow behind the hero text so it stays
+     readable over the brighter parts of the video. */
+  .hero h1, .hero-sub, .hero .stat b, .hero .stat span{ text-shadow:0 2px 18px rgba(15,16,32,0.55), 0 1px 3px rgba(15,16,32,0.35); }
+  /* gradient words have see-through glyphs: a text-shadow would show through and muddy them */
+  .hero h1 .grad-text{ text-shadow:none; }
+  .hero-video::after{ content:""; position:absolute; inset:0; background:linear-gradient(160deg,rgba(18,19,44,0.52) 0%,rgba(15,16,32,0.38) 55%,rgba(24,16,38,0.62) 100%); }
   .hero-spot{ position:absolute; left:0; top:0; width:800px; height:800px; margin:-400px 0 0 -400px; border-radius:50%; background:radial-gradient(closest-side,rgba(233,75,154,0.1),rgba(15,16,32,0)); pointer-events:none; opacity:0; transition:opacity .5s; }
   .hero-glow{ position:absolute; right:-10%; top:-25%; width:80vw; aspect-ratio:1; border-radius:50%; background:radial-gradient(closest-side,rgba(123,92,255,0.16),rgba(233,75,154,0.06) 55%,rgba(15,16,32,0) 75%); pointer-events:none; }
   .hero-in{ position:relative; flex:1; display:flex; flex-direction:column; justify-content:flex-start; gap:clamp(28px,3vw,48px); padding:clamp(112px,9vw,150px) var(--pad-x) 0; }
