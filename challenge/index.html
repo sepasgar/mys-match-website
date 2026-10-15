@@ -129,6 +129,13 @@
   .c-step.done{ background:#E9E3FF; color:#4B3BB0; }
   .c-step.now{ background:var(--ink); color:#fff; }
   .c-step.no{ background:#FDECF2; color:#B4214F; }
+  /* "Track your progress" box on the dark confirmation card (Oct 2026). */
+  .c-track-note{ display:flex; flex-direction:column; gap:12px; padding:20px 22px; border-radius:24px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); }
+  .c-track-note b{ font-size:17px; }
+  .c-track-note p{ font-size:16px !important; }
+  .c-track-note a{ color:#CDB8FF; }
+  .c-track-note .c-step{ background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.7); }
+  .c-track-note .c-step.now{ background:#fff; color:var(--ink); }
   .c-draft{ font-size:15px; padding:12px 16px; border-radius:14px; background:#FFF6DD; color:#7A5600; }
 
   /* form */
@@ -386,7 +393,14 @@
         <div id="c-sent" class="c-card-dark" hidden>
           <span class="kicker" id="sent-kick">Entry received</span>
           <h3>Thanks, <span id="sent-name">there</span>. <span class="grad-text">You're in.</span></h3>
-          <p>We'll get back to you at <b id="sent-email"></b> after submissions close on 15 December. You can follow the status and edit your entry here until then.</p>
+          <p>We'll get back to you at <b id="sent-email"></b> after submissions close on 15 December. You can edit your entry here until then.</p>
+          <!-- WHY (Oct 2026): applicants didn't know they can follow their entry; say
+               where (this page, signed in) and what the stages are. -->
+          <div class="c-track-note">
+            <b>Track your progress</b>
+            <p>Come back to <a href="/challenge/">mysmatch.com/challenge</a> anytime and sign in with the same account. Your entry card shows where it is:</p>
+            <div class="c-steps"><span class="c-step now">Submitted</span><span class="c-step">In review</span><span class="c-step">Shortlisted</span><span class="c-step">Interview</span><span class="c-step">Selected</span></div>
+          </div>
           <div class="c-btns">
             <button class="btn btn-light" type="button" id="sent-another">Submit another track</button>
             <a class="btn btn-ghost" href="https://www.instagram.com/mysmatchofficial/" target="_blank" rel="noopener noreferrer">Follow us on Instagram ↗</a>
