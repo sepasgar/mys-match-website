@@ -220,7 +220,11 @@ def head_block(path, lang):
                  '<style>html[lang=fa] body,html[lang=fa] button,html[lang=fa] input,html[lang=fa] textarea{font-family:Vazirmatn,\'Geist\',sans-serif}'
                  'html[lang=fa] .h2,html[lang=fa] h1,html[lang=fa] h2{letter-spacing:0!important}'
                  'html[lang=fa] .kicker{letter-spacing:0}</style>')
-    return MARK_HEAD[0] + '\n' + '\n'.join(links) + '\n' + style + extra + '\n' + MARK_HEAD[1] + '\n'
+    # The switch keeps the rest of the address (?id=… on the event/job page,
+    # #anchors), otherwise the other language opens an empty event page.
+    keep = ('<script>document.addEventListener("DOMContentLoaded",function(){var q=location.search+location.hash;'
+            'if(q)document.querySelectorAll(".lang-switch a").forEach(function(a){a.setAttribute("href",a.getAttribute("href")+q);});});</script>')
+    return MARK_HEAD[0] + '\n' + '\n'.join(links) + '\n' + style + extra + keep + '\n' + MARK_HEAD[1] + '\n'
 
 
 def switch_block(path, lang, extra_class=''):
