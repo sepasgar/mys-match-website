@@ -116,9 +116,11 @@
      stats below the fold. Content now stacks from the top and fits the first screen. */
   .hero{ background:linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%); color:#fff; position:relative; overflow:hidden; display:flex; flex-direction:column; padding-bottom:48px; }
   /* Hero background video (Oct 2026). The blur is baked into the file
-     (640 px, ~95 KB) instead of CSS filter:blur — a live blur over a video is
-     slow on phones, and blur hides the low resolution. A dark tint keeps the
-     text readable. Loaded only after the page has finished loading. */
+     instead of CSS filter:blur — a live blur over a video is slow on phones.
+     v3 (16 Oct): 1280 px with a medium blur (~650 KB) so the scene is
+     recognisable; the old 640 px / heavy-blur file looked muddy. A lighter
+     variant exists if this one is still too soft. A dark tint keeps the text
+     readable. Loaded only after the page has finished loading. */
   .hero-video{ position:absolute; inset:0; overflow:hidden; pointer-events:none; }
   .hero-video img, .hero-video video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transform:scale(1.06); }
   .hero-video video{ opacity:0; transition:opacity 1.2s ease; }
@@ -378,7 +380,7 @@
 <!-- ════════ HERO ════════ -->
 <section class="hero" id="top">
   <div class="hero-video" aria-hidden="true">
-    <img src="/media/hero-poster.jpg" alt="" width="640" height="362" fetchpriority="low" decoding="async">
+    <img src="/media/hero-poster-v3.jpg" alt="" width="1280" height="724" fetchpriority="low" decoding="async">
     <video id="hero-video" muted playsinline loop preload="none" disablepictureinpicture></video>
   </div>
   <div class="hero-spot" id="hero-spot"></div>
@@ -870,7 +872,7 @@
     var visible = true;
     var sync = function () { if (!vid.src) return; if (visible && !document.hidden) vid.play().catch(function () {}); else vid.pause(); };
     var start = function () {
-      vid.src = '/media/hero.mp4';
+      vid.src = '/media/hero-v3.mp4';
       vid.addEventListener('playing', function () { vid.classList.add('on'); }, { once: true });
       sync();
     };
