@@ -400,7 +400,8 @@
       radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.35) 0%, rgba(255,255,255,0) 70%),
       linear-gradient(176deg,rgba(226,106,216,0.52) 0%,rgba(176,100,230,0.48) 30%,rgba(142,108,236,0.48) 55%,rgba(112,118,238,0.55) 100%); }
   /* WHY lighter (user, Oct 17): the first tint (~0.8) hid the video too much. */
-  .hero-video::before{ content:""; position:absolute; inset:0; z-index:1; background:var(--lines) center/cover no-repeat; mix-blend-mode:screen; opacity:0.5; }
+  /* WHY no wave lines on the hero (user, Oct 17): they sat on top of the video;
+     the lines stay on the other gradient surfaces only. */
   .hero h1, .hero-sub, .hero .stat b, .hero .stat span{ text-shadow:none; }
   .hero h1 .grad-text, .cta-card h2 span, .how .h2 span{ background:none; color:var(--indigo) !important; -webkit-text-fill-color:var(--indigo); }
   .hero-sub{ color:var(--ink-soft); }
@@ -431,7 +432,9 @@
   .step:nth-child(2){ background:linear-gradient(160deg,rgba(255,255,255,0.95),rgba(247,239,255,0.93)); }
   .step:nth-child(3){ background:linear-gradient(160deg,rgba(255,255,255,0.96),rgba(250,243,255,0.94)); }
   .step:nth-child(4){ background:linear-gradient(160deg,#FFFFFF,#FCF0F8); }
-  .step-top, .step:nth-child(4) .step-top{ color:rgba(30,26,54,0.62); }
+  /* WHY: the "/ Step" label was removed (user, Oct 17), so the text row would
+     jump to the top of the card; keep it at the bottom as before. */
+  .step{ justify-content:flex-end; }
   .step p, .step:nth-child(4) p{ color:var(--ink-2); }
   .step-big, .step:nth-child(2) .step-big, .step:nth-child(3) .step-big, .step:nth-child(4) .step-big{ color:rgba(123,92,255,0.32); }
 
@@ -643,28 +646,24 @@
 </div>
 <div class="steps">
 <div class="step">
-<div class="step-top"><span>/ Schritt</span></div>
 <div class="step-row">
 <div class="step-txt"><h3>Profil erstellen</h3><p>Registrier dich mit deiner Uni-E-Mail. Füg ein Foto, deinen Studiengang und ein paar Infos über dich hinzu.</p></div>
 <span class="step-big">01</span>
 </div>
 </div>
 <div class="step">
-<div class="step-top"><span>/ Schritt</span></div>
 <div class="step-row">
 <div class="step-txt"><h3>Suchen oder entdecken</h3><p>Stöbere durch vorgeschlagene Lernpartner und Kommilitonen oder leg eigene Suchkriterien fest: Uni, Studiengang, Semester, Stadt und mehr.</p></div>
 <span class="step-big">02</span>
 </div>
 </div>
 <div class="step">
-<div class="step-top"><span>/ Schritt</span></div>
 <div class="step-row">
 <div class="step-txt"><h3>Verbindungsanfrage senden</h3><p>Jemand Interessantes gefunden? Schick eine Verbindungsanfrage. Die Person kann annehmen oder ablehnen – ganz ohne Druck.</p></div>
 <span class="step-big">03</span>
 </div>
 </div>
 <div class="step">
-<div class="step-top"><span>/ Schritt</span></div>
 <div class="step-row">
 <div class="step-txt"><h3>Losreden</h3><p>Sobald beide zustimmen, öffnet sich ein privater Chat. Plant eine Lernsession, ein Gruppenprojekt oder ein Treffen auf dem Campus.</p></div>
 <span class="step-big">04</span>

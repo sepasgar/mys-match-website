@@ -403,7 +403,8 @@
       radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.35) 0%, rgba(255,255,255,0) 70%),
       linear-gradient(176deg,rgba(226,106,216,0.52) 0%,rgba(176,100,230,0.48) 30%,rgba(142,108,236,0.48) 55%,rgba(112,118,238,0.55) 100%); }
   /* WHY lighter (user, Oct 17): the first tint (~0.8) hid the video too much. */
-  .hero-video::before{ content:""; position:absolute; inset:0; z-index:1; background:var(--lines) center/cover no-repeat; mix-blend-mode:screen; opacity:0.5; }
+  /* WHY no wave lines on the hero (user, Oct 17): they sat on top of the video;
+     the lines stay on the other gradient surfaces only. */
   .hero h1, .hero-sub, .hero .stat b, .hero .stat span{ text-shadow:none; }
   .hero h1 .grad-text, .cta-card h2 span, .how .h2 span{ background:none; color:var(--indigo) !important; -webkit-text-fill-color:var(--indigo); }
   .hero-sub{ color:var(--ink-soft); }
@@ -434,7 +435,9 @@
   .step:nth-child(2){ background:linear-gradient(160deg,rgba(255,255,255,0.95),rgba(247,239,255,0.93)); }
   .step:nth-child(3){ background:linear-gradient(160deg,rgba(255,255,255,0.96),rgba(250,243,255,0.94)); }
   .step:nth-child(4){ background:linear-gradient(160deg,#FFFFFF,#FCF0F8); }
-  .step-top, .step:nth-child(4) .step-top{ color:rgba(30,26,54,0.62); }
+  /* WHY: the "/ Step" label was removed (user, Oct 17), so the text row would
+     jump to the top of the card; keep it at the bottom as before. */
+  .step{ justify-content:flex-end; }
   .step p, .step:nth-child(4) p{ color:var(--ink-2); }
   .step-big, .step:nth-child(2) .step-big, .step:nth-child(3) .step-big, .step:nth-child(4) .step-big{ color:rgba(123,92,255,0.32); }
 
@@ -652,28 +655,24 @@
     </div>
     <div class="steps">
       <div class="step">
-        <div class="step-top"><span>/ Step</span></div>
         <div class="step-row">
           <div class="step-txt"><h3>Create your profile</h3><p>Sign up with your university email. Add your photo, major, and a few details about yourself.</p></div>
           <span class="step-big">01</span>
         </div>
       </div>
       <div class="step">
-        <div class="step-top"><span>/ Step</span></div>
         <div class="step-row">
           <div class="step-txt"><h3>Search or discover</h3><p>Browse auto-suggested study partners and classmates, or set your own search criteria: university, major, semester, city, and more.</p></div>
           <span class="step-big">02</span>
         </div>
       </div>
       <div class="step">
-        <div class="step-top"><span>/ Step</span></div>
         <div class="step-row">
           <div class="step-txt"><h3>Send a connection request</h3><p>Found someone interesting? Send a connection request. They can accept or pass — no pressure.</p></div>
           <span class="step-big">03</span>
         </div>
       </div>
       <div class="step">
-        <div class="step-top"><span>/ Step</span></div>
         <div class="step-row">
           <div class="step-txt"><h3>Start talking</h3><p>Once both sides agree, a private chat opens. Plan a study session, group project, or campus meetup.</p></div>
           <span class="step-big">04</span>
