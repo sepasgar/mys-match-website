@@ -46,6 +46,22 @@
     .store-badge svg { width: 20px; height: 20px; }
     .home-link { display: block; margin-top: 36px; color: var(--faint); font-family: var(--mono); font-size: 13px; letter-spacing: 0.06em; text-decoration: none; }
     .home-link:hover { color: #fff; }
+    /* v6 theme (Oct 2026): same gradient + lines + grain as the rest of the site,
+       dark ink text instead of white. Overrides only; markup + logic unchanged. */
+    body { color: var(--ink); background:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E") 0 0/220px 220px,
+      radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.85) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(50% 50% at 50% 60%, rgba(160,170,255,0.5) 0%, rgba(255,255,255,0) 70%),
+      linear-gradient(176deg,#E26AD8 0%,#B064E6 30%,#8E6CEC 55%,#7076EE 100%) fixed; }
+    body::before { content:""; position:fixed; inset:0; background:url(/media/lines.svg) center/cover no-repeat; mix-blend-mode:screen; opacity:0.55; pointer-events:none; }
+    .card { position: relative; }
+    .eyebrow, .card > p[style] { color: rgba(30,26,54,0.7) !important; }
+    .lede { color: #2A2440; }
+    .open-app-btn { background: #0F1020; box-shadow: 0 14px 40px rgba(40,20,120,0.3); }
+    .open-app-btn:hover { background: #2E28C0; }
+    .store-badge { color: #2E28C0; box-shadow: 0 8px 24px rgba(60,30,140,0.18); }
+    .home-link { color: rgba(30,26,54,0.72); }
+    .home-link:hover { color: var(--ink); }
   </style>
 </head>
 <body>

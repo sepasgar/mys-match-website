@@ -124,6 +124,25 @@
   }
   footer a{ color:inherit; }
   @media (prefers-reduced-motion:reduce){ .link{ transition:none; } .link:hover{ transform:none; } }
+  /* v6 theme (Oct 2026): same gradient + lines + grain as the rest of the site.
+     The store buttons stay the main goal, so they become solid ink pills that
+     stand out on the gradient; website + email are white cards. */
+  body{ color:#0F1020; background:
+      radial-gradient(50% 50% at 78% 30%, rgba(255,192,238,0.85) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(50% 50% at 50% 70%, rgba(160,170,255,0.5) 0%, rgba(255,255,255,0) 70%),
+      linear-gradient(176deg,#E26AD8 0%,#B064E6 30%,#8E6CEC 55%,#7076EE 100%) fixed; }
+  body::before{ content:""; position:fixed; inset:0; background:url(/media/lines.svg) center/cover no-repeat; mix-blend-mode:screen; opacity:0.55; pointer-events:none; }
+  main{ position:relative; }
+  .tagline, footer{ color:rgba(42,36,64,0.75); }
+  .logo{ box-shadow:0 14px 40px rgba(40,20,120,0.3); }
+  .link{ background:rgba(255,255,255,0.9); color:#0F1020; border-color:rgba(255,255,255,0.7); box-shadow:0 8px 24px rgba(60,30,140,0.16); }
+  .link:hover{ border-color:#fff; }
+  .link .ic{ background:rgba(46,40,192,0.08); color:#2E28C0; }
+  .link .txt small{ color:#4B4C63; }
+  .link.primary{ background:#0F1020; color:#fff; box-shadow:0 14px 40px rgba(40,20,120,0.3); }
+  .link.primary:hover{ box-shadow:0 20px 50px rgba(40,20,120,0.4); }
+  .link.primary .ic{ background:rgba(255,255,255,0.14); color:#fff; }
+  .link.primary .txt small{ color:rgba(255,255,255,0.72); }
 </style>
 </head>
 <body>
