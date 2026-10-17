@@ -416,6 +416,14 @@
   /* Light sections: indigo accents, softer lavender between sheets */
   .manifesto p .accent, .shot-cap span, .feat.on .feat-n, .safe-card .kicker, .event-tag, .dash-list li::before{ color:var(--violet); }
   .sheet{ box-shadow:0 -24px 48px rgba(40,20,120,0.10); }
+  /* Glimpse (user, Oct 17: "a bit gradient" behind the screenshots): soft brand
+     glows on a lavender wash, so the phones sit on colour while the text stays
+     on a light ground. */
+  .glimpse{ background:
+      radial-gradient(45% 55% at 88% 62%, rgba(226,106,216,0.30) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(50% 55% at 12% 78%, rgba(112,118,238,0.28) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(40% 45% at 50% 95%, rgba(176,100,230,0.22) 0%, rgba(255,255,255,0) 70%),
+      linear-gradient(180deg,#FFFFFF 0%,#F6EFFF 45%,#EFE6FF 100%); }
   .feat-icon{ background:var(--g-brand); box-shadow:0 40px 80px rgba(60,30,140,0.3); }
   .chip{ background:#fff; }
 
