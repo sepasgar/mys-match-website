@@ -419,24 +419,35 @@
   .feat-icon{ background:var(--g-brand); box-shadow:0 40px 80px rgba(60,30,140,0.3); }
   .chip{ background:#fff; }
 
-  /* How it works: gradient surface, frosted step cards */
-  /* WHY no overflow:hidden here: it turns the section into a scroll box and the
-     sticky step cards stopped stacking; the texture layers round their own corners. */
-  .how{ color:var(--ink); box-shadow:0 -24px 48px rgba(40,20,120,0.16); }
-  .how::before, .how::after, .footer::before, .footer::after{ border-radius:inherit; }
-  .how-head .kicker{ color:rgba(30,26,54,0.7); }
-  .step, .step:nth-child(2), .step:nth-child(3), .step:nth-child(4){ color:var(--ink); background:linear-gradient(160deg,rgba(255,255,255,0.94),rgba(244,236,255,0.92)); border:1px solid rgba(255,255,255,0.7); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); box-shadow:0 -24px 48px rgba(40,20,120,0.16); }
-  /* WHY near-opaque: the cards stack on top of each other while scrolling, and
-     see-through glass let the card underneath show through. Each card is a
-     shade lighter, like the old stack. */
-  .step:nth-child(2){ background:linear-gradient(160deg,rgba(255,255,255,0.95),rgba(247,239,255,0.93)); }
-  .step:nth-child(3){ background:linear-gradient(160deg,rgba(255,255,255,0.96),rgba(250,243,255,0.94)); }
-  .step:nth-child(4){ background:linear-gradient(160deg,#FFFFFF,#FCF0F8); }
-  /* WHY: the "/ Step" label was removed (user, Oct 17), so the text row would
-     jump to the top of the card; keep it at the bottom as before. */
-  .step{ justify-content:flex-end; }
+  /* How it works (user, Oct 17): the gradient moved from the section to the
+     cards. White section; the cards run from almost white (01) to the full
+     brand gradient (04) — a white veil over the gradient that thins card by card.
+     Opaque on purpose: the cards stack while scrolling.
+     WHY no overflow:hidden here: it turns the section into a scroll box and the
+     sticky step cards stopped stacking. */
+  .how{ color:var(--ink); background:linear-gradient(180deg,#FFFFFF 0%,#F8F4FF 100%); box-shadow:0 -24px 48px rgba(40,20,120,0.12); }
+  .how::before, .how::after{ display:none; }
+  .footer::before, .footer::after{ border-radius:inherit; }
+  .how-head .kicker{ color:var(--muted); }
+  .step{ --veil:0.86; justify-content:flex-end; color:var(--ink); border:1px solid rgba(255,255,255,0.7); box-shadow:0 -24px 48px rgba(40,20,120,0.14);
+    background:
+      linear-gradient(rgba(255,255,255,var(--veil)),rgba(255,255,255,var(--veil))),
+      radial-gradient(60% 60% at 80% 30%, rgba(255,192,238,0.85) 0%, rgba(255,255,255,0) 70%),
+      var(--g-brand); }
+  /* WHY the repeated :nth-child: the base styles colour each card by position. */
+  .step:nth-child(1){ --veil:0.86; }
+  .step:nth-child(2){ --veil:0.6; }
+  .step:nth-child(3){ --veil:0.3; }
+  .step:nth-child(4){ --veil:0; }
+  .step:nth-child(n){ background:
+      linear-gradient(rgba(255,255,255,var(--veil)),rgba(255,255,255,var(--veil))),
+      radial-gradient(60% 60% at 80% 30%, rgba(255,192,238,0.85) 0%, rgba(255,255,255,0) 70%),
+      var(--g-brand); }
   .step p, .step:nth-child(4) p{ color:var(--ink-2); }
-  .step-big, .step:nth-child(2) .step-big, .step:nth-child(3) .step-big, .step:nth-child(4) .step-big{ color:rgba(123,92,255,0.32); }
+  .step:nth-child(3) p, .step:nth-child(4) p{ color:var(--ink-soft); }
+  /* Big numbers: lavender on the pale cards, soft white on the strong ones. */
+  .step-big, .step:nth-child(2) .step-big{ color:rgba(123,92,255,0.3); }
+  .step:nth-child(3) .step-big, .step:nth-child(4) .step-big{ color:rgba(255,255,255,0.55); }
 
   /* Download card: the design's gradient "Match. Study." card */
   .cta-card{ color:var(--ink); box-shadow:0 40px 80px rgba(60,30,140,0.22); }
