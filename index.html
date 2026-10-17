@@ -397,8 +397,12 @@
   /* Hero: video under a gradient tint, lines on top, dark text */
   .hero{ color:var(--ink); }
   .hero-video::after{ background:
-      radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.55) 0%, rgba(255,255,255,0) 70%),
-      linear-gradient(176deg,rgba(226,106,216,0.80) 0%,rgba(176,100,230,0.78) 30%,rgba(142,108,236,0.78) 55%,rgba(112,118,238,0.82) 100%); }
+      /* WHY: with the lighter tint the small dark text lost contrast over the
+         video; a soft light fade behind the text column only keeps it readable. */
+      linear-gradient(90deg, rgba(246,238,255,0.42) 0%, rgba(246,238,255,0.22) 40%, rgba(246,238,255,0) 62%),
+      radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.35) 0%, rgba(255,255,255,0) 70%),
+      linear-gradient(176deg,rgba(226,106,216,0.52) 0%,rgba(176,100,230,0.48) 30%,rgba(142,108,236,0.48) 55%,rgba(112,118,238,0.55) 100%); }
+  /* WHY lighter (user, Oct 17): the first tint (~0.8) hid the video too much. */
   .hero-video::before{ content:""; position:absolute; inset:0; z-index:1; background:var(--lines) center/cover no-repeat; mix-blend-mode:screen; opacity:0.5; }
   .hero h1, .hero-sub, .hero .stat b, .hero .stat span{ text-shadow:none; }
   .hero h1 .grad-text, .cta-card h2 span, .how .h2 span{ background:none; color:var(--indigo) !important; -webkit-text-fill-color:var(--indigo); }
@@ -418,10 +422,18 @@
   .chip{ background:#fff; }
 
   /* How it works: gradient surface, frosted step cards */
-  .how{ color:var(--ink); overflow:hidden; box-shadow:0 -24px 48px rgba(40,20,120,0.16); }
+  /* WHY no overflow:hidden here: it turns the section into a scroll box and the
+     sticky step cards stopped stacking; the texture layers round their own corners. */
+  .how{ color:var(--ink); box-shadow:0 -24px 48px rgba(40,20,120,0.16); }
+  .how::before, .how::after, .footer::before, .footer::after{ border-radius:inherit; }
   .how-head .kicker{ color:rgba(30,26,54,0.7); }
-  .step, .step:nth-child(2), .step:nth-child(3), .step:nth-child(4){ color:var(--ink); background:linear-gradient(160deg,rgba(255,255,255,0.62),rgba(255,255,255,0.42)); border:1px solid rgba(255,255,255,0.6); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); box-shadow:0 -24px 48px rgba(40,20,120,0.16); }
-  .step:nth-child(4){ background:linear-gradient(160deg,rgba(255,255,255,0.86),rgba(252,240,248,0.8)); }
+  .step, .step:nth-child(2), .step:nth-child(3), .step:nth-child(4){ color:var(--ink); background:linear-gradient(160deg,rgba(255,255,255,0.94),rgba(244,236,255,0.92)); border:1px solid rgba(255,255,255,0.7); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); box-shadow:0 -24px 48px rgba(40,20,120,0.16); }
+  /* WHY near-opaque: the cards stack on top of each other while scrolling, and
+     see-through glass let the card underneath show through. Each card is a
+     shade lighter, like the old stack. */
+  .step:nth-child(2){ background:linear-gradient(160deg,rgba(255,255,255,0.95),rgba(247,239,255,0.93)); }
+  .step:nth-child(3){ background:linear-gradient(160deg,rgba(255,255,255,0.96),rgba(250,243,255,0.94)); }
+  .step:nth-child(4){ background:linear-gradient(160deg,#FFFFFF,#FCF0F8); }
   .step-top, .step:nth-child(4) .step-top{ color:rgba(30,26,54,0.62); }
   .step p, .step:nth-child(4) p{ color:var(--ink-2); }
   .step-big, .step:nth-child(2) .step-big, .step:nth-child(3) .step-big, .step:nth-child(4) .step-big{ color:rgba(123,92,255,0.32); }
