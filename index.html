@@ -322,6 +322,13 @@
     .nav.open{ border-radius:28px; }
     .nav.open .nav-links{ display:flex; position:static; flex-direction:column; align-items:flex-start; gap:4px; padding:4px 24px 20px; font-size:18px; }
     .nav.open .nav-links a{ padding:10px 0; }
+    /* WHY: the links sit between logo and buttons in the markup, so the open
+       dropdown squeezed into the middle of the header row; push it onto its own
+       full-width row below. */
+    .nav.open .nav-links{ order:3; flex-basis:100%; }
+    /* WHY: the link padding above also hit the EN/DE/فا pills in the menu and
+       squashed the highlighted one into a thin bar. */
+    .nav.open .nav-links .lang-switch a{ padding:6px 12px; }
     .nav-in{ flex-wrap:wrap; gap:12px; }
     .nav-right{ display:flex; align-items:center; gap:10px; }
     .shots{ grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -343,6 +350,103 @@
     .step, .safe-card, .cta-card, .event-stage, .feat-panel{ border-radius:28px; }
     .foot-cols{ grid-template-columns:repeat(2,minmax(0,1fr)); }
     .store{ flex:1 1 auto; }
+  }
+
+  /* ═════════ v6 theme (Oct 2026, "MysMatch Home v6" design) ═════════
+     Visual layer only: same content and section order as before. The dark
+     look becomes a pink → violet → periwinkle gradient with flowing white
+     lines (media/lines.svg) and a fine grain, dark ink text, indigo
+     highlight words, frosted step cards and a gradient footer. Kept as one
+     block on top of the base styles so it can be reviewed or removed in one go.
+     The hero keeps the library video (user choice), tinted with the gradient. */
+  :root{
+    --g-brand:linear-gradient(176deg,#E26AD8 0%,#B064E6 30%,#8E6CEC 55%,#7076EE 100%);
+    --indigo:#2E28C0; --ink-soft:#2A2440; --nav-ink:#1E1A36;
+    --lines:url(/media/lines.svg);
+    --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  html,body{ background:#F4EFFF; }
+  .btn-violet{ background:#fff; color:var(--indigo); box-shadow:0 12px 40px rgba(60,30,140,0.22); }
+  .btn-violet:hover{ background:#F4F0FF; color:var(--indigo); }
+  .btn-dark:hover{ background:var(--indigo); }
+
+  /* Gradient surfaces share one recipe: brand gradient + two soft glows +
+     flowing lines (screen) + grain (overlay). */
+  .hero, .how, .cta-card, .footer{ background:
+      radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.85) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(50% 50% at 50% 60%, rgba(160,170,255,0.5) 0%, rgba(255,255,255,0) 70%),
+      var(--g-brand); }
+  .how::before, .cta-card::after, .footer::before{ content:""; position:absolute; inset:0; background:var(--lines) center/cover no-repeat; mix-blend-mode:screen; opacity:0.55; pointer-events:none; }
+  .how::after, .footer::after{ content:""; position:absolute; inset:0; background:var(--grain); background-size:220px 220px; mix-blend-mode:overlay; opacity:0.55; pointer-events:none; }
+  .how .in, .footer .in{ position:relative; z-index:1; }
+
+  /* Header: frosted gradient pill, dark links */
+  .nav{ background:linear-gradient(100deg,rgba(226,106,216,0.92) 0%,rgba(176,100,230,0.92) 40%,rgba(142,108,236,0.92) 70%,rgba(112,118,238,0.92) 100%); border:1px solid rgba(255,255,255,0.45); box-shadow:0 12px 40px rgba(60,30,140,0.28), inset 0 1px 0 rgba(255,255,255,0.35); }
+  .brand, .brand:hover{ color:var(--ink); }
+  .nav-links a{ color:var(--nav-ink); }
+  .nav-links a:hover{ color:#fff; }
+  .nav-cta{ background:var(--ink); color:#fff; }
+  .nav-cta:hover{ background:var(--indigo); color:#fff; }
+  .menu-btn{ border-color:rgba(30,26,54,0.25); }
+  .menu-btn span{ background:var(--ink); }
+  .progress{ background:linear-gradient(90deg,#2E28C0,#7B5CFF,#E26AD8); }
+  .nav .lang-switch a{ color:rgba(30,26,54,0.62); }
+  .nav .lang-switch a:hover{ color:var(--ink); }
+  .nav .lang-switch a[aria-current]{ color:var(--ink); background:rgba(255,255,255,0.45); }
+
+  /* Hero: video under a gradient tint, lines on top, dark text */
+  .hero{ color:var(--ink); }
+  .hero-video::after{ background:
+      radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.55) 0%, rgba(255,255,255,0) 70%),
+      linear-gradient(176deg,rgba(226,106,216,0.80) 0%,rgba(176,100,230,0.78) 30%,rgba(142,108,236,0.78) 55%,rgba(112,118,238,0.82) 100%); }
+  .hero-video::before{ content:""; position:absolute; inset:0; z-index:1; background:var(--lines) center/cover no-repeat; mix-blend-mode:screen; opacity:0.5; }
+  .hero h1, .hero-sub, .hero .stat b, .hero .stat span{ text-shadow:none; }
+  .hero h1 .grad-text, .cta-card h2 span, .how .h2 span{ background:none; color:var(--indigo) !important; -webkit-text-fill-color:var(--indigo); }
+  .hero-sub{ color:var(--ink-soft); }
+  .hero .btn-ghost{ color:var(--ink); border-color:rgba(30,26,54,0.28); }
+  .hero .btn-ghost:hover{ border-color:var(--ink); color:var(--ink); }
+  .stats{ border-top-color:rgba(42,36,64,0.16); }
+  .stat span, .eyebrow{ color:rgba(42,36,64,0.7); }
+  .hero-spot{ background:radial-gradient(closest-side,rgba(255,255,255,0.18),rgba(255,255,255,0)); }
+  .hero-glow{ display:none; }
+  .hero-phones .phone{ border-color:rgba(255,255,255,0.35); box-shadow:0 50px 100px rgba(40,20,120,0.4); }
+
+  /* Light sections: indigo accents, softer lavender between sheets */
+  .manifesto p .accent, .shot-cap span, .feat.on .feat-n, .safe-card .kicker, .event-tag, .dash-list li::before{ color:var(--violet); }
+  .sheet{ box-shadow:0 -24px 48px rgba(40,20,120,0.10); }
+  .feat-icon{ background:var(--g-brand); box-shadow:0 40px 80px rgba(60,30,140,0.3); }
+  .chip{ background:#fff; }
+
+  /* How it works: gradient surface, frosted step cards */
+  .how{ color:var(--ink); overflow:hidden; box-shadow:0 -24px 48px rgba(40,20,120,0.16); }
+  .how-head .kicker{ color:rgba(30,26,54,0.7); }
+  .step, .step:nth-child(2), .step:nth-child(3), .step:nth-child(4){ color:var(--ink); background:linear-gradient(160deg,rgba(255,255,255,0.62),rgba(255,255,255,0.42)); border:1px solid rgba(255,255,255,0.6); backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px); box-shadow:0 -24px 48px rgba(40,20,120,0.16); }
+  .step:nth-child(4){ background:linear-gradient(160deg,rgba(255,255,255,0.86),rgba(252,240,248,0.8)); }
+  .step-top, .step:nth-child(4) .step-top{ color:rgba(30,26,54,0.62); }
+  .step p, .step:nth-child(4) p{ color:var(--ink-2); }
+  .step-big, .step:nth-child(2) .step-big, .step:nth-child(3) .step-big, .step:nth-child(4) .step-big{ color:rgba(123,92,255,0.32); }
+
+  /* Download card: the design's gradient "Match. Study." card */
+  .cta-card{ color:var(--ink); box-shadow:0 40px 80px rgba(60,30,140,0.22); }
+  .cta-card::before{ background:radial-gradient(closest-side,rgba(255,255,255,0.22),rgba(255,255,255,0)); }
+  .cta-card > *{ position:relative; z-index:1; }
+  .cta-bottom p{ color:var(--ink-soft); }
+  .store{ box-shadow:0 8px 24px rgba(60,30,140,0.18); }
+  .store b{ color:var(--indigo); }
+
+  /* Footer: gradient with the dark, fading MysMatch wordmark */
+  .footer{ color:var(--ink); position:relative; box-shadow:0 -24px 48px rgba(40,20,120,0.16); }
+  .foot-brand .brand, .foot-brand .brand:hover{ color:var(--ink); }
+  .foot-brand p{ color:var(--ink-soft); }
+  .foot-col .kicker{ color:rgba(30,26,54,0.7); }
+  .foot-col a{ color:var(--nav-ink); }
+  .foot-col a:hover{ color:#fff; }
+  .wordmark{ background:linear-gradient(180deg,rgba(15,16,32,0.85),rgba(46,40,192,0.25)); -webkit-background-clip:text; background-clip:text; }
+  .foot-bottom{ color:rgba(30,26,54,0.72); border-top-color:rgba(30,26,54,0.14); }
+  .foot-bottom a{ color:rgba(30,26,54,0.72); }
+  .foot-bottom a:hover{ color:var(--ink); }
+  @media (max-width:1100px){
+    .nav.open .nav-links a{ color:var(--nav-ink); }
   }
 </style>
 <!-- i18n:head -->
