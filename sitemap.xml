@@ -146,4 +146,17 @@
     <priority>0.8</priority>
   </url>
   <!-- /i18n:sitemap -->
+  <!-- WHY: Creator/Ideation Challenge public since 2026-10-18 (was unlisted + noindex). -->
+  <url>
+    <loc>https://www.mysmatch.com/challenge/</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.mysmatch.com/challenge/rules.html</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.4</priority>
+  </url>
 </urlset>
