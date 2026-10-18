@@ -320,3 +320,15 @@ section.page-hero .fact svg{ color:var(--indigo); }
 .fs-store small{ font-size:12px; color:rgba(255,255,255,0.75); }
 .fs-store b{ font-size:18px; font-weight:600; letter-spacing:-0.02em; }
 .fs-store svg{ flex-shrink:0; }
+
+/* Equal store buttons (owner, 2026-10-18): App Store and Google Play always
+   the same size, in the download sections and in the footer. Two equal grid
+   columns as wide as the wider button; phones shrink both together. */
+.stores, .foot-stores{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); width:fit-content; max-width:100%; }
+.foot-stores > .kicker{ grid-column:1 / -1; }
+.stores > a, .foot-stores > a{ min-width:0; justify-content:flex-start; }
+@media (max-width:520px){
+  .stores, .foot-stores{ width:100%; }
+  .stores > a.store, .footer .foot-stores > a.fs-store{ padding:12px 14px; gap:10px; }
+  .stores > a.store b, .foot-stores > a.fs-store b{ font-size:17px; }
+}
