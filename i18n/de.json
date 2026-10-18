@@ -765,7 +765,8 @@
   "<span>Upload your design</span><em data-err=\"post\"></em>": "<span>Lade dein Design hoch</span><em data-err=\"post\"></em>",
   "<span data-only=\"video\" hidden=\"\">Google Drive link to your video *</span><span data-only=\"post\" hidden=\"\">Or share a Google Drive link (e.g. a video post)</span><em data-err=\"drive_url\"></em>": "<span data-only=\"video\" hidden=\"\">Google-Drive-Link zu deinem Video *</span><span data-only=\"post\" hidden=\"\">Oder teile einen Google-Drive-Link (z. B. für einen Video-Post)</span><em data-err=\"drive_url\"></em>",
   "Google Drive link to your video *": "Google-Drive-Link zu deinem Video *",
-  "Or share a Google Drive link (e.g. a video post)": "Oder teile einen Google-Drive-Link (z. B. für einen Video-Post)"
+  "Or share a Google Drive link (e.g. a video post)": "Oder teile einen Google-Drive-Link (z. B. für einen Video-Post)",
+  "<span>Your concept, or a concept summary (if you upload your concept as a file) *</span><em data-err=\"concept_text\"></em>": "<span>Dein Konzept oder eine Zusammenfassung (wenn du dein Konzept als Datei hochlädst) *</span><em data-err=\"concept_text\"></em>"
  },
  "js": {
   "Open registration": "Anmeldung offen",
