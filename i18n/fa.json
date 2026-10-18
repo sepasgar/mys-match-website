@@ -766,7 +766,10 @@
   "<span data-only=\"video\" hidden=\"\">Google Drive link to your video *</span><span data-only=\"post\" hidden=\"\">Or share a Google Drive link (e.g. a video post)</span><em data-err=\"drive_url\"></em>": "<span data-only=\"video\" hidden=\"\">لینک گوگل درایو ویدیویت *</span><span data-only=\"post\" hidden=\"\">یا لینک گوگل درایو بفرست (مثلاً برای پست ویدیویی)</span><em data-err=\"drive_url\"></em>",
   "Google Drive link to your video *": "لینک گوگل درایو ویدیویت *",
   "Or share a Google Drive link (e.g. a video post)": "یا لینک گوگل درایو بفرست (مثلاً برای پست ویدیویی)",
-  "<span>Your concept, or a concept summary (if you upload your concept as a file) *</span><em data-err=\"concept_text\"></em>": "<span>ایدهٔ تو، یا خلاصهٔ آن (اگر ایده‌ات را به‌صورت فایل بارگذاری می‌کنی) *</span><em data-err=\"concept_text\"></em>"
+  "<span>Your concept, or a concept summary (if you upload your concept as a file) *</span><em data-err=\"concept_text\"></em>": "<span>ایدهٔ تو، یا خلاصهٔ آن (اگر ایده‌ات را به‌صورت فایل بارگذاری می‌کنی) *</span><em data-err=\"concept_text\"></em>",
+  "<small>Instagram</small><b>@mysmatchofficial</b>": "<small>اینستاگرام</small><b>@mysmatchofficial</b>",
+  "<small>TikTok</small><b>@mysmatchofficial</b>": "<small>تیک‌تاک</small><b>@mysmatchofficial</b>",
+  "<small>LinkedIn</small><b>MysMatch</b>": "<small>لینکدین</small><b>MysMatch</b>"
  },
  "js": {
   "Open registration": "ثبت‌نام باز است",
