@@ -552,6 +552,18 @@ html[lang=fa] .gt-kick{ font-family:inherit; letter-spacing:0; font-size:13px; }
 }
 /* The download card is narrower than the page on phones: stack the two (still equal) buttons. */
 @media (max-width:430px){ .cta-card .stores{ grid-template-columns:1fr; } }
+/* Safety cards on the brand gradient (owner, 2026-10-18; were plain white).
+   Same recipe as How it works: a white veil that thins card by card. */
+.safety .safe-card{ --veil:0.5; position:relative; overflow:hidden; isolation:isolate; border:1px solid rgba(255,255,255,0.7);
+  box-shadow:0 30px 60px rgba(60,30,140,0.16);
+  background:linear-gradient(rgba(255,255,255,var(--veil)),rgba(255,255,255,var(--veil))),
+             radial-gradient(60% 60% at 80% 20%, rgba(255,192,238,0.5) 0%, rgba(255,255,255,0) 70%), var(--g-brand); }
+.safety .safe-card:nth-child(2){ --veil:0.25; }
+.safety .safe-card:nth-child(3), .safety .safe-card:nth-child(n+4){ --veil:0; }
+.safety .safe-card::before{ content:""; position:absolute; inset:0; z-index:-1; background:var(--lines) center/cover no-repeat; mix-blend-mode:screen; opacity:.45; pointer-events:none; }
+.safety .safe-card .kicker{ color:rgba(30,26,54,0.68); }
+.safety .safe-card h3{ color:#1E1A36; }
+.safety .safe-card p{ color:var(--ink-soft); }
 </style>
 <!-- i18n:head -->
 <link rel="alternate" hreflang="en" href="https://www.mysmatch.com/">
