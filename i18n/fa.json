@@ -975,7 +975,8 @@
   "Checked in at": "زمان ورود",
   "Preparing…": "در حال آماده‌سازی…",
   "Could not create the Excel file. Please try again, or use Export CSV.": "فایل اکسل ساخته نشد. لطفاً دوباره امتحان کن یا از خروجی CSV استفاده کن.",
-  "Add at least one image or a Google Drive link": "دست‌کم یک تصویر یا لینک گوگل درایو اضافه کن"
+  "Add at least one image or a Google Drive link": "دست‌کم یک تصویر یا لینک گوگل درایو اضافه کن",
+  "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": "<div class=\"c-prog\"><span class=\"kicker\">پیشرفت تو</span><ol class=\"c-stepper\">"
  },
  "jsraw": {
   "{ key: 'Sports', label: 'Sports' }": "{ key: 'Sports', label: 'ورزش' }",

@@ -161,6 +161,41 @@
   .c-track-note .c-step.now{ background:#fff; color:var(--ink); }
   .c-draft{ font-size:15px; padding:12px 16px; border-radius:14px; background:#FFF6DD; color:#7A5600; }
 
+  /* Entry cards = brand gradient + a step tracker (owner, 2026-10-18: the
+     progress must stand out from the form below). */
+  .c-entry{ position:relative; overflow:hidden; isolation:isolate; gap:22px; color:var(--nav-ink); border:1px solid rgba(255,255,255,0.6);
+    background:radial-gradient(60% 80% at 88% 8%, rgba(255,192,238,0.8) 0%, rgba(255,192,238,0) 60%), radial-gradient(50% 70% at 5% 100%, rgba(112,118,238,0.55) 0%, rgba(112,118,238,0) 60%), var(--g-brand);
+    box-shadow:0 30px 60px rgba(60,30,140,0.22); }
+  .c-entry::before{ content:""; position:absolute; inset:0; z-index:-1; background:var(--lines) center/cover no-repeat; mix-blend-mode:screen; opacity:.45; pointer-events:none; }
+  .c-entry-top .kicker{ color:rgba(30,26,54,0.7); }
+  .c-entry-top b{ color:#1E1A36; font-size:clamp(22px,2vw,32px); }
+  .c-entry .c-draft{ background:rgba(255,246,221,0.92); }
+  .c-prog{ display:flex; flex-direction:column; gap:18px; padding:clamp(16px,1.6vw,24px); border-radius:22px; background:rgba(255,255,255,0.3); border:1px solid rgba(255,255,255,0.55); }
+  .c-prog > .kicker{ color:rgba(30,26,54,0.75); }
+  .c-stepper{ list-style:none; margin:0; padding:0; display:flex; }
+  .c-stepper li{ flex:1 1 0; position:relative; display:flex; flex-direction:column; align-items:center; gap:10px; text-align:center; min-width:0; }
+  /* line from the previous step to this one */
+  .c-stepper li::before{ content:""; position:absolute; top:17px; inset-inline-start:-50%; width:100%; height:3px; border-radius:3px; background:rgba(255,255,255,0.45); }
+  .c-stepper li:first-child::before{ display:none; }
+  .c-stepper li.done::before, .c-stepper li.now::before, .c-stepper li.no::before{ background:#fff; }
+  .c-stepper .dot{ position:relative; z-index:1; /* above the next step's line */ width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px;
+    background:rgba(255,255,255,0.35); color:rgba(30,26,54,0.5); border:2px solid rgba(255,255,255,0.75); }
+  .c-stepper li.done .dot{ background:#fff; color:var(--indigo); border-color:#fff; }
+  .c-stepper li.now .dot{ background:#1E1A36; color:#fff; border-color:#fff; box-shadow:0 0 0 6px rgba(255,255,255,0.35), 0 10px 22px rgba(30,20,80,0.35); }
+  .c-stepper li.no .dot{ background:#B4214F; color:#fff; border-color:#fff; }
+  .c-stepper .lb{ font-size:14px; font-weight:500; line-height:1.25; color:rgba(30,26,54,0.6); }
+  .c-stepper li.done .lb{ color:#1E1A36; }
+  .c-stepper li.now .lb, .c-stepper li.no .lb{ color:#1E1A36; font-weight:700; }
+  .c-prog-now{ display:none; }
+  @media (max-width:520px){
+    .c-stepper .dot{ width:30px; height:30px; font-size:13px; }
+    .c-stepper li::before{ top:14px; }
+    .c-stepper .lb{ display:none; }
+    .c-prog-now{ display:inline-flex; align-self:flex-start; align-items:center; gap:8px; padding:8px 14px; border-radius:999px; background:#1E1A36; color:#fff; font-size:15px; font-weight:600; }
+    .c-prog-now::before{ content:""; width:7px; height:7px; border-radius:50%; background:#fff; }
+    .c-prog-now.no{ background:#B4214F; }
+  }
+
   /* form */
   .c-form{ display:flex; flex-direction:column; border-top:1px solid #E2DEF0; }
   .fs{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:clamp(28px,4vw,80px); padding:clamp(40px,4vw,72px) 0; border-bottom:1px solid #E2DEF0; }
@@ -647,7 +682,10 @@
     return all.map(function (s, i) {
       var label = MMC.STATUSES.find(function (x) { return x.id === s; }).label;
       var cls = i < idx ? 'done' : (i === idx ? (s === 'not_selected' ? 'no' : 'now') : '');
-      return '<span class="c-step ' + cls + '">' + esc(label) + '</span>';
+      // Step tracker: ✓ for finished steps, × for "Not selected", else the step number.
+      // (the check is drawn, not a ✓ character: the Persian font shows that as a slash)
+      var dot = cls === 'done' ? '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>' : (cls === 'no' ? '×' : String(i + 1));
+      return '<li class="' + cls + '"' + (cls === 'now' || cls === 'no' ? ' aria-current="step"' : '') + '><span class="dot">' + dot + '</span><span class="lb">' + esc(label) + '</span></li>';
     }).join('');
   }
   function renderEntries() {
@@ -661,7 +699,9 @@
           + '<button class="btn btn-light" type="button" data-withdraw="' + e.id + '">Withdraw</button></div>' : '')
         + '</div>'
         + (draft ? '<div class="c-draft">Not sent yet — something was missing or the upload stopped. Tap “Finish” to complete it.</div>'
-                 : '<div class="c-steps">' + steps(e) + '</div>')
+                 : '<div class="c-prog"><span class="kicker">Your progress</span><ol class="c-stepper">' + steps(e) + '</ol>'
+                   // phones: the step names don't fit under 5 dots, so only the current one is written out
+                   + '<span class="c-prog-now' + (e.status === 'not_selected' ? ' no' : '') + '">' + esc((MMC.STATUSES.find(function (x) { return x.id === e.status; }) || {}).label || '') + '</span></div>')
         + '</div>';
     }).join('');
     list.querySelectorAll('[data-edit]').forEach(function (b) { b.onclick = function () { startEdit(b.getAttribute('data-edit')); }; });

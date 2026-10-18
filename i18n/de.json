@@ -975,7 +975,8 @@
   "Checked in at": "Eingecheckt um",
   "Preparing…": "Wird vorbereitet…",
   "Could not create the Excel file. Please try again, or use Export CSV.": "Die Excel-Datei konnte nicht erstellt werden. Bitte versuche es noch einmal oder nutze „CSV exportieren“.",
-  "Add at least one image or a Google Drive link": "Füg mindestens ein Bild oder einen Google-Drive-Link hinzu"
+  "Add at least one image or a Google Drive link": "Füg mindestens ein Bild oder einen Google-Drive-Link hinzu",
+  "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": "<div class=\"c-prog\"><span class=\"kicker\">Dein Fortschritt</span><ol class=\"c-stepper\">"
  },
  "jsraw": {
   "{ key: 'Sports', label: 'Sports' }": "{ key: 'Sports', label: 'Sport' }",
