@@ -978,7 +978,7 @@
   "{ key: 'Networking', label: 'Networking' }": "{ key: 'Networking', label: 'شبکه‌سازی' }",
   "{ key: 'Other', label: 'Other' }": "{ key: 'Other', label: 'سایر' }",
   "(n === 1 ? ' event' : ' events')": "(n === 1 ? ' رویداد' : ' رویداد')",
-  "var CHIP_LABEL = {};": "var CHIP_LABEL = { 'Studying': 'دانشجو', 'Graduated': 'فارغ‌التحصیل', 'Working': 'شاغل', 'Freelancing': 'فریلنسر', 'Full-time': 'تمام‌وقت', 'Part-time': 'پاره‌وقت', 'Freelance': 'فریلنس', 'Instagram': 'اینستاگرام', 'TikTok': 'تیک‌تاک', 'LinkedIn': 'لینکدین' };",
+  "var CHIP_LABEL = {};": "var CHIP_LABEL = { 'Studying': 'دانشجو', 'Graduated': 'فارغ‌التحصیل', 'Working': 'شاغل', 'Freelancing': 'فریلنسر', 'Full-time': 'تمام‌وقت', 'Part-time': 'پاره‌وقت', 'Freelance': 'فریلنس', 'Instagram': 'اینستاگرام', 'TikTok': 'تیک‌تاک', 'LinkedIn': 'لینکدین', 'YouTube': 'یوتیوب' };",
   "var t = st.track ? trackOf(st.track).title.toLowerCase() : '';": "var t = st.track ? trackOf(st.track).title : '';",
   "(t ? 'Send ' + t + ' entry →' : 'Send entry →')": "(t ? 'ارسال ' + t + ' ←' : 'ارسال اثر ←')",
   "(big ? 'Drop images here or ' : 'Drop file' + (slot.max > 1 ? 's' : '') + ' or ') + '<span>browse</span></b><small>'": "(big ? 'تصویرها را اینجا رها کن یا ' : (slot.max > 1 ? 'فایل‌ها' : 'فایل') + ' را اینجا رها کن یا ') + '<span>انتخاب کن</span></b><small>'",
