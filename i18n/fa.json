@@ -752,7 +752,13 @@
   "Organization Dashboard — MysMatch": "داشبورد سازمان — MysMatch",
   "/ Organizations": "/ سازمان‌ها",
   "Organization <span class=\"grad-text\">dashboard.</span>": "داشبورد <span class=\"grad-text\">سازمان.</span>",
-  "<small>Creator Challenge · Season 01</small>Ideation Challenge": "<small>چالش تولید محتوا · فصل ۰۱</small>چالش ایده‌پردازی"
+  "<small>Creator Challenge · Season 01</small>Ideation Challenge": "<small>چالش تولید محتوا · فصل ۰۱</small>چالش ایده‌پردازی",
+  "Golden ticket": "بلیت طلایی",
+  "Ideation Challenge · Season 01": "چالش ایده‌پردازی · فصل ۰۱",
+  "Participate in the competition, join our team!": "در مسابقه شرکت کن و به تیم ما بپیوند!",
+  "Write a scenario, design a post or film a video for MysMatch. The best entries are invited to interview. Submissions close 15 December 2026.": "برای MysMatch سناریو بنویس، پست طراحی کن یا ویدیو بساز. بهترین آثار به مصاحبه دعوت می‌شوند. مهلت ارسال تا ۱۵ دسامبر ۲۰۲۶.",
+  "Join the challenge →": "شرکت در چالش ←",
+  "Maybe later": "شاید بعداً"
  },
  "js": {
   "Open registration": "ثبت‌نام باز است",
