@@ -732,8 +732,25 @@
         wrap.appendChild(r);
       });
     }
+    if (key === 'cv' || key === 'extra') evenDrops();
   }
   function renderSlots() { Object.keys(MMC.SLOTS).forEach(renderSlot); }
+  // WHY (owner, Oct 18): the CV and "Additional documents" drop boxes sit side
+  // by side but their hints differ in length, so the boxes had different
+  // heights. Give both the taller height (also when stacked on phones).
+  // Runs after every slot render, on resize and once the fonts are in.
+  function evenDrops() {
+    var a = form.querySelector('[data-slot-wrap="cv"] .dz'), b = form.querySelector('[data-slot-wrap="extra"] .dz');
+    if (!a || !b) return;
+    if (form.hidden) return; // measured again when the form is shown
+    a.style.minHeight = b.style.minHeight = '';
+    var h = Math.max(a.offsetHeight, b.offsetHeight) + 'px';
+    a.style.boxSizing = b.style.boxSizing = 'border-box'; // offsetHeight includes padding + border
+    a.style.minHeight = b.style.minHeight = h;
+  }
+  window.addEventListener('resize', function () { if (!form.hidden) evenDrops(); });
+  // Web fonts can arrive after the first measure and change the line wrapping.
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { evenDrops(); });
   function addFiles(key, files) {
     var slot = MMC.SLOTS[key], skipped = 0;
     var ok = [].filter.call(files, function (f) {
@@ -890,6 +907,7 @@
     formMsg(''); showErrors({}); st.tried = false;
     renderAll();
     form.hidden = !open || used.length >= MMC.TRACKS.length;
+    evenDrops();
   }
   async function startEdit(id) {
     var e = entries.find(function (x) { return x.id === id; }); if (!e) return;
@@ -905,6 +923,7 @@
       st.docs[k].push(d);
     }
     show('c-sent', false); form.hidden = false; $('cancel-edit').hidden = false;
+    evenDrops();
     formMsg(''); showErrors({}); st.tried = false;
     renderAll();
     form.scrollIntoView({ behavior: 'smooth', block: 'start' });
