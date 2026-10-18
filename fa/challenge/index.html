@@ -706,7 +706,7 @@
         c.onclick = function () {
           var v = c.getAttribute('data-v'), cur = st.chips[key];
           st.chips[key] = single ? (cur[0] === v ? [] : [v]) : (cur.indexOf(v) >= 0 ? cur.filter(function (x) { return x !== v; }) : cur.concat([v]));
-          renderChips();
+          renderChips(); liveCheck();
         };
       });
     });
@@ -722,7 +722,7 @@
         + (used[t.id] ? '<span class="used">قبلاً فرستاده‌ای — بالا ویرایشش کن</span>' : '') + '</button>';
     }).join('');
     $('picks').querySelectorAll('.pick:not([disabled])').forEach(function (b) {
-      b.onclick = function () { st.track = b.getAttribute('data-track'); renderPicks(); renderTrackParts(); };
+      b.onclick = function () { st.track = b.getAttribute('data-track'); renderPicks(); renderTrackParts(); liveCheck(); };
     });
   }
   function renderTrackParts() {
@@ -801,6 +801,7 @@
     st.docs[key] = next.slice(0, slot.max);
     renderSlot(key);
     if (skipped) formMsg(skipped + ' فایل اضافه نشد (نوع، حجم یا تعداد فایل‌ها). ' + slot.hint + '.');
+    liveCheck();
   }
   function removeDoc(key, i) {
     var d = st.docs[key][i];
@@ -808,12 +809,13 @@
     if (d.preview && d.file) URL.revokeObjectURL(d.preview);
     st.docs[key].splice(i, 1);
     renderSlot(key);
+    liveCheck();
   }
 
   form.querySelectorAll('[data-check]').forEach(function (b) {
     b.onclick = function (e) {
       if (e.target.tagName === 'A') return;
-      var k = b.getAttribute('data-check'); st.checks[k] = !st.checks[k]; renderChecks();
+      var k = b.getAttribute('data-check'); st.checks[k] = !st.checks[k]; renderChecks(); liveCheck();
     };
   });
   function renderChecks() {
@@ -864,6 +866,12 @@
     renderPicks(); renderChecks(); renderSlot('post');
   }
   function formMsg(t) { var el = $('form-msg'); el.hidden = !t; el.textContent = t || ''; }
+  // WHY (owner, 2026-10-18): after a send attempt, every hint sits on its own
+  // field and disappears as soon as that field is fixed (typing, picking a
+  // track/chip, ticking the box, adding or removing files) instead of
+  // staying until the next press of "Send".
+  function liveCheck() { if (st && st.tried) showErrors(validate(values())); }
+  form.addEventListener('input', function (e) { if (e.target.type !== 'file') liveCheck(); });
 
   var PROBLEM = {
     missing_scenario: { scenario_text: 'چند خط بنویس یا PDF بارگذاری کن' }, missing_images: { post: 'دست‌کم یک تصویر یا لینک گوگل درایو اضافه کن' },
