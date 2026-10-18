@@ -167,7 +167,8 @@ h1,h2,h3,p{ margin:0; }
    indigo highlight words. Kept in one block so it can be reviewed or
    removed in one go; the homepage carries the same rules inline. */
 :root{
-  --g-brand:linear-gradient(176deg,#E26AD8 0%,#B064E6 30%,#8E6CEC 55%,#7076EE 100%);
+  /* WHY lighter stops (owner, 2026-10-18): the site looked too pink on phones; every brand colour mixed 40% towards white (was #E26AD8 #B064E6 #8E6CEC #7076EE), pink glows 40% weaker. */
+  --g-brand:linear-gradient(176deg,#EEA6E8 0%,#D0A2F0 30%,#BBA7F4 55%,#A9ADF5 100%);
   --indigo:#2E28C0; --ink-soft:#2A2440; --nav-ink:#1E1A36;
   --lines:url(/media/lines.svg);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -180,7 +181,7 @@ html,body{ background:#F4EFFF; }
 /* Gradient surfaces share one recipe: brand gradient + two soft glows,
    flowing lines (screen) + grain (overlay) as pseudo layers. */
 .page-hero, .sheet-dark, .footer{ background:
-    radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.85) 0%, rgba(255,255,255,0) 70%),
+    radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.51) 0%, rgba(255,255,255,0) 70%),
     radial-gradient(50% 50% at 50% 60%, rgba(160,170,255,0.5) 0%, rgba(255,255,255,0) 70%),
     var(--g-brand); }
 .page-hero::before, .sheet-dark::before, .footer::before{ content:""; position:absolute; inset:0; left:0; top:0; width:auto; aspect-ratio:auto; border-radius:inherit; background:var(--lines) center/cover no-repeat; mix-blend-mode:screen; opacity:0.55; pointer-events:none; }
@@ -188,7 +189,7 @@ html,body{ background:#F4EFFF; }
 .sheet-dark > .in, .footer > .in{ position:relative; z-index:1; }
 
 /* Header: frosted gradient pill, dark links */
-.nav{ background:linear-gradient(100deg,rgba(226,106,216,0.92) 0%,rgba(176,100,230,0.92) 40%,rgba(142,108,236,0.92) 70%,rgba(112,118,238,0.92) 100%); border:1px solid rgba(255,255,255,0.45); box-shadow:0 12px 40px rgba(60,30,140,0.28), inset 0 1px 0 rgba(255,255,255,0.35); }
+.nav{ background:linear-gradient(100deg,rgba(238,166,232,0.92) 0%,rgba(208,162,240,0.92) 40%,rgba(187,167,244,0.92) 70%,rgba(169,173,245,0.92) 100%); border:1px solid rgba(255,255,255,0.45); box-shadow:0 12px 40px rgba(60,30,140,0.28), inset 0 1px 0 rgba(255,255,255,0.35); }
 .brand, .brand:hover{ color:var(--ink); }
 .nav-links a{ color:var(--nav-ink); }
 .nav-links a:hover, .nav-links a.on{ color:#fff; }
@@ -262,7 +263,7 @@ html,body{ background:#F4EFFF; }
 .page-hero .c-unit{ background:rgba(255,255,255,0.35); border-color:rgba(255,255,255,0.6); }
 .page-hero .c-unit span{ color:rgba(30,26,54,0.62); }
 /* Dark feature cards on light pages (support contact, challenge CTA) → gradient */
-.contact-card, .c-card-dark{ background:radial-gradient(60% 60% at 80% 30%, rgba(255,192,238,0.8) 0%, rgba(255,255,255,0) 70%), var(--g-brand) !important; color:var(--ink) !important; box-shadow:0 30px 60px rgba(60,30,140,0.22); }
+.contact-card, .c-card-dark{ background:radial-gradient(60% 60% at 80% 30%, rgba(255,192,238,0.48) 0%, rgba(255,255,255,0) 70%), var(--g-brand) !important; color:var(--ink) !important; box-shadow:0 30px 60px rgba(60,30,140,0.22); }
 /* WHY div./section. prefixes: the pages' own <style> loads after this file, so
    equal-specificity rules there would win. */
 .prose div.contact-card h2{ color:var(--ink); }
@@ -294,7 +295,7 @@ section.page-hero .back:hover{ color:var(--ink); }
 section.page-hero .fact{ color:var(--ink-soft); border-color:rgba(30,26,54,0.2); background:rgba(255,255,255,0.22); }
 section.page-hero .company{ color:var(--ink); }
 section.page-hero .verified, section.page-hero .center-state a{ color:var(--indigo); }
-div.apply, div.app-card{ background:radial-gradient(60% 60% at 80% 20%, rgba(255,192,238,0.8) 0%, rgba(255,255,255,0) 70%), var(--g-brand); color:var(--ink); box-shadow:0 30px 60px rgba(60,30,140,0.22); }
+div.apply, div.app-card{ background:radial-gradient(60% 60% at 80% 20%, rgba(255,192,238,0.48) 0%, rgba(255,255,255,0) 70%), var(--g-brand); color:var(--ink); box-shadow:0 30px 60px rgba(60,30,140,0.22); }
 div.apply > p, div.app-card > p{ color:var(--ink-soft); }
 div.apply .open-app{ color:var(--indigo); }
 div.apply .open-app:hover{ color:var(--ink); }

@@ -361,7 +361,8 @@
      block on top of the base styles so it can be reviewed or removed in one go.
      The hero keeps the library video (user choice), tinted with the gradient. */
   :root{
-    --g-brand:linear-gradient(176deg,#E26AD8 0%,#B064E6 30%,#8E6CEC 55%,#7076EE 100%);
+    /* WHY lighter stops (owner, 2026-10-18): the site looked too pink on phones; every brand colour mixed 40% towards white (was #E26AD8 #B064E6 #8E6CEC #7076EE), pink glows 40% weaker. */
+    --g-brand:linear-gradient(176deg,#EEA6E8 0%,#D0A2F0 30%,#BBA7F4 55%,#A9ADF5 100%);
     --indigo:#2E28C0; --ink-soft:#2A2440; --nav-ink:#1E1A36;
     --lines:url(/media/lines.svg);
     --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -374,7 +375,7 @@
   /* Gradient surfaces share one recipe: brand gradient + two soft glows +
      flowing lines (screen) + grain (overlay). */
   .hero, .how, .cta-card, .footer{ background:
-      radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.85) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(50% 50% at 78% 40%, rgba(255,192,238,0.51) 0%, rgba(255,255,255,0) 70%),
       radial-gradient(50% 50% at 50% 60%, rgba(160,170,255,0.5) 0%, rgba(255,255,255,0) 70%),
       var(--g-brand); }
   .how::before, .cta-card::after, .footer::before{ content:""; position:absolute; inset:0; background:var(--lines) center/cover no-repeat; mix-blend-mode:screen; opacity:0.55; pointer-events:none; }
@@ -382,7 +383,7 @@
   .how .in, .footer .in{ position:relative; z-index:1; }
 
   /* Header: frosted gradient pill, dark links */
-  .nav{ background:linear-gradient(100deg,rgba(226,106,216,0.92) 0%,rgba(176,100,230,0.92) 40%,rgba(142,108,236,0.92) 70%,rgba(112,118,238,0.92) 100%); border:1px solid rgba(255,255,255,0.45); box-shadow:0 12px 40px rgba(60,30,140,0.28), inset 0 1px 0 rgba(255,255,255,0.35); }
+  .nav{ background:linear-gradient(100deg,rgba(238,166,232,0.92) 0%,rgba(208,162,240,0.92) 40%,rgba(187,167,244,0.92) 70%,rgba(169,173,245,0.92) 100%); border:1px solid rgba(255,255,255,0.45); box-shadow:0 12px 40px rgba(60,30,140,0.28), inset 0 1px 0 rgba(255,255,255,0.35); }
   .brand, .brand:hover{ color:var(--ink); }
   .nav-links a{ color:var(--nav-ink); }
   .nav-links a:hover{ color:#fff; }
@@ -424,7 +425,7 @@
      glows on a lavender wash, so the phones sit on colour while the text stays
      on a light ground. */
   .glimpse{ background:
-      radial-gradient(45% 55% at 88% 62%, rgba(226,106,216,0.30) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(45% 55% at 88% 62%, rgba(226,106,216,0.18) 0%, rgba(255,255,255,0) 70%),
       radial-gradient(50% 55% at 12% 78%, rgba(112,118,238,0.28) 0%, rgba(255,255,255,0) 70%),
       radial-gradient(40% 45% at 50% 95%, rgba(176,100,230,0.22) 0%, rgba(255,255,255,0) 70%),
       linear-gradient(180deg,#FFFFFF 0%,#F6EFFF 45%,#EFE6FF 100%); }
@@ -444,7 +445,7 @@
   .step{ --veil:0.86; justify-content:flex-end; color:var(--ink); border:1px solid rgba(255,255,255,0.7); box-shadow:0 -24px 48px rgba(40,20,120,0.14);
     background:
       linear-gradient(rgba(255,255,255,var(--veil)),rgba(255,255,255,var(--veil))),
-      radial-gradient(60% 60% at 80% 30%, rgba(255,192,238,0.85) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(60% 60% at 80% 30%, rgba(255,192,238,0.51) 0%, rgba(255,255,255,0) 70%),
       var(--g-brand); }
   /* WHY the repeated :nth-child: the base styles colour each card by position. */
   .step:nth-child(1){ --veil:0.86; }
@@ -453,7 +454,7 @@
   .step:nth-child(4){ --veil:0; }
   .step:nth-child(n){ background:
       linear-gradient(rgba(255,255,255,var(--veil)),rgba(255,255,255,var(--veil))),
-      radial-gradient(60% 60% at 80% 30%, rgba(255,192,238,0.85) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(60% 60% at 80% 30%, rgba(255,192,238,0.51) 0%, rgba(255,255,255,0) 70%),
       var(--g-brand); }
   .step p, .step:nth-child(4) p{ color:var(--ink-2); }
   .step:nth-child(3) p, .step:nth-child(4) p{ color:var(--ink-soft); }
