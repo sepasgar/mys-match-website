@@ -310,3 +310,13 @@ section.page-hero .fact svg{ color:var(--indigo); }
 .nav .nav-links a.gold:hover{ color:#2A1F05; filter:brightness(1.04); }
 .footer .foot-col a.gold{ align-self:flex-start; display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:9999px; background:linear-gradient(135deg,#FBE3A1 0%,#F2C75C 50%,#D9A63A 100%); color:#2A1F05; font-weight:600; box-shadow:0 4px 16px rgba(242,199,92,0.22); }
 .footer .foot-col a.gold:hover{ color:#2A1F05; filter:brightness(1.04); }
+
+/* Footer store buttons (owner, 2026-10-18): Apple + Google Play logos at the end of every page. */
+.foot-stores{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 14px; margin:clamp(20px,2.4vw,36px) 0 28px; }
+.foot-stores > .kicker{ width:100%; color:rgba(30,26,54,0.7); }
+.footer .foot-stores a.fs-store{ display:inline-flex; align-items:center; gap:10px; padding:12px 20px 12px 16px; border-radius:16px; background:#1E1A36; color:#fff; line-height:1.15; white-space:nowrap; box-shadow:0 10px 26px rgba(30,20,80,0.25); transition:transform .2s, background .2s; }
+.footer .foot-stores a.fs-store:hover{ background:#2E28C0; color:#fff; transform:translateY(-2px); }
+.fs-store > span{ display:flex; flex-direction:column; }
+.fs-store small{ font-size:12px; color:rgba(255,255,255,0.75); }
+.fs-store b{ font-size:18px; font-weight:600; letter-spacing:-0.02em; }
+.fs-store svg{ flex-shrink:0; }
