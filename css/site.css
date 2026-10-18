@@ -332,3 +332,10 @@ section.page-hero .fact svg{ color:var(--indigo); }
   .stores > a.store, .footer .foot-stores > a.fs-store{ padding:12px 14px; gap:10px; }
   .stores > a.store b, .foot-stores > a.fs-store b{ font-size:17px; }
 }
+
+/* WHY (owner, 2026-10-18): on the light gradient cards the gradient-filled
+   "You're in." / "Thank you." and the lilac kicker were almost invisible.
+   Solid indigo words and a dark kicker, like the other gradient surfaces.
+   div. prefix = one notch above the challenge page's own <style>. */
+div.c-card-dark .grad-text{ background:none; color:var(--indigo); -webkit-text-fill-color:var(--indigo); }
+div.c-card-dark .kicker{ color:rgba(30,26,54,0.7); }
