@@ -117,7 +117,7 @@
           + kv('Portfolio', e.portfolio_url ? link(e.portfolio_url) : '') + kv('Handle', esc(e.social_handle)) + kv('Right now', esc(e.right_now))
           + kv('Open to', esc((e.open_to || []).join(', '))) + kv('Made for', esc((e.made_for || []).join(', ')))
           + kv('Sent', esc(fmtDate(e.submitted_at))) + kv('Last edit', esc(fmtDate(e.updated_at))) + '</div>'
-          + (e.drive_url ? '<h4>Video</h4><p class="j-txt">' + link(e.drive_url) + '</p>' : '')
+          + (e.drive_url ? '<h4>Google Drive</h4><p class="j-txt">' + link(e.drive_url) + '</p>' : '')
           + (e.scenario_text ? '<h4>Scenario</h4><p class="j-txt">' + esc(e.scenario_text) + '</p>' : '')
           + (e.concept_text ? '<h4>Concept</h4><p class="j-txt">' + esc(e.concept_text) + '</p>' : '')
           + (e.questions ? '<h4>Questions for us</h4><p class="j-txt">' + esc(e.questions) + '</p>' : '')
@@ -166,7 +166,7 @@
     var cols = [['Title', 'title'], ['Track', function (e) { return trackT(e.track); }], ['Status', function (e) { return statusT(e.status); }],
       ['Name', 'full_name'], ['Email', 'email'], ['Phone', 'phone'], ['City', 'city'], ['Country', 'country'], ['Portfolio', 'portfolio_url'],
       ['Handle', 'social_handle'], ['Right now', 'right_now'], ['Open to', function (e) { return (e.open_to || []).join(', '); }],
-      ['Made for', function (e) { return (e.made_for || []).join(', '); }], ['Video', 'drive_url'], ['Files', function (e) { return e.files.length; }],
+      ['Made for', function (e) { return (e.made_for || []).join(', '); }], ['Drive link', 'drive_url'], ['Files', function (e) { return e.files.length; }],
       ['Sent', function (e) { return fmtDate(e.submitted_at); }], ['Notes', 'notes']];
     var cell = function (v) { v = v == null ? '' : String(v); return /[;"\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
     var rows = [cols.map(function (c) { return c[0]; }).join(';')].concat(filtered().map(function (e) {

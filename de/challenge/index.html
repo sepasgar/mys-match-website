@@ -308,7 +308,7 @@
 <div class="c-track t2" data-reveal="">
 <div class="top"><span class="num">02</span><span class="tag">Bild/Video</span></div><!-- WHY Static/Video: owner, 2026-10-18 (a post can also be a video post) -->
 <div class="body"><h3>Kreativer Post</h3><p>Gestalte einen einzelnen Post oder ein Karussell, bei dem Studierende aufhören zu scrollen und die App herunterladen wollen.</p>
-<div class="you"><span>Du reichst ein</span><b>1–5 Bilder (PNG, JPG oder WebP)</b></div>
+<div class="you"><span>Du reichst ein</span><b>1–5 Bilder oder ein Google-Drive-Link</b></div>
 <div><button class="btn btn-light" data-track-cta="post" type="button">In dieser Kategorie mitmachen →</button></div></div>
 </div>
 <div class="c-track t3" data-reveal="">
@@ -444,9 +444,10 @@
 <span class="hint">Schreib es Szene für Szene: was wir sehen, was wir hören, die Caption. Oder lade es unten als PDF hoch.</span></label>
 <div class="fld" data-slot-wrap="scenario"><span class="lbl">Oder lade dein Szenario hoch</span></div>
 </div>
-<div class="fld" data-only="post" data-slot-wrap="post" hidden=""><span class="lbl"><span>Lade dein Design hoch *</span><em data-err="post"></em></span></div>
-<div class="fld" data-only="video" hidden="">
-<label class="fld"><span class="lbl"><span>Google-Drive-Link zu deinem Video *</span><em data-err="drive_url"></em></span>
+<div class="fld" data-only="post" data-slot-wrap="post" hidden=""><span class="lbl"><span>Lade dein Design hoch</span><em data-err="post"></em></span></div>
+<!-- WHY shared (owner, 2026-10-18): Creative post may send images, a Drive link or both; Content creator needs the link. -->
+<div class="fld" data-only="post video" hidden="">
+<label class="fld"><span class="lbl"><span data-only="video" hidden="">Google-Drive-Link zu deinem Video *</span><span data-only="post" hidden="">Oder teile einen Google-Drive-Link (z. B. für einen Video-Post)</span><em data-err="drive_url"></em></span>
 <input class="inp" maxlength="500" name="drive_url" placeholder="https://drive.google.com/file/d/…" type="url"/></label>
 <span class="info"><b>i</b><span>Stell die Freigabe in Google Drive auf „Jeder, der über den Link verfügt“ (Betrachter), damit unser Team es öffnen kann.</span></span>
 </div>
@@ -670,7 +671,8 @@
     });
   }
   function renderTrackParts() {
-    form.querySelectorAll('[data-only]').forEach(function (el) { el.hidden = el.getAttribute('data-only') !== st.track; });
+    // data-only may list several tracks ("post video").
+    form.querySelectorAll('[data-only]').forEach(function (el) { el.hidden = el.getAttribute('data-only').split(' ').indexOf(st.track) < 0; });
     var t = st.track ? trackOf(st.track).title : '';
     $('send-btn').textContent = st.entryId ? 'Änderungen speichern →' : (t ? t + ' senden →' : 'Beitrag senden →');
   }
@@ -682,7 +684,7 @@
     var old = wrap.querySelectorAll('.dz, .doc, .thumbs'); old.forEach(function (n) { n.remove(); });
     var accept = slot.exts.map(function (x) { return '.' + x; }).join(',');
     var dz = document.createElement('label');
-    dz.className = 'dz' + (big ? ' big' : '') + (st.tried && key === 'post' && st.track === 'post' && !list.length ? ' bad' : '');
+    dz.className = 'dz' + (big ? ' big' : '') + (st.tried && key === 'post' && st.track === 'post' && !list.length && !field('drive_url').value.trim() ? ' bad' : '');
     dz.innerHTML = '<input type="file" accept="' + accept + '"' + (slot.max > 1 ? ' multiple' : '') + '>'
       + '<span class="up">↑</span><span class="tx"><b>' + (big ? 'Bilder hierher ziehen oder ' : (slot.max > 1 ? 'Dateien' : 'Datei') + ' hierher ziehen oder ') + '<span>auswählen</span></b><small>' + esc(slot.hint) + '</small></span>';
     var add = function (files) { addFiles(key, files); };
@@ -776,7 +778,7 @@
       right_now: st.chips.right_now[0] || null, open_to: st.chips.open_to, made_for: st.chips.made_for,
       title: v('title') || '',
       scenario_text: st.track === 'scenario' ? v('scenario_text') : null,
-      drive_url: st.track === 'video' ? v('drive_url') : null,
+      drive_url: st.track === 'video' || st.track === 'post' ? v('drive_url') : null,
       concept_text: v('concept_text'), questions: v('questions'),
       consent: st.checks.consent,
     };
@@ -790,8 +792,10 @@
     if (!st.track) e.track = 'Wähl eine Kategorie';
     if (f.title.length < 2) e.title = 'Pflichtfeld';
     if (st.track === 'scenario' && (f.scenario_text || '').length < 40 && !st.docs.scenario.length) e.scenario_text = 'Schreib ein paar Zeilen oder lade ein PDF hoch';
-    if (st.track === 'post' && !st.docs.post.length) e.post = 'Füg mindestens ein Bild hinzu';
-    if (st.track === 'video' && !/^https:\/\/(drive|docs)\.google\.com\//i.test(f.drive_url || '')) e.drive_url = 'Füg einen Google-Drive-Link ein';
+    // Regex on its own line: i18n/build.py reads the "//" inside it as a comment start.
+    var driveOk = /^https:\/\/(drive|docs)\.google\.com\//i.test(f.drive_url || '');
+    if (st.track === 'post' && !st.docs.post.length && !f.drive_url) e.post = 'Füg mindestens ein Bild oder einen Google-Drive-Link hinzu';
+    if ((st.track === 'video' || (st.track === 'post' && f.drive_url)) && !driveOk) e.drive_url = 'Füg einen Google-Drive-Link ein';
     if ((f.concept_text || '').length < 20 && !st.docs.concept.length) e.concept_text = f.concept_text ? 'Erzähl uns etwas mehr' : 'Schreib es oder lade ein PDF hoch';
     if (!f.consent) e.consent = 'Bitte bestätigen, um zu senden';
     return e;
@@ -807,7 +811,7 @@
   function formMsg(t) { var el = $('form-msg'); el.hidden = !t; el.textContent = t || ''; }
 
   var PROBLEM = {
-    missing_scenario: { scenario_text: 'Schreib ein paar Zeilen oder lade ein PDF hoch' }, missing_images: { post: 'Füg mindestens ein Bild hinzu' },
+    missing_scenario: { scenario_text: 'Schreib ein paar Zeilen oder lade ein PDF hoch' }, missing_images: { post: 'Füg mindestens ein Bild oder einen Google-Drive-Link hinzu' },
     missing_drive: { drive_url: 'Füg einen Google-Drive-Link ein' }, missing_concept: { concept_text: 'Schreib es oder lade ein PDF hoch' },
   };
 

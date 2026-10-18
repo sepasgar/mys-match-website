@@ -314,7 +314,7 @@
       <div class="c-track t2" data-reveal>
         <div class="top"><span class="num">02</span><span class="tag">Static/Video</span></div><!-- WHY Static/Video: owner, 2026-10-18 (a post can also be a video post) -->
         <div class="body"><h3>Creative post</h3><p>Design a single post or carousel that makes a student stop scrolling and want to download the app.</p>
-          <div class="you"><span>You submit</span><b>1–5 images (PNG, JPG or WebP)</b></div>
+          <div class="you"><span>You submit</span><b>1–5 images or a Google Drive link</b></div>
           <div><button class="btn btn-light" type="button" data-track-cta="post">Enter this track →</button></div></div>
       </div>
       <div class="c-track t3" data-reveal>
@@ -462,10 +462,11 @@
                 <div class="fld" data-slot-wrap="scenario"><span class="lbl">Or upload your scenario</span></div>
               </div>
 
-              <div data-only="post" hidden class="fld" data-slot-wrap="post"><span class="lbl"><span>Upload your design *</span><em data-err="post"></em></span></div>
+              <div data-only="post" hidden class="fld" data-slot-wrap="post"><span class="lbl"><span>Upload your design</span><em data-err="post"></em></span></div>
 
-              <div data-only="video" hidden class="fld">
-                <label class="fld"><span class="lbl"><span>Google Drive link to your video *</span><em data-err="drive_url"></em></span>
+              <!-- WHY shared (owner, 2026-10-18): Creative post may send images, a Drive link or both; Content creator needs the link. -->
+              <div data-only="post video" hidden class="fld">
+                <label class="fld"><span class="lbl"><span data-only="video" hidden>Google Drive link to your video *</span><span data-only="post" hidden>Or share a Google Drive link (e.g. a video post)</span><em data-err="drive_url"></em></span>
                   <input class="inp" name="drive_url" type="url" maxlength="500" placeholder="https://drive.google.com/file/d/…"></label>
                 <span class="info"><b>i</b><span>In Google Drive, set sharing to “Anyone with the link can view” so our team can open it.</span></span>
               </div>
@@ -693,7 +694,8 @@
     });
   }
   function renderTrackParts() {
-    form.querySelectorAll('[data-only]').forEach(function (el) { el.hidden = el.getAttribute('data-only') !== st.track; });
+    // data-only may list several tracks ("post video").
+    form.querySelectorAll('[data-only]').forEach(function (el) { el.hidden = el.getAttribute('data-only').split(' ').indexOf(st.track) < 0; });
     var t = st.track ? trackOf(st.track).title.toLowerCase() : '';
     $('send-btn').textContent = st.entryId ? 'Save changes →' : (t ? 'Send ' + t + ' entry →' : 'Send entry →');
   }
@@ -705,7 +707,7 @@
     var old = wrap.querySelectorAll('.dz, .doc, .thumbs'); old.forEach(function (n) { n.remove(); });
     var accept = slot.exts.map(function (x) { return '.' + x; }).join(',');
     var dz = document.createElement('label');
-    dz.className = 'dz' + (big ? ' big' : '') + (st.tried && key === 'post' && st.track === 'post' && !list.length ? ' bad' : '');
+    dz.className = 'dz' + (big ? ' big' : '') + (st.tried && key === 'post' && st.track === 'post' && !list.length && !field('drive_url').value.trim() ? ' bad' : '');
     dz.innerHTML = '<input type="file" accept="' + accept + '"' + (slot.max > 1 ? ' multiple' : '') + '>'
       + '<span class="up">↑</span><span class="tx"><b>' + (big ? 'Drop images here or ' : 'Drop file' + (slot.max > 1 ? 's' : '') + ' or ') + '<span>browse</span></b><small>' + esc(slot.hint) + '</small></span>';
     var add = function (files) { addFiles(key, files); };
@@ -799,7 +801,7 @@
       right_now: st.chips.right_now[0] || null, open_to: st.chips.open_to, made_for: st.chips.made_for,
       title: v('title') || '',
       scenario_text: st.track === 'scenario' ? v('scenario_text') : null,
-      drive_url: st.track === 'video' ? v('drive_url') : null,
+      drive_url: st.track === 'video' || st.track === 'post' ? v('drive_url') : null,
       concept_text: v('concept_text'), questions: v('questions'),
       consent: st.checks.consent,
     };
@@ -813,8 +815,10 @@
     if (!st.track) e.track = 'Pick a track';
     if (f.title.length < 2) e.title = 'Required';
     if (st.track === 'scenario' && (f.scenario_text || '').length < 40 && !st.docs.scenario.length) e.scenario_text = 'Write a few lines or upload a PDF';
-    if (st.track === 'post' && !st.docs.post.length) e.post = 'Add at least one image';
-    if (st.track === 'video' && !/^https:\/\/(drive|docs)\.google\.com\//i.test(f.drive_url || '')) e.drive_url = 'Paste a Google Drive link';
+    // Regex on its own line: i18n/build.py reads the "//" inside it as a comment start.
+    var driveOk = /^https:\/\/(drive|docs)\.google\.com\//i.test(f.drive_url || '');
+    if (st.track === 'post' && !st.docs.post.length && !f.drive_url) e.post = 'Add at least one image or a Google Drive link';
+    if ((st.track === 'video' || (st.track === 'post' && f.drive_url)) && !driveOk) e.drive_url = 'Paste a Google Drive link';
     if ((f.concept_text || '').length < 20 && !st.docs.concept.length) e.concept_text = f.concept_text ? 'Tell us a bit more' : 'Write it or upload a PDF';
     if (!f.consent) e.consent = 'Please confirm to send';
     return e;
@@ -830,7 +834,7 @@
   function formMsg(t) { var el = $('form-msg'); el.hidden = !t; el.textContent = t || ''; }
 
   var PROBLEM = {
-    missing_scenario: { scenario_text: 'Write a few lines or upload a PDF' }, missing_images: { post: 'Add at least one image' },
+    missing_scenario: { scenario_text: 'Write a few lines or upload a PDF' }, missing_images: { post: 'Add at least one image or a Google Drive link' },
     missing_drive: { drive_url: 'Paste a Google Drive link' }, missing_concept: { concept_text: 'Write it or upload a PDF' },
   };
 

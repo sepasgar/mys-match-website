@@ -760,7 +760,12 @@
   "Join the challenge →": "شرکت در چالش ←",
   "Maybe later": "شاید بعداً",
   "Static/Video": "تصویری/ویدیو",
-  "Video/Vlog": "ویدیو/ولاگ"
+  "Video/Vlog": "ویدیو/ولاگ",
+  "1–5 images or a Google Drive link": "۱ تا ۵ تصویر یا لینک گوگل درایو",
+  "<span>Upload your design</span><em data-err=\"post\"></em>": "<span>طرحت را بارگذاری کن</span><em data-err=\"post\"></em>",
+  "<span data-only=\"video\" hidden=\"\">Google Drive link to your video *</span><span data-only=\"post\" hidden=\"\">Or share a Google Drive link (e.g. a video post)</span><em data-err=\"drive_url\"></em>": "<span data-only=\"video\" hidden=\"\">لینک گوگل درایو ویدیویت *</span><span data-only=\"post\" hidden=\"\">یا لینک گوگل درایو بفرست (مثلاً برای پست ویدیویی)</span><em data-err=\"drive_url\"></em>",
+  "Google Drive link to your video *": "لینک گوگل درایو ویدیویت *",
+  "Or share a Google Drive link (e.g. a video post)": "یا لینک گوگل درایو بفرست (مثلاً برای پست ویدیویی)"
  },
  "js": {
   "Open registration": "ثبت‌نام باز است",
@@ -965,7 +970,8 @@
   "Registered at": "زمان ثبت‌نام",
   "Checked in at": "زمان ورود",
   "Preparing…": "در حال آماده‌سازی…",
-  "Could not create the Excel file. Please try again, or use Export CSV.": "فایل اکسل ساخته نشد. لطفاً دوباره امتحان کن یا از خروجی CSV استفاده کن."
+  "Could not create the Excel file. Please try again, or use Export CSV.": "فایل اکسل ساخته نشد. لطفاً دوباره امتحان کن یا از خروجی CSV استفاده کن.",
+  "Add at least one image or a Google Drive link": "دست‌کم یک تصویر یا لینک گوگل درایو اضافه کن"
  },
  "jsraw": {
   "{ key: 'Sports', label: 'Sports' }": "{ key: 'Sports', label: 'ورزش' }",

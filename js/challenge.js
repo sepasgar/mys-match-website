@@ -96,7 +96,7 @@
 
   var TRACKS = [
     { id: 'scenario', num: '01', tag: T('Writing'), title: T('Scenario'), desc: 'Write the script for a Reel or TikTok about student life and MysMatch: the hook, the scenes, the punchline.', deliver: 'A written script, scene by scene' },
-    { id: 'post', num: '02', tag: T('Static/Video'), title: T('Creative post'), desc: 'Design a single post or carousel that makes a student stop scrolling and want to download the app.', deliver: '1–5 images (PNG, JPG or WebP)' },
+    { id: 'post', num: '02', tag: T('Static/Video'), title: T('Creative post'), desc: 'Design a single post or carousel that makes a student stop scrolling and want to download the app.', deliver: '1–5 images or a Google Drive link' },
     { id: 'video', num: '03', tag: T('Video/Vlog'), title: T('Content creator'), desc: 'Record a short video in your own style, as if you were already filming for our channels.', deliver: 'A Google Drive link to your video' },
   ];
   var STATUSES = [
