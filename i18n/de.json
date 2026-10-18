@@ -751,7 +751,8 @@
   "Get the app, visit our website, or say hi.": "Hol dir die App, besuch unsere Website oder sag hallo.",
   "Organization Dashboard — MysMatch": "Organisations-Dashboard — MysMatch",
   "/ Organizations": "/ Organisationen",
-  "Organization <span class=\"grad-text\">dashboard.</span>": "Organisations-<span class=\"grad-text\">Dashboard.</span>"
+  "Organization <span class=\"grad-text\">dashboard.</span>": "Organisations-<span class=\"grad-text\">Dashboard.</span>",
+  "<small>Creator Challenge · Season 01</small>Ideation Challenge": "<small>Creator Challenge · Staffel 01</small>Ideation Challenge"
  },
  "js": {
   "Open registration": "Anmeldung offen",

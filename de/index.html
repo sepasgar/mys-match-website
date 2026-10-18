@@ -479,6 +479,13 @@
   @media (max-width:1100px){
     .nav.open .nav-links a{ color:var(--nav-ink); }
   }
+/* Ideation Challenge link = gold pill on every page, menu + footer (owner, 2026-10-18).
+   WHY .nav / .footer prefixes: beat the v6 nav + footer link colours and the phone-menu padding. */
+.nav .nav-links a.gold, .nav.open .nav-links a.gold{ display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:9999px; background:linear-gradient(135deg,#FBE3A1 0%,#F2C75C 50%,#D9A63A 100%); color:#2A1F05; font-weight:600; box-shadow:0 4px 16px rgba(242,199,92,0.28),inset 0 1px 0 rgba(255,255,255,0.5); }
+.nav .nav-links a.gold::before{ content:""; width:6px; height:6px; border-radius:50%; background:#2A1F05; }
+.nav .nav-links a.gold:hover{ color:#2A1F05; filter:brightness(1.04); }
+.footer .foot-col a.gold{ align-self:flex-start; display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:9999px; background:linear-gradient(135deg,#FBE3A1 0%,#F2C75C 50%,#D9A63A 100%); color:#2A1F05; font-weight:600; box-shadow:0 4px 16px rgba(242,199,92,0.22); }
+.footer .foot-col a.gold:hover{ color:#2A1F05; filter:brightness(1.04); }
 </style>
 <!-- i18n:head -->
 <link rel="alternate" hreflang="en" href="https://www.mysmatch.com/">
@@ -501,7 +508,7 @@
 <a href="/de/events/">Events</a>
 <a href="/de/jobs/">Jobs</a>
 <!-- WHY: Creator/Ideation Challenge launched Oct 2026 (was unlisted until then) -->
-<a href="/de/challenge/">Challenge</a>
+<a class="gold" href="/de/challenge/">Ideation Challenge</a>
 <a href="#safety">Sicherheit</a>
 <!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
 <!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/" hreflang="en" lang="en">EN</a><a href="/de/" hreflang="de" lang="de" aria-current="true">DE</a><a href="/fa/" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --></nav>
@@ -717,7 +724,7 @@
 <div class="foot-cols">
 <div class="foot-col">
 <span class="kicker">Produkt</span>
-<a href="/de/events/">Events</a><a href="/de/jobs/">Jobs</a><a href="/de/challenge/">Ideation Challenge</a><a href="#safety">Sicherheit</a>
+<a href="/de/events/">Events</a><a href="/de/jobs/">Jobs</a><a class="gold" href="/de/challenge/">Ideation Challenge</a><a href="#safety">Sicherheit</a>
 </div>
 <div class="foot-col">
 <span class="kicker">Unternehmen</span>

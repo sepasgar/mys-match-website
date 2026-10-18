@@ -301,3 +301,11 @@ div.apply .open-app:hover{ color:var(--ink); }
 div.apply .hint, div.app-card .app-card-close, div.app-card .app-card-dismiss{ color:rgba(30,26,54,0.65); }
 div.app-card .app-card-close:hover, div.app-card .app-card-dismiss:hover{ color:var(--ink); }
 section.page-hero .fact svg{ color:var(--indigo); }
+
+/* Ideation Challenge link = gold pill on every page, menu + footer (owner, 2026-10-18).
+   WHY .nav / .footer prefixes: beat the v6 nav + footer link colours and the phone-menu padding. */
+.nav .nav-links a.gold, .nav.open .nav-links a.gold{ display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border-radius:9999px; background:linear-gradient(135deg,#FBE3A1 0%,#F2C75C 50%,#D9A63A 100%); color:#2A1F05; font-weight:600; box-shadow:0 4px 16px rgba(242,199,92,0.28),inset 0 1px 0 rgba(255,255,255,0.5); }
+.nav .nav-links a.gold::before{ content:""; width:6px; height:6px; border-radius:50%; background:#2A1F05; }
+.nav .nav-links a.gold:hover{ color:#2A1F05; filter:brightness(1.04); }
+.footer .foot-col a.gold{ align-self:flex-start; display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:9999px; background:linear-gradient(135deg,#FBE3A1 0%,#F2C75C 50%,#D9A63A 100%); color:#2A1F05; font-weight:600; box-shadow:0 4px 16px rgba(242,199,92,0.22); }
+.footer .foot-col a.gold:hover{ color:#2A1F05; filter:brightness(1.04); }
