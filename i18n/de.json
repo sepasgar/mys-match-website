@@ -771,7 +771,9 @@
   "<small>TikTok</small><b>@mysmatchofficial</b>": "<small>TikTok</small><b>@mysmatchofficial</b>",
   "<small>LinkedIn</small><b>MysMatch</b>": "<small>LinkedIn</small><b>MysMatch</b>",
   "The strongest entries are invited to interview for a role in our social media team.": "Die stärksten Beiträge laden wir zu einem Gespräch für eine Rolle in unserem Social-Media-Team ein.",
-  "Second and third place get a gift and hiring priority.": "Der zweite und dritte Platz erhalten ein Geschenk und werden bei der Einstellung bevorzugt."
+  "Second and third place get a gift and hiring priority.": "Der zweite und dritte Platz erhalten ein Geschenk und werden bei der Einstellung bevorzugt.",
+  "<b>You're signed in as a judge.</b> Entries are reviewed on the judging page.": "<b>Du bist als Jury angemeldet.</b> Beiträge werden auf der Jury-Seite bewertet.",
+  "Open judging dashboard →": "Jury-Seite öffnen →"
  },
  "js": {
   "Open registration": "Anmeldung offen",

@@ -135,6 +135,8 @@
   .c-link{ background:none; border:none; padding:0; font:inherit; color:var(--violet); cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
 
   /* signed-in bar + entries */
+  .c-judge{ display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; padding:18px 22px; border-radius:20px; background:linear-gradient(135deg,#FCE8AE 0%,#F4CD67 50%,#E0AE45 100%); color:#2A1F05; font-size:16px; }
+  .c-judge[hidden]{ display:none; }
   .c-me{ display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; padding:18px 22px; border-radius:20px; background:#F4F1FD; font-size:16px; color:var(--ink-2); }
   .c-me b{ color:var(--ink); }
   .c-entries{ display:flex; flex-direction:column; gap:14px; }
@@ -436,6 +438,8 @@
 <div hidden="" id="c-app">
 <div class="c-sec" style="gap:clamp(32px,3vw,56px)">
 <div class="c-me"><span>واردشده با <b id="me-email"></b></span><button class="c-link" id="sign-out" type="button">خروج</button></div>
+<!-- WHY (owner, 2026-10-18): the MysMatch Official account signed in here and only saw the entrant form; judges get a way to the judging page. -->
+<div class="c-judge" hidden="" id="c-judge"><span><b>با حساب داور وارد شده‌ای.</b> آثار در صفحهٔ داوری بررسی می‌شوند.</span><a class="btn btn-dark" href="/challenge/judge.html">باز کردن صفحهٔ داوری ←</a></div>
 <div class="c-entries" hidden="" id="c-entries">
 <div class="kicker">آثار تو</div>
 <div class="c-entries" id="entries-list"></div>
@@ -998,6 +1002,8 @@
     show('c-auth', false); show('c-app', true);
     $('me-email').textContent = session.user.email || '';
     if ((session.user.app_metadata || {}).provider === 'google') await MMC.markNewWebAccount();
+    // Judges (owner of MysMatch Official) see a link to the judging page; checked on the server.
+    MMC.isJudge().then(function (j) { $('c-judge').hidden = !j; });
     await reload();
     if (pendingTrack) newForm(pendingTrack);
   }
