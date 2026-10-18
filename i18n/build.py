@@ -36,6 +36,9 @@ PAGES = [
     'index.html', 'events/index.html', 'events/event.html', 'jobs/index.html', 'jobs/job.html',
     'organizations/index.html', 'team/index.html', 'support/index.html',
     'delete-account/index.html', 'privacy-policy/index.html', 'terms/index.html',
+    # Oct 18 2026 (owner: "all pages in all languages"): challenge, links, org dashboard.
+    # challenge/judge.html stays English (MysMatch team only); 404.html translates itself (GitHub serves one 404 for every path).
+    'challenge/index.html', 'challenge/rules.html', 'challenge/reset.html', 'links/index.html', 'dashboard.html',
 ]
 BLOCK = {'div', 'p', 'section', 'article', 'header', 'footer', 'nav', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4',
          'h5', 'h6', 'table', 'thead', 'tbody', 'tr', 'td', 'th', 'form', 'main', 'aside', 'figure', 'blockquote',
@@ -245,7 +248,7 @@ def inject(html, path, lang):
     return html
 
 
-LEGAL = {'privacy-policy/index.html', 'terms/index.html', 'delete-account/index.html'}
+LEGAL = {'privacy-policy/index.html', 'terms/index.html', 'delete-account/index.html', 'challenge/rules.html'}
 LEGAL_NOTE = {
     'de': 'Dies ist eine Übersetzung zur Information. Rechtlich verbindlich ist die <a href="{en}">englische Fassung</a>.',
     'fa': 'این متن ترجمه‌ای برای آگاهی است. نسخهٔ حقوقی الزام‌آور، <a href="{en}">نسخهٔ انگلیسی</a> است.',

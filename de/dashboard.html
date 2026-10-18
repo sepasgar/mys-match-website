@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Organisations-Dashboard — MysMatch</title>
+<meta content="#0F1020" name="theme-color"/>
+<meta content="noindex" name="robots"/>
+<link href="/logo-512.png" rel="icon" type="image/png"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/css/site.css" rel="stylesheet"/>
+<style>
+  /* Oct 2026 redesign on top of /css/site.css, plus the Excel export, the
+     "People" column and check-in (who came / manual tick, Oct 11 2026). */
+  .who{ font-size:14px; color:var(--on-dark); max-width:220px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .signout{ background:#fff; color:var(--ink); font-family:inherit; font-weight:600; font-size:15px; padding:12px 22px; border-radius:9999px; border:none; cursor:pointer; transition:background .3s; }
+  .signout:hover{ background:#F1ECFF; }
+  .dash .in{ min-height:50vh; }
+  .center-state{ padding:clamp(48px,6vw,96px) 0; font-size:clamp(20px,1.8vw,28px); color:var(--ink-2); letter-spacing:-0.02em; }
+
+  /* Login */
+  .login-box{ max-width:480px; }
+  .login-box h2{ font-size:clamp(32px,3vw,48px); letter-spacing:-0.045em; font-weight:600; line-height:1.05; margin-bottom:12px; }
+  .login-box p.sub{ font-size:16px; color:var(--ink-2); line-height:1.55; margin-bottom:12px; }
+  label{ display:block; font-size:14px; font-weight:600; color:var(--ink); margin:18px 0 8px; }
+  input{ width:100%; border:1px solid #E2DEF0; border-radius:16px; padding:14px 16px; font-size:16px; font-family:inherit; color:var(--ink); background:#fff; transition:border-color .2s, box-shadow .2s; }
+  input:focus{ outline:none; border-color:var(--violet); box-shadow:0 0 0 4px rgba(123,92,255,0.12); }
+  .login-box .btn{ width:100%; margin-top:24px; }
+  .btn[disabled]{ opacity:.5; cursor:not-allowed; transform:none; }
+  .err{ background:#FDECF4; color:#B3246B; border:1px solid #F6C2DD; border-radius:16px; padding:12px 16px; font-size:14px; font-weight:600; margin-top:16px; }
+  .hint{ font-size:13px; color:var(--muted); margin-top:16px; line-height:1.5; }
+
+  /* Event list */
+  .list-head{ display:flex; flex-direction:column; gap:14px; margin-bottom:clamp(28px,3vw,48px); }
+  .list-head h2{ font-size:clamp(36px,4vw,72px); letter-spacing:-0.055em; font-weight:700; line-height:0.95; }
+  .list-head p{ font-size:clamp(16px,1.2vw,19px); color:var(--ink-2); max-width:56ch; }
+  .ev-list{ display:flex; flex-direction:column; border-top:1px solid #E2DEF0; }
+  .ev-row{ display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; padding:clamp(20px,2vw,32px) clamp(8px,1.4vw,24px); border-bottom:1px solid #E2DEF0; border-radius:24px; cursor:pointer; transition:background .3s; }
+  .ev-row:hover{ background:#fff; }
+  .ev-row .t{ font-size:clamp(20px,1.8vw,30px); font-weight:600; letter-spacing:-0.035em; line-height:1.1; }
+  .ev-row .m{ font-size:15px; color:var(--ink-2); margin-top:6px; }
+  .badges{ display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+  .pill{ font-size:13px; font-weight:600; padding:7px 14px; border-radius:9999px; white-space:nowrap; }
+  .pill.web{ background:#F1ECFF; color:#4B3BB0; }
+  .pill.priv{ background:#ECEAF4; color:var(--ink-2); }
+  .pill.count{ background:var(--ink); color:#fff; font-family:var(--mono); font-weight:500; }
+  .empty{ padding:clamp(40px,4vw,72px) 0; font-size:clamp(20px,1.8vw,28px); font-weight:600; letter-spacing:-0.03em; color:var(--ink); max-width:34ch; }
+
+  /* Attendees */
+  .back{ display:inline-block; margin-bottom:24px; font-family:var(--mono); font-size:13px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); cursor:pointer; background:none; border:none; padding:0; }
+  .back:hover{ color:var(--ink); }
+  .att-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:20px; flex-wrap:wrap; margin-bottom:clamp(24px,2.6vw,40px); }
+  .att-head h2{ font-size:clamp(32px,3.6vw,64px); letter-spacing:-0.05em; font-weight:700; line-height:0.98; overflow-wrap:anywhere; }
+  .att-head .cnt{ font-family:var(--mono); font-size:15px; color:var(--violet); margin-top:12px; }
+  .toolbar{ display:flex; gap:10px; flex-wrap:wrap; }
+  .btn-sm{ display:inline-flex; align-items:center; gap:8px; padding:12px 22px; border-radius:9999px; font-size:15px; font-weight:600; border:1px solid #E2DEF0; background:#fff; color:var(--ink); cursor:pointer; font-family:inherit; transition:border-color .2s, background .2s; }
+  .btn-sm:hover{ border-color:var(--ink); }
+  .btn-sm.primary{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .btn-sm.primary:hover{ background:var(--violet); border-color:var(--violet); }
+  .btn-sm[disabled]{ opacity:.6; cursor:wait; }
+  .table-wrap{ background:#fff; border-radius:28px; overflow:auto; box-shadow:0 1px 2px rgba(15,16,32,0.04),0 24px 48px -28px rgba(60,40,140,0.25); }
+  table{ width:100%; border-collapse:collapse; min-width:720px; }
+  th, td{ text-align:left; padding:14px 18px; font-size:15px; border-bottom:1px solid var(--line); white-space:nowrap; }
+  th{ font-family:var(--mono); font-size:12px; font-weight:500; text-transform:uppercase; letter-spacing:0.08em; color:var(--muted); }
+  tr:last-child td{ border-bottom:none; }
+  td.num{ font-family:var(--mono); color:var(--muted); }
+  td.ans{ white-space:normal; max-width:320px; color:var(--ink-2); font-size:14px; }
+  .src{ font-size:12px; font-weight:600; padding:4px 10px; border-radius:9999px; }
+  .src.web{ background:#F1ECFF; color:#4B3BB0; }
+  .src.app{ background:#ECEAF4; color:var(--ink-2); }
+  .doc-view{ padding:6px 14px; border-radius:9999px; font-size:13px; font-weight:600; border:1px solid #E2DEF0; background:#fff; color:var(--ink); cursor:pointer; font-family:inherit; }
+  .doc-view:hover{ border-color:var(--ink); }
+  /* Organization view (Oct 11 2026) */
+  .org-head{ display:flex; align-items:center; gap:20px; margin-bottom:clamp(24px,2.6vw,40px); }
+  .org-head h2{ font-size:clamp(32px,3.6vw,64px); letter-spacing:-0.05em; font-weight:700; line-height:0.98; margin-top:10px; overflow-wrap:anywhere; }
+  .org-logo{ width:clamp(64px,5.4vw,88px); height:clamp(64px,5.4vw,88px); border-radius:24px; object-fit:cover; flex-shrink:0; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:24px; color:#fff; background:linear-gradient(135deg,#7B5CFF,#E94B9A); }
+  .ver{ font-size:0.45em; color:var(--violet); vertical-align:middle; }
+  .stats{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); background:var(--ink); color:#fff; border-radius:28px; padding:clamp(20px,2.4vw,36px) 8px; margin-bottom:16px; }
+  .stat{ display:flex; flex-direction:column; align-items:center; gap:6px; border-left:1px solid rgba(255,255,255,0.1); }
+  .stat:first-child{ border-left:none; }
+  .stat b{ font-size:clamp(26px,2.6vw,44px); font-weight:700; letter-spacing:-0.045em; line-height:1; }
+  .stat span{ font-family:var(--mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); }
+  .charts{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr)); gap:16px; margin-bottom:clamp(40px,4vw,64px); }
+  .chart{ background:#fff; border-radius:28px; padding:clamp(20px,2.2vw,32px); box-shadow:0 1px 2px rgba(15,16,32,0.04),0 24px 48px -28px rgba(60,40,140,0.25); }
+  .chart-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; margin-bottom:18px; }
+  .chart-num{ font-size:clamp(32px,3vw,48px); font-weight:700; letter-spacing:-0.05em; line-height:1; margin-top:10px; display:flex; align-items:center; gap:10px; }
+  .chg{ font-size:13px; font-weight:600; letter-spacing:0; padding:4px 10px; border-radius:9999px; background:#E7F8EF; color:#1C7A4A; }
+  .chg.neg{ background:#FDECF4; color:#B3246B; }
+  .chart-sub{ font-size:14px; color:var(--muted); margin-top:6px; }
+  .seg{ display:flex; background:#F4F1FD; border-radius:9999px; padding:4px; }
+  .seg button{ cursor:pointer; font-family:var(--mono); font-size:12px; border:none; background:none; color:var(--ink-2); padding:8px 12px; border-radius:9999px; }
+  .seg button.on{ background:var(--ink); color:#fff; }
+  .bars{ display:flex; align-items:flex-end; gap:3px; height:140px; padding-top:20px; }
+  .bar-col{ flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; position:relative; min-width:0; }
+  .bar{ width:100%; border-radius:6px 6px 2px 2px; background:linear-gradient(180deg,#7B5CFF,#E94B9A); }
+  .peak{ position:absolute; top:-2px; font-family:var(--mono); font-size:11px; color:var(--violet); transform:translateY(-100%); }
+  .axis{ display:flex; gap:3px; margin-top:8px; }
+  .axis span{ flex:1; text-align:center; font-family:var(--mono); font-size:11px; color:var(--muted); min-width:0; }
+  .chart-foot{ font-family:var(--mono); font-size:12px; color:var(--muted); margin-top:12px; }
+  .tabs.big .tab{ font-size:17px; padding:12px 22px; }
+  .tab-note{ font-size:15px; color:var(--ink-2); margin:4px 0 16px; }
+  .perk-l{ display:flex; align-items:center; gap:16px; min-width:0; }
+  .perk-img{ width:56px; height:56px; border-radius:16px; object-fit:cover; flex-shrink:0; background:linear-gradient(135deg,#E6E9FF,#FCE6F3); }
+  @media (max-width:640px){ .stats{ grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:20px; } .stat:nth-child(3){ border-left:none; } }
+
+  /* Check-in (Oct 11 2026) */
+  .tabs{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:18px; }
+  .tab{ cursor:pointer; font-family:inherit; font-size:15px; font-weight:500; padding:10px 18px; border-radius:9999px; border:1px solid #E2DEF0; background:#fff; color:var(--ink-2); }
+  .tab span{ font-family:var(--mono); font-size:13px; color:var(--muted); margin-left:4px; }
+  .tab.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .tab.on span{ color:var(--faint); }
+  .ci{ cursor:pointer; font-family:inherit; font-size:13px; font-weight:600; padding:7px 14px; border-radius:9999px; border:1px dashed #CFC6EC; background:#fff; color:var(--ink-2); white-space:nowrap; }
+  .ci:hover{ border-style:solid; border-color:var(--ink); color:var(--ink); }
+  .ci.on{ border:1px solid transparent; background:#E7F8EF; color:#1C7A4A; }
+  .ci.on:hover{ background:#FDECF4; color:#B3246B; }
+  .ci[disabled]{ opacity:.6; cursor:wait; }
+  tr.came td{ background:#FBFFFC; }
+  @media (max-width:640px){ .who{ display:none; } .table-wrap{ border-radius:20px; } }
+</style>
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://www.mysmatch.com/dashboard">
+<link rel="alternate" hreflang="de" href="https://www.mysmatch.com/de/dashboard">
+<link rel="alternate" hreflang="fa" href="https://www.mysmatch.com/fa/dashboard">
+<link rel="alternate" hreflang="x-default" href="https://www.mysmatch.com/dashboard">
+<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style><script>document.addEventListener("DOMContentLoaded",function(){var q=location.search+location.hash;if(q)document.querySelectorAll(".lang-switch a").forEach(function(a){a.setAttribute("href",a.getAttribute("href")+q);});});</script>
+<!-- /i18n:head -->
+</head>
+<body>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+<div class="nav-in">
+<a class="brand" href="/de/"><img alt="" height="36" src="/logo-512.png" width="36"/><span>MysMatch</span></a>
+<nav class="nav-links" id="nav-links">
+<a href="/de/">Start</a>
+<a href="/de/events/">Events</a>
+<a href="/de/jobs/">Jobs</a>
+<!-- WHY: Creator/Ideation Challenge launched Oct 2026 -->
+<a href="/de/challenge/">Challenge</a>
+<!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/dashboard" hreflang="en" lang="en">EN</a><a href="/de/dashboard" hreflang="de" lang="de" aria-current="true">DE</a><a href="/fa/dashboard" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --></nav>
+<div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/dashboard" hreflang="en" lang="en">EN</a><a href="/de/dashboard" hreflang="de" lang="de" aria-current="true">DE</a><a href="/fa/dashboard" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --> <span id="nav-right" style="display:flex;align-items:center;gap:14px"></span>
+<button aria-controls="nav-links" aria-expanded="false" aria-label="Menü öffnen" class="menu-btn" id="menu-btn" type="button"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</header>
+<!-- ════════ HERO ════════ -->
+<section class="page-hero short">
+<div class="hero-stack">
+<div class="hero-head">
+<div class="kicker">/ Organisationen</div>
+<h1>Organisations-<span class="grad-text">Dashboard.</span></h1>
+</div>
+</div>
+</section>
+<!-- ════════ CONTENT (rendered by the script below) ════════ -->
+<section class="sheet sheet-white dash">
+<div class="in">
+<div class="center-state" id="root">Wird geladen…</div>
+</div>
+</section>
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+<div class="in">
+<div class="foot-top">
+<div class="foot-brand">
+<a class="brand" href="/de/"><img alt="" height="44" src="/logo-512.png" width="44"/><span>MysMatch</span></a>
+<p>Lern nicht allein.</p>
+</div>
+<div class="foot-cols">
+<div class="foot-col"><span class="kicker">Produkt</span><a href="/de/events/">Events</a><a href="/de/jobs/">Jobs</a><a href="/de/challenge/">Ideation Challenge</a></div>
+<div class="foot-col"><span class="kicker">Unternehmen</span><a href="mailto:contact@mys-match.com">Kontakt</a><a href="/de/dashboard.html">Login für Organisationen</a><a href="/de/organizations/">Registrierung für Organisationen</a></div>
+<div class="foot-col"><span class="kicker">Rechtliches</span><a href="/de/privacy-policy/">Datenschutzerklärung</a><a href="/de/terms/">Nutzungsbedingungen</a><a href="/de/support/">Support</a></div>
+<div class="foot-col"><span class="kicker">Social Media</span><a href="https://www.instagram.com/mysmatchofficial/" rel="noopener noreferrer" target="_blank">Instagram</a><a href="https://www.tiktok.com/@mysmatchofficial" rel="noopener noreferrer" target="_blank">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" rel="noopener noreferrer" target="_blank">LinkedIn</a></div>
+</div>
+</div>
+<div aria-hidden="true" class="wordmark">MysMatch</div>
+<div class="foot-bottom"><span>© 2026 MysMatch. Alle Rechte vorbehalten.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/site.js"></script>
+<script>
+  (function () {
+    const root = document.getElementById('root');
+    const navRight = document.getElementById('nav-right');
+    const esc = (s) => (s == null ? '' : String(s)).replace(/[&<>"']/g, (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+    if (!window.MM) { root.textContent = 'Keine Verbindung. Bitte versuch es später erneut.'; return; }
+
+    // Event date: real start moment in the event's own zone (e.date is the
+    // typed time stored as if UTC; late-evening events showed the wrong day).
+    function fmtEvent(e) { try { return new Date(e.starts_at).toLocaleDateString('de-DE', { day: 'numeric', month: 'short', year: 'numeric', timeZone: e.timezone || 'Europe/Berlin' }); } catch (x) { return ''; } }
+    function fmtTime(iso) { try { return new Date(iso).toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
+    function fmtDT(iso) { try { return new Date(iso).toLocaleString('de-DE', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' }); } catch (e) { return ''; } }
+
+    MM.currentUser().then((user) => { user ? showDashboard(user) : showLogin(); });
+
+    // ---- Login -------------------------------------------------------------
+    function showLogin() {
+      navRight.innerHTML = '';
+      root.className = '';
+      root.innerHTML =
+        '<div class="login-box">'
+        + '<h2>Anmeldung für Organisationen</h2>'
+        + '<p class="sub">Melde dich mit derselben E-Mail und demselben Passwort wie in der MysMatch-App an, um deine Events und Teilnehmenden zu sehen – und als Organisation auch deine Vorteile und Follower.</p>'
+        + '<form id="login-form">'
+        + '<label for="le">E-Mail</label><input id="le" type="email" autocomplete="email" required>'
+        + '<label for="lp">Passwort</label><input id="lp" type="password" autocomplete="current-password" required>'
+        + '<div id="login-err" class="err" hidden></div>'
+        + '<button class="btn btn-dark" id="login-btn" type="submit">Anmelden</button>'
+        + '<p class="hint">Mit Apple/Google registriert oder kein Passwort? Leg in der App unter <strong>Profil → Einstellungen</strong> eins fest und melde dich dann hier an.</p>'
+        + '</form></div>';
+      document.getElementById('login-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('login-btn');
+        const errBox = document.getElementById('login-err');
+        errBox.hidden = true; btn.disabled = true; btn.textContent = 'Anmeldung…';
+        MM.signIn(document.getElementById('le').value.trim(), document.getElementById('lp').value).then((res) => {
+          if (!res.ok) { errBox.textContent = res.error || 'Anmeldung fehlgeschlagen.'; errBox.hidden = false; btn.disabled = false; btn.textContent = 'Anmelden'; return; }
+          showDashboard(res.user);
+        });
+      });
+    }
+
+    // ---- Dashboard entry ----------------------------------------------------
+    // Organization owners get the organization view (stats, charts, events,
+    // perks — Oct 11 2026); personal accounts that host events keep the
+    // events list they had before.
+    function showDashboard(user) {
+      navRight.innerHTML = '<span class="who">' + esc(user.email || '') + '</span><button class="signout" id="signout">Abmelden</button>';
+      document.getElementById('signout').addEventListener('click', () => { MM.signOut().then(showLogin); });
+      root.className = '';
+      root.innerHTML = '<div class="center-state">Wird geladen…</div>';
+      MM.myOrganization(user.id).then((org) => {
+        if (org) showOrg(user, org, 'events');
+        else showPersonal(user);
+      });
+    }
+
+    function eventRowsHtml(events) {
+      return '<div class="ev-list">' + events.map((e) => {
+        const c = e._counts || { total: 0 };
+        return '<div class="ev-row" data-id="' + esc(e.id) + '" data-title="' + esc(e.title) + '">'
+          + '<div><div class="t">' + esc(e.title) + '</div>'
+          + '<div class="m">' + esc(fmtEvent(e)) + (e.location || e.city ? ' · ' + esc(e.location || e.city) : '') + '</div></div>'
+          + '<div class="badges">'
+          // publish_to_web now means "register on web too" (every public
+          // event is shown on the website since Oct 2026).
+          + (e.publish_to_web ? '<span class="pill web">Web-Anmeldung</span>' : '')
+          + (e.is_private ? '<span class="pill priv">Privat</span>' : '')
+          + '<span class="pill count">' + c.total + (e.max_capacity != null ? '/' + e.max_capacity : '') + '</span>'
+          + '</div></div>';
+      }).join('') + '</div>';
+    }
+    function bindEventRows(container, user, goBack) {
+      container.querySelectorAll('.ev-row').forEach((row) => {
+        row.addEventListener('click', () => showAttendees(user, row.getAttribute('data-id'), row.getAttribute('data-title'), goBack));
+      });
+    }
+
+    // ---- Personal account: event list ---------------------------------------
+    function showPersonal(user) {
+      root.innerHTML = '<div class="center-state">Deine Events werden geladen…</div>';
+      MM.myEvents(user.id).then((events) => {
+        let html = '<div class="list-head"><div class="kicker">/ Deine Events</div><h2>Deine Events</h2><p>Sieh dir Anmeldungen an und exportiere Teilnehmerlisten. Events erstellst und bearbeitest du in der App.</p></div>';
+        if (!events.length) {
+          html += '<div class="empty">Du hast noch keine Events erstellt. Erstell eins in der MysMatch-App, dann erscheint es hier.</div>';
+          root.innerHTML = html; return;
+        }
+        root.innerHTML = html + eventRowsHtml(events);
+        bindEventRows(root, user, () => showPersonal(user));
+      });
+    }
+
+    // ---- Organization view --------------------------------------------------
+    const MS_DAY = 86400000;
+    const MONTHS = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+    // Same maths as the app's getFollowerGrowth / getRedemptionGrowth: one bar
+    // per local day, total in the window, % change vs the window before.
+    function growth(times, rangeDays) {
+      const startToday = new Date(); startToday.setHours(0, 0, 0, 0);
+      const winStart = startToday.getTime() - (rangeDays - 1) * MS_DAY;
+      const prevStart = winStart - rangeDays * MS_DAY;
+      const buckets = Array.from({ length: rangeDays }, (_, i) => ({ day: new Date(winStart + i * MS_DAY).getDate(), count: 0 }));
+      let total = 0, prev = 0;
+      times.forEach((iso) => {
+        const t = new Date(iso).getTime();
+        if (t >= winStart) { const i = Math.floor((t - winStart) / MS_DAY); if (i >= 0 && i < rangeDays) { buckets[i].count++; total++; } }
+        else if (t >= prevStart) prev++;
+      });
+      return { buckets, total, changePct: prev > 0 ? Math.round(((total - prev) / prev) * 100) : null };
+    }
+    function chartHtml(id, eyebrow, value, g, range, footnote) {
+      const max = Math.max(1, ...g.buckets.map((b) => b.count));
+      const peak = g.buckets.findIndex((b) => b.count === max && b.count > 0);
+      const up = (g.changePct || 0) >= 0;
+      return '<div class="chart" id="' + id + '">'
+        + '<div class="chart-top"><div><div class="kicker">' + esc(eyebrow) + '</div>'
+        + '<div class="chart-num">' + esc(value)
+        + (g.changePct != null ? '<span class="chg' + (up ? '' : ' neg') + '">' + (up ? '↑' : '↓') + ' ' + Math.abs(g.changePct) + '%</span>' : '') + '</div>'
+        + '<div class="chart-sub">ggü. den vorherigen ' + range + ' Tagen</div></div>'
+        + '<div class="seg"><button type="button" data-r="7"' + (range === 7 ? ' class="on"' : '') + '>7D</button><button type="button" data-r="30"' + (range === 30 ? ' class="on"' : '') + '>30D</button></div></div>'
+        + '<div class="bars">' + g.buckets.map((b, i) => {
+          const h = b.count > 0 ? Math.max(4, Math.round((b.count / max) * 100)) : 0;
+          return '<div class="bar-col" title="' + b.day + ': ' + b.count + '">' + (i === peak ? '<span class="peak">' + b.count + '</span>' : '') + (h ? '<div class="bar" style="height:' + h + '%"></div>' : '') + '</div>';
+        }).join('') + '</div>'
+        // WHY the >= 3 gap: a weekly tick next to the last day overlapped it on phones.
+        + '<div class="axis">' + g.buckets.map((b, i, a) => '<span>' + ((i === 0 || i === a.length - 1 || (i % 7 === 0 && a.length - 1 - i >= 3)) ? b.day : '') + '</span>').join('') + '</div>'
+        + '<div class="chart-foot">Tag im Monat · ' + MONTHS[new Date().getMonth()] + (footnote ? ' · ' + esc(footnote) : '') + '</div>'
+        + '</div>';
+    }
+
+    function showOrg(user, org, tab) {
+      root.innerHTML = '<div class="center-state">Deine Organisation wird geladen…</div>';
+      const since = new Date(); since.setHours(0, 0, 0, 0);
+      const sinceIso = new Date(since.getTime() - 59 * MS_DAY).toISOString(); // 2 × 30-day windows
+      Promise.all([
+        MM.orgEvents(org.id), MM.myEvents(user.id), MM.orgPerks(org.id),
+        MM.orgFollows(org.id, sinceIso), MM.orgRedemptions(org.id, sinceIso),
+      ]).then(([orgEv, ownEv, perks, follows, reds]) => {
+        // Org events plus any the owner created personally, without duplicates.
+        const seen = {};
+        const events = orgEv.concat(ownEv).filter((e) => (seen[e.id] ? false : (seen[e.id] = true)))
+          .sort((a, b) => String(b.starts_at).localeCompare(String(a.starts_at)));
+        const live = perks.filter((p) => !p.deleted);
+        // All-time redemptions = per-perk counters, retired perks included.
+        const redeemAll = perks.reduce((n, p) => n + (p.redeem_total || 0), 0);
+        const followTimes = follows.map((f) => f.created_at), redTimes = reds.map((r) => r.redeemed_at);
+        const state = { fr: 30, rr: 30, tab: tab || 'events' };
+
+        root.innerHTML =
+          '<div class="org-head">'
+          + (org.avatar_url ? '<img class="org-logo" src="' + esc(org.avatar_url) + '" alt="">' : '<div class="org-logo">' + esc((org.name || '?').slice(0, 2).toUpperCase()) + '</div>')
+          + '<div><div class="kicker">/ Deine Organisation</div><h2>' + esc(org.name) + (org.verified ? ' <span class="ver" title="Verifizierte Organisation">✓</span>' : '') + '</h2></div></div>'
+          + '<div class="stats">'
+          + '<div class="stat"><b>' + (org.follower_count || 0).toLocaleString() + '</b><span>Follower</span></div>'
+          + '<div class="stat"><b>' + live.length + '</b><span>Vorteile</span></div>'
+          + '<div class="stat"><b>' + redeemAll.toLocaleString() + '</b><span>Einlösungen</span></div>'
+          + '<div class="stat"><b>' + events.length + '</b><span>Events</span></div>'
+          + '</div>'
+          + '<div class="charts" id="charts"></div>'
+          + '<div class="tabs big" id="org-tabs"><button class="tab" type="button" data-t="events">Events <span>' + events.length + '</span></button><button class="tab" type="button" data-t="perks">Vorteile <span>' + perks.length + '</span></button></div>'
+          + '<div id="org-body"></div>';
+
+        const charts = document.getElementById('charts');
+        function drawCharts() {
+          charts.innerHTML = chartHtml('ch-f', 'Neue Follower', '+' + growth(followTimes, state.fr).total, growth(followTimes, state.fr), state.fr)
+            + chartHtml('ch-r', 'Eingelöste Vorteile', String(growth(redTimes, state.rr).total), growth(redTimes, state.rr), state.rr, redeemAll.toLocaleString() + ' insgesamt');
+          charts.querySelectorAll('#ch-f .seg button').forEach((b) => b.addEventListener('click', () => { state.fr = Number(b.dataset.r); drawCharts(); }));
+          charts.querySelectorAll('#ch-r .seg button').forEach((b) => b.addEventListener('click', () => { state.rr = Number(b.dataset.r); drawCharts(); }));
+        }
+        drawCharts();
+
+        const bodyEl = document.getElementById('org-body');
+        const back = () => showOrg(user, org, state.tab);
+        function drawTab() {
+          document.querySelectorAll('#org-tabs .tab').forEach((t) => t.classList.toggle('on', t.dataset.t === state.tab));
+          if (state.tab === 'events') {
+            bodyEl.innerHTML = events.length
+              ? '<p class="tab-note">Tippe auf ein Event, um Anmeldungen, Check-ins und Exporte zu sehen. Events erstellst und bearbeitest du in der App.</p>' + eventRowsHtml(events)
+              : '<div class="empty">Noch keine Events. Erstell eins in der MysMatch-App, dann erscheint es hier.</div>';
+            bindEventRows(bodyEl, user, back);
+          } else {
+            bodyEl.innerHTML = perks.length
+              ? '<p class="tab-note">Nur Anzahl und Zeitpunkte der Einlösungen – die Website zeigt nie, wer einen Vorteil eingelöst hat.</p>'
+                + '<div class="ev-list">' + perks.map((p) => {
+                  const limit = p.total_limit != null ? ' / ' + p.total_limit : '';
+                  const status = p.deleted ? '<span class="pill priv">Beendet</span>' : (p.active === false ? '<span class="pill priv">Pausiert</span>' : '<span class="pill web">Aktiv</span>');
+                  return '<div class="ev-row perk-row" data-id="' + esc(p.id) + '">'
+                    + '<div class="perk-l">' + (p.image_url ? '<img class="perk-img" src="' + esc(p.image_url) + '" alt="">' : '<div class="perk-img"></div>')
+                    + '<div><div class="t">' + esc(p.title) + '</div><div class="m">' + (p.requires_qr === false ? 'Offener Vorteil (ohne QR)' : 'QR-Vorteil') + (p.per_user_limit != null ? ' · max. ' + p.per_user_limit + ' pro Person' : '') + '</div></div></div>'
+                    + '<div class="badges">' + status + '<span class="pill count">' + (p.redeem_total || 0) + limit + ' eingelöst</span></div></div>';
+                }).join('') + '</div>'
+              : '<div class="empty">Noch keine Vorteile. Erstell einen in der MysMatch-App unter „Vorteile verwalten“.</div>';
+            bodyEl.querySelectorAll('.perk-row').forEach((row) => {
+              row.addEventListener('click', () => showPerk(user, org, perks.find((p) => p.id === row.dataset.id), back));
+            });
+          }
+        }
+        document.querySelectorAll('#org-tabs .tab').forEach((t) => t.addEventListener('click', () => { state.tab = t.dataset.t; drawTab(); }));
+        drawTab();
+      });
+    }
+
+    // ---- One perk: anonymous redemption log -----------------------------------
+    function showPerk(user, org, perk, goBack) {
+      root.innerHTML = '<div class="center-state">Vorteil wird geladen…</div>';
+      Promise.all([MM.orgRedemptions(org.id, null, perk.id), perk.requires_qr === false ? Promise.resolve(null) : MM.perkClaimCount(perk.id)])
+        .then(([reds, claims]) => {
+          // Group the log by local day (newest first) — times, never people.
+          const days = [];
+          reds.forEach((r) => {
+            const d = new Date(r.redeemed_at);
+            const key = d.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' });
+            const last = days[days.length - 1];
+            if (last && last.key === key) last.times.push(d); else days.push({ key, times: [d] });
+          });
+          const table = [['#', 'Eingelöst am']].concat(reds.map((r, i) => [i + 1, new Date(r.redeemed_at).toLocaleString()]));
+          root.innerHTML = '<button class="back" id="back" type="button">← Zurück zu den Vorteilen</button>'
+            + '<div class="att-head"><div><h2>' + esc(perk.title) + '</h2>'
+            + '<div class="cnt">' + (perk.redeem_total || 0) + (perk.total_limit != null ? ' von ' + perk.total_limit : '') + ' eingelöst'
+            + (claims != null ? ' · beansprucht von ' + claims + (claims === 1 ? ' Person' : ' Personen') : '') + '</div></div>'
+            + (reds.length ? '<div class="toolbar"><button class="btn-sm" id="csv" type="button">CSV exportieren</button><button class="btn-sm primary" id="xlsx" type="button">Excel exportieren</button></div>' : '')
+            + '</div>'
+            + (reds.length
+              ? '<div class="table-wrap"><table class="days"><thead><tr><th>Tag</th><th>Eingelöst</th><th>Uhrzeiten</th></tr></thead><tbody>'
+                + days.map((d) => '<tr><td>' + esc(d.key) + '</td><td>' + d.times.length + '</td><td class="ans">'
+                  + d.times.map((t) => esc(t.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' }))).join(', ') + '</td></tr>').join('')
+                + '</tbody></table></div>'
+              : '<div class="empty">' + (perk.requires_qr === false ? 'Offene Vorteile haben keine QR-Scans, deshalb gibt es keine Einlösungen zum Auflisten.' : 'Noch keine Einlösungen.') + '</div>');
+          document.getElementById('back').addEventListener('click', goBack);
+          const base = (perk.title || 'perk').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '-redemptions';
+          const c = document.getElementById('csv'); if (c) c.addEventListener('click', () => downloadCsv(base, table));
+          const x = document.getElementById('xlsx'); if (x) x.addEventListener('click', () => downloadXlsx(x, base, table, 'Redemptions'));
+        });
+    }
+
+    // ---- Dashboard: attendee list -----------------------------------------
+    function showAttendees(user, eventId, title, goBack) {
+      root.innerHTML = '<div class="center-state">Teilnehmende werden geladen…</div>';
+      // Fetch attendees + the event's questions (to label answer columns).
+      Promise.all([
+        MM.eventAttendees(eventId),
+        MM.db.from('events').select('questions').eq('id', eventId).maybeSingle(),
+      ]).then(([rows, evRes]) => {
+        const questions = (evRes && evRes.data && Array.isArray(evRes.data.questions)) ? evRes.data.questions : [];
+        renderAttendees(user, eventId, title, rows, questions, goBack);
+      });
+    }
+
+    function renderAttendees(user, eventId, title, rows, questions, goBack) {
+      // Check-in filter (Oct 11 2026): all / came / not checked in.
+      let filter = 'all';
+      const back = '<button class="back" id="back" type="button">← Zurück zu den Events</button>';
+      root.innerHTML = back + '<div id="att-body"></div>';
+      document.getElementById('back').addEventListener('click', goBack || (() => showDashboard(user)));
+      const body = document.getElementById('att-body');
+
+      function draw() {
+        const people = rows.reduce((n, r) => n + (r.party_size || 1), 0);
+        const came = rows.filter((r) => r.checked_in_at);
+        const cameP = came.reduce((n, r) => n + (r.party_size || 1), 0);
+        const shown = rows.filter((r) => filter === 'all' || (filter === 'in' ? r.checked_in_at : !r.checked_in_at));
+        const head = '<div class="att-head"><div><h2>' + esc(title) + '</h2>'
+          + '<div class="cnt">' + rows.length + (rows.length === 1 ? ' Anmeldung' : ' Anmeldungen')
+          + (people !== rows.length ? ' · ' + people + ' Personen' : '')
+          // People count, because a booking can bring several guests.
+          + (rows.length ? ' · ' + cameP + ' von ' + people + ' eingecheckt' : '') + '</div></div>'
+          + (rows.length ? '<div class="toolbar"><button class="btn-sm" id="csv" type="button">CSV exportieren</button><button class="btn-sm primary" id="xlsx" type="button">Excel exportieren</button></div>' : '')
+          + '</div>';
+        const tabs = rows.length
+          ? '<div class="tabs" role="tablist">'
+            + [['all', 'Alle', rows.length], ['in', 'Eingecheckt', came.length], ['out', 'Nicht eingecheckt', rows.length - came.length]]
+              .map((t) => '<button class="tab' + (filter === t[0] ? ' on' : '') + '" type="button" data-f="' + t[0] + '">' + t[1] + ' <span>' + t[2] + '</span></button>').join('')
+            + '</div>'
+          : '';
+
+        let table;
+        if (!rows.length) {
+          table = '<div class="empty">Noch keine Anmeldungen.</div>';
+        } else if (!shown.length) {
+          table = '<div class="empty">' + (filter === 'in' ? 'Noch niemand ist eingecheckt.' : 'Alle sind eingecheckt.') + '</div>';
+        } else {
+          const qHeaders = questions.map((q) => '<th>' + esc(q.label) + '</th>').join('');
+          const trs = shown.map((r) => {
+            const i = rows.indexOf(r);
+            const name = [r.first_name, r.last_name].filter(Boolean).join(' ') || '—';
+            const gender = r.user_gender || r.gender || '';
+            const ans = r.answers || {};
+            const qCells = questions.map((q) => '<td class="ans">' + esc(ans[q.id] || '') + '</td>').join('');
+            // Manual check-in (user decision): tick / untick per attendee.
+            const ci = r.checked_in_at
+              ? '<button class="ci on" type="button" data-i="' + i + '" title="Klicken zum Rückgängigmachen">✓ ' + esc(fmtTime(r.checked_in_at)) + '</button>'
+              : '<button class="ci" type="button" data-i="' + i + '">Als da markieren</button>';
+            return '<tr' + (r.checked_in_at ? ' class="came"' : '') + '><td class="num">' + (i + 1) + '</td>'
+              + '<td>' + ci + '</td>'
+              + '<td>' + esc(name) + '</td>'
+              + '<td>' + esc(r.email || '') + '</td>'
+              + '<td>' + esc(gender) + '</td>'
+              // WHY People (Oct 2026): party_size was already returned but never shown.
+              + '<td>' + (r.party_size || 1) + '</td>'
+              + '<td><span class="src ' + (r.source === 'web' ? 'web' : 'app') + '">' + (r.source === 'web' ? 'Web' : 'App') + '</span></td>'
+              + '<td>' + esc(fmtDT(r.registered_at)) + '</td>'
+              + '<td>' + (r.document_url ? '<button class="doc-view" data-doc="' + esc(r.document_url) + '">Ansehen</button>' : '') + '</td>'
+              + qCells + '</tr>';
+          }).join('');
+          table = '<div class="table-wrap"><table><thead><tr><th>#</th><th>Eingecheckt</th><th>Name</th><th>E-Mail</th><th>Geschlecht</th><th>Personen</th><th>Quelle</th><th>Angemeldet</th><th>Dokument</th>'
+            + qHeaders + '</tr></thead><tbody>' + trs + '</tbody></table></div>';
+        }
+        body.innerHTML = head + tabs + table;
+
+        const csvBtn = document.getElementById('csv');
+        if (csvBtn) csvBtn.addEventListener('click', () => downloadCsv(fileBase(title), exportTable(rows, questions)));
+        const xlsxBtn = document.getElementById('xlsx');
+        if (xlsxBtn) xlsxBtn.addEventListener('click', () => downloadXlsx(xlsxBtn, fileBase(title), exportTable(rows, questions), 'Attendees'));
+        body.querySelectorAll('.tab').forEach((t) => t.addEventListener('click', () => { filter = t.getAttribute('data-f'); draw(); }));
+        body.querySelectorAll('.ci').forEach((b) => {
+          b.addEventListener('click', async () => {
+            const r = rows[Number(b.getAttribute('data-i'))];
+            const turnOn = !r.checked_in_at;
+            if (!turnOn && !confirm('Check-in rückgängig machen für ' + ([r.first_name, r.last_name].filter(Boolean).join(' ') || 'diese Person') + '?')) return;
+            b.disabled = true; b.textContent = 'Wird gespeichert…';
+            const res = await MM.setCheckIn(eventId, r.user_id, turnOn);
+            if (res && res.status === 'ok') r.checked_in_at = res.checked_in_at || null;
+            else alert('Der Check-in konnte nicht gespeichert werden. Bitte versuche es noch einmal.');
+            draw();
+          });
+        });
+        // Document viewers: sign the private path on demand and open it.
+        body.querySelectorAll('.doc-view').forEach((b) => {
+          b.addEventListener('click', async () => {
+            b.textContent = 'Wird geöffnet…';
+            const url = await MM.signEventDoc(b.getAttribute('data-doc'));
+            b.textContent = 'Ansehen';
+            if (url) window.open(url, '_blank', 'noopener'); else alert('Das Dokument konnte nicht geöffnet werden.');
+          });
+        });
+      }
+      draw();
+    }
+
+    // ---- Export (CSV + Excel share one table) -------------------------------
+    // WHY one builder: both files must always have the same columns.
+    function exportTable(rows, questions) {
+      const header = ['#', 'Name', 'E-Mail', 'Geschlecht', 'Personen', 'Quelle', 'Angemeldet am', 'Eingecheckt um'].concat(questions.map((q) => q.label));
+      const body = rows.map((r, i) => {
+        const ans = r.answers || {};
+        return [i + 1, [r.first_name, r.last_name].filter(Boolean).join(' '), r.email || '', r.user_gender || r.gender || '',
+          r.party_size || 1, r.source === 'web' ? 'Web' : 'App', new Date(r.registered_at).toLocaleString(),
+          // Empty = did not check in (Oct 11 2026).
+          r.checked_in_at ? new Date(r.checked_in_at).toLocaleString() : '']
+          .concat(questions.map((q) => ans[q.id] || ''));
+      });
+      return [header].concat(body);
+    }
+    function fileBase(title) { return (title || 'attendees').replace(/[^a-z0-9]+/gi, '-').toLowerCase() + '-attendees'; }
+    function saveBlob(blob, name) {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = name;
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(() => URL.revokeObjectURL(a.href), 10000);
+    }
+
+    function csvCell(v) { v = v == null ? '' : String(v); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; }
+    // Generic: takes a ready table (array of rows) so attendee lists and perk
+    // redemption logs share the same exporters.
+    function downloadCsv(base, table) {
+      const lines = table.map((cols) => cols.map(csvCell).join(','));
+      // Prepend a UTF-8 BOM so Excel renders accents correctly.
+      saveBlob(new Blob(['﻿' + lines.join('\r\n')], { type: 'text/csv;charset=utf-8;' }), base + '.csv');
+    }
+
+    // Excel (.xlsx) via SheetJS, loaded only when someone clicks the button so
+    // the dashboard itself stays light. Pinned version on cdnjs.
+    let xlsxLib = null;
+    function loadXlsx() {
+      if (window.XLSX) return Promise.resolve(window.XLSX);
+      if (xlsxLib) return xlsxLib;
+      xlsxLib = new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+        s.onload = () => resolve(window.XLSX);
+        s.onerror = () => { xlsxLib = null; reject(new Error('xlsx load failed')); };
+        document.head.appendChild(s);
+      });
+      return xlsxLib;
+    }
+    function downloadXlsx(btn, base, data, sheetName) {
+      const label = btn.textContent;
+      btn.disabled = true; btn.textContent = 'Wird vorbereitet…';
+      loadXlsx().then((XLSX) => {
+        const ws = XLSX.utils.aoa_to_sheet(data);
+        // Column widths from the longest value (capped) so the sheet opens readable.
+        ws['!cols'] = data[0].map((_, c) => ({ wch: Math.min(50, Math.max(6, ...data.map((r) => String(r[c] == null ? '' : r[c]).length + 2))) }));
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, sheetName || 'Sheet1');
+        const out = XLSX.write(wb, { bookType: 'xlsx', type: 'array' });
+        saveBlob(new Blob([out], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }), base + '.xlsx');
+      }).catch((err) => {
+        console.error(err);
+        alert('Die Excel-Datei konnte nicht erstellt werden. Bitte versuche es noch einmal oder nutze „CSV exportieren“.');
+      }).finally(() => { btn.disabled = false; btn.textContent = label; });
+    }
+  })();
+</script>
+</body>
+</html>

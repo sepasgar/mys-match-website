@@ -15,23 +15,102 @@
   // (localhost must then be in Supabase's Redirect URLs); live = mysmatch.com.
   var SITE = /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(location.origin) ? location.origin : 'https://www.mysmatch.com';
 
+  // Languages (Oct 2026): /de/challenge/ and /fa/challenge/ are copies made by
+  // i18n/build.py with <html lang> set. Texts built in this file can't be
+  // swapped by that script, so they are translated here. Email + Google links
+  // always come back to the English address (only /challenge/** is in
+  // Supabase's Redirect URLs, and auth-callback only forwards to the English
+  // reset page); ?lang= or the remembered language then sends people on to
+  // their copy (redirect at the top of challenge/index.html + reset.html).
+  var LANG = (document.documentElement.lang || 'en').slice(0, 2);
+  if (LANG !== 'de' && LANG !== 'fa') LANG = 'en';
+  try { localStorage.setItem('mmc-lang', LANG); } catch (e) { /* private mode: English fallback */ }
+  var BACK = SITE + '/challenge/?welcome=1' + (LANG === 'en' ? '' : '&lang=' + LANG);
+  var TEXTS = {
+    de: {
+      "Writing": "Text",
+      "Static": "Bild",
+      "Video": "Video",
+      "Scenario": "Szenario",
+      "Creative post": "Kreativer Post",
+      "Content creator": "Content Creator",
+      "Submitted": "Eingereicht",
+      "In review": "In Prüfung",
+      "Shortlisted": "Engere Auswahl",
+      "Interview": "Gespräch",
+      "Selected": "Ausgewählt",
+      "Not selected": "Nicht ausgewählt",
+      "PDF, DOC or DOCX · 1 file · 5 MB": "PDF, DOC oder DOCX · 1 Datei · 5 MB",
+      "Cover letter, references, portfolio · up to 2 files · 10 MB each": "Anschreiben, Referenzen, Portfolio · bis zu 2 Dateien · je 10 MB",
+      "PDF · 1 file · 10 MB": "PDF · 1 Datei · 10 MB",
+      "PNG, JPG or WebP · up to 5 images": "PNG, JPG oder WebP · bis zu 5 Bilder",
+      "Something went wrong.": "Etwas ist schiefgelaufen.",
+      "An account with this email already exists. Please sign in.": "Mit dieser E-Mail gibt es schon ein Konto. Bitte melde dich an.",
+      "Wrong email or password.": "E-Mail oder Passwort ist falsch.",
+      "Please confirm your email first — check your inbox (and spam).": "Bitte bestätige zuerst deine E-Mail – schau in dein Postfach (und in den Spam-Ordner).",
+      "This password appeared in a data leak. Please choose a different one.": "Dieses Passwort ist in einem Datenleck aufgetaucht. Bitte wähle ein anderes.",
+      "Password must be at least 6 characters.": "Das Passwort muss mindestens 6 Zeichen haben.",
+      "Too many attempts. Please wait a minute and try again.": "Zu viele Versuche. Bitte warte eine Minute und versuche es dann noch einmal.",
+      "That is more files than allowed for this field.": "Das sind mehr Dateien, als dieses Feld erlaubt.",
+      "A file is too big.": "Eine Datei ist zu groß.",
+      "A file has a type we can’t accept.": "Eine Datei hat ein Format, das wir nicht annehmen können.",
+      "You already have an entry in this track — edit it from “Your entries”.": "Du hast in dieser Kategorie schon einen Beitrag – bearbeite ihn unter „Deine Beiträge“.",
+      "Submissions are closed, or your session ended. Please reload the page.": "Die Einreichung ist geschlossen oder deine Sitzung ist abgelaufen. Bitte lade die Seite neu.",
+      "Please check the highlighted fields.": "Bitte prüfe die markierten Felder.",
+      "No connection. Your entry was not sent — please try again.": "Keine Verbindung. Dein Beitrag wurde nicht gesendet – bitte versuche es noch einmal.",
+    },
+    fa: {
+      "Writing": "نوشتاری",
+      "Static": "تصویری",
+      "Video": "ویدیو",
+      "Scenario": "سناریو",
+      "Creative post": "پست خلاقانه",
+      "Content creator": "تولیدکنندهٔ محتوا",
+      "Submitted": "ارسال شد",
+      "In review": "در حال بررسی",
+      "Shortlisted": "فهرست نهایی",
+      "Interview": "مصاحبه",
+      "Selected": "انتخاب شد",
+      "Not selected": "انتخاب نشد",
+      "PDF, DOC or DOCX · 1 file · 5 MB": "PDF، DOC یا DOCX · ۱ فایل · ۵ مگابایت",
+      "Cover letter, references, portfolio · up to 2 files · 10 MB each": "نامهٔ همراه، توصیه‌نامه، نمونه‌کار · حداکثر ۲ فایل · هرکدام ۱۰ مگابایت",
+      "PDF · 1 file · 10 MB": "PDF · ۱ فایل · ۱۰ مگابایت",
+      "PNG, JPG or WebP · up to 5 images": "PNG، JPG یا WebP · حداکثر ۵ تصویر",
+      "Something went wrong.": "مشکلی پیش آمد.",
+      "An account with this email already exists. Please sign in.": "با این ایمیل قبلاً حساب ساخته شده است. لطفاً وارد شو.",
+      "Wrong email or password.": "ایمیل یا رمز عبور اشتباه است.",
+      "Please confirm your email first — check your inbox (and spam).": "لطفاً اول ایمیلت را تأیید کن — صندوق ورودی (و پوشهٔ اسپم) را ببین.",
+      "This password appeared in a data leak. Please choose a different one.": "این رمز عبور در یک نشت اطلاعات دیده شده است. لطفاً رمز دیگری انتخاب کن.",
+      "Password must be at least 6 characters.": "رمز عبور باید دست‌کم ۶ کاراکتر باشد.",
+      "Too many attempts. Please wait a minute and try again.": "تلاش‌ها بیش از حد بود. لطفاً یک دقیقه صبر کن و دوباره امتحان کن.",
+      "That is more files than allowed for this field.": "تعداد فایل‌ها بیشتر از حد مجاز این بخش است.",
+      "A file is too big.": "یکی از فایل‌ها خیلی بزرگ است.",
+      "A file has a type we can’t accept.": "نوع یکی از فایل‌ها پذیرفته نمی‌شود.",
+      "You already have an entry in this track — edit it from “Your entries”.": "در این بخش قبلاً اثری فرستاده‌ای — آن را از «آثار تو» ویرایش کن.",
+      "Submissions are closed, or your session ended. Please reload the page.": "مهلت ارسال تمام شده یا نشستت منقضی شده است. لطفاً صفحه را دوباره بارگذاری کن.",
+      "Please check the highlighted fields.": "لطفاً بخش‌های مشخص‌شده را بررسی کن.",
+      "No connection. Your entry was not sent — please try again.": "اتصال برقرار نیست. اثرت ارسال نشد — لطفاً دوباره امتحان کن.",
+    },
+  };
+  var T = function (s) { var d = TEXTS[LANG]; return (d && d[s]) || s; };
+
   var TRACKS = [
-    { id: 'scenario', num: '01', tag: 'Writing', title: 'Scenario', desc: 'Write the script for a Reel or TikTok about student life and MysMatch: the hook, the scenes, the punchline.', deliver: 'A written script, scene by scene' },
-    { id: 'post', num: '02', tag: 'Static', title: 'Creative post', desc: 'Design a single post or carousel that makes a student stop scrolling and want to download the app.', deliver: '1–5 images (PNG, JPG or WebP)' },
-    { id: 'video', num: '03', tag: 'Video', title: 'Content creator', desc: 'Record a short video in your own style, as if you were already filming for our channels.', deliver: 'A Google Drive link to your video' },
+    { id: 'scenario', num: '01', tag: T('Writing'), title: T('Scenario'), desc: 'Write the script for a Reel or TikTok about student life and MysMatch: the hook, the scenes, the punchline.', deliver: 'A written script, scene by scene' },
+    { id: 'post', num: '02', tag: T('Static'), title: T('Creative post'), desc: 'Design a single post or carousel that makes a student stop scrolling and want to download the app.', deliver: '1–5 images (PNG, JPG or WebP)' },
+    { id: 'video', num: '03', tag: T('Video'), title: T('Content creator'), desc: 'Record a short video in your own style, as if you were already filming for our channels.', deliver: 'A Google Drive link to your video' },
   ];
   var STATUSES = [
-    { id: 'submitted', label: 'Submitted' }, { id: 'in_review', label: 'In review' },
-    { id: 'shortlisted', label: 'Shortlisted' }, { id: 'interview', label: 'Interview' },
-    { id: 'selected', label: 'Selected' }, { id: 'not_selected', label: 'Not selected' },
+    { id: 'submitted', label: T('Submitted') }, { id: 'in_review', label: T('In review') },
+    { id: 'shortlisted', label: T('Shortlisted') }, { id: 'interview', label: T('Interview') },
+    { id: 'selected', label: T('Selected') }, { id: 'not_selected', label: T('Not selected') },
   ];
   // Same limits as the server (challenge_files_check) so people learn early.
   var SLOTS = {
-    cv: { kind: 'cv', max: 1, mb: 5, exts: ['pdf', 'doc', 'docx'], hint: 'PDF, DOC or DOCX · 1 file · 5 MB' },
-    extra: { kind: 'extra', max: 2, mb: 10, exts: ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg', 'webp'], hint: 'Cover letter, references, portfolio · up to 2 files · 10 MB each' },
-    scenario: { kind: 'scenario_pdf', max: 1, mb: 10, exts: ['pdf'], hint: 'PDF · 1 file · 10 MB' },
-    concept: { kind: 'concept_pdf', max: 1, mb: 10, exts: ['pdf'], hint: 'PDF · 1 file · 10 MB' },
-    post: { kind: 'post_image', max: 5, mb: 3, exts: ['png', 'jpg', 'jpeg', 'webp'], hint: 'PNG, JPG or WebP · up to 5 images' },
+    cv: { kind: 'cv', max: 1, mb: 5, exts: ['pdf', 'doc', 'docx'], hint: T('PDF, DOC or DOCX · 1 file · 5 MB') },
+    extra: { kind: 'extra', max: 2, mb: 10, exts: ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg', 'webp'], hint: T('Cover letter, references, portfolio · up to 2 files · 10 MB each') },
+    scenario: { kind: 'scenario_pdf', max: 1, mb: 10, exts: ['pdf'], hint: T('PDF · 1 file · 10 MB') },
+    concept: { kind: 'concept_pdf', max: 1, mb: 10, exts: ['pdf'], hint: T('PDF · 1 file · 10 MB') },
+    post: { kind: 'post_image', max: 5, mb: 3, exts: ['png', 'jpg', 'jpeg', 'webp'], hint: T('PNG, JPG or WebP · up to 5 images') },
   };
   var MIME = {
     pdf: 'application/pdf', doc: 'application/msword',
@@ -60,29 +139,32 @@
       // signup_source=web → the account is a 'web' account (handle_new_user),
       // not a half-finished app sign-up that the app would clean up.
       // No #anchor: Supabase appends the login token to the URL fragment.
-      options: { data: { signup_source: 'web' }, emailRedirectTo: SITE + '/challenge/?welcome=1' },
+      // language: the confirmation email is German for 'de' (Persian has no
+      // template text, so it gets English).
+      options: { data: { signup_source: 'web', language: LANG }, emailRedirectTo: BACK },
     });
     if (r.error) return { ok: false, error: friendlyAuth(r.error) };
     // Supabase hides "already registered" behind an empty identities list.
     if (r.data.user && !r.data.session && r.data.user.identities && r.data.user.identities.length === 0) {
-      return { ok: false, error: 'An account with this email already exists. Please sign in.' };
+      return { ok: false, error: T('An account with this email already exists. Please sign in.') };
     }
     return { ok: true, needsConfirm: !r.data.session };
   }
   // Send the sign-up confirmation email again (page allows it once a minute;
   // Supabase itself also refuses more than one per 60 s per address).
   async function resendSignup(email) {
-    var r = await db.auth.resend({ type: 'signup', email: email, options: { emailRedirectTo: SITE + '/challenge/?welcome=1' } });
+    var r = await db.auth.resend({ type: 'signup', email: email, options: { emailRedirectTo: BACK } });
     if (r.error) return { ok: false, error: friendlyAuth(r.error) };
     return { ok: true };
   }
   async function signIn(email, password) {
     var r = await db.auth.signInWithPassword({ email: email, password: password });
-    if (r.error) return { ok: false, error: friendlyAuth(r.error) };
+    // unconfirmed: the page offers "Resend email" (it can't match the message, which is translated).
+    if (r.error) return { ok: false, error: friendlyAuth(r.error), unconfirmed: /email not confirmed/i.test(r.error.message || '') };
     return { ok: true };
   }
   async function signInGoogle() {
-    var r = await db.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: SITE + '/challenge/?welcome=1' } });
+    var r = await db.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: BACK } });
     if (r.error) return { ok: false, error: r.error.message };
     return { ok: true };
   }
@@ -103,12 +185,12 @@
     if (r.error) console.warn('[MMC] mark_new_web_account', r.error.message);
   }
   function friendlyAuth(e) {
-    var m = (e && e.message) || 'Something went wrong.';
-    if (/invalid login credentials/i.test(m)) return 'Wrong email or password.';
-    if (/email not confirmed/i.test(m)) return 'Please confirm your email first — check your inbox (and spam).';
-    if (/known to be weak|pwned|leaked/i.test(m)) return 'This password appeared in a data leak. Please choose a different one.';
-    if (/at least 6/i.test(m)) return 'Password must be at least 6 characters.';
-    if (/rate limit|too many|only request this after/i.test(m)) return 'Too many attempts. Please wait a minute and try again.';
+    var m = (e && e.message) || T('Something went wrong.');
+    if (/invalid login credentials/i.test(m)) return T('Wrong email or password.');
+    if (/email not confirmed/i.test(m)) return T('Please confirm your email first — check your inbox (and spam).');
+    if (/known to be weak|pwned|leaked/i.test(m)) return T('This password appeared in a data leak. Please choose a different one.');
+    if (/at least 6/i.test(m)) return T('Password must be at least 6 characters.');
+    if (/rate limit|too many|only request this after/i.test(m)) return T('Too many attempts. Please wait a minute and try again.');
     return m;
   }
 
@@ -233,13 +315,13 @@
   // Server error → sentence for the person filling in the form.
   function friendlyError(e) {
     var m = (e && (e.message || e.details)) || String(e || '');
-    if (/challenge_file_limit/.test(m)) return 'That is more files than allowed for this field.';
-    if (/challenge_file_too_big|exceeded the maximum allowed size|Payload too large/i.test(m)) return 'A file is too big.';
-    if (/challenge_file_type|mime type/i.test(m)) return 'A file has a type we can’t accept.';
-    if (/duplicate key.*challenge_entries/i.test(m)) return 'You already have an entry in this track — edit it from “Your entries”.';
-    if (/row-level security|closed/i.test(m)) return 'Submissions are closed, or your session ended. Please reload the page.';
-    if (/check constraint/i.test(m)) return 'Please check the highlighted fields.';
-    if (/Failed to fetch|NetworkError/i.test(m)) return 'No connection. Your entry was not sent — please try again.';
+    if (/challenge_file_limit/.test(m)) return T('That is more files than allowed for this field.');
+    if (/challenge_file_too_big|exceeded the maximum allowed size|Payload too large/i.test(m)) return T('A file is too big.');
+    if (/challenge_file_type|mime type/i.test(m)) return T('A file has a type we can’t accept.');
+    if (/duplicate key.*challenge_entries/i.test(m)) return T('You already have an entry in this track — edit it from “Your entries”.');
+    if (/row-level security|closed/i.test(m)) return T('Submissions are closed, or your session ended. Please reload the page.');
+    if (/check constraint/i.test(m)) return T('Please check the highlighted fields.');
+    if (/Failed to fetch|NetworkError/i.test(m)) return T('No connection. Your entry was not sent — please try again.');
     return m;
   }
 
@@ -280,7 +362,7 @@
   }
 
   window.MMC = {
-    TRACKS: TRACKS, STATUSES: STATUSES, SLOTS: SLOTS, GOOGLE_WEB_ENABLED: GOOGLE_WEB_ENABLED, extOf: extOf,
+    LANG: LANG, TRACKS: TRACKS, STATUSES: STATUSES, SLOTS: SLOTS, GOOGLE_WEB_ENABLED: GOOGLE_WEB_ENABLED, extOf: extOf,
     getChallenge: getChallenge, isOpen: isOpen, session: session, onAuth: onAuth,
     signUp: signUp, resendSignup: resendSignup, signIn: signIn, signInGoogle: signInGoogle, markNewWebAccount: markNewWebAccount, resetPassword: resetPassword, signOut: signOut,
     myEntries: myEntries, saveEntry: saveEntry, withdraw: withdraw, fileUrl: fileUrl, friendlyError: friendlyError,

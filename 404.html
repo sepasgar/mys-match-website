@@ -87,7 +87,7 @@
          This button is the fallback for browsers / desktop / app-less users. -->
     <a class="open-app-btn" id="openAppBtn" href="#">Open in MysMatch</a>
 
-    <p style="font-size: 13px; color: var(--gray-light); margin: 18px 0 10px;">
+    <p id="noApp" style="font-size: 13px; color: var(--gray-light); margin: 18px 0 10px;">
       Don't have the app yet?
     </p>
 
@@ -106,7 +106,7 @@
       </a>
     </div>
 
-    <a class="home-link" href="/">← Back to MysMatch home</a>
+    <a class="home-link" id="homeLink" href="/">← Back to MysMatch home</a>
   </main>
 
   <script>
@@ -132,6 +132,26 @@
         document.getElementById('lede').textContent =
           "The page you're looking for doesn't exist. Try heading back to the home page.";
         document.getElementById('openAppBtn').style.display = 'none';
+      }
+
+      // Languages (Oct 2026): GitHub serves this one file for missing pages
+      // under /de/ and /fa/ too, so the texts follow the address. Event share
+      // links (/event/…) have no language and stay English.
+      var lang = (path.match(/^\/(de|fa)(\/|$)/) || [])[1];
+      var L = {
+        de: { title404: 'Seite nicht gefunden', lede404: 'Die Seite, die du suchst, gibt es nicht. Geh am besten zurück zur Startseite.',
+              noApp: 'Du hast die App noch nicht?', home: '← Zurück zur MysMatch-Startseite' },
+        fa: { title404: 'صفحه پیدا نشد', lede404: 'صفحه‌ای که دنبالش هستی وجود ندارد. به صفحهٔ اصلی برگرد.',
+              noApp: 'هنوز اپ را نداری؟', home: '→ بازگشت به صفحهٔ اصلی MysMatch' },
+      }[lang];
+      if (L) {
+        document.documentElement.lang = lang;
+        if (lang === 'fa') document.documentElement.dir = 'rtl';
+        document.getElementById('title').textContent = L.title404;
+        document.getElementById('lede').textContent = L.lede404;
+        document.getElementById('noApp').textContent = L.noApp;
+        var home = document.getElementById('homeLink');
+        home.textContent = L.home; home.setAttribute('href', '/' + lang + '/');
       }
     })();
   </script>

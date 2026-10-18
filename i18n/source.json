@@ -14,10 +14,12 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
-  ],
-  "Features": [
-   "index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "challenge/rules.html",
+   "challenge/reset.html",
+   "links/index.html",
+   "dashboard.html"
   ],
   "How it works": [
    "index.html"
@@ -33,7 +35,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Jobs": [
    "index.html",
@@ -43,6 +47,20 @@
    "jobs/job.html",
    "organizations/index.html",
    "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
+  ],
+  "Challenge": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
@@ -71,7 +89,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Do not <span class=\"grad-text\">study alone.</span>": [
    "index.html"
@@ -139,67 +159,10 @@
   "Connect by major and start talking": [
    "index.html"
   ],
-  "/ Features": [
-   "index.html"
-  ],
-  "Everything you need, <span class=\"dim\">nothing you don't.</span>": [
-   "index.html"
-  ],
-  "Smart Discovery": [
-   "index.html"
-  ],
-  "/ Discovery": [
-   "index.html"
-  ],
-  "Automatically discover students who share your university, major, and semester — organized in tiers from closest connection to broadest.": [
-   "index.html"
-  ],
-  "Search Preferences": [
-   "index.html"
-  ],
-  "Set your own criteria — university, major, semester, city, or gender — and browse students to connect with. Your search, your way.": [
-   "index.html"
-  ],
-  "Instant Chat": [
-   "index.html"
-  ],
-  "/ Connection": [
-   "index.html"
-  ],
-  "Once connected, start chatting right away. Real-time messages with read receipts.": [
-   "index.html"
-  ],
-  "Student Events": [
-   "index.html"
-  ],
-  "Browse and join campus events, or create your own. See who's organizing, track your registrations, and get QR tickets on the day.": [
-   "index.html"
-  ],
-  "Biometric Security": [
-   "index.html"
-  ],
-  "/ Control": [
-   "index.html"
-  ],
-  "Lock the app with Face ID, fingerprint, or a custom PIN. Your privacy is non-negotiable.": [
-   "index.html"
-  ],
-  "Report &amp; Block": [
-   "index.html"
-  ],
-  "Instantly block or report anyone. We review every report and take action fast.": [
-   "index.html"
-  ],
-  "MysMatch app": [
-   "index.html"
-  ],
   "/ How it works": [
    "index.html"
   ],
   "From sign-up <span style=\"color:var(--violet-soft)\">to connected in minutes.</span>": [
-   "index.html"
-  ],
-  "/ Step": [
    "index.html"
   ],
   "Create your profile": [
@@ -340,7 +303,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Product": [
    "index.html",
@@ -352,7 +317,22 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
+  ],
+  "Ideation Challenge": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html",
+   "challenge/index.html"
   ],
   "Company": [
    "index.html",
@@ -364,7 +344,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Contact": [
    "index.html",
@@ -377,7 +359,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Organization login": [
    "index.html",
@@ -389,7 +373,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Organization sign-up": [
    "index.html",
@@ -401,7 +387,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Legal": [
    "index.html",
@@ -413,7 +401,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Privacy Policy": [
    "index.html",
@@ -426,7 +416,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Terms of Service": [
    "index.html",
@@ -439,7 +431,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Support": [
    "index.html",
@@ -452,7 +446,8 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "dashboard.html"
   ],
   "Social": [
    "index.html",
@@ -464,7 +459,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Instagram": [
    "index.html",
@@ -476,7 +473,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "TikTok": [
    "index.html",
@@ -488,7 +487,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "LinkedIn": [
    "index.html",
@@ -500,7 +501,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "© 2026 MysMatch. All rights reserved.": [
    "index.html",
@@ -513,7 +516,10 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "challenge/rules.html",
+   "dashboard.html"
   ],
   "contact@mys-match.com": [
    "index.html",
@@ -525,7 +531,10 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "challenge/rules.html",
+   "dashboard.html"
   ],
   "MysMatch helps university students find study partners and classmates in their own program and semester, plus campus events and student jobs. Free.": [
    "index.html"
@@ -549,7 +558,9 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html"
   ],
   "Your campus,<br/><span class=\"grad-text\">in real life.</span>": [
    "events/index.html"
@@ -703,7 +714,7 @@
   "Number of people": [
    "events/event.html"
   ],
-  "By registering you agree to our <a href=\"/terms\">Terms</a> and <a href=\"/privacy-policy\">Privacy Policy</a>. We'll share your details with the event organizer.": [
+  "By registering you agree to our <a href=\"/terms/\">Terms</a> and <a href=\"/privacy-policy/\">Privacy Policy</a>. We'll share your details with the event organizer.": [
    "events/event.html"
   ],
   "Close": [
@@ -746,7 +757,8 @@
    "jobs/index.html"
   ],
   "City": [
-   "jobs/index.html"
+   "jobs/index.html",
+   "challenge/index.html"
   ],
   "All cities": [
    "jobs/index.html"
@@ -1031,7 +1043,7 @@
   "How do I delete my account?": [
    "support/index.html"
   ],
-  "In the app, go to <strong>Profile → Ownership</strong>, tap your account card, then <strong>Delete my account</strong>. Your account is permanently deleted after a 30-day grace period (signing in again cancels it). You can also request deletion by emailing <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> from your account email. Details: <a href=\"/delete-account\">Delete your account</a>.": [
+  "In the app, go to <strong>Profile → Ownership</strong>, tap your account card, then <strong>Delete my account</strong>. Your account is permanently deleted after a 30-day grace period (signing in again cancels it). You can also request deletion by emailing <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> from your account email. Details: <a href=\"/delete-account/\">Delete your account</a>.": [
    "support/index.html"
   ],
   "How do I change my email, university, or profile photo?": [
@@ -1089,7 +1101,8 @@
    "delete-account/index.html"
   ],
   "/ Account": [
-   "delete-account/index.html"
+   "delete-account/index.html",
+   "challenge/reset.html"
   ],
   "Delete your account": [
    "delete-account/index.html"
@@ -1161,7 +1174,7 @@
   "Data we are required to keep by law may be kept for longer.": [
    "delete-account/index.html"
   ],
-  "Full details are in our <a href=\"/privacy-policy#account-deletion\">Privacy Policy</a> (Sections 7 and 12). Questions: <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a>.": [
+  "Full details are in our <a href=\"/privacy-policy/#account-deletion\">Privacy Policy</a> (Sections 7 and 12). Questions: <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a>.": [
    "delete-account/index.html"
   ],
   "How to delete your MysMatch account and data, in the app or by email, and what is deleted or kept.": [
@@ -1411,7 +1424,7 @@
   "<strong>Right to rectification (Art. 16):</strong> correct inaccurate or incomplete data via your profile settings or by contacting us": [
    "privacy-policy/index.html"
   ],
-  "<strong>Right to erasure (Art. 17):</strong> delete your account and all associated data directly from the app (Profile → Ownership → your account → Delete my account), subject to the retention described in Section 7 — see <a href=\"/delete-account\">www.mysmatch.com/delete-account</a>": [
+  "<strong>Right to erasure (Art. 17):</strong> delete your account and all associated data directly from the app (Profile → Ownership → your account → Delete my account), subject to the retention described in Section 7 — see <a href=\"/delete-account/\">www.mysmatch.com/delete-account</a>": [
    "privacy-policy/index.html"
   ],
   "<strong>Right to restrict processing (Art. 18):</strong> request that we limit how we use your data": [
@@ -1492,7 +1505,7 @@
   "12. Account Deletion": [
    "privacy-policy/index.html"
   ],
-  "You can delete your MysMatch account in two ways (step-by-step guide: <a href=\"/delete-account\">www.mysmatch.com/delete-account</a>):": [
+  "You can delete your MysMatch account in two ways (step-by-step guide: <a href=\"/delete-account/\">www.mysmatch.com/delete-account</a>):": [
    "privacy-policy/index.html"
   ],
   "a) In the app:": [
@@ -1576,7 +1589,7 @@
   "By creating an account, accessing, or using MysMatch (\"the App\", \"the Service\"), you agree to be bound by these Terms of Service (\"Terms\"). These Terms constitute a legally binding agreement between you and MysMatch, operated by Sepehr Asgari, based in Germany.": [
    "terms/index.html"
   ],
-  "If you do not agree to these Terms, you must not create an account or use the Service. Please also review our <a href=\"https://www.mysmatch.com/privacy-policy\">Privacy Policy</a>, which describes how we collect and process your personal data.": [
+  "If you do not agree to these Terms, you must not create an account or use the Service. Please also review our <a href=\"https://www.mysmatch.com/privacy-policy/\">Privacy Policy</a>, which describes how we collect and process your personal data.": [
    "terms/index.html"
   ],
   "2. Eligibility": [
@@ -1962,13 +1975,528 @@
   ],
   "Read the MysMatch Terms of Service.": [
    "terms/index.html"
+  ],
+  "Creator Challenge — MysMatch": [
+   "challenge/index.html"
+  ],
+  "Submit entry": [
+   "challenge/index.html",
+   "challenge/rules.html"
+  ],
+  "/ Creator Challenge": [
+   "challenge/index.html"
+  ],
+  "Season 01 · Open": [
+   "challenge/index.html"
+  ],
+  "Make our feed.<br/><span class=\"grad-text\">Join the team.</span>": [
+   "challenge/index.html"
+  ],
+  "Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. The strongest entries are invited to interview.": [
+   "challenge/index.html"
+  ],
+  "Submit your entry ↓": [
+   "challenge/index.html"
+  ],
+  "Get inspired": [
+   "challenge/index.html"
+  ],
+  "Submissions close · 15 Dec 2026": [
+   "challenge/index.html"
+  ],
+  "Days": [
+   "challenge/index.html"
+  ],
+  "Hours": [
+   "challenge/index.html"
+  ],
+  "Min": [
+   "challenge/index.html"
+  ],
+  "Sec": [
+   "challenge/index.html"
+  ],
+  "/ The brief": [
+   "challenge/index.html"
+  ],
+  "You're our new social media manager. <span class=\"dim\">What do you post first?</span>": [
+   "challenge/index.html"
+  ],
+  "Audience": [
+   "challenge/index.html"
+  ],
+  "University students looking for study partners, classmates, events and jobs.": [
+   "challenge/index.html"
+  ],
+  "Message": [
+   "challenge/index.html"
+  ],
+  "Do not study alone. Make students want to download MysMatch.": [
+   "challenge/index.html"
+  ],
+  "We judge": [
+   "challenge/index.html"
+  ],
+  "The idea, the craft, and how well it fits our audience and channels.": [
+   "challenge/index.html"
+  ],
+  "/ Three tracks": [
+   "challenge/index.html"
+  ],
+  "Pick your <span style=\"color:#CDB8FF\">format.</span>": [
+   "challenge/index.html"
+  ],
+  "One entry per track. Want to try more than one? Send a separate entry for each.": [
+   "challenge/index.html"
+  ],
+  "Writing": [
+   "challenge/index.html"
+  ],
+  "Scenario": [
+   "challenge/index.html"
+  ],
+  "Write the script for a Reel or TikTok about student life and MysMatch: the hook, the scenes, the punchline.": [
+   "challenge/index.html"
+  ],
+  "You submit": [
+   "challenge/index.html"
+  ],
+  "A written script, scene by scene": [
+   "challenge/index.html"
+  ],
+  "Enter this track →": [
+   "challenge/index.html"
+  ],
+  "Static": [
+   "challenge/index.html"
+  ],
+  "Creative post": [
+   "challenge/index.html"
+  ],
+  "Design a single post or carousel that makes a student stop scrolling and want to download the app.": [
+   "challenge/index.html"
+  ],
+  "1–5 images (PNG, JPG or WebP)": [
+   "challenge/index.html"
+  ],
+  "Video": [
+   "challenge/index.html"
+  ],
+  "Content creator": [
+   "challenge/index.html"
+  ],
+  "Record a short video in your own style, as if you were already filming for our channels.": [
+   "challenge/index.html"
+  ],
+  "A Google Drive link to your video": [
+   "challenge/index.html"
+  ],
+  "/ Get inspired": [
+   "challenge/index.html"
+  ],
+  "Study our feed. <span style=\"color:var(--violet)\">Then beat it.</span>": [
+   "challenge/index.html"
+  ],
+  "See what we post today, and try the app so you know what you're promoting.": [
+   "challenge/index.html"
+  ],
+  "<span><small>Download on the</small><b>App Store</b></span>": [
+   "challenge/index.html"
+  ],
+  "<span><small>Get it on</small><b>Google Play</b></span>": [
+   "challenge/index.html"
+  ],
+  "<span><small>Instagram</small><b>@mysmatchofficial</b></span><i>↗</i>": [
+   "challenge/index.html"
+  ],
+  "<span><small>TikTok</small><b>@mysmatchofficial</b></span><i>↗</i>": [
+   "challenge/index.html"
+  ],
+  "<span><small>LinkedIn</small><b>MysMatch</b></span><i>↗</i>": [
+   "challenge/index.html"
+  ],
+  "/ Submit your entry": [
+   "challenge/index.html"
+  ],
+  "Your move.": [
+   "challenge/index.html"
+  ],
+  "Takes about five minutes. Fields marked * are required. <a href=\"/challenge/rules.html\">Rules &amp; privacy</a>": [
+   "challenge/index.html"
+  ],
+  "Loading…": [
+   "challenge/index.html",
+   "dashboard.html"
+  ],
+  "Submissions closed": [
+   "challenge/index.html"
+  ],
+  "That's a wrap. <span class=\"grad-text\">Thank you.</span>": [
+   "challenge/index.html"
+  ],
+  "Submissions closed on 15 December 2026. If you sent an entry, sign in below to follow its status.": [
+   "challenge/index.html"
+  ],
+  "Create your account to enter.": [
+   "challenge/index.html"
+  ],
+  "An account lets you send entries, upload files, and follow your status until we announce the results. Already use the MysMatch app? Sign in with the same email and password.": [
+   "challenge/index.html"
+  ],
+  "Create account": [
+   "challenge/index.html"
+  ],
+  "Sign in": [
+   "challenge/index.html"
+  ],
+  "Resend email": [
+   "challenge/index.html"
+  ],
+  "Email": [
+   "challenge/index.html"
+  ],
+  "alex@university.edu": [
+   "challenge/index.html"
+  ],
+  "Password": [
+   "challenge/index.html"
+  ],
+  "At least 6 characters": [
+   "challenge/index.html",
+   "challenge/reset.html"
+  ],
+  "Create account →": [
+   "challenge/index.html"
+  ],
+  "Forgot password?": [
+   "challenge/index.html"
+  ],
+  "or": [
+   "challenge/index.html"
+  ],
+  "Continue with Google": [
+   "challenge/index.html"
+  ],
+  "Signed in as <b id=\"me-email\"></b>": [
+   "challenge/index.html"
+  ],
+  "Sign out": [
+   "challenge/index.html"
+  ],
+  "Your entries": [
+   "challenge/index.html"
+  ],
+  "Entry received": [
+   "challenge/index.html"
+  ],
+  "Thanks, <span id=\"sent-name\">there</span>. <span class=\"grad-text\">You're in.</span>": [
+   "challenge/index.html"
+  ],
+  "We'll get back to you at <b id=\"sent-email\"></b> after submissions close on 15 December. You can edit your entry here until then.": [
+   "challenge/index.html"
+  ],
+  "Track your progress": [
+   "challenge/index.html"
+  ],
+  "Come back to <a href=\"/challenge/\">mysmatch.com/challenge</a> anytime and sign in with the same account. Your entry card shows where it is:": [
+   "challenge/index.html"
+  ],
+  "Submitted": [
+   "challenge/index.html"
+  ],
+  "In review": [
+   "challenge/index.html"
+  ],
+  "Shortlisted": [
+   "challenge/index.html"
+  ],
+  "Interview": [
+   "challenge/index.html"
+  ],
+  "Selected": [
+   "challenge/index.html"
+  ],
+  "Submit another track": [
+   "challenge/index.html"
+  ],
+  "Follow us on Instagram ↗": [
+   "challenge/index.html"
+  ],
+  "About you": [
+   "challenge/index.html"
+  ],
+  "How we'll reach you if your entry is shortlisted.": [
+   "challenge/index.html"
+  ],
+  "<span>Full name *</span><em data-err=\"full_name\"></em>": [
+   "challenge/index.html"
+  ],
+  "Alex Morgan": [
+   "challenge/index.html"
+  ],
+  "<span>Email *</span><em data-err=\"email\"></em>": [
+   "challenge/index.html"
+  ],
+  "Phone": [
+   "challenge/index.html"
+  ],
+  "Berlin": [
+   "challenge/index.html"
+  ],
+  "<span>Country of residence *</span><em data-err=\"country\"></em>": [
+   "challenge/index.html"
+  ],
+  "Germany": [
+   "challenge/index.html"
+  ],
+  "<span>Portfolio or LinkedIn</span><em data-err=\"portfolio_url\"></em>": [
+   "challenge/index.html"
+  ],
+  "https://": [
+   "challenge/index.html"
+  ],
+  "Instagram or TikTok handle": [
+   "challenge/index.html"
+  ],
+  "@yourhandle": [
+   "challenge/index.html"
+  ],
+  "Right now I'm…": [
+   "challenge/index.html"
+  ],
+  "Open to": [
+   "challenge/index.html"
+  ],
+  "CV": [
+   "challenge/index.html"
+  ],
+  "Additional documents": [
+   "challenge/index.html"
+  ],
+  "Your entry": [
+   "challenge/index.html"
+  ],
+  "Choose a track, then share your work and the thinking behind it.": [
+   "challenge/index.html"
+  ],
+  "<span>Track *</span><em data-err=\"track\"></em>": [
+   "challenge/index.html"
+  ],
+  "<span>Entry title *</span><em data-err=\"title\"></em>": [
+   "challenge/index.html"
+  ],
+  "e.g. “Finding my exam buddy in 24 hours”": [
+   "challenge/index.html"
+  ],
+  "Made for": [
+   "challenge/index.html"
+  ],
+  "<span>Your scenario *</span><em data-err=\"scenario_text\"></em>": [
+   "challenge/index.html"
+  ],
+  "Scene 1 — Library, 11pm. A student stares at a blank page…": [
+   "challenge/index.html"
+  ],
+  "Write it out scene by scene: what we see, what we hear, the caption. Or upload it as a PDF below.": [
+   "challenge/index.html"
+  ],
+  "Or upload your scenario": [
+   "challenge/index.html"
+  ],
+  "<span>Upload your design *</span><em data-err=\"post\"></em>": [
+   "challenge/index.html"
+  ],
+  "<span>Google Drive link to your video *</span><em data-err=\"drive_url\"></em>": [
+   "challenge/index.html"
+  ],
+  "https://drive.google.com/file/d/…": [
+   "challenge/index.html"
+  ],
+  "<b>i</b><span>In Google Drive, set sharing to “Anyone with the link can view” so our team can open it.</span>": [
+   "challenge/index.html"
+  ],
+  "<span>Your concept *</span><em data-err=\"concept_text\"></em>": [
+   "challenge/index.html"
+  ],
+  "What's the idea, who is it for, and why would a student stop scrolling?": [
+   "challenge/index.html"
+  ],
+  "0 characters": [
+   "challenge/index.html"
+  ],
+  "Or upload your concept": [
+   "challenge/index.html"
+  ],
+  "Send": [
+   "challenge/index.html"
+  ],
+  "Your questions for us": [
+   "challenge/index.html"
+  ],
+  "Anything you'd like to know about the challenge, the role or the team?": [
+   "challenge/index.html"
+  ],
+  "<span class=\"box\"></span><span class=\"t\"><span>This is my original work. MysMatch may contact me about this challenge and related roles, and may feature my entry on its channels with credit. I've read the <a href=\"/challenge/rules.html\" target=\"_blank\">rules &amp; privacy notes</a>. *</span><em data-err=\"consent\"></em></span>": [
+   "challenge/index.html"
+  ],
+  "Send entry →": [
+   "challenge/index.html"
+  ],
+  "Cancel editing": [
+   "challenge/index.html"
+  ],
+  "We reply after 15 December 2026.": [
+   "challenge/index.html"
+  ],
+  "Challenge rules": [
+   "challenge/index.html"
+  ],
+  "Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. Submissions close 15 December 2026.": [
+   "challenge/index.html"
+  ],
+  "Make our feed. Join the team. Submissions close 15 December 2026.": [
+   "challenge/index.html"
+  ],
+  "Creator Challenge rules &amp; privacy — MysMatch": [
+   "challenge/rules.html"
+  ],
+  "/ Creator Challenge · Season 01": [
+   "challenge/rules.html"
+  ],
+  "Rules &amp; privacy.": [
+   "challenge/rules.html"
+  ],
+  "The short version": [
+   "challenge/rules.html"
+  ],
+  "Send one entry per track (Scenario, Creative post, Content creator) by <strong>15 December 2026, 23:59 (Berlin time)</strong>.": [
+   "challenge/rules.html"
+  ],
+  "It must be your own original work.": [
+   "challenge/rules.html"
+  ],
+  "The strongest entries are invited to interview for a role in our social media team. There is no cash prize.": [
+   "challenge/rules.html"
+  ],
+  "We keep entries until <strong>15 June 2027</strong> and then delete them, together with all uploaded files.": [
+   "challenge/rules.html"
+  ],
+  "Entries": [
+   "challenge/rules.html"
+  ],
+  "One entry per person per track. You can edit or withdraw an entry until the deadline; after that entries are locked.": [
+   "challenge/rules.html"
+  ],
+  "Videos are sent as a Google Drive link that anyone with the link can view. Please keep it available until 15 June 2027.": [
+   "challenge/rules.html"
+  ],
+  "Don't include other people's personal data, music or footage you don't have the rights to, or anything offensive. We may remove such entries.": [
+   "challenge/rules.html"
+  ],
+  "Your work and your rights": [
+   "challenge/rules.html"
+  ],
+  "You keep the copyright of your entry. By entering you allow MysMatch to show your entry, credited to you, on its own channels (Instagram, TikTok, LinkedIn, website and app), free of charge and without time limit. If we want to use your work commercially in any other way, we'll ask you first.": [
+   "challenge/rules.html"
+  ],
+  "Judging": [
+   "challenge/rules.html"
+  ],
+  "The MysMatch team judges the idea, the craft, and how well an entry fits our audience and channels. You can follow your status (Submitted, In review, Shortlisted, Interview, Selected / Not selected) on the challenge page after signing in. Being shortlisted or interviewed doesn't guarantee a job offer. Our decisions are final.": [
+   "challenge/rules.html"
+  ],
+  "Privacy": [
+   "challenge/rules.html"
+  ],
+  "<strong>What we collect:</strong> your account email, the details you type in the form (name, email, phone, city, country, links, handle, availability), your entry and the files you upload (CV, documents, images, PDFs).": [
+   "challenge/rules.html"
+  ],
+  "<strong>Why:</strong> to run the challenge, judge entries, contact you about your entry and, if you're shortlisted, about a role. We don't sell your data or use it for advertising.": [
+   "challenge/rules.html"
+  ],
+  "<strong>Who sees it:</strong> only you and the MysMatch team members who judge the challenge. Files are stored privately with our hosting provider (Supabase) and opened through short-lived links.": [
+   "challenge/rules.html"
+  ],
+  "<strong>How long:</strong> until 15 June 2027. Withdrawing an entry or deleting your account removes it earlier, files included.": [
+   "challenge/rules.html"
+  ],
+  "<strong>Your rights:</strong> you can see and change your entry on the challenge page, withdraw it, or ask us to access, correct or delete your data at <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a>. More details are in our <a href=\"/privacy-policy/\">Privacy Policy</a>.": [
+   "challenge/rules.html"
+  ],
+  "Questions": [
+   "challenge/rules.html"
+  ],
+  "Write to <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a> or use the questions field in the form.": [
+   "challenge/rules.html"
+  ],
+  "Back to the challenge →": [
+   "challenge/rules.html",
+   "challenge/reset.html"
+  ],
+  "Rules, eligibility and privacy notes for the MysMatch Creator Challenge, Season 01.": [
+   "challenge/rules.html"
+  ],
+  "Set a new password — MysMatch": [
+   "challenge/reset.html"
+  ],
+  "Creator Challenge": [
+   "challenge/reset.html"
+  ],
+  "Set a new password.": [
+   "challenge/reset.html"
+  ],
+  "New password": [
+   "challenge/reset.html"
+  ],
+  "Repeat it": [
+   "challenge/reset.html"
+  ],
+  "Save password →": [
+   "challenge/reset.html"
+  ],
+  "MysMatch — Links": [
+   "links/index.html"
+  ],
+  "MysMatch logo": [
+   "links/index.html"
+  ],
+  "Do not study alone. Find study partners and classmates in your course.": [
+   "links/index.html"
+  ],
+  "<small>Download on the</small>App Store": [
+   "links/index.html"
+  ],
+  "<small>Get it on</small>Google Play": [
+   "links/index.html"
+  ],
+  "<small>Website</small>www.mysmatch.com": [
+   "links/index.html"
+  ],
+  "<small>Contact us</small>contact@mys-match.com": [
+   "links/index.html"
+  ],
+  "Download MysMatch on the App Store or Google Play, visit our website, or get in touch.": [
+   "links/index.html"
+  ],
+  "Get the app, visit our website, or say hi.": [
+   "links/index.html"
+  ],
+  "Organization Dashboard — MysMatch": [
+   "dashboard.html"
+  ],
+  "/ Organizations": [
+   "dashboard.html"
+  ],
+  "Organization <span class=\"grad-text\">dashboard.</span>": [
+   "dashboard.html"
   ]
  },
  "js": {
   "Europe/Berlin": [
    "index.html",
    "events/index.html",
-   "events/event.html"
+   "events/event.html",
+   "dashboard.html"
   ],
   "<svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"3\" y=\"4\" width=\"18\" height=\"18\" rx=\"2.5\"></rect><path d=\"M16 2v4M8 2v4M3 10h18\"></path></svg>": [
    "index.html"
@@ -2081,7 +2609,8 @@
    "events/index.html"
   ],
   "All": [
-   "events/index.html"
+   "events/index.html",
+   "dashboard.html"
   ],
   "<span class=\"ev-badge full\">Fully booked</span>": [
    "events/index.html"
@@ -2167,7 +2696,8 @@
   ],
   "Could not connect. Please try again later.": [
    "events/event.html",
-   "jobs/job.html"
+   "jobs/job.html",
+   "dashboard.html"
   ],
   "This event is not available.<br>It may be private or no longer published.": [
    "events/event.html"
@@ -2328,7 +2858,7 @@
   "<a class=\"btn\" id=\"qr-dl\" download=\"mysmatch-ticket.png\">Save QR code</a>": [
    "events/event.html"
   ],
-  "<a class=\"btn secondary\" href=\"/events\">Browse more events</a></div>": [
+  "<a class=\"btn secondary\" href=\"/events/\">Browse more events</a></div>": [
    "events/event.html"
   ],
   "Something went wrong. Please try again.": [
@@ -2388,7 +2918,7 @@
   "No job specified.": [
    "jobs/job.html"
   ],
-  "This job is no longer available.<br><a href=\"/jobs\">See all jobs</a>": [
+  "This job is no longer available.<br><a href=\"/jobs/\">See all jobs</a>": [
    "jobs/job.html"
   ],
   "Could not load this job.": [
@@ -2444,6 +2974,637 @@
   ],
   "MysMatch": [
    "jobs/job.html"
+  ],
+  "Studying": [
+   "challenge/index.html"
+  ],
+  "Graduated": [
+   "challenge/index.html"
+  ],
+  "Working": [
+   "challenge/index.html"
+  ],
+  "Freelancing": [
+   "challenge/index.html"
+  ],
+  "Full-time": [
+   "challenge/index.html"
+  ],
+  "Part-time": [
+   "challenge/index.html"
+  ],
+  "Freelance": [
+   "challenge/index.html"
+  ],
+  "Instagram": [
+   "challenge/index.html"
+  ],
+  "TikTok": [
+   "challenge/index.html"
+  ],
+  "LinkedIn": [
+   "challenge/index.html"
+  ],
+  "Season 01 · Closed": [
+   "challenge/index.html"
+  ],
+  "Create account →": [
+   "challenge/index.html"
+  ],
+  "Sign in →": [
+   "challenge/index.html"
+  ],
+  "Create your account to enter.": [
+   "challenge/index.html"
+  ],
+  "Welcome back.": [
+   "challenge/index.html"
+  ],
+  "Resend email in ": [
+   "challenge/index.html"
+  ],
+  "Resend email": [
+   "challenge/index.html"
+  ],
+  "Sent again to ": [
+   "challenge/index.html"
+  ],
+  "Please enter a valid email.": [
+   "challenge/index.html"
+  ],
+  "Password must be at least 6 characters.": [
+   "challenge/index.html",
+   "challenge/reset.html"
+  ],
+  "Almost there — we sent a confirmation link to ": [
+   "challenge/index.html"
+  ],
+  "Type your email above first, then tap “Forgot password?”.": [
+   "challenge/index.html"
+  ],
+  "If an account exists for ": [
+   "challenge/index.html"
+  ],
+  ", we sent a link to set a new password.": [
+   "challenge/index.html"
+  ],
+  "<span class=\"c-step ": [
+   "challenge/index.html"
+  ],
+  "<div class=\"c-entry\">": [
+   "challenge/index.html"
+  ],
+  "<div class=\"c-entry-top\"><div style=\"display:flex;flex-direction:column;gap:8px;min-width:0\"><span class=\"kicker\">": [
+   "challenge/index.html"
+  ],
+  "<div class=\"c-entry-act\"><button class=\"btn btn-light\" type=\"button\" data-edit=\"": [
+   "challenge/index.html"
+  ],
+  "Finish": [
+   "challenge/index.html"
+  ],
+  "Edit": [
+   "challenge/index.html"
+  ],
+  "<button class=\"btn btn-light\" type=\"button\" data-withdraw=\"": [
+   "challenge/index.html"
+  ],
+  "<div class=\"c-draft\">Not sent yet — something was missing or the upload stopped. Tap “Finish” to complete it.</div>": [
+   "challenge/index.html"
+  ],
+  "<div class=\"c-steps\">": [
+   "challenge/index.html"
+  ],
+  "Withdraw this entry? It and its files will be deleted. You can send a new one before the deadline.": [
+   "challenge/index.html"
+  ],
+  "<button type=\"button\" class=\"chip": [
+   "challenge/index.html"
+  ],
+  "<button type=\"button\" class=\"pick": [
+   "challenge/index.html"
+  ],
+  "<span class=\"row\"><span class=\"num\">": [
+   "challenge/index.html"
+  ],
+  "</span><span class=\"dot\"></span></span><span class=\"t\">": [
+   "challenge/index.html"
+  ],
+  "<span class=\"used\">Already entered — edit it above</span>": [
+   "challenge/index.html"
+  ],
+  "Save changes →": [
+   "challenge/index.html"
+  ],
+  "Send ": [
+   "challenge/index.html"
+  ],
+  "Send entry →": [
+   "challenge/index.html"
+  ],
+  "<input type=\"file\" accept=\"": [
+   "challenge/index.html"
+  ],
+  "<span class=\"up\">↑</span><span class=\"tx\"><b>": [
+   "challenge/index.html"
+  ],
+  "Drop images here or ": [
+   "challenge/index.html"
+  ],
+  "Drop file": [
+   "challenge/index.html"
+  ],
+  "</span><button type=\"button\" class=\"x\" aria-label=\"Remove\">×</button></div>": [
+   "challenge/index.html"
+  ],
+  "<span class=\"ext\">": [
+   "challenge/index.html"
+  ],
+  "</span><span class=\"nm\">": [
+   "challenge/index.html"
+  ],
+  "</span><span class=\"sz\">": [
+   "challenge/index.html"
+  ],
+  "</span><button type=\"button\" class=\"x\" aria-label=\"Remove\">×</button>": [
+   "challenge/index.html"
+  ],
+  "s were": [
+   "challenge/index.html"
+  ],
+  " not added (type, size or number of files). ": [
+   "challenge/index.html"
+  ],
+  "Required": [
+   "challenge/index.html"
+  ],
+  "Check your email": [
+   "challenge/index.html"
+  ],
+  "Pick a track": [
+   "challenge/index.html"
+  ],
+  "Write a few lines or upload a PDF": [
+   "challenge/index.html"
+  ],
+  "Add at least one image": [
+   "challenge/index.html"
+  ],
+  "Tell us a bit more": [
+   "challenge/index.html"
+  ],
+  "Write it or upload a PDF": [
+   "challenge/index.html"
+  ],
+  "Please confirm to send": [
+   "challenge/index.html"
+  ],
+  " field needs": [
+   "challenge/index.html"
+  ],
+  " fields need": [
+   "challenge/index.html"
+  ],
+  " your attention": [
+   "challenge/index.html"
+  ],
+  "We reply after 15 December 2026.": [
+   "challenge/index.html"
+  ],
+  "Paste a Google Drive link": [
+   "challenge/index.html"
+  ],
+  "Sending…": [
+   "challenge/index.html"
+  ],
+  "Uploading ": [
+   "challenge/index.html"
+  ],
+  "Submissions are closed.": [
+   "challenge/index.html"
+  ],
+  "Entry received · ": [
+   "challenge/index.html"
+  ],
+  "[challenge] save failed": [
+   "challenge/index.html"
+  ],
+  " Please check your files and add any that are missing.": [
+   "challenge/index.html"
+  ],
+  "This link is incomplete. Please request a new one from the challenge page (“Forgot password?”).": [
+   "challenge/reset.html"
+  ],
+  "This link has expired or was already used. Please request a new one from the challenge page.": [
+   "challenge/reset.html"
+  ],
+  "The two passwords don’t match.": [
+   "challenge/reset.html"
+  ],
+  "This password appeared in a data leak. Please choose a different one.": [
+   "challenge/reset.html"
+  ],
+  "Your password has been updated. You are signed in.": [
+   "challenge/reset.html"
+  ],
+  "<div class=\"login-box\">": [
+   "dashboard.html"
+  ],
+  "<h2>Organization sign in</h2>": [
+   "dashboard.html"
+  ],
+  "<p class=\"sub\">Sign in with the same email & password you use in the MysMatch app to see your events and attendees — and, for organizations, your perks and followers.</p>": [
+   "dashboard.html"
+  ],
+  "<form id=\"login-form\">": [
+   "dashboard.html"
+  ],
+  "<label for=\"le\">Email</label><input id=\"le\" type=\"email\" autocomplete=\"email\" required>": [
+   "dashboard.html"
+  ],
+  "<label for=\"lp\">Password</label><input id=\"lp\" type=\"password\" autocomplete=\"current-password\" required>": [
+   "dashboard.html"
+  ],
+  "<div id=\"login-err\" class=\"err\" hidden></div>": [
+   "dashboard.html"
+  ],
+  "<button class=\"btn btn-dark\" id=\"login-btn\" type=\"submit\">Sign in</button>": [
+   "dashboard.html"
+  ],
+  "<p class=\"hint\">Signed up with Apple/Google or don\\'t have a password? Set one from <strong>Profile → Settings</strong> in the app, then sign in here.</p>": [
+   "dashboard.html"
+  ],
+  "Signing in…": [
+   "dashboard.html"
+  ],
+  "Sign in failed.": [
+   "dashboard.html"
+  ],
+  "Sign in": [
+   "dashboard.html"
+  ],
+  "<span class=\"who\">": [
+   "dashboard.html"
+  ],
+  "</span><button class=\"signout\" id=\"signout\">Sign out</button>": [
+   "dashboard.html"
+  ],
+  "<div class=\"center-state\">Loading…</div>": [
+   "dashboard.html"
+  ],
+  "<div class=\"ev-list\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"ev-row\" data-id=\"": [
+   "dashboard.html"
+  ],
+  "<div><div class=\"t\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"m\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"badges\">": [
+   "dashboard.html"
+  ],
+  "<span class=\"pill web\">Web registration</span>": [
+   "dashboard.html"
+  ],
+  "<span class=\"pill priv\">Private</span>": [
+   "dashboard.html"
+  ],
+  "<span class=\"pill count\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"center-state\">Loading your events…</div>": [
+   "dashboard.html"
+  ],
+  "<div class=\"list-head\"><div class=\"kicker\">/ Your events</div><h2>Your events</h2><p>View registrations and export attendee lists. To create or edit events, use the app.</p></div>": [
+   "dashboard.html"
+  ],
+  "<div class=\"empty\">You haven\\'t created any events yet. Create one in the MysMatch app and it\\'ll appear here.</div>": [
+   "dashboard.html"
+  ],
+  "January": [
+   "dashboard.html"
+  ],
+  "February": [
+   "dashboard.html"
+  ],
+  "March": [
+   "dashboard.html"
+  ],
+  "April": [
+   "dashboard.html"
+  ],
+  "May": [
+   "dashboard.html"
+  ],
+  "June": [
+   "dashboard.html"
+  ],
+  "July": [
+   "dashboard.html"
+  ],
+  "August": [
+   "dashboard.html"
+  ],
+  "September": [
+   "dashboard.html"
+  ],
+  "October": [
+   "dashboard.html"
+  ],
+  "November": [
+   "dashboard.html"
+  ],
+  "December": [
+   "dashboard.html"
+  ],
+  "<div class=\"chart\" id=\"": [
+   "dashboard.html"
+  ],
+  "<div class=\"chart-top\"><div><div class=\"kicker\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"chart-num\">": [
+   "dashboard.html"
+  ],
+  "<span class=\"chg": [
+   "dashboard.html"
+  ],
+  "<div class=\"chart-sub\">vs. previous ": [
+   "dashboard.html"
+  ],
+  "<div class=\"seg\"><button type=\"button\" data-r=\"7\"": [
+   "dashboard.html"
+  ],
+  ">7D</button><button type=\"button\" data-r=\"30\"": [
+   "dashboard.html"
+  ],
+  "<div class=\"bars\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"bar-col\" title=\"": [
+   "dashboard.html"
+  ],
+  "<span class=\"peak\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"bar\" style=\"height:": [
+   "dashboard.html"
+  ],
+  "<div class=\"axis\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"chart-foot\">Day of month · ": [
+   "dashboard.html"
+  ],
+  "<div class=\"center-state\">Loading your organization…</div>": [
+   "dashboard.html"
+  ],
+  "<div class=\"org-head\">": [
+   "dashboard.html"
+  ],
+  "<img class=\"org-logo\" src=\"": [
+   "dashboard.html"
+  ],
+  "<div class=\"org-logo\">": [
+   "dashboard.html"
+  ],
+  "<div><div class=\"kicker\">/ Your organization</div><h2>": [
+   "dashboard.html"
+  ],
+  " <span class=\"ver\" title=\"Verified organization\">✓</span>": [
+   "dashboard.html"
+  ],
+  "<div class=\"stats\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"stat\"><b>": [
+   "dashboard.html"
+  ],
+  "<div class=\"charts\" id=\"charts\"></div>": [
+   "dashboard.html"
+  ],
+  "<div class=\"tabs big\" id=\"org-tabs\"><button class=\"tab\" type=\"button\" data-t=\"events\">Events <span>": [
+   "dashboard.html"
+  ],
+  "</span></button><button class=\"tab\" type=\"button\" data-t=\"perks\">Perks <span>": [
+   "dashboard.html"
+  ],
+  "<div id=\"org-body\"></div>": [
+   "dashboard.html"
+  ],
+  "New followers": [
+   "dashboard.html"
+  ],
+  "Perks redeemed": [
+   "dashboard.html"
+  ],
+  "<p class=\"tab-note\">Tap an event to see registrations, check-ins and exports. To create or edit events, use the app.</p>": [
+   "dashboard.html"
+  ],
+  "<div class=\"empty\">No events yet. Create one in the MysMatch app and it\\'ll appear here.</div>": [
+   "dashboard.html"
+  ],
+  "<p class=\"tab-note\">Redemption counts and times only — the website never shows who redeemed a perk.</p>": [
+   "dashboard.html"
+  ],
+  "<span class=\"pill priv\">Retired</span>": [
+   "dashboard.html"
+  ],
+  "<span class=\"pill priv\">Paused</span>": [
+   "dashboard.html"
+  ],
+  "<span class=\"pill web\">Live</span>": [
+   "dashboard.html"
+  ],
+  "<div class=\"ev-row perk-row\" data-id=\"": [
+   "dashboard.html"
+  ],
+  "<div class=\"perk-l\">": [
+   "dashboard.html"
+  ],
+  "<img class=\"perk-img\" src=\"": [
+   "dashboard.html"
+  ],
+  "<div class=\"perk-img\"></div>": [
+   "dashboard.html"
+  ],
+  "</div><div class=\"m\">": [
+   "dashboard.html"
+  ],
+  "Open perk (no QR)": [
+   "dashboard.html"
+  ],
+  " per student": [
+   "dashboard.html"
+  ],
+  "<div class=\"empty\">No perks yet. Create one in the MysMatch app under Manage perks.</div>": [
+   "dashboard.html"
+  ],
+  "<div class=\"center-state\">Loading perk…</div>": [
+   "dashboard.html"
+  ],
+  "Redeemed at": [
+   "dashboard.html"
+  ],
+  "<button class=\"back\" id=\"back\" type=\"button\">← Back to perks</button>": [
+   "dashboard.html"
+  ],
+  "<div class=\"att-head\"><div><h2>": [
+   "dashboard.html"
+  ],
+  "<div class=\"cnt\">": [
+   "dashboard.html"
+  ],
+  " · claimed by ": [
+   "dashboard.html"
+  ],
+  "<div class=\"toolbar\"><button class=\"btn-sm\" id=\"csv\" type=\"button\">Export CSV</button><button class=\"btn-sm primary\" id=\"xlsx\" type=\"button\">Export Excel</button></div>": [
+   "dashboard.html"
+  ],
+  "<div class=\"table-wrap\"><table class=\"days\"><thead><tr><th>Day</th><th>Redeemed</th><th>Times</th></tr></thead><tbody>": [
+   "dashboard.html"
+  ],
+  "</td><td class=\"ans\">": [
+   "dashboard.html"
+  ],
+  "<div class=\"empty\">": [
+   "dashboard.html"
+  ],
+  "Open perks have no QR scans, so there are no redemptions to list.": [
+   "dashboard.html"
+  ],
+  "No redemptions yet.": [
+   "dashboard.html"
+  ],
+  "Redemptions": [
+   "dashboard.html"
+  ],
+  "<div class=\"center-state\">Loading attendees…</div>": [
+   "dashboard.html"
+  ],
+  "<button class=\"back\" id=\"back\" type=\"button\">← Back to events</button>": [
+   "dashboard.html"
+  ],
+  "<div id=\"att-body\"></div>": [
+   "dashboard.html"
+  ],
+  " checked in": [
+   "dashboard.html"
+  ],
+  "<div class=\"tabs\" role=\"tablist\">": [
+   "dashboard.html"
+  ],
+  "Checked in": [
+   "dashboard.html"
+  ],
+  "Not checked in": [
+   "dashboard.html"
+  ],
+  "<button class=\"tab": [
+   "dashboard.html"
+  ],
+  "<div class=\"empty\">No registrations yet.</div>": [
+   "dashboard.html"
+  ],
+  "Nobody is checked in yet.": [
+   "dashboard.html"
+  ],
+  "Everyone is checked in.": [
+   "dashboard.html"
+  ],
+  "<td class=\"ans\">": [
+   "dashboard.html"
+  ],
+  "<button class=\"ci on\" type=\"button\" data-i=\"": [
+   "dashboard.html"
+  ],
+  "\" title=\"Click to undo\">✓ ": [
+   "dashboard.html"
+  ],
+  "<button class=\"ci\" type=\"button\" data-i=\"": [
+   "dashboard.html"
+  ],
+  "\">Mark arrived</button>": [
+   "dashboard.html"
+  ],
+  "><td class=\"num\">": [
+   "dashboard.html"
+  ],
+  "<td><span class=\"src ": [
+   "dashboard.html"
+  ],
+  "Web": [
+   "dashboard.html"
+  ],
+  "App": [
+   "dashboard.html"
+  ],
+  "<button class=\"doc-view\" data-doc=\"": [
+   "dashboard.html"
+  ],
+  "<div class=\"table-wrap\"><table><thead><tr><th>#</th><th>Checked in</th><th>Name</th><th>Email</th><th>Gender</th><th>People</th><th>Source</th><th>Registered</th><th>Doc</th>": [
+   "dashboard.html"
+  ],
+  "Attendees": [
+   "dashboard.html"
+  ],
+  "Undo check-in for ": [
+   "dashboard.html"
+  ],
+  "this attendee": [
+   "dashboard.html"
+  ],
+  "Saving…": [
+   "dashboard.html"
+  ],
+  "Could not save the check-in. Please try again.": [
+   "dashboard.html"
+  ],
+  "Opening…": [
+   "dashboard.html"
+  ],
+  "View": [
+   "dashboard.html"
+  ],
+  "Could not open document.": [
+   "dashboard.html"
+  ],
+  "Name": [
+   "dashboard.html"
+  ],
+  "Email": [
+   "dashboard.html"
+  ],
+  "Gender": [
+   "dashboard.html"
+  ],
+  "People": [
+   "dashboard.html"
+  ],
+  "Source": [
+   "dashboard.html"
+  ],
+  "Registered at": [
+   "dashboard.html"
+  ],
+  "Checked in at": [
+   "dashboard.html"
+  ],
+  "xlsx load failed": [
+   "dashboard.html"
+  ],
+  "Preparing…": [
+   "dashboard.html"
+  ],
+  "Sheet1": [
+   "dashboard.html"
+  ],
+  "Could not create the Excel file. Please try again, or use Export CSV.": [
+   "dashboard.html"
   ]
  }
 }

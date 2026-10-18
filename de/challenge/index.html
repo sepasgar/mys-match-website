@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Creator Challenge — MysMatch</title>
+<meta content="Schreib ein Szenario, gestalte einen Post oder dreh ein Video für MysMatch – als wärst du schon unser Social-Media-Manager. Einsendeschluss ist der 15. Dezember 2026." name="description"/>
+<meta content="#0F1020" name="theme-color"/>
+<meta content="Creator Challenge — MysMatch" property="og:title"/>
+<meta content="Gestalte unseren Feed. Komm ins Team. Einsendeschluss ist der 15. Dezember 2026." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://www.mysmatch.com/de/challenge/" property="og:url"/>
+<meta content="https://www.mysmatch.com/og-image.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<!-- WHY (Oct 2026): email + Google links always return to the English page
+     (Supabase Redirect URLs / auth-callback only know /challenge/). ?lang= or
+     the language remembered by js/challenge.js sends people on to the
+     /de/ or /fa/ copy; search + #hash are kept (the login token is in it). -->
+<script>
+(function () {
+  if (document.documentElement.lang !== 'en') return;
+  var m = /[?&]lang=(de|fa)(&|$)/.exec(location.search), l = m ? m[1] : null;
+  if (!l && /[?&](welcome=1|token_hash=)/.test(location.search)) { try { l = localStorage.getItem('mmc-lang'); } catch (e) {} }
+  if (l === 'de' || l === 'fa') location.replace('/' + l + location.pathname + location.search + location.hash);
+})();
+</script>
+<link href="/logo-512.png" rel="icon" type="image/png"/>
+<!-- WHY no noindex any more: challenge launched 2026-10-18, search engines may list it. -->
+<link href="https://www.mysmatch.com/de/challenge/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/css/site.css" rel="stylesheet"/>
+<!-- Creator / Ideation Challenge (Oct 2026), ported from the design export
+     "MysMatch Ideation Challenge.html". The form is real: entrants sign in,
+     entries + files go to Supabase (js/challenge.js), status follows here. -->
+<style>
+  /* gold "Ideation Challenge" pill from the design */
+  .nav-links a.gold{ padding:8px 16px; border-radius:9999px; background:linear-gradient(135deg,#FBE3A1 0%,#F2C75C 50%,#D9A63A 100%); color:#2A1F05; font-weight:600; box-shadow:0 4px 16px rgba(242,199,92,0.28),inset 0 1px 0 rgba(255,255,255,0.5); }
+  .nav-links a.gold::before{ content:""; width:6px; height:6px; border-radius:50%; background:#2A1F05; }
+  .nav-links a.gold:hover{ color:#2A1F05; }
+
+  /* hero */
+  .c-hero{ min-height:100vh; }
+  .c-hero::before{ left:auto; right:-12%; top:-25%; width:80vw; background:radial-gradient(closest-side,rgba(123,92,255,0.18),rgba(233,75,154,0.07) 55%,rgba(15,16,32,0) 75%); }
+  .c-hero h1{ font-size:clamp(60px,9.4vw,196px); line-height:0.88; letter-spacing:-0.065em; max-width:none; }
+  .c-kick{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .c-pill{ padding:7px 14px; border-radius:9999px; border:1px solid rgba(205,184,255,0.35); color:#CDB8FF; white-space:nowrap; }
+  .c-hero-l{ display:flex; flex-direction:column; gap:clamp(28px,2.6vw,40px); max-width:600px; }
+  .c-hero-l p{ font-size:clamp(19px,1.6vw,28px); line-height:1.45; color:var(--on-dark); letter-spacing:-0.01em; }
+  .c-btns{ display:flex; gap:14px; flex-wrap:wrap; }
+  .btn-ghost{ background:transparent; color:#fff; border:1px solid rgba(255,255,255,0.2); }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.08); color:#fff; }
+  .c-count-w{ display:flex; flex-direction:column; gap:18px; }
+  .c-count{ display:flex; gap:clamp(8px,0.8vw,14px); }
+  .c-unit{ display:flex; flex-direction:column; gap:10px; min-width:clamp(70px,7vw,128px); padding:clamp(14px,1.4vw,24px); border-radius:28px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); }
+  .c-unit b{ font-size:clamp(36px,4.2vw,80px); line-height:0.85; font-weight:700; letter-spacing:-0.05em; font-variant-numeric:tabular-nums; }
+  .c-unit span{ font-family:var(--mono); font-size:clamp(11px,0.8vw,13px); letter-spacing:0.1em; text-transform:uppercase; color:var(--faint); }
+
+  /* brief */
+  .c-sec{ display:flex; flex-direction:column; gap:clamp(56px,6vw,120px); }
+  .c-head{ display:flex; flex-direction:column; gap:clamp(20px,2vw,32px); }
+  .c-headrow{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .c-headrow p{ max-width:30ch; font-size:clamp(17px,1.3vw,22px); line-height:1.5; color:var(--ink-2); }
+  .sheet-dark .c-headrow p{ color:#B4B5C8; }
+  .c-brief h2{ font-size:clamp(44px,6.4vw,132px); line-height:0.94; letter-spacing:-0.06em; font-weight:700; max-width:15ch; }
+  .c-cols{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr)); border-top:1px solid #E2DEF0; }
+  .c-cols > div{ padding:clamp(28px,2.6vw,44px) clamp(0px,2vw,40px) 0 0; display:flex; flex-direction:column; gap:14px; }
+  .c-cols .kicker{ color:var(--violet); }
+  .c-cols p{ font-size:clamp(20px,1.7vw,30px); line-height:1.3; letter-spacing:-0.025em; font-weight:500; }
+
+  /* tracks */
+  .c-tracks{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .c-track{ border-radius:40px; padding:clamp(28px,3vw,56px); min-height:clamp(480px,38vw,640px); display:flex; flex-direction:column; justify-content:space-between; gap:40px; }
+  .c-track .num{ font-size:clamp(96px,8.4vw,168px); line-height:0.78; font-weight:700; letter-spacing:-0.07em; }
+  .c-track .tag{ font-family:var(--mono); font-size:clamp(11px,0.8vw,13px); letter-spacing:0.1em; text-transform:uppercase; padding:8px 14px; border-radius:9999px; border:1px solid; white-space:nowrap; }
+  .c-track .top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+  .c-track .body{ display:flex; flex-direction:column; gap:clamp(20px,1.8vw,28px); }
+  .c-track h3{ font-size:clamp(34px,3.2vw,60px); line-height:0.96; letter-spacing:-0.05em; font-weight:700; }
+  .c-track p{ font-size:clamp(17px,1.25vw,21px); line-height:1.55; }
+  .c-track .you{ display:flex; flex-direction:column; gap:6px; padding-top:20px; border-top:1px solid; }
+  .c-track .you span{ font-family:var(--mono); font-size:clamp(11px,0.8vw,13px); letter-spacing:0.1em; text-transform:uppercase; }
+  .c-track .you b{ font-size:clamp(17px,1.25vw,21px); font-weight:600; letter-spacing:-0.02em; }
+  .t1{ background:#17182C; color:#fff; border:1px solid rgba(255,255,255,0.12); } .t1 .num{ color:#2E2F52; }
+  .t2{ background:#1C1D36; color:#fff; border:1px solid rgba(255,255,255,0.12); } .t2 .num{ color:#3A3B66; }
+  .t1 p,.t2 p,.t1 .you span,.t2 .you span{ color:#B4B5C8; } .t1 .tag,.t2 .tag,.t1 .you,.t2 .you{ border-color:rgba(255,255,255,0.12); }
+  .t3{ background:linear-gradient(135deg,#ECEEFF 0%,#F4ECFF 50%,#FCEBF6 100%); color:var(--ink); border:1px solid #DCD3F2; } .t3 .num{ color:#C9BEF5; }
+  .t3 p,.t3 .you span{ color:var(--ink-2); } .t3 .tag,.t3 .you{ border-color:#DCD3F2; }
+
+  /* inspiration */
+  .c-insp{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr)); gap:clamp(56px,6vw,120px); align-items:start; }
+  .c-insp-l{ display:flex; flex-direction:column; gap:clamp(28px,2.6vw,44px); }
+  .c-insp-l .kicker{ color:var(--ink-2); }
+  .c-insp-l p{ max-width:32ch; font-size:clamp(18px,1.4vw,24px); line-height:1.5; color:var(--ink-2); }
+  .c-social{ display:flex; flex-direction:column; gap:clamp(12px,1.2vw,18px); }
+  .c-social a{ display:flex; justify-content:space-between; align-items:center; gap:24px; padding:clamp(24px,2.4vw,44px); border-radius:32px; background:#fff; color:var(--ink); transition:transform .5s cubic-bezier(.2,.7,.2,1); }
+  .c-social a:hover{ transform:translateX(8px); color:var(--ink); }
+  .c-social a > span:first-child{ display:flex; flex-direction:column; gap:8px; min-width:0; }
+  .c-social small{ font-family:var(--mono); font-size:clamp(12px,0.85vw,14px); letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); }
+  .c-social b{ font-size:clamp(22px,2.4vw,44px); font-weight:600; letter-spacing:-0.045em; overflow-wrap:anywhere; }
+  .c-social i{ flex-shrink:0; width:clamp(48px,4vw,68px); height:clamp(48px,4vw,68px); border-radius:50%; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; font-style:normal; }
+
+  /* submit section */
+  .c-enter h2{ font-size:clamp(44px,6.4vw,132px); line-height:0.92; letter-spacing:-0.06em; font-weight:700; }
+  .c-card-dark{ border-radius:48px; background:linear-gradient(160deg,#12132C 0%,#0F1020 60%,#181026 100%); color:#fff; padding:clamp(32px,6vw,120px); display:flex; flex-direction:column; gap:clamp(24px,2.6vw,44px); }
+  .c-card-dark h3{ font-size:clamp(40px,6vw,120px); line-height:0.92; letter-spacing:-0.06em; font-weight:700; }
+  .c-card-dark p{ max-width:44ch; font-size:clamp(18px,1.4vw,24px); line-height:1.5; color:var(--on-dark); }
+  .c-card-dark .kicker{ color:#CDB8FF; }
+
+  /* auth card */
+  .c-auth{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:clamp(28px,4vw,80px); align-items:start; border-top:1px solid #E2DEF0; padding-top:clamp(40px,4vw,72px); }
+  .c-auth-l{ display:flex; flex-direction:column; gap:16px; }
+  .c-auth-l h3{ font-size:clamp(28px,2.6vw,48px); letter-spacing:-0.045em; font-weight:700; line-height:1.02; }
+  .c-auth-l p{ font-size:clamp(16px,1.15vw,19px); line-height:1.55; color:var(--ink-2); }
+  .c-tabs{ display:flex; gap:8px; margin-bottom:6px; }
+  .c-auth-form{ display:flex; flex-direction:column; gap:18px; }
+  .c-or{ display:flex; align-items:center; gap:14px; color:var(--muted); font-size:14px; }
+  .c-or::before,.c-or::after{ content:""; flex:1; height:1px; background:#E2DEF0; }
+  .c-msg{ font-size:16px; line-height:1.5; padding:14px 18px; border-radius:16px; }
+  .c-msg.err{ background:#FDECF2; color:#B4214F; }
+  .c-msg.ok{ background:#E8F8EF; color:#1C7A4A; }
+  .c-link{ background:none; border:none; padding:0; font:inherit; color:var(--violet); cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+
+  /* signed-in bar + entries */
+  .c-me{ display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; padding:18px 22px; border-radius:20px; background:#F4F1FD; font-size:16px; color:var(--ink-2); }
+  .c-me b{ color:var(--ink); }
+  .c-entries{ display:flex; flex-direction:column; gap:14px; }
+  .c-entries > .kicker{ margin-bottom:4px; }
+  .c-entry{ display:flex; flex-direction:column; gap:16px; padding:clamp(20px,2vw,32px); border-radius:28px; background:#fff; border:1px solid #E2DEF0; }
+  .c-entry-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; }
+  .c-entry-top b{ font-size:clamp(20px,1.6vw,26px); letter-spacing:-0.03em; }
+  .c-entry-top .kicker{ color:var(--violet); }
+  .c-entry-act{ display:flex; gap:10px; flex-wrap:wrap; }
+  .c-entry-act .btn{ padding:12px 22px; font-size:16px; }
+  .c-steps{ display:flex; gap:6px; flex-wrap:wrap; }
+  .c-step{ font-size:14px; padding:8px 14px; border-radius:9999px; background:#F4F1FD; color:var(--muted); white-space:nowrap; }
+  .c-step.done{ background:#E9E3FF; color:#4B3BB0; }
+  .c-step.now{ background:var(--ink); color:#fff; }
+  .c-step.no{ background:#FDECF2; color:#B4214F; }
+  /* "Track your progress" box on the dark confirmation card (Oct 2026). */
+  .c-track-note{ display:flex; flex-direction:column; gap:12px; padding:20px 22px; border-radius:24px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); }
+  .c-track-note b{ font-size:17px; }
+  .c-track-note p{ font-size:16px !important; }
+  .c-track-note a{ color:#CDB8FF; }
+  .c-track-note .c-step{ background:rgba(255,255,255,0.1); color:rgba(255,255,255,0.7); }
+  .c-track-note .c-step.now{ background:#fff; color:var(--ink); }
+  .c-draft{ font-size:15px; padding:12px 16px; border-radius:14px; background:#FFF6DD; color:#7A5600; }
+
+  /* form */
+  .c-form{ display:flex; flex-direction:column; border-top:1px solid #E2DEF0; }
+  .fs{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,2fr); gap:clamp(28px,4vw,80px); padding:clamp(40px,4vw,72px) 0; border-bottom:1px solid #E2DEF0; }
+  .fs:last-child{ border-bottom:none; padding-bottom:0; }
+  .fs-l{ display:flex; flex-direction:column; gap:12px; max-width:380px; }
+  .fs-l .n{ font-size:clamp(56px,5vw,96px); line-height:0.8; font-weight:700; letter-spacing:-0.07em; color:#DCD3F2; }
+  .fs-l h3{ font-size:clamp(28px,2.6vw,48px); letter-spacing:-0.045em; font-weight:700; line-height:1; }
+  .fs-l p{ font-size:clamp(16px,1.15vw,19px); line-height:1.55; color:var(--ink-2); }
+  .fs-r{ display:flex; flex-direction:column; gap:clamp(22px,2vw,32px); min-width:0; }
+  .grid2{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:clamp(18px,1.6vw,28px); }
+  .fld{ display:flex; flex-direction:column; gap:10px; min-width:0; }
+  .lbl{ display:flex; justify-content:space-between; gap:12px; font-size:clamp(15px,1.05vw,17px); font-weight:600; }
+  .lbl em{ font-style:normal; color:#D6336C; font-weight:500; text-align:right; }
+  .inp{ width:100%; font-family:inherit; font-size:clamp(17px,1.2vw,20px); color:var(--ink); background:#fff; border:1.5px solid #E2DEF0; border-radius:20px; padding:18px 20px; outline:none; transition:border-color .2s, box-shadow .2s; }
+  textarea.inp{ resize:vertical; line-height:1.55; }
+  .inp:focus{ border-color:var(--violet); box-shadow:0 0 0 4px rgba(123,92,255,0.14); }
+  .inp.bad{ border-color:#D6336C; }
+  .inp::placeholder{ color:#A3A4B8; }
+  .hint{ font-size:15px; color:var(--muted); }
+  .chips{ display:flex; gap:8px; flex-wrap:wrap; }
+  .chip{ cursor:pointer; font-family:inherit; font-size:clamp(15px,1.05vw,17px); font-weight:500; padding:12px 20px; border-radius:9999px; white-space:nowrap; border:1.5px solid #E2DEF0; background:#fff; color:var(--ink-2); transition:background .2s; }
+  .chip.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .picks{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr)); gap:12px; }
+  .pick{ cursor:pointer; text-align:left; font-family:inherit; display:flex; flex-direction:column; gap:14px; padding:clamp(18px,1.6vw,28px); border-radius:24px; border:1.5px solid #E2DEF0; background:#fff; color:var(--ink); transition:background .25s, border-color .25s; }
+  .pick .row{ display:flex; justify-content:space-between; align-items:center; width:100%; }
+  .pick .num{ font-family:var(--mono); font-size:13px; letter-spacing:0.1em; opacity:0.7; }
+  .pick .dot{ width:22px; height:22px; border-radius:50%; border:1.5px solid #C9C9D9; }
+  .pick .t{ font-size:clamp(20px,1.6vw,28px); font-weight:600; letter-spacing:-0.035em; line-height:1.05; }
+  .pick.on{ background:var(--ink); color:#fff; border-color:var(--ink); }
+  .pick.on .dot{ background:#CDB8FF; border-color:#CDB8FF; }
+  .pick.bad{ border-color:#D6336C; }
+  .pick[disabled]{ cursor:not-allowed; opacity:0.45; }
+  .pick .used{ font-size:13px; color:var(--muted); }
+  .dz{ cursor:pointer; display:flex; align-items:center; gap:18px; padding:clamp(16px,1.4vw,24px) clamp(18px,1.6vw,26px); border-radius:22px; border:2px dashed #CFC6EA; background:#fff; transition:background .2s, border-color .2s; }
+  .dz.big{ flex-direction:column; justify-content:center; text-align:center; min-height:clamp(200px,16vw,280px); padding:32px; border-radius:28px; }
+  .dz.over{ border-color:var(--violet); background:#F1ECFF; }
+  .dz.bad{ border-color:#D6336C; }
+  .dz input{ display:none; }
+  .dz .up{ flex-shrink:0; width:48px; height:48px; border-radius:50%; background:var(--ink); color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px; }
+  .dz .tx{ display:flex; flex-direction:column; gap:4px; min-width:0; }
+  .dz .tx b{ font-size:clamp(17px,1.25vw,21px); font-weight:600; letter-spacing:-0.02em; }
+  .dz .tx b span{ color:var(--violet); }
+  .dz .tx small{ font-size:14px; color:var(--muted); }
+  .doc{ display:flex; align-items:center; gap:14px; padding:12px 12px 12px 16px; border-radius:16px; background:#F4F1FD; }
+  .doc .ext{ flex-shrink:0; font-family:var(--mono); font-size:12px; font-weight:500; letter-spacing:0.06em; padding:6px 9px; border-radius:8px; background:#fff; color:#4B3BB0; }
+  .doc .nm{ flex:1; min-width:0; font-size:16px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .doc .sz{ flex-shrink:0; font-size:14px; color:var(--muted); }
+  .x{ cursor:pointer; flex-shrink:0; width:32px; height:32px; border-radius:50%; border:none; background:#fff; color:var(--ink); font-size:16px; line-height:1; }
+  .thumbs{ display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:12px; }
+  .thumb{ position:relative; border-radius:20px; overflow:hidden; background:#F1ECFF; aspect-ratio:4/5; background-size:cover; background-position:center; }
+  .thumb div{ position:absolute; left:8px; right:8px; bottom:8px; display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 8px 8px 12px; border-radius:14px; background:rgba(15,16,32,0.78); color:#fff; }
+  .thumb span{ font-size:13px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .thumb .x{ width:26px; height:26px; font-size:14px; }
+  .info{ display:flex; gap:10px; align-items:flex-start; padding:16px 18px; border-radius:16px; background:#F1ECFF; color:#4B3BB0; font-size:15px; line-height:1.5; }
+  .check{ cursor:pointer; text-align:left; font-family:inherit; display:flex; gap:16px; align-items:flex-start; padding:0; border:none; background:none; color:var(--ink); }
+  .check .box{ flex-shrink:0; width:28px; height:28px; border-radius:9px; border:1.5px solid #C9C9D9; background:#fff; color:#fff; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; transition:background .2s; }
+  .check.on .box{ background:var(--violet); border-color:var(--violet); }
+  .check.bad .box{ border-color:#D6336C; }
+  .check .t{ display:flex; flex-direction:column; gap:6px; font-size:clamp(16px,1.15vw,19px); line-height:1.5; color:var(--ink-2); }
+  .check .t em{ font-style:normal; color:#D6336C; font-weight:500; }
+  .send-row{ display:flex; align-items:center; gap:24px; flex-wrap:wrap; }
+  .send{ font-size:clamp(18px,1.4vw,24px); padding:clamp(20px,1.8vw,30px) clamp(36px,3.4vw,64px); box-shadow:0 20px 50px -18px rgba(15,16,32,0.5); }
+  .send[disabled]{ opacity:0.6; cursor:progress; transform:none; }
+  .summary{ font-size:clamp(15px,1.05vw,17px); color:var(--muted); }
+  .summary.bad{ color:#D6336C; }
+
+  @media (max-width:900px){
+    .fs, .c-auth{ grid-template-columns:minmax(0,1fr); }
+  }
+  @media (max-width:640px){
+    .c-unit{ min-width:0; flex:1; border-radius:20px; }
+    .c-card-dark{ border-radius:32px; }
+    .c-track{ border-radius:32px; min-height:0; }
+  }
+</style>
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://www.mysmatch.com/challenge/">
+<link rel="alternate" hreflang="de" href="https://www.mysmatch.com/de/challenge/">
+<link rel="alternate" hreflang="fa" href="https://www.mysmatch.com/fa/challenge/">
+<link rel="alternate" hreflang="x-default" href="https://www.mysmatch.com/challenge/">
+<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style><script>document.addEventListener("DOMContentLoaded",function(){var q=location.search+location.hash;if(q)document.querySelectorAll(".lang-switch a").forEach(function(a){a.setAttribute("href",a.getAttribute("href")+q);});});</script>
+<!-- /i18n:head -->
+</head>
+<body>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+<div class="nav-in">
+<a class="brand" href="/de/"><img alt="" height="36" src="/logo-512.png" width="36"/><span>MysMatch</span></a>
+<nav class="nav-links" id="nav-links">
+<a href="/de/">Start</a>
+<a href="/de/events/">Events</a>
+<a href="/de/jobs/">Jobs</a>
+<a aria-current="page" class="gold" href="/de/challenge/">Ideation Challenge</a>
+<!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/challenge/" hreflang="en" lang="en">EN</a><a href="/de/challenge/" hreflang="de" lang="de" aria-current="true">DE</a><a href="/fa/challenge/" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --></nav>
+<div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/challenge/" hreflang="en" lang="en">EN</a><a href="/de/challenge/" hreflang="de" lang="de" aria-current="true">DE</a><a href="/fa/challenge/" hreflang="fa" lang="fa">فا</a></div><!-- /i18n:switch --> <a class="nav-cta" href="#enter">Beitrag einreichen</a>
+<button aria-controls="nav-links" aria-expanded="false" aria-label="Menü öffnen" class="menu-btn" id="menu-btn" type="button"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</header>
+<!-- ════════ HERO ════════ -->
+<section class="page-hero c-hero">
+<div class="hero-stack">
+<div class="hero-head">
+<div class="kicker c-kick" data-reveal=""><span>/ Creator Challenge</span><span class="c-pill" id="season-pill">Staffel 01 · Offen</span></div>
+<h1 data-reveal="">Gestalte unseren Feed.<br/><span class="grad-text">Komm ins Team.</span></h1>
+</div>
+<div class="hero-foot" data-reveal="">
+<div class="c-hero-l">
+<p>Schreib ein Szenario, gestalte einen Post oder dreh ein Video für MysMatch – als wärst du schon unser Social-Media-Manager. Die stärksten Beiträge laden wir zum Gespräch ein.</p>
+<div class="c-btns">
+<a class="btn btn-violet" href="#enter">Beitrag einreichen ↓</a>
+<a class="btn btn-ghost" href="#inspiration">Lass dich inspirieren</a>
+</div>
+</div>
+<div class="c-count-w">
+<span class="kicker" style="color:var(--faint)">Einsendeschluss · 15. Dez. 2026</span>
+<div aria-live="off" class="c-count" id="countdown">
+<div class="c-unit"><b id="cd-d">--</b><span>Tage</span></div>
+<div class="c-unit"><b id="cd-h">--</b><span>Stunden</span></div>
+<div class="c-unit"><b id="cd-m">--</b><span>Min</span></div>
+<div class="c-unit"><b id="cd-s">--</b><span>Sek</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ BRIEF ════════ -->
+<section class="sheet sheet-white c-brief">
+<div class="in c-sec">
+<div class="c-head">
+<div class="kicker">/ Die Aufgabe</div>
+<h2 data-reveal="">Du bist unser neuer Social-Media-Manager. <span class="dim">Was postest du zuerst?</span></h2>
+</div>
+<div class="c-cols">
+<div data-reveal=""><span class="kicker">Zielgruppe</span><p>Studierende, die Lernpartner, Kommilitonen, Events und Jobs suchen.</p></div>
+<div data-reveal=""><span class="kicker">Botschaft</span><p>Lern nicht allein. Bring Studierende dazu, MysMatch herunterladen zu wollen.</p></div>
+<div data-reveal=""><span class="kicker">Wir bewerten</span><p>Die Idee, die Umsetzung und wie gut es zu unserer Zielgruppe und unseren Kanälen passt.</p></div>
+</div>
+</div>
+</section>
+<!-- ════════ TRACKS ════════ -->
+<section class="sheet sheet-dark">
+<div class="in c-sec">
+<div class="c-headrow">
+<div class="c-head">
+<div class="kicker" style="color:var(--faint)">/ Drei Kategorien</div>
+<h2 class="h2" data-reveal="">Wähl dein <span style="color:#CDB8FF">Format.</span></h2>
+</div>
+<p>Ein Beitrag pro Kategorie. Du willst mehrere ausprobieren? Schick für jede einen eigenen Beitrag.</p>
+</div>
+<div class="c-tracks">
+<div class="c-track t1" data-reveal="">
+<div class="top"><span class="num">01</span><span class="tag">Text</span></div>
+<div class="body"><h3>Szenario</h3><p>Schreib das Skript für ein Reel oder TikTok über das Studileben und MysMatch: den Hook, die Szenen, die Pointe.</p>
+<div class="you"><span>Du reichst ein</span><b>Ein geschriebenes Skript, Szene für Szene</b></div>
+<div><button class="btn btn-light" data-track-cta="scenario" type="button">In dieser Kategorie mitmachen →</button></div></div>
+</div>
+<div class="c-track t2" data-reveal="">
+<div class="top"><span class="num">02</span><span class="tag">Bild</span></div>
+<div class="body"><h3>Kreativer Post</h3><p>Gestalte einen einzelnen Post oder ein Karussell, bei dem Studierende aufhören zu scrollen und die App herunterladen wollen.</p>
+<div class="you"><span>Du reichst ein</span><b>1–5 Bilder (PNG, JPG oder WebP)</b></div>
+<div><button class="btn btn-light" data-track-cta="post" type="button">In dieser Kategorie mitmachen →</button></div></div>
+</div>
+<div class="c-track t3" data-reveal="">
+<div class="top"><span class="num">03</span><span class="tag">Video</span></div>
+<div class="body"><h3>Content Creator</h3><p>Nimm ein kurzes Video in deinem eigenen Stil auf – als würdest du schon für unsere Kanäle drehen.</p>
+<div class="you"><span>Du reichst ein</span><b>Einen Google-Drive-Link zu deinem Video</b></div>
+<div><button class="btn btn-dark" data-track-cta="video" type="button">In dieser Kategorie mitmachen →</button></div></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ INSPIRATION ════════ -->
+<section class="sheet sheet-lilac" id="inspiration">
+<div class="in c-insp">
+<div class="c-insp-l">
+<div class="kicker">/ Inspiration</div>
+<h2 class="h2" data-reveal="">Schau dir unseren Feed an. <span style="color:var(--violet)">Dann mach es besser.</span></h2>
+<p>Schau, was wir heute posten, und probier die App aus, damit du weißt, wofür du wirbst.</p>
+<div class="stores">
+<a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" rel="noopener noreferrer" target="_blank"><span><small>Laden im</small><b>App Store</b></span></a>
+<a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" rel="noopener noreferrer" target="_blank"><span><small>Jetzt bei</small><b>Google Play</b></span></a>
+</div>
+</div>
+<div class="c-social">
+<a data-reveal="" href="https://www.instagram.com/mysmatchofficial/" rel="noopener noreferrer" target="_blank"><span><small>Instagram</small><b>@mysmatchofficial</b></span><i>↗</i></a>
+<a data-reveal="" href="https://www.tiktok.com/@mysmatchofficial" rel="noopener noreferrer" target="_blank"><span><small>TikTok</small><b>@mysmatchofficial</b></span><i>↗</i></a>
+<a data-reveal="" href="https://www.linkedin.com/company/mysmatch" rel="noopener noreferrer" target="_blank"><span><small>LinkedIn</small><b>MysMatch</b></span><i>↗</i></a>
+</div>
+</div>
+</section>
+<!-- ════════ SUBMIT (live) ════════ -->
+<section class="sheet sheet-white c-enter" id="enter">
+<div class="in c-sec">
+<div class="c-headrow">
+<div class="c-head">
+<div class="kicker">/ Beitrag einreichen</div>
+<h2 data-reveal="">Du bist dran.</h2>
+</div>
+<p id="enter-sub">Dauert etwa fünf Minuten. Felder mit * sind Pflicht. <a href="/de/challenge/rules.html">Regeln &amp; Datenschutz</a></p>
+</div>
+<div class="hint" id="c-loading">Wird geladen…</div>
+<!-- After the deadline (server clock decides; this is just the message). -->
+<div class="c-card-dark" hidden="" id="c-closed">
+<span class="kicker">Einreichung geschlossen</span>
+<h3>Das war's. <span class="grad-text">Danke!</span></h3>
+<p>Die Einreichung endete am 15. Dezember 2026. Wenn du einen Beitrag geschickt hast, melde dich unten an, um seinen Status zu sehen.</p>
+</div>
+<!-- Not signed in -->
+<div class="c-auth" hidden="" id="c-auth">
+<div class="c-auth-l">
+<h3 id="auth-title">Erstell ein Konto, um mitzumachen.</h3>
+<p>Mit einem Konto kannst du Beiträge senden, Dateien hochladen und deinen Status verfolgen, bis wir die Ergebnisse bekanntgeben. Du nutzt schon die MysMatch-App? Melde dich mit derselben E-Mail und demselben Passwort an.</p>
+</div>
+<div class="c-auth-form">
+<div class="c-tabs" role="tablist">
+<button class="chip on" id="tab-up" role="tab" type="button">Konto erstellen</button>
+<button class="chip" id="tab-in" role="tab" type="button">Anmelden</button>
+</div>
+<div class="c-msg" hidden="" id="auth-msg"></div>
+<!-- Shown after sign-up / an "email not confirmed" sign-in: resend the
+             confirmation email, enabled 60 s after the last one was sent. -->
+<div hidden="" id="resend-wrap"><button class="btn btn-light" disabled="" id="resend-btn" type="button">E-Mail erneut senden</button></div>
+<form class="c-auth-form" id="auth-form" novalidate="">
+<label class="fld"><span class="lbl">E-Mail</span><input autocomplete="email" class="inp" id="a-email" placeholder="alex@uni.de" required="" type="email"/></label>
+<label class="fld"><span class="lbl">Passwort</span><input autocomplete="new-password" class="inp" id="a-pass" placeholder="Mindestens 6 Zeichen" required="" type="password"/></label>
+<div class="send-row">
+<button class="btn btn-dark" id="auth-go" type="submit">Konto erstellen →</button>
+<button class="c-link" hidden="" id="auth-forgot" type="button">Passwort vergessen?</button>
+</div>
+</form>
+<div hidden="" id="google-wrap">
+<div class="c-or">oder</div>
+<button class="btn btn-light" id="auth-google" style="width:100%" type="button">Weiter mit Google</button>
+</div>
+</div>
+</div>
+<!-- Signed in -->
+<div hidden="" id="c-app">
+<div class="c-sec" style="gap:clamp(32px,3vw,56px)">
+<div class="c-me"><span>Angemeldet als <b id="me-email"></b></span><button class="c-link" id="sign-out" type="button">Abmelden</button></div>
+<div class="c-entries" hidden="" id="c-entries">
+<div class="kicker">Deine Beiträge</div>
+<div class="c-entries" id="entries-list"></div>
+</div>
+<div class="c-card-dark" hidden="" id="c-sent">
+<span class="kicker" id="sent-kick">Beitrag erhalten</span>
+<h3>Danke, <span id="sent-name">du</span>. <span class="grad-text">Du bist dabei.</span></h3>
+<p>Wir melden uns nach Einsendeschluss am 15. Dezember unter <b id="sent-email"></b>. Bis dahin kannst du deinen Beitrag hier bearbeiten.</p>
+<!-- WHY (Oct 2026): applicants didn't know they can follow their entry; say
+               where (this page, signed in) and what the stages are. -->
+<div class="c-track-note">
+<b>Verfolge deinen Stand</b>
+<p>Komm jederzeit zurück auf <a href="/de/challenge/">mysmatch.com/challenge</a> und melde dich mit demselben Konto an. Deine Beitragskarte zeigt, wo er gerade steht:</p>
+<div class="c-steps"><span class="c-step now">Eingereicht</span><span class="c-step">In Prüfung</span><span class="c-step">Engere Auswahl</span><span class="c-step">Gespräch</span><span class="c-step">Ausgewählt</span></div>
+</div>
+<div class="c-btns">
+<button class="btn btn-light" id="sent-another" type="button">In einer weiteren Kategorie einreichen</button>
+<a class="btn btn-ghost" href="https://www.instagram.com/mysmatchofficial/" rel="noopener noreferrer" target="_blank">Folge uns auf Instagram ↗</a>
+</div>
+</div>
+<form class="c-form" hidden="" id="c-form" novalidate="">
+<div class="fs">
+<div class="fs-l"><span class="n">01</span><h3>Über dich</h3><p>So erreichen wir dich, wenn dein Beitrag in die engere Auswahl kommt.</p></div>
+<div class="fs-r">
+<div class="grid2">
+<label class="fld"><span class="lbl"><span>Vollständiger Name *</span><em data-err="full_name"></em></span><input autocomplete="name" class="inp" maxlength="100" name="full_name" placeholder="Alex Morgan"/></label>
+<label class="fld"><span class="lbl"><span>E-Mail *</span><em data-err="email"></em></span><input autocomplete="email" class="inp" maxlength="200" name="email" placeholder="alex@uni.de" type="email"/></label>
+<label class="fld"><span class="lbl">Telefon</span><input autocomplete="tel" class="inp" maxlength="40" name="phone" placeholder="+49 151 2345 6789" type="tel"/></label>
+<label class="fld"><span class="lbl">Stadt</span><input class="inp" maxlength="100" name="city" placeholder="Berlin"/></label>
+<label class="fld"><span class="lbl"><span>Wohnsitzland *</span><em data-err="country"></em></span><input autocomplete="country-name" class="inp" maxlength="100" name="country" placeholder="Deutschland"/></label>
+<label class="fld"><span class="lbl"><span>Portfolio oder LinkedIn</span><em data-err="portfolio_url"></em></span><input class="inp" maxlength="300" name="portfolio_url" placeholder="https://" type="url"/></label>
+<label class="fld"><span class="lbl">Instagram- oder TikTok-Name</span><input class="inp" maxlength="100" name="social_handle" placeholder="@deinname"/></label>
+</div>
+<div class="grid2">
+<div class="fld"><span class="lbl">Gerade bin ich…</span><div class="chips" data-chips="right_now" data-single="1"></div></div>
+<div class="fld"><span class="lbl">Offen für</span><div class="chips" data-chips="open_to"></div></div>
+</div>
+<div class="grid2">
+<div class="fld" data-slot-wrap="cv"><span class="lbl">Lebenslauf</span></div>
+<div class="fld" data-slot-wrap="extra"><span class="lbl">Weitere Dokumente</span></div>
+</div>
+</div>
+</div>
+<div class="fs">
+<div class="fs-l"><span class="n">02</span><h3>Dein Beitrag</h3><p>Wähl eine Kategorie und teile dann deine Arbeit und die Idee dahinter.</p></div>
+<div class="fs-r">
+<div class="fld"><span class="lbl"><span>Kategorie *</span><em data-err="track"></em></span><div class="picks" id="picks"></div></div>
+<label class="fld"><span class="lbl"><span>Titel des Beitrags *</span><em data-err="title"></em></span><input class="inp" maxlength="120" name="title" placeholder="z. B. „In 24 Stunden zum Lernpartner für die Prüfung“"/></label>
+<div class="fld"><span class="lbl">Gemacht für</span><div class="chips" data-chips="made_for"></div></div>
+<div class="fs-r" data-only="scenario" hidden="">
+<label class="fld"><span class="lbl"><span>Dein Szenario *</span><em data-err="scenario_text"></em></span>
+<textarea class="inp" maxlength="10000" name="scenario_text" placeholder="Szene 1 – Bibliothek, 23 Uhr. Eine Studentin starrt auf ein leeres Blatt…" rows="10"></textarea>
+<span class="hint">Schreib es Szene für Szene: was wir sehen, was wir hören, die Caption. Oder lade es unten als PDF hoch.</span></label>
+<div class="fld" data-slot-wrap="scenario"><span class="lbl">Oder lade dein Szenario hoch</span></div>
+</div>
+<div class="fld" data-only="post" data-slot-wrap="post" hidden=""><span class="lbl"><span>Lade dein Design hoch *</span><em data-err="post"></em></span></div>
+<div class="fld" data-only="video" hidden="">
+<label class="fld"><span class="lbl"><span>Google-Drive-Link zu deinem Video *</span><em data-err="drive_url"></em></span>
+<input class="inp" maxlength="500" name="drive_url" placeholder="https://drive.google.com/file/d/…" type="url"/></label>
+<span class="info"><b>i</b><span>Stell die Freigabe in Google Drive auf „Jeder, der über den Link verfügt“ (Betrachter), damit unser Team es öffnen kann.</span></span>
+</div>
+<label class="fld"><span class="lbl"><span>Dein Konzept *</span><em data-err="concept_text"></em></span>
+<textarea class="inp" maxlength="5000" name="concept_text" placeholder="Was ist die Idee, für wen ist sie, und warum würden Studierende aufhören zu scrollen?" rows="5"></textarea>
+<span class="hint" id="concept-count" style="text-align:right">0 Zeichen</span></label>
+<div class="fld" data-slot-wrap="concept"><span class="lbl">Oder lade dein Konzept hoch</span></div>
+</div>
+</div>
+<div class="fs">
+<div class="fs-l"><span class="n">03</span><h3>Senden</h3></div>
+<div class="fs-r">
+<label class="fld"><span class="lbl">Deine Fragen an uns</span>
+<textarea class="inp" maxlength="2000" name="questions" placeholder="Möchtest du etwas über die Challenge, die Rolle oder das Team wissen?" rows="4"></textarea></label>
+<!-- WHY no age / sanctions box: "Who can take part" was removed from the rules (owner, 2026-10-18). -->
+<button class="check" data-check="consent" type="button"><span class="box"></span><span class="t"><span>Das ist meine eigene Arbeit. MysMatch darf mich zu dieser Challenge und passenden Rollen kontaktieren und meinen Beitrag mit Namensnennung auf seinen Kanälen zeigen. Ich habe die <a href="/de/challenge/rules.html" target="_blank">Regeln &amp; Datenschutzhinweise</a> gelesen. *</span><em data-err="consent"></em></span></button>
+<div class="c-msg err" hidden="" id="form-msg"></div>
+<div class="send-row">
+<button class="btn btn-dark send" id="send-btn" type="submit">Beitrag senden →</button>
+<button class="btn btn-light" hidden="" id="cancel-edit" type="button">Bearbeitung abbrechen</button>
+<span class="summary" id="summary">Wir antworten nach dem 15. Dezember 2026.</span>
+</div>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+<div class="in">
+<div class="foot-top">
+<div class="foot-brand">
+<a class="brand" href="/de/"><img alt="" height="44" src="/logo-512.png" width="44"/><span>MysMatch</span></a>
+<p>Lern nicht allein.</p>
+</div>
+<div class="foot-cols">
+<div class="foot-col"><span class="kicker">Produkt</span><a href="/de/events/">Events</a><a href="/de/jobs/">Jobs</a><a href="/de/challenge/">Ideation Challenge</a></div>
+<div class="foot-col"><span class="kicker">Unternehmen</span><a href="mailto:contact@mys-match.com">Kontakt</a><a href="/de/dashboard.html">Login für Organisationen</a><a href="/de/organizations/">Registrierung für Organisationen</a></div>
+<div class="foot-col"><span class="kicker">Rechtliches</span><a href="/de/privacy-policy/">Datenschutzerklärung</a><a href="/de/terms/">Nutzungsbedingungen</a><a href="/de/challenge/rules.html">Challenge-Regeln</a></div>
+<div class="foot-col"><span class="kicker">Social Media</span><a href="https://www.instagram.com/mysmatchofficial/" rel="noopener noreferrer" target="_blank">Instagram</a><a href="https://www.tiktok.com/@mysmatchofficial" rel="noopener noreferrer" target="_blank">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" rel="noopener noreferrer" target="_blank">LinkedIn</a></div>
+</div>
+</div>
+<div aria-hidden="true" class="wordmark">MysMatch</div>
+<div class="foot-bottom"><span>© 2026 MysMatch. Alle Rechte vorbehalten.</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/challenge.js"></script>
+<script src="/js/site.js"></script>
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+  var fmtSize = function (b) { return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; };
+  var DEADLINE = new Date('2026-12-15T23:59:59+01:00').getTime();
+  var OPTIONS = {
+    right_now: ['Studying', 'Graduated', 'Working', 'Freelancing'],
+    open_to: ['Full-time', 'Part-time', 'Freelance'],
+    made_for: ['Instagram', 'TikTok', 'LinkedIn'],
+  };
+  // WHY: OPTIONS are the saved values (stay English); the German/Persian copies get labels here via i18n "jsraw".
+  var CHIP_LABEL = { 'Studying': 'Im Studium', 'Graduated': 'Abschluss', 'Working': 'Berufstätig', 'Freelancing': 'Freiberuflich', 'Full-time': 'Vollzeit', 'Part-time': 'Teilzeit', 'Freelance': 'Freelance' };
+
+  // ── Countdown (display only; the server clock decides what's accepted) ──
+  var pad = function (n) { return String(n).padStart(2, '0'); };
+  function tick() {
+    var ms = Math.max(0, DEADLINE - Date.now());
+    $('cd-d').textContent = pad(Math.floor(ms / 864e5)); $('cd-h').textContent = pad(Math.floor(ms / 36e5) % 24);
+    $('cd-m').textContent = pad(Math.floor(ms / 6e4) % 60); $('cd-s').textContent = pad(Math.floor(ms / 1e3) % 60);
+    if (!ms) $('season-pill').textContent = 'Staffel 01 · Geschlossen';
+  }
+  tick(); setInterval(tick, 1000);
+
+  // ── State ──
+  var open = Date.now() < DEADLINE;
+  var entries = [];
+  var st = null; // form state
+  function blankState() {
+    return { entryId: null, track: null, chips: { right_now: [], open_to: [], made_for: [] }, checks: { consent: false },
+             docs: { cv: [], extra: [], scenario: [], concept: [], post: [] }, removed: [], tried: false };
+  }
+
+  function show(id, on) { $(id).hidden = !on; }
+
+  // ── Auth panel ──
+  var mode = 'up';
+  function setMode(m) {
+    mode = m;
+    $('tab-up').classList.toggle('on', m === 'up'); $('tab-in').classList.toggle('on', m === 'in');
+    $('auth-go').textContent = m === 'up' ? 'Konto erstellen →' : 'Anmelden →';
+    $('auth-title').textContent = m === 'up' ? 'Erstell ein Konto, um mitzumachen.' : 'Willkommen zurück.';
+    $('a-pass').setAttribute('autocomplete', m === 'up' ? 'new-password' : 'current-password');
+    $('auth-forgot').hidden = m !== 'in';
+    authMsg(''); hideResend();
+  }
+  // ── Resend confirmation email (once a minute) ──
+  var resendEmail = '', resendTimer = null;
+  function startResendCooldown(email, secondsLeft) {
+    resendEmail = email;
+    $('resend-wrap').hidden = false;
+    var left = secondsLeft, b = $('resend-btn');
+    clearInterval(resendTimer);
+    var paint = function () {
+      b.disabled = left > 0;
+      b.textContent = left > 0 ? 'E-Mail erneut senden in ' + left + ' s' : 'E-Mail erneut senden';
+    };
+    paint();
+    resendTimer = setInterval(function () { left--; paint(); if (left <= 0) clearInterval(resendTimer); }, 1000);
+  }
+  function hideResend() { clearInterval(resendTimer); $('resend-wrap').hidden = true; }
+  $('resend-btn').onclick = async function () {
+    if (!resendEmail) return;
+    $('resend-btn').disabled = true;
+    var r = await MMC.resendSignup(resendEmail);
+    authMsg(r.ok ? 'Erneut gesendet an ' + resendEmail + '. Das kann ein paar Minuten dauern – schau auch in deinen Spam-Ordner.' : r.error, r.ok);
+    startResendCooldown(resendEmail, 60);
+  };
+
+  function authMsg(text, ok) { var el = $('auth-msg'); el.hidden = !text; el.textContent = text || ''; el.className = 'c-msg ' + (ok ? 'ok' : 'err'); }
+  $('tab-up').onclick = function () { setMode('up'); };
+  $('tab-in').onclick = function () { setMode('in'); };
+  $('auth-form').onsubmit = async function (e) {
+    e.preventDefault();
+    var email = $('a-email').value.trim(), pass = $('a-pass').value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return authMsg('Bitte gib eine gültige E-Mail ein.');
+    if (pass.length < 6) return authMsg('Das Passwort muss mindestens 6 Zeichen haben.');
+    $('auth-go').disabled = true;
+    var r = mode === 'up' ? await MMC.signUp(email, pass) : await MMC.signIn(email, pass);
+    $('auth-go').disabled = false;
+    if (!r.ok) {
+      authMsg(r.error);
+      // Signed up but never confirmed → offer the email again right away.
+      if (r.unconfirmed) startResendCooldown(email, 0);
+      return;
+    }
+    if (r.needsConfirm) {
+      authMsg('Fast geschafft – wir haben einen Bestätigungslink an ' + email + ' geschickt. Öffne ihn, um dein Konto zu aktivieren, und komm dann hierher zurück. Nicht gefunden? Schau in deinen Spam-Ordner.', true);
+      $('a-pass').value = '';
+      startResendCooldown(email, 60);
+    }
+  };
+  $('auth-forgot').onclick = async function () {
+    var email = $('a-email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return authMsg('Gib zuerst oben deine E-Mail ein und tippe dann auf „Passwort vergessen?“.');
+    var r = await MMC.resetPassword(email);
+    authMsg(r.ok ? 'Falls es ein Konto für ' + email + ' gibt, haben wir einen Link zum Festlegen eines neuen Passworts geschickt.' : r.error, r.ok);
+  };
+  if (MMC.GOOGLE_WEB_ENABLED) { $('google-wrap').hidden = false; $('auth-google').onclick = function () { MMC.signInGoogle(); }; }
+  $('sign-out').onclick = async function () { await MMC.signOut(); render(null); };
+
+  // ── Entries list ──
+  function trackOf(id) { return MMC.TRACKS.find(function (t) { return t.id === id; }) || { title: id }; }
+  function steps(e) {
+    var order = ['submitted', 'in_review', 'shortlisted', 'interview'];
+    var final = e.status === 'not_selected' ? 'not_selected' : 'selected';
+    var all = order.concat([final]);
+    var idx = all.indexOf(e.status);
+    return all.map(function (s, i) {
+      var label = MMC.STATUSES.find(function (x) { return x.id === s; }).label;
+      var cls = i < idx ? 'done' : (i === idx ? (s === 'not_selected' ? 'no' : 'now') : '');
+      return '<span class="c-step ' + cls + '">' + esc(label) + '</span>';
+    }).join('');
+  }
+  function renderEntries() {
+    var list = $('entries-list');
+    show('c-entries', entries.length > 0);
+    list.innerHTML = entries.map(function (e) {
+      var draft = !e.submitted_at;
+      return '<div class="c-entry">'
+        + '<div class="c-entry-top"><div style="display:flex;flex-direction:column;gap:8px;min-width:0"><span class="kicker">' + esc(trackOf(e.track).title) + '</span><b>' + esc(e.title) + '</b></div>'
+        + (open ? '<div class="c-entry-act"><button class="btn btn-light" type="button" data-edit="' + e.id + '">' + (draft ? 'Fertigstellen' : 'Bearbeiten') + '</button>'
+          + '<button class="btn btn-light" type="button" data-withdraw="' + e.id + '">Zurückziehen</button></div>' : '')
+        + '</div>'
+        + (draft ? '<div class="c-draft">Noch nicht gesendet – etwas hat gefehlt oder der Upload wurde unterbrochen. Tippe auf „Fertigstellen“, um ihn abzuschließen.</div>'
+                 : '<div class="c-steps">' + steps(e) + '</div>')
+        + '</div>';
+    }).join('');
+    list.querySelectorAll('[data-edit]').forEach(function (b) { b.onclick = function () { startEdit(b.getAttribute('data-edit')); }; });
+    list.querySelectorAll('[data-withdraw]').forEach(function (b) {
+      b.onclick = async function () {
+        if (!confirm('Diesen Beitrag zurückziehen? Er wird mit seinen Dateien gelöscht. Vor Einsendeschluss kannst du einen neuen schicken.')) return;
+        try { await MMC.withdraw(b.getAttribute('data-withdraw')); await reload(); } catch (err) { alert(MMC.friendlyError(err)); }
+      };
+    });
+  }
+
+  // ── Form ──
+  var form = $('c-form');
+  function field(name) { return form.querySelector('[name="' + name + '"]'); }
+
+  function renderChips() {
+    form.querySelectorAll('[data-chips]').forEach(function (box) {
+      var key = box.getAttribute('data-chips'), single = box.hasAttribute('data-single');
+      box.innerHTML = OPTIONS[key].map(function (o) {
+        return '<button type="button" class="chip' + (st.chips[key].indexOf(o) >= 0 ? ' on' : '') + '" data-v="' + esc(o) + '">' + esc(CHIP_LABEL[o] || o) + '</button>';
+      }).join('');
+      box.querySelectorAll('.chip').forEach(function (c) {
+        c.onclick = function () {
+          var v = c.getAttribute('data-v'), cur = st.chips[key];
+          st.chips[key] = single ? (cur[0] === v ? [] : [v]) : (cur.indexOf(v) >= 0 ? cur.filter(function (x) { return x !== v; }) : cur.concat([v]));
+          renderChips();
+        };
+      });
+    });
+  }
+
+  function renderPicks() {
+    var used = {};
+    entries.forEach(function (e) { if (e.id !== st.entryId) used[e.track] = true; });
+    $('picks').innerHTML = MMC.TRACKS.map(function (t) {
+      var on = st.track === t.id, dis = used[t.id] || (st.entryId && !on);
+      return '<button type="button" class="pick' + (on ? ' on' : '') + (st.tried && !st.track ? ' bad' : '') + '" data-track="' + t.id + '"' + (dis ? ' disabled' : '') + '>'
+        + '<span class="row"><span class="num">' + t.num + '</span><span class="dot"></span></span><span class="t">' + esc(t.title) + '</span>'
+        + (used[t.id] ? '<span class="used">Schon eingereicht – oben bearbeiten</span>' : '') + '</button>';
+    }).join('');
+    $('picks').querySelectorAll('.pick:not([disabled])').forEach(function (b) {
+      b.onclick = function () { st.track = b.getAttribute('data-track'); renderPicks(); renderTrackParts(); };
+    });
+  }
+  function renderTrackParts() {
+    form.querySelectorAll('[data-only]').forEach(function (el) { el.hidden = el.getAttribute('data-only') !== st.track; });
+    var t = st.track ? trackOf(st.track).title : '';
+    $('send-btn').textContent = st.entryId ? 'Änderungen speichern →' : (t ? t + ' senden →' : 'Beitrag senden →');
+  }
+
+  // Drop zones: one per slot, existing (server) files + new local files.
+  function renderSlot(key) {
+    var wrap = form.querySelector('[data-slot-wrap="' + key + '"]'); if (!wrap) return;
+    var slot = MMC.SLOTS[key], list = st.docs[key], big = key === 'post';
+    var old = wrap.querySelectorAll('.dz, .doc, .thumbs'); old.forEach(function (n) { n.remove(); });
+    var accept = slot.exts.map(function (x) { return '.' + x; }).join(',');
+    var dz = document.createElement('label');
+    dz.className = 'dz' + (big ? ' big' : '') + (st.tried && key === 'post' && st.track === 'post' && !list.length ? ' bad' : '');
+    dz.innerHTML = '<input type="file" accept="' + accept + '"' + (slot.max > 1 ? ' multiple' : '') + '>'
+      + '<span class="up">↑</span><span class="tx"><b>' + (big ? 'Bilder hierher ziehen oder ' : (slot.max > 1 ? 'Dateien' : 'Datei') + ' hierher ziehen oder ') + '<span>auswählen</span></b><small>' + esc(slot.hint) + '</small></span>';
+    var add = function (files) { addFiles(key, files); };
+    dz.querySelector('input').onchange = function (e) { add(e.target.files); e.target.value = ''; };
+    dz.ondragover = function (e) { e.preventDefault(); dz.classList.add('over'); };
+    dz.ondragleave = function () { dz.classList.remove('over'); };
+    dz.ondrop = function (e) { e.preventDefault(); dz.classList.remove('over'); add(e.dataTransfer.files); };
+    wrap.appendChild(dz);
+    if (big) {
+      var g = document.createElement('div'); g.className = 'thumbs';
+      list.forEach(function (d, i) {
+        var t = document.createElement('div'); t.className = 'thumb';
+        if (d.preview) t.style.backgroundImage = 'url("' + d.preview + '")';
+        t.innerHTML = '<div><span>' + esc(d.name) + '</span><button type="button" class="x" aria-label="Remove">×</button></div>';
+        t.querySelector('.x').onclick = function () { removeDoc(key, i); };
+        g.appendChild(t);
+      });
+      wrap.appendChild(g);
+    } else {
+      list.forEach(function (d, i) {
+        var r = document.createElement('div'); r.className = 'doc';
+        r.innerHTML = '<span class="ext">' + esc(MMC.extOf(d.name).toUpperCase()) + '</span><span class="nm">' + esc(d.name) + '</span><span class="sz">' + esc(fmtSize(d.size)) + '</span><button type="button" class="x" aria-label="Remove">×</button>';
+        r.querySelector('.x').onclick = function () { removeDoc(key, i); };
+        wrap.appendChild(r);
+      });
+    }
+  }
+  function renderSlots() { Object.keys(MMC.SLOTS).forEach(renderSlot); }
+  function addFiles(key, files) {
+    var slot = MMC.SLOTS[key], skipped = 0;
+    var ok = [].filter.call(files, function (f) {
+      var good = slot.exts.indexOf(MMC.extOf(f.name)) >= 0
+        // images are shrunk in the browser before upload, so allow bigger originals
+        && f.size <= (key === 'post' ? 25 : slot.mb) * 1048576;
+      if (!good) skipped++;
+      return good;
+    }).map(function (f) { return { file: f, name: f.name, size: f.size, preview: key === 'post' ? URL.createObjectURL(f) : null }; });
+    var cur = slot.max === 1 ? [] : st.docs[key];
+    if (slot.max === 1) st.docs[key].forEach(function (d) { if (d.id) st.removed.push(d.id); });
+    var next = cur.concat(ok);
+    if (next.length > slot.max) skipped += next.length - slot.max;
+    st.docs[key] = next.slice(0, slot.max);
+    renderSlot(key);
+    if (skipped) formMsg(skipped + (skipped > 1 ? ' Dateien wurden' : ' Datei wurde') + ' nicht hinzugefügt (Format, Größe oder Anzahl). ' + slot.hint + '.');
+  }
+  function removeDoc(key, i) {
+    var d = st.docs[key][i];
+    if (d.id) st.removed.push(d.id);
+    if (d.preview && d.file) URL.revokeObjectURL(d.preview);
+    st.docs[key].splice(i, 1);
+    renderSlot(key);
+  }
+
+  form.querySelectorAll('[data-check]').forEach(function (b) {
+    b.onclick = function (e) {
+      if (e.target.tagName === 'A') return;
+      var k = b.getAttribute('data-check'); st.checks[k] = !st.checks[k]; renderChecks();
+    };
+  });
+  function renderChecks() {
+    form.querySelectorAll('[data-check]').forEach(function (b) {
+      var k = b.getAttribute('data-check');
+      b.classList.toggle('on', st.checks[k]); b.querySelector('.box').textContent = st.checks[k] ? '✓' : '';
+      b.classList.toggle('bad', st.tried && !st.checks[k]);
+    });
+  }
+  field('concept_text').oninput = function () { $('concept-count').textContent = this.value.length + ' Zeichen'; };
+
+  function values() {
+    var v = function (n) { var x = field(n).value.trim(); return x || null; };
+    return {
+      full_name: v('full_name') || '', email: v('email') || '', phone: v('phone'), city: v('city'), country: v('country'),
+      portfolio_url: v('portfolio_url'), social_handle: v('social_handle'),
+      right_now: st.chips.right_now[0] || null, open_to: st.chips.open_to, made_for: st.chips.made_for,
+      title: v('title') || '',
+      scenario_text: st.track === 'scenario' ? v('scenario_text') : null,
+      drive_url: st.track === 'video' ? v('drive_url') : null,
+      concept_text: v('concept_text'), questions: v('questions'),
+      consent: st.checks.consent,
+    };
+  }
+  function validate(f) {
+    var e = {};
+    if (f.full_name.length < 2) e.full_name = 'Pflichtfeld';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = f.email ? 'Prüfe deine E-Mail' : 'Pflichtfeld';
+    if (!f.country) e.country = 'Pflichtfeld';
+    if (f.portfolio_url && !/^https?:\/\//i.test(f.portfolio_url)) e.portfolio_url = 'Mit https:// beginnen';
+    if (!st.track) e.track = 'Wähl eine Kategorie';
+    if (f.title.length < 2) e.title = 'Pflichtfeld';
+    if (st.track === 'scenario' && (f.scenario_text || '').length < 40 && !st.docs.scenario.length) e.scenario_text = 'Schreib ein paar Zeilen oder lade ein PDF hoch';
+    if (st.track === 'post' && !st.docs.post.length) e.post = 'Füg mindestens ein Bild hinzu';
+    if (st.track === 'video' && !/^https:\/\/(drive|docs)\.google\.com\//i.test(f.drive_url || '')) e.drive_url = 'Füg einen Google-Drive-Link ein';
+    if ((f.concept_text || '').length < 20 && !st.docs.concept.length) e.concept_text = f.concept_text ? 'Erzähl uns etwas mehr' : 'Schreib es oder lade ein PDF hoch';
+    if (!f.consent) e.consent = 'Bitte bestätigen, um zu senden';
+    return e;
+  }
+  function showErrors(e) {
+    form.querySelectorAll('[data-err]').forEach(function (el) { el.textContent = e[el.getAttribute('data-err')] || ''; });
+    ['full_name', 'email', 'country', 'portfolio_url', 'title', 'scenario_text', 'drive_url', 'concept_text'].forEach(function (n) { field(n).classList.toggle('bad', !!e[n]); });
+    var n = Object.keys(e).length;
+    $('summary').textContent = n ? n + (n === 1 ? ' Feld braucht' : ' Felder brauchen') + ' deine Aufmerksamkeit' : 'Wir antworten nach dem 15. Dezember 2026.';
+    $('summary').classList.toggle('bad', !!n);
+    renderPicks(); renderChecks(); renderSlot('post');
+  }
+  function formMsg(t) { var el = $('form-msg'); el.hidden = !t; el.textContent = t || ''; }
+
+  var PROBLEM = {
+    missing_scenario: { scenario_text: 'Schreib ein paar Zeilen oder lade ein PDF hoch' }, missing_images: { post: 'Füg mindestens ein Bild hinzu' },
+    missing_drive: { drive_url: 'Füg einen Google-Drive-Link ein' }, missing_concept: { concept_text: 'Schreib es oder lade ein PDF hoch' },
+  };
+
+  form.onsubmit = async function (ev) {
+    ev.preventDefault();
+    st.tried = true; formMsg('');
+    var f = values(), errs = validate(f);
+    showErrors(errs);
+    if (Object.keys(errs).length) { var first = form.querySelector('.bad, em:not(:empty)'); if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+    var btn = $('send-btn'), label = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Wird gesendet…';
+    var fields = Object.assign({}, f);
+    if (!st.entryId) fields.track = st.track;
+    var newFiles = [];
+    Object.keys(st.docs).forEach(function (k) {
+      if (k === 'scenario' && st.track !== 'scenario') return;
+      if (k === 'post' && st.track !== 'post') return;
+      st.docs[k].forEach(function (d) { if (d.file) newFiles.push({ slot: k, file: d.file }); });
+    });
+    var savedId = st.entryId;
+    try {
+      var r = await MMC.saveEntry({
+        entryId: st.entryId, fields: fields, removeFileIds: st.removed, newFiles: newFiles,
+        onSaved: function (id) { savedId = id; },
+        onProgress: function (i, n) { btn.textContent = 'Lade ' + i + ' von ' + n + ' hoch…'; },
+      });
+      if (!r.ok) {
+        // Saved as a draft; reload it from the server (files included) and
+        // say what's missing — the server is the referee.
+        await reload(true); await startEdit(r.entryId);
+        st.tried = true;
+        if (r.problem === 'closed') formMsg('Die Einreichung ist geschlossen.');
+        else showErrors(PROBLEM[r.problem] || {});
+        btn.disabled = false; renderTrackParts();
+        return;
+      }
+      $('sent-kick').textContent = 'Beitrag erhalten · ' + trackOf(st.track).title;
+      $('sent-name').textContent = f.full_name.split(' ')[0] || 'du';
+      $('sent-email').textContent = f.email;
+      st = blankState();
+      await reload();
+      form.hidden = true; show('c-sent', true);
+      $('c-sent').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (err) {
+      console.error('[challenge] save failed', err);
+      await reload(true);
+      // Part of it may be saved already: show the server's copy so nothing is
+      // uploaded twice; files that didn't make it need to be added again.
+      if (savedId) await startEdit(savedId);
+      formMsg(MMC.friendlyError(err) + (newFiles.length ? ' Bitte prüfe deine Dateien und füge fehlende erneut hinzu.' : ''));
+    }
+    btn.disabled = false; btn.textContent = label;
+  };
+  $('sent-another').onclick = function () { show('c-sent', false); newForm(); };
+  $('cancel-edit').onclick = function () { newForm(); };
+
+  function fill(e) {
+    ['full_name', 'email', 'phone', 'city', 'country', 'portfolio_url', 'social_handle', 'title', 'scenario_text', 'drive_url', 'concept_text', 'questions']
+      .forEach(function (n) { field(n).value = (e && e[n]) || ''; });
+    $('concept-count').textContent = field('concept_text').value.length + ' Zeichen';
+  }
+  // Fresh form; "About you" is carried over from the last entry / account.
+  function newForm(trackHint) {
+    st = blankState();
+    var last = entries[entries.length - 1];
+    fill(null);
+    if (last) {
+      ['full_name', 'email', 'phone', 'city', 'country', 'portfolio_url', 'social_handle'].forEach(function (n) { field(n).value = last[n] || ''; });
+      st.chips.right_now = last.right_now ? [last.right_now] : []; st.chips.open_to = last.open_to || [];
+    } else if (window.__me) { field('email').value = window.__me.email || ''; }
+    var used = entries.map(function (e) { return e.track; });
+    if (trackHint && used.indexOf(trackHint) < 0) st.track = trackHint;
+    $('cancel-edit').hidden = true;
+    formMsg(''); showErrors({}); st.tried = false;
+    renderAll();
+    form.hidden = !open || used.length >= MMC.TRACKS.length;
+  }
+  async function startEdit(id) {
+    var e = entries.find(function (x) { return x.id === id; }); if (!e) return;
+    st = blankState(); st.entryId = e.id; st.track = e.track;
+    fill(e);
+    st.chips.right_now = e.right_now ? [e.right_now] : []; st.chips.open_to = e.open_to || []; st.chips.made_for = e.made_for || [];
+    st.checks.consent = !!e.consent;
+    var slotOf = { cv: 'cv', extra: 'extra', scenario_pdf: 'scenario', concept_pdf: 'concept', post_image: 'post' };
+    for (var i = 0; i < (e.files || []).length; i++) {
+      var f = e.files[i], k = slotOf[f.kind];
+      var d = { id: f.id, name: f.file_name, size: f.size_bytes, path: f.path, preview: null };
+      if (k === 'post') d.preview = await MMC.fileUrl(f.path);
+      st.docs[k].push(d);
+    }
+    show('c-sent', false); form.hidden = false; $('cancel-edit').hidden = false;
+    formMsg(''); showErrors({}); st.tried = false;
+    renderAll();
+    form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function renderAll() { renderChips(); renderPicks(); renderTrackParts(); renderSlots(); renderChecks(); }
+
+  async function reload(keepForm) {
+    try { entries = await MMC.myEntries(); } catch (e) { console.error('[challenge] load', e); entries = []; }
+    renderEntries();
+    if (!keepForm) newForm(); else renderPicks();
+  }
+
+  // Track buttons in the "Three tracks" section jump to the form with it picked.
+  document.querySelectorAll('[data-track-cta]').forEach(function (b) {
+    b.onclick = function () {
+      pendingTrack = b.getAttribute('data-track-cta');
+      if (window.__me && !st.entryId) { if (!form.hidden) { newForm(pendingTrack); } }
+      $('enter').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+  });
+  var pendingTrack = null;
+
+  async function render(session) {
+    show('c-loading', false);
+    window.__me = session ? session.user : null;
+    show('c-closed', !open);
+    if (!session) { show('c-app', false); show('c-auth', true); setMode(open ? 'up' : 'in'); return; }
+    show('c-auth', false); show('c-app', true);
+    $('me-email').textContent = session.user.email || '';
+    if ((session.user.app_metadata || {}).provider === 'google') await MMC.markNewWebAccount();
+    await reload();
+    if (pendingTrack) newForm(pendingTrack);
+  }
+
+  st = blankState();
+  var lastUid;
+  MMC.session().then(function (s) { lastUid = s ? s.user.id : null; render(s); });
+  // Back from the confirmation email / Google: go straight to the form.
+  if (/[?&]welcome=1/.test(location.search)) setTimeout(function () { $('enter').scrollIntoView({ block: 'start' }); }, 600);
+  MMC.onAuth(function (s) {
+    var uid = s ? s.user.id : null;
+    if (lastUid === undefined || uid === lastUid) return; lastUid = uid;
+    render(s);
+  });
+})();
+</script>
+</body>
+</html>
