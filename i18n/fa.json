@@ -769,7 +769,9 @@
   "<span>Your concept, or a concept summary (if you upload your concept as a file) *</span><em data-err=\"concept_text\"></em>": "<span>ایدهٔ تو، یا خلاصهٔ آن (اگر ایده‌ات را به‌صورت فایل بارگذاری می‌کنی) *</span><em data-err=\"concept_text\"></em>",
   "<small>Instagram</small><b>@mysmatchofficial</b>": "<small>اینستاگرام</small><b>@mysmatchofficial</b>",
   "<small>TikTok</small><b>@mysmatchofficial</b>": "<small>تیک‌تاک</small><b>@mysmatchofficial</b>",
-  "<small>LinkedIn</small><b>MysMatch</b>": "<small>لینکدین</small><b>MysMatch</b>"
+  "<small>LinkedIn</small><b>MysMatch</b>": "<small>لینکدین</small><b>MysMatch</b>",
+  "The strongest entries are invited to interview for a role in our social media team.": "بهترین آثار برای مصاحبه جهت یک نقش در تیم شبکه‌های اجتماعی ما دعوت می‌شوند.",
+  "Second and third place get a gift and hiring priority.": "نفرات دوم و سوم یک هدیه و اولویت در استخدام دریافت می‌کنند."
  },
  "js": {
   "Open registration": "ثبت‌نام باز است",

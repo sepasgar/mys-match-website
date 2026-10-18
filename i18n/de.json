@@ -769,7 +769,9 @@
   "<span>Your concept, or a concept summary (if you upload your concept as a file) *</span><em data-err=\"concept_text\"></em>": "<span>Dein Konzept oder eine Zusammenfassung (wenn du dein Konzept als Datei hochlädst) *</span><em data-err=\"concept_text\"></em>",
   "<small>Instagram</small><b>@mysmatchofficial</b>": "<small>Instagram</small><b>@mysmatchofficial</b>",
   "<small>TikTok</small><b>@mysmatchofficial</b>": "<small>TikTok</small><b>@mysmatchofficial</b>",
-  "<small>LinkedIn</small><b>MysMatch</b>": "<small>LinkedIn</small><b>MysMatch</b>"
+  "<small>LinkedIn</small><b>MysMatch</b>": "<small>LinkedIn</small><b>MysMatch</b>",
+  "The strongest entries are invited to interview for a role in our social media team.": "Die stärksten Beiträge laden wir zu einem Gespräch für eine Rolle in unserem Social-Media-Team ein.",
+  "Second and third place get a gift and hiring priority.": "Der zweite und dritte Platz erhalten ein Geschenk und werden bei der Einstellung bevorzugt."
  },
  "js": {
   "Open registration": "Anmeldung offen",
