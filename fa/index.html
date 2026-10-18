@@ -564,6 +564,13 @@ html[lang=fa] .gt-kick{ font-family:inherit; letter-spacing:0; font-size:13px; }
 .safety .safe-card .kicker{ color:rgba(30,26,54,0.68); }
 .safety .safe-card h3{ color:#1E1A36; }
 .safety .safe-card p{ color:var(--ink-soft); }
+/* Clear top bar over the hero video (owner, 2026-10-18): no gradient pill
+   while the video is on screen; it fades in once the visitor scrolls past.
+   The open phone menu always gets its background so the links stay readable. */
+.nav{ transition:background .35s ease, border-color .35s ease, box-shadow .35s ease; }
+.nav.on-hero:not(.open){ background:transparent; border-color:transparent; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; }
+.nav.on-hero:not(.open) .progress{ opacity:0; }
+.nav.on-hero:not(.open) .nav-links a:not(.gold), .nav.on-hero:not(.open) .brand, .nav.on-hero:not(.open) .lang-switch a{ text-shadow:0 1px 10px rgba(255,255,255,0.7); }
 </style>
 <!-- i18n:head -->
 <link rel="alternate" hreflang="en" href="https://www.mysmatch.com/">
@@ -575,7 +582,7 @@ html[lang=fa] .gt-kick{ font-family:inherit; letter-spacing:0; font-size:13px; }
 </head>
 <body>
 <!-- ════════ HEADER ════════ -->
-<header class="nav" id="nav">
+<header class="nav on-hero" id="nav">
 <div class="nav-in">
 <a class="brand" href="/fa/">
 <img alt="" height="36" src="/logo-512.png" width="36"/>
@@ -975,6 +982,10 @@ html[lang=fa] .gt-kick{ font-family:inherit; letter-spacing:0; font-size:13px; }
 
   // Mobile menu: toggle, and close after tapping a link.
   var nav = document.getElementById('nav'), btn = document.getElementById('menu-btn');
+  // Clear top bar while the hero video is on screen (see .nav.on-hero).
+  var heroEl = document.getElementById('top');
+  function navOnHero() { nav.classList.toggle('on-hero', !!heroEl && window.scrollY < heroEl.offsetHeight - nav.offsetHeight - 24); }
+  window.addEventListener('scroll', navOnHero, { passive: true }); window.addEventListener('resize', navOnHero); navOnHero();
   function setMenu(open) { nav.classList.toggle('open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
   btn.addEventListener('click', function () { setMenu(!nav.classList.contains('open')); });
   document.querySelectorAll('#nav-links a').forEach(function (a) { a.addEventListener('click', function () { setMenu(false); }); });
