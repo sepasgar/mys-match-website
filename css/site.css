@@ -339,3 +339,6 @@ section.page-hero .fact svg{ color:var(--indigo); }
    div. prefix = one notch above the challenge page's own <style>. */
 div.c-card-dark .grad-text{ background:none; color:var(--indigo); -webkit-text-fill-color:var(--indigo); }
 div.c-card-dark .kicker{ color:rgba(30,26,54,0.7); }
+
+/* Postal address in the footer (owner, 2026-10-19); always left-to-right, also on the Persian pages. */
+.foot-addr{ direction:ltr; unicode-bidi:isolate; }
