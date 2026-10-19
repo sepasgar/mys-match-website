@@ -5,10 +5,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>چالش تولید محتوا — MysMatch</title>
-<meta content="برای MysMatch سناریو بنویس، پست طراحی کن یا ویدیو بساز — انگار همین حالا مدیر شبکه‌های اجتماعی ما هستی. مهلت ارسال تا ۱۵ دسامبر ۲۰۲۶." name="description"/>
+<meta content="برای MysMatch سناریو بنویس، پست طراحی کن یا ویدیو بساز — انگار همین حالا مدیر شبکه‌های اجتماعی ما هستی. مهلت ارسال تا ۱ دسامبر ۲۰۲۶." name="description"/>
 <meta content="#0F1020" name="theme-color"/>
 <meta content="چالش تولید محتوا — MysMatch" property="og:title"/>
-<meta content="فید ما را بساز. به تیم بپیوند. مهلت ارسال تا ۱۵ دسامبر ۲۰۲۶." property="og:description"/>
+<meta content="فید ما را بساز. به تیم بپیوند. مهلت ارسال تا ۱ دسامبر ۲۰۲۶." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://www.mysmatch.com/fa/challenge/" property="og:url"/>
 <meta content="https://www.mysmatch.com/og-image-v2.jpg" property="og:image"/>
@@ -322,7 +322,7 @@
 </div>
 </div>
 <div class="c-count-w">
-<span class="kicker" style="color:var(--faint)">پایان مهلت ارسال · ۱۵ دسامبر ۲۰۲۶</span>
+<span class="kicker" style="color:var(--faint)">پایان مهلت ارسال · ۱ دسامبر ۲۰۲۶</span>
 <div aria-live="off" class="c-count" id="countdown">
 <div class="c-unit"><b id="cd-d">--</b><span>روز</span></div>
 <div class="c-unit"><b id="cd-h">--</b><span>ساعت</span></div>
@@ -442,7 +442,7 @@
 <div class="c-card-dark" hidden="" id="c-closed">
 <span class="kicker">مهلت ارسال تمام شد</span>
 <h3>تمام شد. <span class="grad-text">ممنونیم.</span></h3>
-<p>مهلت ارسال ۱۵ دسامبر ۲۰۲۶ تمام شد. اگر اثری فرستاده‌ای، پایین وارد شو تا وضعیتش را ببینی.</p>
+<p>مهلت ارسال ۱ دسامبر ۲۰۲۶ تمام شد. اگر اثری فرستاده‌ای، پایین وارد شو تا وضعیتش را ببینی.</p>
 </div>
 <!-- Not signed in -->
 <div class="c-auth" hidden="" id="c-auth">
@@ -486,7 +486,7 @@
 <div class="c-card-dark" hidden="" id="c-sent">
 <span class="kicker" id="sent-kick">اثرت رسید</span>
 <h3>ممنون <span id="sent-name">دوست من</span>. <span class="grad-text">در چالش هستی.</span></h3>
-<p>بعد از پایان مهلت در ۱۵ دسامبر از طریق <b id="sent-email"></b> با تو تماس می‌گیریم. تا آن موقع می‌توانی اثرت را همین‌جا ویرایش کنی.</p>
+<p>بعد از پایان مهلت در ۱ دسامبر از طریق <b id="sent-email"></b> با تو تماس می‌گیریم. تا آن موقع می‌توانی اثرت را همین‌جا ویرایش کنی.</p>
 <!-- WHY (Oct 2026): applicants didn't know they can follow their entry; say
                where (this page, signed in) and what the stages are. -->
 <div class="c-track-note">
@@ -558,7 +558,7 @@
 <div class="send-row">
 <button class="btn btn-dark send" id="send-btn" type="submit">ارسال اثر ←</button>
 <button class="btn btn-light" hidden="" id="cancel-edit" type="button">لغو ویرایش</button>
-<span class="summary" id="summary">بعد از ۱۵ دسامبر ۲۰۲۶ پاسخ می‌دهیم.</span>
+<span class="summary" id="summary">بعد از ۱ دسامبر ۲۰۲۶ پاسخ می‌دهیم.</span>
 </div>
 </div>
 </div>
@@ -597,7 +597,8 @@
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
   var fmtSize = function (b) { return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; };
-  var DEADLINE = new Date('2026-12-15T23:59:59+01:00').getTime();
+  // Deadline moved to 1 Dec 2026 (owner, 2026-10-19); the server (challenges.closes_at) decides.
+  var DEADLINE = new Date('2026-12-01T23:59:59+01:00').getTime();
   var OPTIONS = {
     right_now: ['Studying', 'Graduated', 'Working', 'Freelancing'],
     open_to: ['Full-time', 'Part-time', 'Freelance'],
@@ -904,7 +905,7 @@
     form.querySelectorAll('[data-err]').forEach(function (el) { el.textContent = e[el.getAttribute('data-err')] || ''; });
     ['full_name', 'email', 'country', 'portfolio_url', 'title', 'scenario_text', 'drive_url', 'concept_text'].forEach(function (n) { field(n).classList.toggle('bad', !!e[n]); });
     var n = Object.keys(e).length;
-    $('summary').textContent = n ? n + ' بخش نیاز به بررسی دارد' : 'بعد از ۱۵ دسامبر ۲۰۲۶ پاسخ می‌دهیم.';
+    $('summary').textContent = n ? n + ' بخش نیاز به بررسی دارد' : 'بعد از ۱ دسامبر ۲۰۲۶ پاسخ می‌دهیم.';
     $('summary').classList.toggle('bad', !!n);
     renderPicks(); renderChecks(); renderSlot('post');
   }

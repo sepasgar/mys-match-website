@@ -798,7 +798,15 @@
   "Cash gift, an invitation to interview and priority in hiring for the next hiring round.": "هدیهٔ نقدی، دعوت به مصاحبه و اولویت در دور بعدی استخدام.",
   "The winner of each track gets a job contract in our social media team (after a short interview).": "برندهٔ هر بخش یک قرارداد کاری در تیم شبکه‌های اجتماعی ما می‌گیرد (پس از یک مصاحبهٔ کوتاه).",
   "Second and third place in each track get a cash gift, an invitation to interview and priority in hiring for the next hiring round.": "نفرات دوم و سوم هر بخش یک هدیهٔ نقدی، دعوت به مصاحبه و اولویت در دور بعدی استخدام می‌گیرند.",
-  "The MysMatch team judges the idea, the craft, and how well an entry fits our audience and channels. You can follow your status (Submitted, In review, Shortlisted, Interview, Selected / Not selected) on the challenge page after signing in. Apart from the job contract for each track winner, being shortlisted or interviewed doesn't guarantee a job offer. Our decisions are final.": "تیم MysMatch ایده، کیفیت اجرا و میزان تناسب اثر با مخاطب و کانال‌های ما را داوری می‌کند. بعد از ورود، وضعیتت (ارسال شد، در حال بررسی، فهرست نهایی، مصاحبه، انتخاب شد / انتخاب نشد) را در صفحهٔ چالش می‌بینی. به‌جز قرارداد کاری برندهٔ هر بخش، رسیدن به فهرست نهایی یا مصاحبه تضمینی برای پیشنهاد کار نیست. تصمیم‌های ما نهایی است."
+  "The MysMatch team judges the idea, the craft, and how well an entry fits our audience and channels. You can follow your status (Submitted, In review, Shortlisted, Interview, Selected / Not selected) on the challenge page after signing in. Apart from the job contract for each track winner, being shortlisted or interviewed doesn't guarantee a job offer. Our decisions are final.": "تیم MysMatch ایده، کیفیت اجرا و میزان تناسب اثر با مخاطب و کانال‌های ما را داوری می‌کند. بعد از ورود، وضعیتت (ارسال شد، در حال بررسی، فهرست نهایی، مصاحبه، انتخاب شد / انتخاب نشد) را در صفحهٔ چالش می‌بینی. به‌جز قرارداد کاری برندهٔ هر بخش، رسیدن به فهرست نهایی یا مصاحبه تضمینی برای پیشنهاد کار نیست. تصمیم‌های ما نهایی است.",
+  "Submissions close · 1 Dec 2026": "پایان مهلت ارسال · ۱ دسامبر ۲۰۲۶",
+  "Submissions closed on 1 December 2026. If you sent an entry, sign in below to follow its status.": "مهلت ارسال ۱ دسامبر ۲۰۲۶ تمام شد. اگر اثری فرستاده‌ای، پایین وارد شو تا وضعیتش را ببینی.",
+  "We'll get back to you at <b id=\"sent-email\"></b> after submissions close on 1 December. You can edit your entry here until then.": "بعد از پایان مهلت در ۱ دسامبر از طریق <b id=\"sent-email\"></b> با تو تماس می‌گیریم. تا آن موقع می‌توانی اثرت را همین‌جا ویرایش کنی.",
+  "We reply after 1 December 2026.": "بعد از ۱ دسامبر ۲۰۲۶ پاسخ می‌دهیم.",
+  "Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. Submissions close 1 December 2026.": "برای MysMatch سناریو بنویس، پست طراحی کن یا ویدیو بساز — انگار همین حالا مدیر شبکه‌های اجتماعی ما هستی. مهلت ارسال تا ۱ دسامبر ۲۰۲۶.",
+  "Make our feed. Join the team. Submissions close 1 December 2026.": "فید ما را بساز. به تیم بپیوند. مهلت ارسال تا ۱ دسامبر ۲۰۲۶.",
+  "Send one entry per track (Scenario, Creative post, Content creator) by <strong>1 December 2026, 23:59 (Berlin time)</strong>.": "تا <strong>۱ دسامبر ۲۰۲۶، ساعت ۲۳:۵۹ (به وقت برلین)</strong> در هر بخش (سناریو، پست خلاقانه، تولیدکنندهٔ محتوا) یک اثر بفرست.",
+  "Write a scenario, design a post or film a video for MysMatch. The best entries are invited to interview. Submissions close 1 December 2026.": "برای MysMatch سناریو بنویس، پست طراحی کن یا ویدیو بساز. بهترین آثار به مصاحبه دعوت می‌شوند. مهلت ارسال تا ۱ دسامبر ۲۰۲۶."
  },
  "js": {
   "Open registration": "ثبت‌نام باز است",
@@ -1005,7 +1013,8 @@
   "Preparing…": "در حال آماده‌سازی…",
   "Could not create the Excel file. Please try again, or use Export CSV.": "فایل اکسل ساخته نشد. لطفاً دوباره امتحان کن یا از خروجی CSV استفاده کن.",
   "Add at least one image or a Google Drive link": "دست‌کم یک تصویر یا لینک گوگل درایو اضافه کن",
-  "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": "<div class=\"c-prog\"><span class=\"kicker\">پیشرفت تو</span><ol class=\"c-stepper\">"
+  "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": "<div class=\"c-prog\"><span class=\"kicker\">پیشرفت تو</span><ol class=\"c-stepper\">",
+  "We reply after 1 December 2026.": "بعد از ۱ دسامبر ۲۰۲۶ پاسخ می‌دهیم."
  },
  "jsraw": {
   "{ key: 'Sports', label: 'Sports' }": "{ key: 'Sports', label: 'ورزش' }",

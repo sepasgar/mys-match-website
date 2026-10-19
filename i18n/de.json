@@ -798,7 +798,15 @@
   "Cash gift, an invitation to interview and priority in hiring for the next hiring round.": "Geldgeschenk, eine Einladung zum Gespräch und Vorrang in der nächsten Einstellungsrunde.",
   "The winner of each track gets a job contract in our social media team (after a short interview).": "Die Gewinnerin oder der Gewinner jeder Kategorie erhält einen Arbeitsvertrag in unserem Social-Media-Team (nach einem kurzen Gespräch).",
   "Second and third place in each track get a cash gift, an invitation to interview and priority in hiring for the next hiring round.": "Der zweite und dritte Platz jeder Kategorie erhalten ein Geldgeschenk, eine Einladung zum Gespräch und Vorrang in der nächsten Einstellungsrunde.",
-  "The MysMatch team judges the idea, the craft, and how well an entry fits our audience and channels. You can follow your status (Submitted, In review, Shortlisted, Interview, Selected / Not selected) on the challenge page after signing in. Apart from the job contract for each track winner, being shortlisted or interviewed doesn't guarantee a job offer. Our decisions are final.": "Das MysMatch-Team bewertet die Idee, die Umsetzung und wie gut ein Beitrag zu unserer Zielgruppe und unseren Kanälen passt. Deinen Status (Eingereicht, In Prüfung, Engere Auswahl, Gespräch, Ausgewählt / Nicht ausgewählt) siehst du nach der Anmeldung auf der Challenge-Seite. Abgesehen vom Arbeitsvertrag für die Gewinner jeder Kategorie garantieren engere Auswahl oder ein Gespräch kein Jobangebot. Unsere Entscheidungen sind endgültig."
+  "The MysMatch team judges the idea, the craft, and how well an entry fits our audience and channels. You can follow your status (Submitted, In review, Shortlisted, Interview, Selected / Not selected) on the challenge page after signing in. Apart from the job contract for each track winner, being shortlisted or interviewed doesn't guarantee a job offer. Our decisions are final.": "Das MysMatch-Team bewertet die Idee, die Umsetzung und wie gut ein Beitrag zu unserer Zielgruppe und unseren Kanälen passt. Deinen Status (Eingereicht, In Prüfung, Engere Auswahl, Gespräch, Ausgewählt / Nicht ausgewählt) siehst du nach der Anmeldung auf der Challenge-Seite. Abgesehen vom Arbeitsvertrag für die Gewinner jeder Kategorie garantieren engere Auswahl oder ein Gespräch kein Jobangebot. Unsere Entscheidungen sind endgültig.",
+  "Submissions close · 1 Dec 2026": "Einsendeschluss · 1. Dez. 2026",
+  "Submissions closed on 1 December 2026. If you sent an entry, sign in below to follow its status.": "Die Einreichung endete am 1. Dezember 2026. Wenn du einen Beitrag geschickt hast, melde dich unten an, um seinen Status zu sehen.",
+  "We'll get back to you at <b id=\"sent-email\"></b> after submissions close on 1 December. You can edit your entry here until then.": "Wir melden uns nach Einsendeschluss am 1. Dezember unter <b id=\"sent-email\"></b>. Bis dahin kannst du deinen Beitrag hier bearbeiten.",
+  "We reply after 1 December 2026.": "Wir antworten nach dem 1. Dezember 2026.",
+  "Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. Submissions close 1 December 2026.": "Schreib ein Szenario, gestalte einen Post oder dreh ein Video für MysMatch – als wärst du schon unser Social-Media-Manager. Einsendeschluss ist der 1. Dezember 2026.",
+  "Make our feed. Join the team. Submissions close 1 December 2026.": "Gestalte unseren Feed. Komm ins Team. Einsendeschluss ist der 1. Dezember 2026.",
+  "Send one entry per track (Scenario, Creative post, Content creator) by <strong>1 December 2026, 23:59 (Berlin time)</strong>.": "Schick bis <strong>1. Dezember 2026, 23:59 Uhr (Berliner Zeit)</strong> einen Beitrag pro Kategorie (Szenario, Kreativer Post, Content Creator).",
+  "Write a scenario, design a post or film a video for MysMatch. The best entries are invited to interview. Submissions close 1 December 2026.": "Schreib ein Szenario, gestalte einen Post oder dreh ein Video für MysMatch. Die besten Beiträge laden wir zum Gespräch ein. Einsendeschluss ist der 1. Dezember 2026."
  },
  "js": {
   "Open registration": "Anmeldung offen",
@@ -1005,7 +1013,8 @@
   "Preparing…": "Wird vorbereitet…",
   "Could not create the Excel file. Please try again, or use Export CSV.": "Die Excel-Datei konnte nicht erstellt werden. Bitte versuche es noch einmal oder nutze „CSV exportieren“.",
   "Add at least one image or a Google Drive link": "Füg mindestens ein Bild oder einen Google-Drive-Link hinzu",
-  "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": "<div class=\"c-prog\"><span class=\"kicker\">Dein Fortschritt</span><ol class=\"c-stepper\">"
+  "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": "<div class=\"c-prog\"><span class=\"kicker\">Dein Fortschritt</span><ol class=\"c-stepper\">",
+  "We reply after 1 December 2026.": "Wir antworten nach dem 1. Dezember 2026."
  },
  "jsraw": {
   "{ key: 'Sports', label: 'Sports' }": "{ key: 'Sports', label: 'Sport' }",

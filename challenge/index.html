@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Creator Challenge — MysMatch</title>
-<meta name="description" content="Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. Submissions close 15 December 2026.">
+<meta name="description" content="Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. Submissions close 1 December 2026.">
 <meta name="theme-color" content="#0F1020">
 
 <meta property="og:title" content="Creator Challenge — MysMatch">
-<meta property="og:description" content="Make our feed. Join the team. Submissions close 15 December 2026.">
+<meta property="og:description" content="Make our feed. Join the team. Submissions close 1 December 2026.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://www.mysmatch.com/challenge/">
 <meta property="og:image" content="https://www.mysmatch.com/og-image-v2.jpg">
@@ -326,7 +326,7 @@
         </div>
       </div>
       <div class="c-count-w">
-        <span class="kicker" style="color:var(--faint)">Submissions close · 15 Dec 2026</span>
+        <span class="kicker" style="color:var(--faint)">Submissions close · 1 Dec 2026</span>
         <div class="c-count" id="countdown" aria-live="off">
           <div class="c-unit"><b id="cd-d">--</b><span>Days</span></div>
           <div class="c-unit"><b id="cd-h">--</b><span>Hours</span></div>
@@ -453,7 +453,7 @@
     <div id="c-closed" class="c-card-dark" hidden>
       <span class="kicker">Submissions closed</span>
       <h3>That's a wrap. <span class="grad-text">Thank you.</span></h3>
-      <p>Submissions closed on 15 December 2026. If you sent an entry, sign in below to follow its status.</p>
+      <p>Submissions closed on 1 December 2026. If you sent an entry, sign in below to follow its status.</p>
     </div>
 
     <!-- Not signed in -->
@@ -501,7 +501,7 @@
         <div id="c-sent" class="c-card-dark" hidden>
           <span class="kicker" id="sent-kick">Entry received</span>
           <h3>Thanks, <span id="sent-name">there</span>. <span class="grad-text">You're in.</span></h3>
-          <p>We'll get back to you at <b id="sent-email"></b> after submissions close on 15 December. You can edit your entry here until then.</p>
+          <p>We'll get back to you at <b id="sent-email"></b> after submissions close on 1 December. You can edit your entry here until then.</p>
           <!-- WHY (Oct 2026): applicants didn't know they can follow their entry; say
                where (this page, signed in) and what the stages are. -->
           <div class="c-track-note">
@@ -580,7 +580,7 @@
               <div class="send-row">
                 <button type="submit" class="btn btn-dark send" id="send-btn">Send entry →</button>
                 <button type="button" class="btn btn-light" id="cancel-edit" hidden>Cancel editing</button>
-                <span class="summary" id="summary">We reply after 15 December 2026.</span>
+                <span class="summary" id="summary">We reply after 1 December 2026.</span>
               </div>
             </div>
           </div>
@@ -621,7 +621,8 @@
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
   var fmtSize = function (b) { return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; };
-  var DEADLINE = new Date('2026-12-15T23:59:59+01:00').getTime();
+  // Deadline moved to 1 Dec 2026 (owner, 2026-10-19); the server (challenges.closes_at) decides.
+  var DEADLINE = new Date('2026-12-01T23:59:59+01:00').getTime();
   var OPTIONS = {
     right_now: ['Studying', 'Graduated', 'Working', 'Freelancing'],
     open_to: ['Full-time', 'Part-time', 'Freelance'],
@@ -928,7 +929,7 @@
     form.querySelectorAll('[data-err]').forEach(function (el) { el.textContent = e[el.getAttribute('data-err')] || ''; });
     ['full_name', 'email', 'country', 'portfolio_url', 'title', 'scenario_text', 'drive_url', 'concept_text'].forEach(function (n) { field(n).classList.toggle('bad', !!e[n]); });
     var n = Object.keys(e).length;
-    $('summary').textContent = n ? n + (n === 1 ? ' field needs' : ' fields need') + ' your attention' : 'We reply after 15 December 2026.';
+    $('summary').textContent = n ? n + (n === 1 ? ' field needs' : ' fields need') + ' your attention' : 'We reply after 1 December 2026.';
     $('summary').classList.toggle('bad', !!n);
     renderPicks(); renderChecks(); renderSlot('post');
   }

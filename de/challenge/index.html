@@ -5,10 +5,10 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title>Creator Challenge — MysMatch</title>
-<meta content="Schreib ein Szenario, gestalte einen Post oder dreh ein Video für MysMatch – als wärst du schon unser Social-Media-Manager. Einsendeschluss ist der 15. Dezember 2026." name="description"/>
+<meta content="Schreib ein Szenario, gestalte einen Post oder dreh ein Video für MysMatch – als wärst du schon unser Social-Media-Manager. Einsendeschluss ist der 1. Dezember 2026." name="description"/>
 <meta content="#0F1020" name="theme-color"/>
 <meta content="Creator Challenge — MysMatch" property="og:title"/>
-<meta content="Gestalte unseren Feed. Komm ins Team. Einsendeschluss ist der 15. Dezember 2026." property="og:description"/>
+<meta content="Gestalte unseren Feed. Komm ins Team. Einsendeschluss ist der 1. Dezember 2026." property="og:description"/>
 <meta content="website" property="og:type"/>
 <meta content="https://www.mysmatch.com/de/challenge/" property="og:url"/>
 <meta content="https://www.mysmatch.com/og-image-v2.jpg" property="og:image"/>
@@ -322,7 +322,7 @@
 </div>
 </div>
 <div class="c-count-w">
-<span class="kicker" style="color:var(--faint)">Einsendeschluss · 15. Dez. 2026</span>
+<span class="kicker" style="color:var(--faint)">Einsendeschluss · 1. Dez. 2026</span>
 <div aria-live="off" class="c-count" id="countdown">
 <div class="c-unit"><b id="cd-d">--</b><span>Tage</span></div>
 <div class="c-unit"><b id="cd-h">--</b><span>Stunden</span></div>
@@ -442,7 +442,7 @@
 <div class="c-card-dark" hidden="" id="c-closed">
 <span class="kicker">Einreichung geschlossen</span>
 <h3>Das war's. <span class="grad-text">Danke!</span></h3>
-<p>Die Einreichung endete am 15. Dezember 2026. Wenn du einen Beitrag geschickt hast, melde dich unten an, um seinen Status zu sehen.</p>
+<p>Die Einreichung endete am 1. Dezember 2026. Wenn du einen Beitrag geschickt hast, melde dich unten an, um seinen Status zu sehen.</p>
 </div>
 <!-- Not signed in -->
 <div class="c-auth" hidden="" id="c-auth">
@@ -486,7 +486,7 @@
 <div class="c-card-dark" hidden="" id="c-sent">
 <span class="kicker" id="sent-kick">Beitrag erhalten</span>
 <h3>Danke, <span id="sent-name">du</span>. <span class="grad-text">Du bist dabei.</span></h3>
-<p>Wir melden uns nach Einsendeschluss am 15. Dezember unter <b id="sent-email"></b>. Bis dahin kannst du deinen Beitrag hier bearbeiten.</p>
+<p>Wir melden uns nach Einsendeschluss am 1. Dezember unter <b id="sent-email"></b>. Bis dahin kannst du deinen Beitrag hier bearbeiten.</p>
 <!-- WHY (Oct 2026): applicants didn't know they can follow their entry; say
                where (this page, signed in) and what the stages are. -->
 <div class="c-track-note">
@@ -558,7 +558,7 @@
 <div class="send-row">
 <button class="btn btn-dark send" id="send-btn" type="submit">Beitrag senden →</button>
 <button class="btn btn-light" hidden="" id="cancel-edit" type="button">Bearbeitung abbrechen</button>
-<span class="summary" id="summary">Wir antworten nach dem 15. Dezember 2026.</span>
+<span class="summary" id="summary">Wir antworten nach dem 1. Dezember 2026.</span>
 </div>
 </div>
 </div>
@@ -597,7 +597,8 @@
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
   var fmtSize = function (b) { return b > 1048576 ? (b / 1048576).toFixed(1) + ' MB' : Math.max(1, Math.round(b / 1024)) + ' KB'; };
-  var DEADLINE = new Date('2026-12-15T23:59:59+01:00').getTime();
+  // Deadline moved to 1 Dec 2026 (owner, 2026-10-19); the server (challenges.closes_at) decides.
+  var DEADLINE = new Date('2026-12-01T23:59:59+01:00').getTime();
   var OPTIONS = {
     right_now: ['Studying', 'Graduated', 'Working', 'Freelancing'],
     open_to: ['Full-time', 'Part-time', 'Freelance'],
@@ -904,7 +905,7 @@
     form.querySelectorAll('[data-err]').forEach(function (el) { el.textContent = e[el.getAttribute('data-err')] || ''; });
     ['full_name', 'email', 'country', 'portfolio_url', 'title', 'scenario_text', 'drive_url', 'concept_text'].forEach(function (n) { field(n).classList.toggle('bad', !!e[n]); });
     var n = Object.keys(e).length;
-    $('summary').textContent = n ? n + (n === 1 ? ' Feld braucht' : ' Felder brauchen') + ' deine Aufmerksamkeit' : 'Wir antworten nach dem 15. Dezember 2026.';
+    $('summary').textContent = n ? n + (n === 1 ? ' Feld braucht' : ' Felder brauchen') + ' deine Aufmerksamkeit' : 'Wir antworten nach dem 1. Dezember 2026.';
     $('summary').classList.toggle('bad', !!n);
     renderPicks(); renderChecks(); renderSlot('post');
   }
