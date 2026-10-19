@@ -774,7 +774,17 @@
   "<b>You're signed in as a judge.</b> Entries are reviewed on the judging page.": "<b>با حساب داور وارد شده‌ای.</b> آثار در صفحهٔ داوری بررسی می‌شوند.",
   "Open judging dashboard →": "باز کردن صفحهٔ داوری ←",
   "Second and third place in each track are also invited to interview, and get a surprise gift and priority in hiring.": "نفرات دوم و سوم هر بخش هم به مصاحبه دعوت می‌شوند و یک هدیهٔ غافلگیرکننده و اولویت در استخدام دریافت می‌کنند.",
-  "Jülicher Str. 209 q-s, 52070 Aachen": "Jülicher Str. 209 q-s, 52070 Aachen"
+  "Jülicher Str. 209 q-s, 52070 Aachen": "Jülicher Str. 209 q-s, 52070 Aachen",
+  "/ What you can win": "/ جوایز",
+  "Prizes in <span style=\"color:var(--violet)\">every track.</span>": "جایزه در <span style=\"color:var(--violet)\">هر بخش.</span>",
+  "Each of the three tracks has its own winners. <a href=\"/challenge/rules.html\">Rules &amp; privacy</a>": "هر کدام از سه بخش برندگان خودش را دارد. <a href=\"/challenge/rules.html\">قوانین و حریم خصوصی</a>",
+  "1st": "اول",
+  "2nd": "دوم",
+  "3rd": "سوم",
+  "Interview for our team": "مصاحبه برای تیم ما",
+  "The winner is invited to interview for a role in our social media team.": "برنده برای مصاحبه جهت یک نقش در تیم شبکه‌های اجتماعی ما دعوت می‌شود.",
+  "Interview + surprise gift": "مصاحبه + هدیهٔ غافلگیرکننده",
+  "Also invited to interview, with a surprise gift and priority in hiring.": "او هم به مصاحبه دعوت می‌شود و یک هدیهٔ غافلگیرکننده و اولویت در استخدام می‌گیرد."
  },
  "js": {
   "Open registration": "ثبت‌نام باز است",

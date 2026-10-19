@@ -774,7 +774,17 @@
   "<b>You're signed in as a judge.</b> Entries are reviewed on the judging page.": "<b>Du bist als Jury angemeldet.</b> Beiträge werden auf der Jury-Seite bewertet.",
   "Open judging dashboard →": "Jury-Seite öffnen →",
   "Second and third place in each track are also invited to interview, and get a surprise gift and priority in hiring.": "Der zweite und dritte Platz jeder Kategorie werden ebenfalls zum Gespräch eingeladen und erhalten ein Überraschungsgeschenk sowie Vorrang bei der Einstellung.",
-  "Jülicher Str. 209 q-s, 52070 Aachen": "Jülicher Str. 209 q-s, 52070 Aachen"
+  "Jülicher Str. 209 q-s, 52070 Aachen": "Jülicher Str. 209 q-s, 52070 Aachen",
+  "/ What you can win": "/ Was du gewinnen kannst",
+  "Prizes in <span style=\"color:var(--violet)\">every track.</span>": "Preise in <span style=\"color:var(--violet)\">jeder Kategorie.</span>",
+  "Each of the three tracks has its own winners. <a href=\"/challenge/rules.html\">Rules &amp; privacy</a>": "Jede der drei Kategorien hat eigene Gewinner. <a href=\"/challenge/rules.html\">Regeln &amp; Datenschutz</a>",
+  "1st": "1.",
+  "2nd": "2.",
+  "3rd": "3.",
+  "Interview for our team": "Gespräch für unser Team",
+  "The winner is invited to interview for a role in our social media team.": "Die Gewinnerin oder der Gewinner wird zu einem Gespräch für eine Rolle in unserem Social-Media-Team eingeladen.",
+  "Interview + surprise gift": "Gespräch + Überraschungsgeschenk",
+  "Also invited to interview, with a surprise gift and priority in hiring.": "Ebenfalls zum Gespräch eingeladen, mit Überraschungsgeschenk und Vorrang bei der Einstellung."
  },
  "js": {
   "Open registration": "Anmeldung offen",
