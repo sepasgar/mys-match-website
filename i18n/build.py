@@ -39,6 +39,8 @@ PAGES = [
     # Oct 18 2026 (owner: "all pages in all languages"): challenge, links, org dashboard.
     # challenge/judge.html stays English (MysMatch team only); 404.html translates itself (GitHub serves one 404 for every path).
     'challenge/index.html', 'challenge/rules.html', 'challenge/reset.html', 'links/index.html', 'dashboard.html',
+    # Oct 20 2026: legal notice (§5 DDG), linked in every footer and from the app.
+    'impressum/index.html',
 ]
 BLOCK = {'div', 'p', 'section', 'article', 'header', 'footer', 'nav', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4',
          'h5', 'h6', 'table', 'thead', 'tbody', 'tr', 'td', 'th', 'form', 'main', 'aside', 'figure', 'blockquote',
