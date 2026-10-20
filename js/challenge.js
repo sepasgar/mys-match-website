@@ -148,6 +148,9 @@
     if (r.data.user && !r.data.session && r.data.user.identities && r.data.user.identities.length === 0) {
       return { ok: false, error: T('An account with this email already exists. Please sign in.') };
     }
+    // Plausible "Challenge signup" (js/analytics.js): counted here, after the
+    // account really exists, so failed tries and duplicates don't count.
+    if (window.mmTrack) window.mmTrack('Challenge signup', { method: 'email' });
     return { ok: true, needsConfirm: !r.data.session };
   }
   // Send the sign-up confirmation email again (page allows it once a minute;
@@ -183,6 +186,9 @@
   async function markNewWebAccount() {
     var r = await db.rpc('mark_new_web_account');
     if (r.error) console.warn('[MMC] mark_new_web_account', r.error.message);
+    // The RPC returns true only on the one call that marks a fresh account, so
+    // returning Google users (and page reloads) are not counted as sign-ups.
+    else if (r.data === true && window.mmTrack) window.mmTrack('Challenge signup', { method: 'google' });
   }
   function friendlyAuth(e) {
     var m = (e && e.message) || T('Something went wrong.');
