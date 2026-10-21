@@ -59,6 +59,15 @@
 
   // One event: full details when web registration is on, a preview otherwise
   // (see listEvents), null when it doesn't exist or is private.
+  // Minimum attendees (Oct 2026): { min_attendees, registered } for a public
+  // event, or null (no minimum / not public / error → no notice shown).
+  async function getMinimum(id) {
+    const { data, error } = await db.rpc('get_event_minimum', { p_event_id: id });
+    if (error) { console.error('[MM] getMinimum', error.message); return null; }
+    const row = Array.isArray(data) ? data[0] : data;
+    return row && row.min_attendees != null ? row : null;
+  }
+
   async function getEvent(id) {
     const { data, error } = await db.rpc('get_web_event', { p_id: id });
     if (error) { console.error('[MM] getEvent', error.message); return null; }
@@ -263,7 +272,7 @@
 
   window.MM = {
     db, SUPABASE_URL,
-    listEvents, getEvent, getCounts, countsBatch, registerGuest,
+    listEvents, getEvent, getCounts, getMinimum, countsBatch, registerGuest,
     uploadGuestDocument, signEventDoc,
     signIn, signOut, currentUser, myEvents, eventAttendees, setCheckIn,
     myOrganization, orgEvents, orgPerks, perkClaimCount, orgRedemptions, orgFollows,

@@ -32,6 +32,9 @@
   .hero-img{ width:100%; height:auto; max-height:min(110vh,1100px); object-fit:cover; border-radius:36px; background:#ECEAF4; display:block; box-shadow:0 40px 80px -30px rgba(60,40,140,0.3); }
   .hero-img.placeholder{ aspect-ratio:4/3; display:flex; align-items:center; justify-content:center; font-size:72px; background:linear-gradient(135deg,rgba(123,92,255,0.10),rgba(233,75,154,0.10)); }
   .desc-wrap{ display:flex; flex-direction:column; gap:16px; }
+  /* Minimum-attendees notice (Oct 2026), same amber as the app; first in the column. */
+  .min-notice{ display:flex; gap:12px; align-items:flex-start; padding:18px 20px; border-radius:20px; background:#FFF6E5; border:1px solid #F5C26B; color:#7A4B00; font-size:16px; line-height:1.55; font-weight:500; }
+  .min-notice svg{ flex:none; margin-top:2px; }
   .desc{ font-size:clamp(17px,1.25vw,20px); color:var(--ink-2); line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; }
   @media (min-width:961px){ #register-card{ position:sticky; top:120px; } }
   @media (max-width:960px){
@@ -41,6 +44,7 @@
     .ev-left > .hero-img{ order:1; }
     #register-card{ order:2; }
     .ev-left > .desc-wrap{ order:3; }
+    .ev-left > .min-notice{ order:0; }
   }
   /* WHY smaller on phones: long single-word titles (e.g. German compounds) broke mid-word. */
   @media (max-width:640px){ .ev-hero h1{ font-size:clamp(30px,9vw,44px); } }
@@ -149,6 +153,11 @@
 <section class="sheet sheet-white ev-main" hidden="" id="event">
 <div class="in">
 <div class="ev-left" id="event-content"></div>
+<!-- Minimum-attendees notice texts (Oct 2026). Kept in the page, not in the
+         script, so i18n/build.py translates them; the script copies one and
+         fills in the numbers. -->
+<p hidden="" id="min-tpl-one">Dieses Event findet nur statt, wenn sich mindestens <b data-min=""></b> Personen anmelden – es fehlt noch <b data-missing=""></b> Anmeldung. Sonst wird es abgesagt.</p>
+<p hidden="" id="min-tpl-other">Dieses Event findet nur statt, wenn sich mindestens <b data-min=""></b> Personen anmelden – es fehlen noch <b data-missing=""></b> Anmeldungen. Sonst wird es abgesagt.</p>
 <div class="card" id="register-card">
 <h2>Anmelden</h2>
 <div class="sub" id="register-sub">Sichere dir deinen Platz – dauert nur einen Moment.</div>
@@ -287,10 +296,14 @@
         } catch (e) { return ''; }
       }
 
-      Promise.all([MM.getEvent(id), MM.getCounts(id)]).then(([ev, counts]) => {
+      // getMinimum: optional (null → no notice), and never blocks the page —
+      // also not when a browser still has the older js/supabase.js cached.
+      const minP = (typeof MM.getMinimum === 'function' ? MM.getMinimum(id) : Promise.resolve(null)).catch(() => null);
+      Promise.all([MM.getEvent(id), MM.getCounts(id), minP]).then(([ev, counts, minRow]) => {
         if (!ev) { stateEl.innerHTML = 'Dieses Event ist nicht verfügbar.<br>Es ist vielleicht privat oder nicht mehr veröffentlicht.'; return; }
         document.title = ev.title + ' — MysMatch';
         renderEvent(ev, counts);
+        renderMinimum(ev, counts, minRow);
       }).catch((err) => { console.error(err); stateEl.textContent = 'Dieses Event konnte nicht geladen werden.'; });
 
       function renderEvent(ev, counts) {
@@ -343,6 +356,26 @@
         stateEl.hidden = true;
 
         setupRegistration(ev, full);
+      }
+
+      // Minimum attendees (Oct 2026): while fewer than the minimum registered
+      // (app + web guests), say how many more are needed; once reached, nothing.
+      // Not for external registration or events that already started.
+      function renderMinimum(ev, counts, minRow) {
+        if (!minRow || ev.external_url) return;
+        if (ev.starts_at && new Date(ev.starts_at).getTime() <= Date.now()) return;
+        const missing = Math.max(0, minRow.min_attendees - counts.total);
+        if (missing === 0) return;
+        const tpl = document.getElementById(missing === 1 ? 'min-tpl-one' : 'min-tpl-other');
+        if (!tpl) return;
+        const box = document.createElement('div');
+        box.className = 'min-notice';
+        box.setAttribute('role', 'note');
+        box.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg><span>' + tpl.innerHTML + '</span>';
+        box.querySelector('[data-min]').textContent = String(minRow.min_attendees);
+        box.querySelector('[data-missing]').textContent = String(missing);
+        const left = document.getElementById('event-content');
+        left.insertBefore(box, left.firstChild);
       }
 
       function setupRegistration(ev, full) {

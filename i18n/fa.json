@@ -834,7 +834,9 @@
   "Who runs MysMatch and how to reach us.": "چه کسی MysMatch را اداره می‌کند و چطور با ما در تماس باشی.",
   "Applications are only accepted through the app — not by email, phone or on this website.": "درخواست‌ها فقط از طریق اپ پذیرفته می‌شوند — نه با ایمیل، تلفن یا از طریق این وب‌سایت.",
   "Applications are only accepted through the MysMatch app — not by email, phone or on this website.": "درخواست‌ها فقط از طریق اپ MysMatch پذیرفته می‌شوند — نه با ایمیل، تلفن یا از طریق این وب‌سایت.",
-  "Download the app, open this job and tap <strong>Apply now</strong>. Your CV and your answers to the organization's questions go straight to them, and you can follow your application in the app.": "اپ را دانلود کن، این آگهی را باز کن و روی <strong>Apply now</strong> بزن. رزومه و پاسخ‌هایت به پرسش‌های سازمان مستقیم به دستشان می‌رسد و می‌توانی درخواستت را در اپ دنبال کنی."
+  "Download the app, open this job and tap <strong>Apply now</strong>. Your CV and your answers to the organization's questions go straight to them, and you can follow your application in the app.": "اپ را دانلود کن، این آگهی را باز کن و روی <strong>Apply now</strong> بزن. رزومه و پاسخ‌هایت به پرسش‌های سازمان مستقیم به دستشان می‌رسد و می‌توانی درخواستت را در اپ دنبال کنی.",
+  "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registration needed. Otherwise it will be cancelled.": "این رویداد فقط در صورتی برگزار می‌شود که دست‌کم <b data-min=\"\"></b> نفر ثبت‌نام کنند — هنوز <b data-missing=\"\"></b> ثبت‌نام دیگر لازم است. در غیر این صورت لغو می‌شود.",
+  "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registrations needed. Otherwise it will be cancelled.": "این رویداد فقط در صورتی برگزار می‌شود که دست‌کم <b data-min=\"\"></b> نفر ثبت‌نام کنند — هنوز <b data-missing=\"\"></b> ثبت‌نام دیگر لازم است. در غیر این صورت لغو می‌شود."
  },
  "js": {
   "Open registration": "ثبت‌نام باز است",

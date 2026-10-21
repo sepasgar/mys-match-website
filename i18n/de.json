@@ -834,7 +834,9 @@
   "Who runs MysMatch and how to reach us.": "Wer MysMatch betreibt und wie du uns erreichst.",
   "Applications are only accepted through the app — not by email, phone or on this website.": "Bewerbungen sind nur über die App möglich – nicht per E-Mail, Telefon oder über diese Website.",
   "Applications are only accepted through the MysMatch app — not by email, phone or on this website.": "Bewerbungen sind nur über die MysMatch-App möglich – nicht per E-Mail, Telefon oder über diese Website.",
-  "Download the app, open this job and tap <strong>Apply now</strong>. Your CV and your answers to the organization's questions go straight to them, and you can follow your application in the app.": "Lade die App herunter, öffne diesen Job und tippe auf <strong>Jetzt bewerben</strong>. Dein Lebenslauf und deine Antworten auf die Fragen der Organisation gehen direkt an sie, und du kannst deine Bewerbung in der App verfolgen."
+  "Download the app, open this job and tap <strong>Apply now</strong>. Your CV and your answers to the organization's questions go straight to them, and you can follow your application in the app.": "Lade die App herunter, öffne diesen Job und tippe auf <strong>Jetzt bewerben</strong>. Dein Lebenslauf und deine Antworten auf die Fragen der Organisation gehen direkt an sie, und du kannst deine Bewerbung in der App verfolgen.",
+  "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registration needed. Otherwise it will be cancelled.": "Dieses Event findet nur statt, wenn sich mindestens <b data-min=\"\"></b> Personen anmelden – es fehlt noch <b data-missing=\"\"></b> Anmeldung. Sonst wird es abgesagt.",
+  "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registrations needed. Otherwise it will be cancelled.": "Dieses Event findet nur statt, wenn sich mindestens <b data-min=\"\"></b> Personen anmelden – es fehlen noch <b data-missing=\"\"></b> Anmeldungen. Sonst wird es abgesagt."
  },
  "js": {
   "Open registration": "Anmeldung offen",
