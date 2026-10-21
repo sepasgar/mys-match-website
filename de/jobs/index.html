@@ -67,6 +67,8 @@
   .apply-sec .kicker{ color:var(--faint); }
   .apply-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; flex-wrap:wrap; }
   .apply-head .h2{ max-width:12ch; }
+  /* "Only through the app" line under the heading (Oct 2026). */
+  .apply-note{ margin-top:18px; max-width:42ch; font-size:clamp(16px,1.3vw,19px); line-height:1.5; color:var(--on-dark); }
   .steps3{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr)); gap:clamp(16px,1.6vw,28px); }
   .step3{ background:#17182C; border:1px solid rgba(255,255,255,0.08); border-radius:40px; padding:clamp(32px,3.4vw,64px); min-height:clamp(320px,26vw,460px); display:flex; flex-direction:column; justify-content:space-between; gap:40px; }
   .step3:nth-child(2){ background:#1C1D36; }
@@ -173,6 +175,8 @@
 <div class="pos-head-l">
 <div class="kicker">/ So bewirbst du dich</div>
 <h2 class="h2" data-reveal="">Bewirb dich in der <span style="color:#CDB8FF">MysMatch-App.</span></h2>
+<!-- WHY (owner, 2026-10-21): make clear the app is the ONLY way to apply. -->
+<p class="apply-note" data-reveal="">Bewerbungen sind nur über die App möglich – nicht per E-Mail, Telefon oder über diese Website.</p>
 </div>
 <div class="stores light">
 <a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" rel="noopener noreferrer" target="_blank">

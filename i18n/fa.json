@@ -831,7 +831,10 @@
   "Too many messages in a short time. Please try again later or email us.": "در زمان کوتاهی پیام‌های زیادی فرستاده شده. لطفاً بعداً دوباره امتحان کن یا به ما ایمیل بزن.",
   "Something went wrong. Please try again or email us.": "مشکلی پیش آمد. لطفاً دوباره امتحان کن یا به ما ایمیل بزن.",
   "Legal notice (Impressum) for MysMatch: who runs the app and website, and how to reach us.": "اطلاعات حقوقی (Impressum) MysMatch: چه کسی اپ و وب‌سایت را اداره می‌کند و چطور با ما در تماس باشی.",
-  "Who runs MysMatch and how to reach us.": "چه کسی MysMatch را اداره می‌کند و چطور با ما در تماس باشی."
+  "Who runs MysMatch and how to reach us.": "چه کسی MysMatch را اداره می‌کند و چطور با ما در تماس باشی.",
+  "Applications are only accepted through the app — not by email, phone or on this website.": "درخواست‌ها فقط از طریق اپ پذیرفته می‌شوند — نه با ایمیل، تلفن یا از طریق این وب‌سایت.",
+  "Applications are only accepted through the MysMatch app — not by email, phone or on this website.": "درخواست‌ها فقط از طریق اپ MysMatch پذیرفته می‌شوند — نه با ایمیل، تلفن یا از طریق این وب‌سایت.",
+  "Download the app, open this job and tap <strong>Apply now</strong>. Your CV and your answers to the organization's questions go straight to them, and you can follow your application in the app.": "اپ را دانلود کن، این آگهی را باز کن و روی <strong>Apply now</strong> بزن. رزومه و پاسخ‌هایت به پرسش‌های سازمان مستقیم به دستشان می‌رسد و می‌توانی درخواستت را در اپ دنبال کنی."
  },
  "js": {
   "Open registration": "ثبت‌نام باز است",
