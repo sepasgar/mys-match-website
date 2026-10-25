@@ -74,6 +74,9 @@
   .btn.secondary{ background:#fff; color:var(--ink); border:1px solid #E2DEF0; margin-top:12px; }
   .btn.secondary:hover{ border-color:var(--ink); color:var(--ink); }
   .hint{ font-size:13px; color:var(--muted); margin-top:10px; line-height:1.5; }
+  /* 2026-10-25: organiser's price details + "what to upload" on the form. */
+  .price-box{ margin:0 0 18px; padding:12px 14px; border-radius:12px; background:#F1ECFF; color:#2A1F6B; font-size:15px; line-height:1.5; }
+  .doc-note{ margin:6px 0 10px; padding:12px 14px; border-radius:12px; background:#FFF6E5; border:1px solid #F5C26B; color:#5A3700; font-size:15px; font-weight:700; line-height:1.5; }
   .hint a{ color:var(--ink-2); text-decoration:underline; }
   .form-error{ background:#FDECF4; color:#B3246B; border:1px solid #F6C2DD; border-radius:16px; padding:12px 16px; font-size:14px; font-weight:600; margin-top:18px; }
   .success{ text-align:center; }
@@ -166,6 +169,8 @@
     <div class="card" id="register-card">
       <h2>Register</h2>
       <div class="sub" id="register-sub">Reserve your spot — it only takes a moment.</div>
+      <!-- Price details (2026-10-25); filled by the script, label translated by build.py. -->
+      <div class="price-box" id="price-box" hidden><b>Prices:</b> <span id="price-note"></span></div>
       <form id="reg-form">
         <div class="row2">
           <div>
@@ -441,6 +446,13 @@
             + '<textarea id="' + fid + '" data-qid="' + esc(q.id) + '"' + (q.required ? ' required' : '') + '></textarea>';
         }).join('');
 
+        // Price details above the form fields (2026-10-25).
+        const priceNote = (ev.price_note || '').trim();
+        if (priceNote) {
+          document.getElementById('price-note').textContent = priceNote;
+          document.getElementById('price-box').hidden = false;
+        }
+
         // Document upload field — shown when the event enables or requires it.
         if (ev.document_upload_enabled || ev.document_upload_required) {
           const req = ev.document_upload_required;
@@ -448,6 +460,8 @@
             '<label for="f-doc">Document'
             + (req ? ' <span class="req">*</span>' : ' <span style="color:var(--gray-light);font-weight:600">(optional)</span>')
             + '</label>'
+            // Organiser's "what to upload" (2026-10-25): bold and boxed so it isn't missed.
+            + ((ev.document_hint || '').trim() ? '<p class="doc-note">' + esc(ev.document_hint.trim()) + '</p>' : '')
             + '<input id="f-doc" type="file" accept="image/png,image/jpeg,image/webp">'
             + '<p class="hint">Upload an image (e.g. payment receipt or proof). Max 5 MB.</p>';
         }
