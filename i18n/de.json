@@ -838,7 +838,8 @@
   "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registration needed. Otherwise it will be cancelled.": "Dieses Event findet nur statt, wenn sich mindestens <b data-min=\"\"></b> Personen anmelden – es fehlt noch <b data-missing=\"\"></b> Anmeldung. Sonst wird es abgesagt.",
   "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registrations needed. Otherwise it will be cancelled.": "Dieses Event findet nur statt, wenn sich mindestens <b data-min=\"\"></b> Personen anmelden – es fehlen noch <b data-missing=\"\"></b> Anmeldungen. Sonst wird es abgesagt.",
   "Founder": "Gründer",
-  "Prices:": "Preise:"
+  "Prices:": "Preise:",
+  "<strong>Resend</strong> (Resend Inc., USA): sends the ticket email (with your QR code) when you register for an event on this website. Receives your name, email address and the event details; legal basis Art. 6(1)(b) GDPR": "<strong>Resend</strong> (Resend Inc., USA): versendet die Ticket-E-Mail (mit deinem QR-Code), wenn du dich auf dieser Website für ein Event anmeldest. Erhält deinen Namen, deine E-Mail-Adresse und die Event-Details; Rechtsgrundlage Art. 6 Abs. 1 lit. b DSGVO"
  },
  "js": {
   "Open registration": "Anmeldung offen",

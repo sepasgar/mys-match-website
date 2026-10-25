@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your ticket — MysMatch</title>
+<!-- Personal ticket page (2026-10-25), linked from the ticket email
+     (edge function send-web-tickets). The link itself is the ticket:
+     ?e=<event id>&r=<web registration id>. Never indexed, never linked. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#0F1020">
+<link rel="icon" type="image/png" href="/logo-512.png">
+<style>
+  :root{ --ink:#14121F; --muted:#6B6880; --line:#E2DEF0; --bg:#F4F1FB; }
+  @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --ink:#F2F0FA; --muted:#A9A5BD; --line:#3A3550; --bg:#14121F; } }
+  :root[data-theme="dark"]{ --ink:#F2F0FA; --muted:#A9A5BD; --line:#3A3550; --bg:#14121F; }
+  *{ box-sizing:border-box; }
+  body{ margin:0; background:var(--bg); color:var(--ink); font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+  main{ max-width:460px; margin:0 auto; padding:32px 16px 48px; text-align:center; }
+  .logo{ width:48px; height:48px; border-radius:12px; }
+  h1{ font-size:24px; margin:14px 0 4px; }
+  .title{ font-size:17px; font-weight:700; margin:6px 0 2px; }
+  .when{ color:var(--muted); font-size:14px; margin:0; }
+  .qr{ display:block; width:min(280px, 80vw); height:auto; margin:22px auto 14px; border-radius:18px; background:#fff; border:1px solid var(--line); }
+  .door{ font-weight:700; font-size:16px; margin:0; }
+  .muted{ color:var(--muted); font-size:14px; margin:6px 0 0; line-height:1.5; }
+  .btn{ display:inline-block; margin-top:18px; padding:12px 22px; border-radius:999px; background:#14121F; color:#fff; text-decoration:none; font-weight:600; font-size:14px; }
+</style>
+</head>
+<body>
+<main>
+  <img class="logo" src="/logo-512.png" alt="MysMatch" width="48" height="48">
+  <h1>Your ticket</h1>
+  <p class="title" id="ev-title"></p>
+  <p class="when" id="ev-when"></p>
+  <img class="qr" id="qr-img" alt="Your ticket QR code">
+  <p class="door" id="door">Show this QR code at the door.</p>
+  <p class="muted">Zeig diesen QR-Code am Eingang.</p>
+  <a class="btn" id="qr-dl" download="mysmatch-ticket.png">Save QR code</a>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script>
+(function () {
+  var p = new URLSearchParams(location.search);
+  var e = p.get('e'), r = p.get('r');
+  var uuid = /^[0-9a-f-]{36}$/i;
+  var img = document.getElementById('qr-img'), dl = document.getElementById('qr-dl');
+  if (!e || !r || !uuid.test(e) || !uuid.test(r)) {
+    document.querySelector('h1').textContent = 'Ticket not found';
+    document.getElementById('door').textContent = 'Please open the link from your ticket email.';
+    img.style.display = 'none'; dl.style.display = 'none';
+    return;
+  }
+  // Same payload the app's door scanner reads (and the website's success screen shows).
+  var payload = JSON.stringify({ eventId: e, userId: r });
+  try {
+    var tmp = document.createElement('div');
+    tmp.style.display = 'none';
+    document.body.appendChild(tmp);
+    new QRCode(tmp, { text: payload, width: 440, height: 440, colorDark: '#0D1E4C', colorLight: '#FFFFFF', correctLevel: QRCode.CorrectLevel.M });
+    var canvas = tmp.querySelector('canvas'), url = '';
+    if (canvas) {
+      // Quiet zone baked in (qrcodejs draws none) so saved images scan reliably.
+      var m = 40, out = document.createElement('canvas');
+      out.width = canvas.width + m * 2; out.height = canvas.height + m * 2;
+      var ctx = out.getContext('2d'); ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0, 0, out.width, out.height);
+      ctx.drawImage(canvas, m, m); url = out.toDataURL('image/png');
+    } else { var f = tmp.querySelector('img'); url = f ? f.src : ''; }
+    document.body.removeChild(tmp);
+    if (url) { img.src = url; dl.href = url; }
+  } catch (err) { console.error(err); }
+  // Event name + date (also works for private web events, by id).
+  if (window.MM && MM.getEvent) {
+    MM.getEvent(e).then(function (ev) {
+      if (!ev) return;
+      document.getElementById('ev-title').textContent = ev.title || '';
+      try {
+        document.getElementById('ev-when').textContent = new Date(ev.starts_at).toLocaleString('en-GB',
+          { weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit', timeZone: ev.timezone || 'Europe/Berlin' });
+      } catch (x) {}
+    }).catch(function () {});
+  }
+})();
+</script>
+</body>
+</html>

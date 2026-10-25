@@ -838,7 +838,8 @@
   "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registration needed. Otherwise it will be cancelled.": "این رویداد فقط در صورتی برگزار می‌شود که دست‌کم <b data-min=\"\"></b> نفر ثبت‌نام کنند — هنوز <b data-missing=\"\"></b> ثبت‌نام دیگر لازم است. در غیر این صورت لغو می‌شود.",
   "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registrations needed. Otherwise it will be cancelled.": "این رویداد فقط در صورتی برگزار می‌شود که دست‌کم <b data-min=\"\"></b> نفر ثبت‌نام کنند — هنوز <b data-missing=\"\"></b> ثبت‌نام دیگر لازم است. در غیر این صورت لغو می‌شود.",
   "Founder": "بنیان‌گذار",
-  "Prices:": "قیمت‌ها:"
+  "Prices:": "قیمت‌ها:",
+  "<strong>Resend</strong> (Resend Inc., USA): sends the ticket email (with your QR code) when you register for an event on this website. Receives your name, email address and the event details; legal basis Art. 6(1)(b) GDPR": "<strong>Resend</strong> (Resend Inc.، آمریکا): ایمیل بلیت (همراه با کد QR) را وقتی در این وب‌سایت برای یک رویداد ثبت‌نام می‌کنی ارسال می‌کند. نام، آدرس ایمیل و جزئیات رویداد را دریافت می‌کند؛ مبنای قانونی ماده ۶(۱)(ب) GDPR"
  },
  "js": {
   "Open registration": "ثبت‌نام باز است",
