@@ -331,6 +331,10 @@ section.page-hero .fact svg{ color:var(--indigo); }
   .stores, .foot-stores{ width:100%; }
   .stores > a.store, .footer .foot-stores > a.fs-store{ padding:12px 14px; gap:10px; }
   .stores > a.store b, .foot-stores > a.fs-store b{ font-size:17px; }
+  /* Phones (owner, 2026-10-25): one badge under the other — side by side the
+     App Store text ran past its button. Same width for both; centred where
+     the surrounding card is centred (justify-content:center there). */
+  .stores, .foot-stores{ grid-template-columns:minmax(0,280px); }
 }
 
 /* WHY (owner, 2026-10-18): on the light gradient cards the gradient-filled

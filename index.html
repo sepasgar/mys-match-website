@@ -556,6 +556,8 @@ html[lang=fa] .gt-kick{ font-family:inherit; letter-spacing:0; font-size:13px; }
   .stores, .foot-stores{ width:100%; }
   .stores > a.store, .footer .foot-stores > a.fs-store{ padding:12px 14px; gap:10px; }
   .stores > a.store b, .foot-stores > a.fs-store b{ font-size:17px; }
+  /* Phones (owner, 2026-10-25): badges stacked, as in css/site.css. */
+  .stores, .foot-stores{ grid-template-columns:minmax(0,280px); }
 }
 /* The download card is narrower than the page on phones: stack the two (still equal) buttons. */
 @media (max-width:430px){ .cta-card .stores{ grid-template-columns:1fr; } }
