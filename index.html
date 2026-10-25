@@ -979,7 +979,9 @@ html.intro-seen .intro{ display:none; }
     var spots = e.max_capacity == null
       ? (SHOW_ATTENDANCE_PUBLICLY ? (total ? total + ' going' : '') : 'Open registration')
       : (full ? 'Fully booked' : (e.max_capacity - total) + ' spots left');
-    var price = (!e.price || e.price == 0) ? 'Free' : '€' + e.price;
+    // 2026-10-25: with price details the number is only the lowest price -> "from €7" / "See prices".
+    var note = (e.price_note || '').trim();
+    var price = (!e.price || e.price == 0) ? (note ? 'See prices' : 'Free') : (note ? 'from ' + '€' + e.price : '€' + e.price);
     // Gradient frame for in-app-only previews (see .event-card.app-only).
     host.classList.toggle('app-only', e.web_registration === false);
     host.innerHTML =
@@ -1008,7 +1010,7 @@ html.intro-seen .intro{ display:none; }
   // landing card is never empty while any web-published event exists.
   function showMostRecent() {
     MM.db.from('events')
-      .select('id,title,location,city,date,event_image,category,price,max_capacity')
+      .select('id,title,location,city,date,event_image,category,price,price_note,max_capacity')
       .eq('publish_to_web', true).eq('is_private', false)
       .order('date', { ascending: false }).limit(1)
       .then(function (res) {

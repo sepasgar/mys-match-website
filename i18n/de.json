@@ -1045,7 +1045,9 @@
   "Could not create the Excel file. Please try again, or use Export CSV.": "Die Excel-Datei konnte nicht erstellt werden. Bitte versuche es noch einmal oder nutze „CSV exportieren“.",
   "Add at least one image or a Google Drive link": "Füg mindestens ein Bild oder einen Google-Drive-Link hinzu",
   "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": "<div class=\"c-prog\"><span class=\"kicker\">Dein Fortschritt</span><ol class=\"c-stepper\">",
-  "We reply after 1 December 2026.": "Wir antworten nach dem 1. Dezember 2026."
+  "We reply after 1 December 2026.": "Wir antworten nach dem 1. Dezember 2026.",
+  "from ": "ab ",
+  "See prices": "Preise ansehen"
  },
  "jsraw": {
   "{ key: 'Sports', label: 'Sports' }": "{ key: 'Sports', label: 'Sport' }",

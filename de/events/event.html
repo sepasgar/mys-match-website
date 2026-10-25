@@ -309,7 +309,9 @@
       function renderEvent(ev, counts) {
         const full = ev.max_capacity != null && counts.total >= ev.max_capacity;
         const left = ev.max_capacity == null ? null : Math.max(0, ev.max_capacity - counts.total);
-        const price = (!ev.price || ev.price == 0) ? 'Kostenlos' : '€' + ev.price;
+        // Price details (2026-10-25, e.g. "€7 for students, €12 regular") replace the bare lowest price.
+        const priceNote = (ev.price_note || '').trim();
+        const price = priceNote || ((!ev.price || ev.price == 0) ? 'Kostenlos' : '€' + ev.price);
         const loc = ev.location || ev.city || '';
         const img = ev.event_image
           ? '<img class="hero-img" src="' + esc(ev.event_image) + '" alt="' + esc(ev.title) + '">'

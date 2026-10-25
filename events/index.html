@@ -300,6 +300,12 @@
 
   var all = [], state = { cat: 'All', free: false };
   var isFree = function (e) { return !e.price || e.price == 0; };
+  // 2026-10-25: with price details the number is only the lowest price -> "from €7" / "See prices".
+  var priceLabel = function (e) {
+    var note = (e.price_note || '').trim();
+    if (isFree(e)) return note ? 'See prices' : 'Free';
+    return note ? 'from ' + '€' + e.price : '€' + e.price;
+  };
 
   // Date parts of the real start moment, in the EVENT's timezone (see event.html).
   function dateParts(e) {
@@ -332,7 +338,7 @@
         : '<div class="ev-row">' + row + '</div>')
       + '<div class="ev-date">' + date + '</div></div>'
       + '<div class="ev-body"><span class="ev-title">' + esc(e.title) + '</span>'
-      + '<div class="ev-foot"><span>' + esc(place) + '</span><span class="ev-price">' + (isFree(e) ? 'Free' : '€' + esc(e.price)) + '</span></div></div></a>';
+      + '<div class="ev-foot"><span>' + esc(place) + '</span><span class="ev-price">' + esc(priceLabel(e)) + '</span></div></div></a>';
   }
 
   function render() {
