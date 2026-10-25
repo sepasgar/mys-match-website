@@ -520,7 +520,8 @@
               + '<h2>You\'re registered!</h2>'
               + '<p class="sub">Your spot for <strong>' + esc(ev.title) + '</strong> is confirmed. Show this QR code at the door.</p>'
               + '<div class="qr-box"><img id="qr-img" width="220" height="220" alt="Your ticket QR code"></div>'
-              + '<div class="qr-warn">⚠️ <strong>Save your QR code now — it won\'t be shown again.</strong><br>'
+              // 2026-10-25: the ticket is also emailed (edge function send-web-tickets).
+              + '<div class="qr-warn">📧 <strong>We have also sent this ticket to your email.</strong> Check your spam folder if you cannot find it.<br>'
               + 'To cancel your registration, log in to the MysMatch app.</div>'
               + '<a class="btn" id="qr-dl" download="mysmatch-ticket.png">Save QR code</a>'
               + '<a class="btn secondary" href="/events/">Browse more events</a></div>';

@@ -512,7 +512,8 @@
               + '<h2>ثبت‌نامت انجام شد!</h2>'
               + '<p class="sub">جای تو در <strong>' + esc(ev.title) + '</strong> تأیید شد. این کد QR را دم در نشان بده.</p>'
               + '<div class="qr-box"><img id="qr-img" width="220" height="220" alt="Your ticket QR code"></div>'
-              + '<div class="qr-warn">⚠️ <strong>همین حالا کد QR را ذخیره کن — دوباره نمایش داده نمی‌شود.</strong><br>'
+              // 2026-10-25: the ticket is also emailed (edge function send-web-tickets).
+              + '<div class="qr-warn">📧 <strong>این بلیت را به ایمیلت هم فرستادیم.</strong> اگر پیدایش نکردی، پوشهٔ اسپم را هم ببین.<br>'
               + 'برای لغو ثبت‌نام، وارد اپ MysMatch شو.</div>'
               + '<a class="btn" id="qr-dl" download="mysmatch-ticket.png">ذخیرهٔ کد QR</a>'
               + '<a class="btn secondary" href="/fa/events/">رویدادهای بیشتر</a></div>';

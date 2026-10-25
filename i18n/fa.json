@@ -1049,7 +1049,8 @@
   "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": "<div class=\"c-prog\"><span class=\"kicker\">پیشرفت تو</span><ol class=\"c-stepper\">",
   "We reply after 1 December 2026.": "بعد از ۱ دسامبر ۲۰۲۶ پاسخ می‌دهیم.",
   "from ": "از ",
-  "See prices": "مشاهده قیمت‌ها"
+  "See prices": "مشاهده قیمت‌ها",
+  "<div class=\"qr-warn\">📧 <strong>We have also sent this ticket to your email.</strong> Check your spam folder if you cannot find it.<br>": "<div class=\"qr-warn\">📧 <strong>این بلیت را به ایمیلت هم فرستادیم.</strong> اگر پیدایش نکردی، پوشهٔ اسپم را هم ببین.<br>"
  },
  "jsraw": {
   "{ key: 'Sports', label: 'Sports' }": "{ key: 'Sports', label: 'ورزش' }",

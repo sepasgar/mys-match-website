@@ -512,7 +512,8 @@
               + '<h2>Du bist angemeldet!</h2>'
               + '<p class="sub">Dein Platz für <strong>' + esc(ev.title) + '</strong> ist bestätigt. Zeig diesen QR-Code am Eingang.</p>'
               + '<div class="qr-box"><img id="qr-img" width="220" height="220" alt="Your ticket QR code"></div>'
-              + '<div class="qr-warn">⚠️ <strong>Speichere deinen QR-Code jetzt – er wird nicht noch einmal angezeigt.</strong><br>'
+              // 2026-10-25: the ticket is also emailed (edge function send-web-tickets).
+              + '<div class="qr-warn">📧 <strong>Wir haben dir dieses Ticket auch per E-Mail geschickt.</strong> Schau im Spam-Ordner nach, falls du es nicht findest.<br>'
               + 'Um deine Anmeldung zu stornieren, melde dich in der MysMatch-App an.</div>'
               + '<a class="btn" id="qr-dl" download="mysmatch-ticket.png">QR-Code speichern</a>'
               + '<a class="btn secondary" href="/de/events/">Weitere Events ansehen</a></div>';

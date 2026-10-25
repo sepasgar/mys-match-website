@@ -1049,7 +1049,8 @@
   "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": "<div class=\"c-prog\"><span class=\"kicker\">Dein Fortschritt</span><ol class=\"c-stepper\">",
   "We reply after 1 December 2026.": "Wir antworten nach dem 1. Dezember 2026.",
   "from ": "ab ",
-  "See prices": "Preise ansehen"
+  "See prices": "Preise ansehen",
+  "<div class=\"qr-warn\">📧 <strong>We have also sent this ticket to your email.</strong> Check your spam folder if you cannot find it.<br>": "<div class=\"qr-warn\">📧 <strong>Wir haben dir dieses Ticket auch per E-Mail geschickt.</strong> Schau im Spam-Ordner nach, falls du es nicht findest.<br>"
  },
  "jsraw": {
   "{ key: 'Sports', label: 'Sports' }": "{ key: 'Sports', label: 'Sport' }",
