@@ -96,7 +96,7 @@
       <div class="kicker" data-reveal>/ Legal</div>
       <h1 data-reveal>Privacy Policy</h1>
     </div>
-    <p class="kicker" data-reveal>Last updated: October 29, 2026</p>
+    <p class="kicker" data-reveal>Last updated: November 1, 2026</p>
   </div>
 </section>
 
@@ -134,7 +134,7 @@
       <li>Usage data: app interactions, screens viewed, features used, search and connection history, session duration</li>
       <li>Location data: city-level location (only when you grant permission)</li>
       <li>Crash data: technical error logs, stack traces, device state at time of crash</li>
-      <li>Analytics data: anonymized interaction patterns, feature usage statistics</li>
+      <li>Analytics data: in-app usage events (screens viewed, buttons tapped, features used), linked to a pseudonymous user ID</li>
     </ul>
     <p><strong>c) Information from third parties:</strong></p>
     <ul>
@@ -175,9 +175,9 @@
     <ul>
       <li><strong>Supabase</strong> (Supabase Inc., USA): database hosting, user authentication, file storage</li>
       <li><strong>OneSignal</strong> (OneSignal Inc., USA): push notification delivery. Receives your device token and user ID</li>
-      <li><strong>Mixpanel</strong> (Mixpanel Inc., USA): analytics and event tracking. Receives anonymized usage data</li>
+      <li><strong>Mixpanel</strong> (Mixpanel Inc., USA; data stored on Mixpanel's EU servers): app usage statistics. Receives usage events (screens viewed, buttons tapped, features used), your pseudonymous user ID, device type and an approximate location (city, country) derived from your IP address. Never your name, email address, phone number or message content</li>
       <li><strong>Plausible Analytics</strong> (Plausible Insights OÜ, Estonia, EU): cookieless statistics for this website only (pages visited, referring site, country, device type, clicks on app-store links and challenge sign-ups). No cookies and no personal data are stored; legal basis Art. 6(1)(f) GDPR</li>
-      <li><strong>Sentry</strong> (Functional Software Inc., USA): crash reporting and error monitoring. Receives device and error data</li>
+      <li><strong>Sentry</strong> (Functional Software Inc., USA): crash reporting and error monitoring. Receives device and error data and your pseudonymous user ID (no email address). An error report may include a screenshot of the app screen at the moment of the error</li>
       <!-- 2026-10-25: ticket emails for website registrations (edge function send-web-tickets). -->
       <li><strong>Resend</strong> (Resend Inc., USA): sends the ticket email (with your QR code) when you register for an event on this website. Receives your name, email address and the event details; legal basis Art. 6(1)(b) GDPR</li>
       <li><strong>Twilio</strong> (Twilio Inc., USA): SMS verification. Receives your phone number</li>
@@ -245,7 +245,7 @@
     <h2>10. Cookies and Tracking Technologies</h2>
     <p>The MysMatch mobile app does not use browser cookies. However, we use the following technologies:</p>
     <ul>
-      <li><strong>Mixpanel SDK:</strong> uses local storage to track anonymized usage events and session data. You can opt out via iOS App Tracking Transparency or by contacting us</li>
+      <li><strong>Mixpanel SDK:</strong> uses local storage to record usage events (screens viewed, buttons tapped) linked to your pseudonymous user ID. You can opt out via iOS App Tracking Transparency or by contacting us</li>
       <li><strong>OneSignal SDK:</strong> stores a device token for push notification delivery. You can disable notifications in your device settings</li>
       <li><strong>Sentry SDK:</strong> collects crash data automatically. This is based on our legitimate interest in maintaining app stability</li>
     </ul>

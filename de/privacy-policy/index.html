@@ -90,7 +90,7 @@
 <div class="kicker" data-reveal="">/ Rechtliches</div>
 <h1 data-reveal="">Datenschutzerklärung</h1><p class="i18n-legal-note" style="margin:16px 0;padding:12px 16px;border-radius:12px;background:#F1EEFF;color:#4B4C63;font-size:14px;line-height:1.5">Dies ist eine Übersetzung zur Information. Rechtlich verbindlich ist die <a href="/privacy-policy/">englische Fassung</a>.</p>
 </div>
-<p class="kicker" data-reveal="">Zuletzt aktualisiert: 29. Oktober 2026</p>
+<p class="kicker" data-reveal="">Zuletzt aktualisiert: 1. November 2026</p>
 </div>
 </section>
 <!-- ════════ CONTENT ════════ -->
@@ -124,7 +124,7 @@
 <li>Nutzungsdaten: Interaktionen in der App, aufgerufene Bildschirme, genutzte Funktionen, Such- und Verbindungsverlauf, Sitzungsdauer</li>
 <li>Standortdaten: Standort auf Stadtebene (nur mit deiner Erlaubnis)</li>
 <li>Absturzdaten: technische Fehlerprotokolle, Stacktraces, Gerätezustand zum Zeitpunkt des Absturzes</li>
-<li>Analysedaten: anonymisierte Interaktionsmuster, Statistiken zur Funktionsnutzung</li>
+<li>Analysedaten: Nutzungsereignisse in der App (angesehene Bildschirme, angetippte Schaltflächen, genutzte Funktionen), verknüpft mit einer pseudonymen Nutzer-ID</li>
 </ul>
 <p><strong>c) Daten von Dritten:</strong></p>
 <ul>
@@ -162,9 +162,9 @@
 <ul>
 <li><strong>Supabase</strong> (Supabase Inc., USA): Datenbank-Hosting, Nutzer-Authentifizierung, Dateispeicher</li>
 <li><strong>OneSignal</strong> (OneSignal Inc., USA): Zustellung von Push-Benachrichtigungen. Erhält dein Geräte-Token und deine Nutzer-ID</li>
-<li><strong>Mixpanel</strong> (Mixpanel Inc., USA): Analyse und Event-Tracking. Erhält anonymisierte Nutzungsdaten</li>
+<li><strong>Mixpanel</strong> (Mixpanel Inc., USA; Speicherung auf den EU-Servern von Mixpanel): Nutzungsstatistiken der App. Erhält Nutzungsereignisse (angesehene Bildschirme, angetippte Schaltflächen, genutzte Funktionen), deine pseudonyme Nutzer-ID, den Gerätetyp und einen ungefähren Standort (Stadt, Land), der aus deiner IP-Adresse abgeleitet wird. Niemals deinen Namen, deine E-Mail-Adresse, Telefonnummer oder Nachrichteninhalte</li>
 <li><strong>Plausible Analytics</strong> (Plausible Insights OÜ, Estland, EU): cookielose Statistiken nur für diese Website (besuchte Seiten, verweisende Website, Land, Gerätetyp, Klicks auf App-Store-Links und Challenge-Anmeldungen). Es werden keine Cookies und keine personenbezogenen Daten gespeichert; Rechtsgrundlage Art. 6 Abs. 1 lit. f DSGVO</li>
-<li><strong>Sentry</strong> (Functional Software Inc., USA): Absturzberichte und Fehlerüberwachung. Erhält Geräte- und Fehlerdaten</li>
+<li><strong>Sentry</strong> (Functional Software Inc., USA): Absturzberichte und Fehlerüberwachung. Erhält Geräte- und Fehlerdaten sowie deine pseudonyme Nutzer-ID (keine E-Mail-Adresse). Ein Fehlerbericht kann einen Screenshot des App-Bildschirms im Moment des Fehlers enthalten</li>
 <!-- 2026-10-25: ticket emails for website registrations (edge function send-web-tickets). -->
 <li><strong>Resend</strong> (Resend Inc., USA): versendet die Ticket-E-Mail (mit deinem QR-Code), wenn du dich auf dieser Website für ein Event anmeldest. Erhält deinen Namen, deine E-Mail-Adresse und die Event-Details; Rechtsgrundlage Art. 6 Abs. 1 lit. b DSGVO</li>
 <li><strong>Twilio</strong> (Twilio Inc., USA): SMS-Bestätigung. Erhält deine Telefonnummer</li>
@@ -227,7 +227,7 @@
 <h2>10. Cookies und Tracking-Technologien</h2>
 <p>Die MysMatch-App verwendet keine Browser-Cookies. Wir nutzen jedoch folgende Technologien:</p>
 <ul>
-<li><strong>Mixpanel SDK:</strong> nutzt lokalen Speicher, um anonymisierte Nutzungsereignisse und Sitzungsdaten zu erfassen. Du kannst über iOS App Tracking Transparency oder durch Kontakt mit uns widersprechen</li>
+<li><strong>Mixpanel SDK:</strong> nutzt lokalen Speicher, um Nutzungsereignisse (angesehene Bildschirme, angetippte Schaltflächen) verknüpft mit deiner pseudonymen Nutzer-ID zu erfassen. Du kannst über iOS App Tracking Transparency oder durch Kontakt mit uns widersprechen</li>
 <li><strong>OneSignal SDK:</strong> speichert ein Geräte-Token für Push-Benachrichtigungen. Du kannst Benachrichtigungen in den Geräteeinstellungen deaktivieren</li>
 <li><strong>Sentry SDK:</strong> erfasst Absturzdaten automatisch. Grundlage ist unser berechtigtes Interesse an der Stabilität der App</li>
 </ul>
