@@ -882,6 +882,8 @@
   "No event specified.": "Kein Event angegeben.",
   "Could not connect. Please try again later.": "Keine Verbindung. Bitte versuch es später erneut.",
   "This event is not available.<br>It may be private or no longer published.": "Dieses Event ist nicht verfügbar.<br>Es ist vielleicht privat oder nicht mehr veröffentlicht.",
+  "This event has ended.": "Dieses Event ist vorbei.",
+  "See upcoming events": "Kommende Events ansehen",
   "Could not load this event.": "Dieses Event konnte nicht geladen werden.",
   "Download the app to see the location": "Hol dir die App, um den Ort zu sehen",
   "<div class=\"desc-wrap\"><div class=\"kicker\">/ About this event</div><div class=\"desc\">": "<div class=\"desc-wrap\"><div class=\"kicker\">/ Über dieses Event</div><div class=\"desc\">",

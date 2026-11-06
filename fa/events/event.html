@@ -306,6 +306,14 @@
       const minP = (typeof MM.getMinimum === 'function' ? MM.getMinimum(id) : Promise.resolve(null)).catch(() => null);
       Promise.all([MM.getEvent(id), MM.getCounts(id), minP]).then(([ev, counts, minRow]) => {
         if (!ev) { stateEl.innerHTML = 'این رویداد در دسترس نیست.<br>ممکن است خصوصی باشد یا دیگر منتشر نشود.'; return; }
+        // Ended events (2026-11-06): 24 h after the start the server returns only
+        // {ended, title, starts_at} — show that instead of the full page and form.
+        if (ev.ended) {
+          document.title = ev.title + ' — MysMatch';
+          stateEl.innerHTML = '<b>' + 'این رویداد به پایان رسیده است.' + '</b><br>' + esc(ev.title) + ' · ' + esc(fmtDate(ev))
+            + '<br><a class="btn btn-dark" style="display:inline-block;margin-top:14px" href="/fa/events/">' + 'دیدن رویدادهای آینده' + '</a>';
+          return;
+        }
         document.title = ev.title + ' — MysMatch';
         renderEvent(ev, counts);
         renderMinimum(ev, counts, minRow);

@@ -314,6 +314,14 @@
       const minP = (typeof MM.getMinimum === 'function' ? MM.getMinimum(id) : Promise.resolve(null)).catch(() => null);
       Promise.all([MM.getEvent(id), MM.getCounts(id), minP]).then(([ev, counts, minRow]) => {
         if (!ev) { stateEl.innerHTML = 'This event is not available.<br>It may be private or no longer published.'; return; }
+        // Ended events (2026-11-06): 24 h after the start the server returns only
+        // {ended, title, starts_at} — show that instead of the full page and form.
+        if (ev.ended) {
+          document.title = ev.title + ' — MysMatch';
+          stateEl.innerHTML = '<b>' + 'This event has ended.' + '</b><br>' + esc(ev.title) + ' · ' + esc(fmtDate(ev))
+            + '<br><a class="btn btn-dark" style="display:inline-block;margin-top:14px" href="/events/">' + 'See upcoming events' + '</a>';
+          return;
+        }
         document.title = ev.title + ' — MysMatch';
         renderEvent(ev, counts);
         renderMinimum(ev, counts, minRow);

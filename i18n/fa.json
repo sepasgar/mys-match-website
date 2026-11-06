@@ -882,6 +882,8 @@
   "No event specified.": "رویدادی مشخص نشده است.",
   "Could not connect. Please try again later.": "اتصال برقرار نشد. لطفاً بعداً دوباره تلاش کن.",
   "This event is not available.<br>It may be private or no longer published.": "این رویداد در دسترس نیست.<br>ممکن است خصوصی باشد یا دیگر منتشر نشود.",
+  "This event has ended.": "این رویداد به پایان رسیده است.",
+  "See upcoming events": "دیدن رویدادهای آینده",
   "Could not load this event.": "بارگذاری این رویداد ممکن نشد.",
   "Download the app to see the location": "برای دیدن مکان اپ را دانلود کن",
   "<div class=\"desc-wrap\"><div class=\"kicker\">/ About this event</div><div class=\"desc\">": "<div class=\"desc-wrap\"><div class=\"kicker\">/ دربارهٔ این رویداد</div><div class=\"desc\">",
