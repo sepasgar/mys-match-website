@@ -3,6 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    // Event share links (2026-11-06): this page only shows when the app did NOT
+    // open the link (Instagram/in-app browsers, app not installed). Go straight
+    // to the web event page — title, date, details or "This event has ended",
+    // plus "Open this event in the app" and store buttons — instead of a page
+    // that only says "Open this event". Runs in <head>, so nothing flashes.
+    (function () {
+      var m = (location.pathname || '').match(/^\/event\/([^/?#]+)\/?$/);
+      if (m) location.replace('/events/event.html?id=' + encodeURIComponent(decodeURIComponent(m[1])));
+    })();
+  </script>
   <title>MysMatch</title>
   <meta name="description" content="Open this event in the MysMatch app.">
   <meta name="theme-color" content="#0F1020">
@@ -31,7 +42,9 @@
                         radial-gradient(50% 40% at 95% 100%, rgba(233,75,154,0.10), transparent 70%),
                         linear-gradient(160deg,#12132C 0%,#0F1020 55%,#181026 100%);
     }
-    .card { max-width: 480px; width: 100%; text-align: center; }
+    /* Explicit width (2026-11-06): Instagram's in-app browser shrank the
+       percentage-width flex item to half the screen. min() works everywhere. */
+    .card { width: min(480px, 100%); flex: 0 0 auto; text-align: center; }
     .logo-tile { width: 84px; height: 84px; border-radius: 26px; background: linear-gradient(135deg,#7B5CFF 0%,#B55BE8 55%,#E94B9A 100%); margin: 0 auto 32px; display: flex; align-items: center; justify-content: center; box-shadow: 0 30px 60px rgba(123,92,255,0.35); }
     .logo-tile svg { width: 40px; height: 40px; }
     .eyebrow { font-family: var(--mono); color: var(--faint); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 16px; }
