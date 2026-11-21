@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Open MysMatch</title>
+<!-- Landing page for links in MysMatch emails (Nov 2026): opens the app
+     (connection requests) or offers the stores if it isn't installed.
+     Not a content page, so kept out of search results. -->
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#0F1020">
+<link rel="icon" type="image/png" href="/logo-512.png">
+<style>
+  :root { --bg:#F4F1FB; --card:#fff; --ink:#14121F; --ink2:#6B6880; --btn:#14121F; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#0F1020; --card:#1A1B2E; --ink:#F4F1FB; --ink2:#A09EB8; --btn:#6B4EFF; } }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:24px 16px;
+         background:var(--bg); color:var(--ink); font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif; }
+  .card { width:100%; max-width:420px; background:var(--card); border-radius:20px; padding:32px 24px; text-align:center; }
+  img.logo { width:56px; height:56px; border-radius:14px; }
+  h1 { font-size:22px; margin:16px 0 8px; }
+  p { color:var(--ink2); font-size:15px; line-height:1.5; margin:0 0 20px; }
+  a.btn { display:block; background:var(--btn); color:#fff; text-decoration:none; font-weight:600; font-size:16px;
+          padding:14px 20px; border-radius:999px; margin-bottom:12px; }
+  a.store { display:block; color:var(--ink); font-weight:600; font-size:15px; padding:12px; border:1.5px solid rgba(127,127,160,.35);
+            border-radius:999px; margin-top:10px; text-decoration:none; }
+  .later { display:none; }
+</style>
+</head>
+<body>
+<main class="card">
+  <img class="logo" src="/logo-512.png" alt="MysMatch">
+  <h1 id="t">Opening MysMatch…</h1>
+  <p id="s">Your connection requests are waiting in the app.</p>
+  <a class="btn" id="open" href="mysmatch://?open=requests">Open the app</a>
+  <div class="later" id="stores">
+    <p id="n" style="margin-top:12px">Don't have the app on this phone?</p>
+    <a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785">App Store</a>
+    <a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app">Google Play</a>
+  </div>
+</main>
+<script>
+(function () {
+  var de = /^de/i.test(navigator.language || '');
+  if (de) {
+    document.documentElement.lang = 'de';
+    document.getElementById('t').textContent = 'MysMatch wird geöffnet…';
+    document.getElementById('s').textContent = 'Deine Vernetzungsanfragen warten in der App.';
+    document.getElementById('open').textContent = 'App öffnen';
+    document.getElementById('n').textContent = 'Du hast die App nicht auf diesem Handy?';
+  }
+  var ua = navigator.userAgent || '';
+  var android = /Android/i.test(ua), ios = /iPhone|iPad|iPod/i.test(ua);
+  // Query-only link: older app versions simply open their start screen,
+  // updated ones jump to the connection requests (app/+native-intent.tsx).
+  var link = 'mysmatch://?open=requests';
+  if (android) {
+    // Chrome opens intent:// links reliably; falls back to Google Play if the app is missing.
+    link = 'intent://?open=requests#Intent;scheme=mysmatch;package=com.mysmatch.app;' +
+           'S.browser_fallback_url=' + encodeURIComponent('https://play.google.com/store/apps/details?id=com.mysmatch.app') + ';end';
+  }
+  document.getElementById('open').href = link;
+  if (android || ios) { setTimeout(function () { window.location.href = link; }, 150); }
+  else { document.getElementById('t').textContent = de ? 'Öffne MysMatch auf deinem Handy' : 'Open MysMatch on your phone'; }
+  // Still here after 2 s → the app probably isn't installed: show the stores.
+  setTimeout(function () { document.getElementById('stores').style.display = 'block'; }, (android || ios) ? 2000 : 0);
+})();
+</script>
+<script async src="https://plausible.io/js/pa-DVdhhwvZTUkHlf5ZrwBf4.js"></script>
+<script>
+  window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+  plausible.init()
+</script>
+</body>
+</html>
