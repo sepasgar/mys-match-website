@@ -42,21 +42,32 @@
 <script>
 (function () {
   var de = /^de/i.test(navigator.language || '');
+  // ?to=accepted&u=<id> comes from "your request was accepted" emails (Nov 2026):
+  // the app opens that person's profile. Anything else = connection requests.
+  var params = new URLSearchParams(location.search);
+  var accepted = params.get('to') === 'accepted';
+  var u = params.get('u') || '';
+  var q = 'open=requests';
+  if (accepted) {
+    q = 'open=accepted';
+    if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(u)) q += '&user=' + u;
+    document.getElementById('s').textContent = 'Your new connection is waiting in the app.';
+  }
   if (de) {
     document.documentElement.lang = 'de';
     document.getElementById('t').textContent = 'MysMatch wird geöffnet…';
-    document.getElementById('s').textContent = 'Deine Vernetzungsanfragen warten in der App.';
+    document.getElementById('s').textContent = accepted ? 'Deine neue Vernetzung wartet in der App.' : 'Deine Vernetzungsanfragen warten in der App.';
     document.getElementById('open').textContent = 'App öffnen';
     document.getElementById('n').textContent = 'Du hast die App nicht auf diesem Handy?';
   }
   var ua = navigator.userAgent || '';
   var android = /Android/i.test(ua), ios = /iPhone|iPad|iPod/i.test(ua);
   // Query-only link: older app versions simply open their start screen,
-  // updated ones jump to the connection requests (app/+native-intent.tsx).
-  var link = 'mysmatch://?open=requests';
+  // updated ones jump to the right screen (app/+native-intent.tsx).
+  var link = 'mysmatch://?' + q;
   if (android) {
     // Chrome opens intent:// links reliably; falls back to Google Play if the app is missing.
-    link = 'intent://?open=requests#Intent;scheme=mysmatch;package=com.mysmatch.app;' +
+    link = 'intent://?' + q + '#Intent;scheme=mysmatch;package=com.mysmatch.app;' +
            'S.browser_fallback_url=' + encodeURIComponent('https://play.google.com/store/apps/details?id=com.mysmatch.app') + ';end';
   }
   document.getElementById('open').href = link;
