@@ -148,7 +148,7 @@
     if (r.data.user && !r.data.session && r.data.user.identities && r.data.user.identities.length === 0) {
       return { ok: false, error: T('An account with this email already exists. Please sign in.') };
     }
-    // Plausible "Challenge signup" (js/analytics.js): counted here, after the
+    // "Challenge signup" event (js/mm.js, own statistics since Nov 2026): counted here, after the
     // account really exists, so failed tries and duplicates don't count.
     if (window.mmTrack) window.mmTrack('Challenge signup', { method: 'email' });
     return { ok: true, needsConfirm: !r.data.session };
