@@ -230,10 +230,32 @@ def head_block(path, lang):
         if has_page(path, l):
             links.append(f'<link rel="alternate" hreflang="{l}" href="{SITE}/{l}{url}">')
     links.append(f'<link rel="alternate" hreflang="x-default" href="{SITE}{url}">')
-    style = ('<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}'
-             '.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}'
-             '.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}'
-             '.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style>')
+    # Language dropdown (Nov 2026, owner: a row of links doesn't scale to
+    # more languages and has no room in the header). A compact "globe + EN"
+    # button on every screen size; the list shows each language in its own
+    # name. The list is position:fixed and placed by script under the button,
+    # because the header (.nav) has overflow:hidden and would clip it.
+    style = ('<style>'
+             '.lang-dd{position:relative;margin-inline-end:8px;font-size:14px;font-weight:600}'
+             '.lang-dd>summary{list-style:none;display:flex;align-items:center;gap:6px;cursor:pointer;padding:9px 12px;border-radius:999px;'
+             'color:var(--nav-ink,#1E1A36);background:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.5);letter-spacing:.04em;user-select:none;white-space:nowrap}'
+             '.lang-dd>summary::-webkit-details-marker{display:none}'
+             '.lang-dd>summary:hover,.lang-dd[open]>summary{background:rgba(255,255,255,.6)}'
+             '.lang-dd>summary svg{flex:none}'
+             '.lang-dd[open]>summary .lang-dd-caret{transform:rotate(180deg)}'
+             '.lang-dd-list{position:fixed;z-index:2147483000;min-width:180px;max-height:70vh;overflow:auto;padding:6px;border-radius:16px;'
+             'background:#fff;box-shadow:0 16px 48px rgba(30,26,54,.22),0 2px 6px rgba(30,26,54,.08);display:flex;flex-direction:column}'
+             '.lang-dd-list[hidden]{display:none}'
+             '.lang-dd-list.lang-dd-list a{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:10px 14px;border-radius:10px;'
+             'color:#1E1A36;font-size:15px;font-weight:500;letter-spacing:0;text-decoration:none;text-shadow:none;background:none;font-family:inherit}'
+             '.lang-dd-list.lang-dd-list a:hover{background:#F3EFFF}'
+             '.lang-dd-list.lang-dd-list a[aria-current]{font-weight:700;background:#F3EFFF}'
+             '.lang-dd-list.lang-dd-list a[aria-current]::after{content:"✓";color:#5B3FE0}'
+             '.lang-dd-code{font-size:13px}'
+             # Phones: no room in the header row, so the dropdown lives in the menu.
+             '.lang-dd-m{display:none}'
+             '@media(max-width:640px){.nav-right .lang-dd{display:none}.lang-dd.lang-dd-m{display:block;margin:10px 0 0}}'
+             '</style>')
     extra = ''
     if lang == 'fa':
         # Persian font + right-to-left fixes; Geist has no Persian letters.
@@ -244,25 +266,51 @@ def head_block(path, lang):
     # The switch keeps the rest of the address (?id=… on the event/job page,
     # #anchors), otherwise the other language opens an empty event page.
     keep = ('<script>document.addEventListener("DOMContentLoaded",function(){var q=location.search+location.hash;'
-            'if(q)document.querySelectorAll(".lang-switch a").forEach(function(a){a.setAttribute("href",a.getAttribute("href")+q);});});</script>')
+            'if(q)document.querySelectorAll(".lang-switch a").forEach(function(a){a.setAttribute("href",a.getAttribute("href")+q);});'
+            # Dropdown: place the list under the button (end-aligned, so it
+            # never leaves the screen; flipped on right-to-left pages), close
+            # on outside tap, Escape, scroll and resize.
+            'document.querySelectorAll("details.lang-dd").forEach(function(d){var s=d.querySelector("summary"),l=d.querySelector(".lang-dd-list");'
+            'document.body.appendChild(l);l.hidden=true;'
+            'function place(){var r=s.getBoundingClientRect();l.style.top=(r.bottom+8)+"px";'
+            'if(r.left+r.width/2<innerWidth/2){l.style.left=Math.max(8,r.left)+"px";l.style.right="auto";}'
+            'else{l.style.right=Math.max(8,innerWidth-r.right)+"px";l.style.left="auto";}}'
+            'd.addEventListener("toggle",function(){l.hidden=!d.open;if(d.open)place();});'
+            'document.addEventListener("click",function(e){if(d.open&&!d.contains(e.target)&&!l.contains(e.target))d.open=false;});'
+            'document.addEventListener("keydown",function(e){if(e.key==="Escape"&&d.open){d.open=false;s.focus();}});'
+            'addEventListener("scroll",function(){if(d.open)d.open=false;},{passive:true});addEventListener("resize",function(){if(d.open)place();});});'
+            '});</script>')
     return MARK_HEAD[0] + '\n' + '\n'.join(links) + '\n' + style + extra + keep + '\n' + MARK_HEAD[1] + '\n'
 
 
+# Each language in its own name, so anyone can find theirs.
+NATIVE = {'en': 'English', 'de': 'Deutsch', 'fa': 'فارسی', 'tr': 'Türkçe', 'it': 'Italiano', 'es': 'Español'}
+GLOBE = ('<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" '
+         'stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></svg>')
+CARET = ('<svg class="lang-dd-caret" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" '
+         'stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>')
+
+
 def switch_block(path, lang, extra_class=''):
+    """Language dropdown: <details> works without script; the class
+    "lang-switch" keeps the ?id=…/#anchor-keeping script working."""
     url = page_url(path)
-    items = [('en', 'EN', url)] + [(l, LANGS[l]['label'], f'/{l}{url}') for l in LANGS if has_page(path, l)]
-    a = ''.join(f'<a href="{href}" hreflang="{l}" lang="{l}"' + (' aria-current="true"' if l == lang else '') + f'>{label}</a>'
-                for l, label, href in items)
-    return f'{MARK_SWITCH[0]}<div class="lang-switch{extra_class}" aria-label="Language">{a}</div>{MARK_SWITCH[1]}'
+    items = [('en', url)] + [(l, f'/{l}{url}') for l in LANGS if has_page(path, l)]
+    a = ''.join(f'<a href="{href}" hreflang="{l}" lang="{l}"' + (' aria-current="true"' if l == lang else '')
+                + f'>{NATIVE.get(l, l.upper())}</a>' for l, href in items)
+    label = 'EN' if lang == 'en' else LANGS[lang]['label']
+    return (f'{MARK_SWITCH[0]}<details class="lang-switch lang-dd{extra_class}"><summary aria-label="Language / {NATIVE.get(lang, lang)}">'
+            f'{GLOBE}<span class="lang-dd-code" lang="{lang}">{label}</span>{CARET}</summary>'
+            f'<div class="lang-dd-list" role="list">{a}</div></details>{MARK_SWITCH[1]}')
 
 
 def inject(html, path, lang):
     html = html.replace('</head>', head_block(path, lang) + '</head>', 1)
+    # Dropdown in the header (Nov 2026); phones (<=640px) have no room there,
+    # so a second copy sits in the menu and only that one shows on phones.
     html = re.sub(r'(<div class="nav-right">)', lambda m: m.group(1) + switch_block(path, lang), html, count=1)
-    # Phones: the header has no room, so a second copy sits at the end of the
-    # menu (nav-links) and only that one shows below 600px.
     html = re.sub(r'(<nav class="nav-links" id="nav-links">.*?)(</nav>)',
-                  lambda m: m.group(1) + switch_block(path, lang, ' lang-switch-m') + m.group(2), html, count=1, flags=re.S)
+                  lambda m: m.group(1) + switch_block(path, lang, ' lang-dd-m') + m.group(2), html, count=1, flags=re.S)
     return html
 
 
