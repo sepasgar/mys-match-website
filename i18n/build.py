@@ -237,6 +237,9 @@ def head_block(path, lang):
     # because the header (.nav) has overflow:hidden and would clip it.
     style = ('<style>'
              '.lang-dd{position:relative;margin-inline-end:8px;font-size:14px;font-weight:600}'
+             # The homepage only makes .nav-right a row below 1100px; a <details> is a block, so
+             # without this it stacked above the Get-the-app button on wide screens.
+             '.nav-right{display:flex;align-items:center;gap:10px}'
              '.lang-dd>summary{list-style:none;display:flex;align-items:center;gap:6px;cursor:pointer;padding:9px 12px;border-radius:999px;'
              'color:var(--nav-ink,#1E1A36);background:rgba(255,255,255,.38);border:1px solid rgba(255,255,255,.5);letter-spacing:.04em;user-select:none;white-space:nowrap}'
              '.lang-dd>summary::-webkit-details-marker{display:none}'
