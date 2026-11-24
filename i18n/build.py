@@ -29,7 +29,17 @@ LANGS = {
     # html lang, dir, locale for dates in scripts, label in the switch
     'de': {'lang': 'de', 'dir': 'ltr', 'locale': 'de-DE', 'label': 'DE'},
     'fa': {'lang': 'fa', 'dir': 'rtl', 'locale': 'fa-IR-u-ca-gregory', 'label': 'فا'},
+    # Turkish (Nov 2026, release in Turkey). The Ideation Challenge pages are
+    # left out on purpose: the challenge ends 1 Dec 2026 (owner), so /tr/ has
+    # no challenge copies and those pages show no TR in the switch/hreflang.
+    'tr': {'lang': 'tr', 'dir': 'ltr', 'locale': 'tr-TR', 'label': 'TR',
+           'skip': {'challenge/index.html', 'challenge/rules.html', 'challenge/reset.html'}},
 }
+
+
+def has_page(path, lang):
+    """Is there a /<lang>/ copy of this page? (English always.)"""
+    return lang == 'en' or path not in LANGS[lang].get('skip', ())
 # Public, indexed pages that get translated copies. The URL path of each is
 # the folder (index.html) or the file without .html.
 PAGES = [
@@ -212,7 +222,8 @@ def head_block(path, lang):
     url = page_url(path)
     links = [f'<link rel="alternate" hreflang="en" href="{SITE}{url}">']
     for l in LANGS:
-        links.append(f'<link rel="alternate" hreflang="{l}" href="{SITE}/{l}{url}">')
+        if has_page(path, l):
+            links.append(f'<link rel="alternate" hreflang="{l}" href="{SITE}/{l}{url}">')
     links.append(f'<link rel="alternate" hreflang="x-default" href="{SITE}{url}">')
     style = ('<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}'
              '.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}'
@@ -234,7 +245,7 @@ def head_block(path, lang):
 
 def switch_block(path, lang, extra_class=''):
     url = page_url(path)
-    items = [('en', 'EN', url)] + [(l, LANGS[l]['label'], f'/{l}{url}') for l in LANGS]
+    items = [('en', 'EN', url)] + [(l, LANGS[l]['label'], f'/{l}{url}') for l in LANGS if has_page(path, l)]
     a = ''.join(f'<a href="{href}" hreflang="{l}" lang="{l}"' + (' aria-current="true"' if l == lang else '') + f'>{label}</a>'
                 for l, label, href in items)
     return f'{MARK_SWITCH[0]}<div class="lang-switch{extra_class}" aria-label="Language">{a}</div>{MARK_SWITCH[1]}'
@@ -254,6 +265,7 @@ LEGAL = {'privacy-policy/index.html', 'terms/index.html', 'delete-account/index.
 LEGAL_NOTE = {
     'de': 'Dies ist eine Übersetzung zur Information. Rechtlich verbindlich ist die <a href="{en}">englische Fassung</a>.',
     'fa': 'این متن ترجمه‌ای برای آگاهی است. نسخهٔ حقوقی الزام‌آور، <a href="{en}">نسخهٔ انگلیسی</a> است.',
+    'tr': 'Bu metin bilgilendirme amaçlı bir çeviridir. Hukuken bağlayıcı olan <a href="{en}">İngilizce metindir</a>.',
 }
 
 
@@ -273,6 +285,10 @@ def localize_href(href, lang):
     m = re.match(r'^(/[^?#]*)(.*)$', href)
     p, rest = m.group(1), m.group(2)
     if p.rstrip('/') in TRANSLATED_URLS or p == '/':
+        # Pages a language skips (Turkish: challenge) keep the English link.
+        skipped = {page_url(x).rstrip('/') for x in LANGS[lang].get('skip', ())} | {'/' + x for x in LANGS[lang].get('skip', ())}
+        if p.rstrip('/') in skipped:
+            return href
         return f'/{lang}{p}{rest}'
     return href
 
@@ -290,6 +306,8 @@ def build():
         # English page: only the hreflang links + switch are (re)added.
         open(src_path, 'w', encoding='utf-8', newline='\n').write(inject(src, path, 'en'))
         for lang, cfg in LANGS.items():
+            if not has_page(path, lang):
+                continue
             table = load(lang)
             soup = BeautifulSoup(src, 'html.parser')
             ps = Pass(table, lang)

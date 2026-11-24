@@ -19,7 +19,8 @@
    "challenge/rules.html",
    "challenge/reset.html",
    "links/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "How it works": [
    "index.html"
@@ -37,7 +38,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Jobs": [
    "index.html",
@@ -52,9 +54,10 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
-  "Challenge": [
+  "Ideation Challenge": [
    "index.html",
    "events/index.html",
    "events/event.html",
@@ -64,7 +67,10 @@
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Safety": [
    "index.html"
@@ -72,12 +78,18 @@
   "Get the app": [
    "index.html",
    "events/index.html",
+   "events/event.html",
    "jobs/index.html",
+   "jobs/job.html",
    "organizations/index.html",
    "support/index.html",
    "delete-account/index.html",
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "challenge/index.html",
+   "challenge/rules.html",
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Open menu": [
    "index.html",
@@ -91,7 +103,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Do not <span class=\"grad-text\">study alone.</span>": [
    "index.html"
@@ -109,12 +122,6 @@
    "index.html"
   ],
   "+4500 universities": [
-   "index.html"
-  ],
-  "Study partners and classmates, jobs and more: your campus, only in the app": [
-   "index.html"
-  ],
-  "Discover: find study partners and classmates in your major": [
    "index.html"
   ],
   "/ Why MysMatch": [
@@ -138,10 +145,16 @@
   "Do not study alone": [
    "index.html"
   ],
+  "Study partners and classmates, jobs and more: your campus, only in the app": [
+   "index.html"
+  ],
   "Campus": [
    "index.html"
   ],
   "Study partners and classmates, jobs and more": [
+   "index.html"
+  ],
+  "Discover: find study partners and classmates in your major": [
    "index.html"
   ],
   "Discover": [
@@ -283,7 +296,14 @@
    "events/event.html",
    "jobs/index.html",
    "jobs/job.html",
-   "organizations/index.html"
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html",
+   "challenge/index.html",
+   "challenge/rules.html",
+   "dashboard.html"
   ],
   "<small>Get it on</small><b>Google Play</b>": [
    "index.html",
@@ -291,7 +311,14 @@
    "events/event.html",
    "jobs/index.html",
    "jobs/job.html",
-   "organizations/index.html"
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html",
+   "challenge/index.html",
+   "challenge/rules.html",
+   "dashboard.html"
   ],
   "Do not study alone.": [
    "index.html",
@@ -305,7 +332,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Product": [
    "index.html",
@@ -319,20 +347,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
-  ],
-  "Ideation Challenge": [
-   "index.html",
-   "events/index.html",
-   "events/event.html",
-   "jobs/index.html",
-   "jobs/job.html",
-   "organizations/index.html",
-   "support/index.html",
-   "delete-account/index.html",
-   "privacy-policy/index.html",
-   "terms/index.html",
-   "challenge/index.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Company": [
    "index.html",
@@ -346,7 +362,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Contact": [
    "index.html",
@@ -361,7 +378,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Organization login": [
    "index.html",
@@ -375,7 +393,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Organization sign-up": [
    "index.html",
@@ -389,7 +408,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Legal": [
    "index.html",
@@ -403,7 +423,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Privacy Policy": [
    "index.html",
@@ -418,7 +439,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Terms of Service": [
    "index.html",
@@ -433,7 +455,24 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
+  ],
+  "Legal Notice": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "team/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html",
+   "challenge/index.html",
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Support": [
    "index.html",
@@ -447,7 +486,8 @@
    "delete-account/index.html",
    "privacy-policy/index.html",
    "terms/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Social": [
    "index.html",
@@ -461,7 +501,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Instagram": [
    "index.html",
@@ -475,7 +516,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "TikTok": [
    "index.html",
@@ -489,7 +531,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "LinkedIn": [
    "index.html",
@@ -503,7 +546,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "© 2026 MysMatch. All rights reserved.": [
    "index.html",
@@ -519,7 +563,24 @@
    "terms/index.html",
    "challenge/index.html",
    "challenge/rules.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
+  ],
+  "Jülicher Str. 209 q-s, 52070 Aachen": [
+   "index.html",
+   "events/index.html",
+   "events/event.html",
+   "jobs/index.html",
+   "jobs/job.html",
+   "organizations/index.html",
+   "support/index.html",
+   "delete-account/index.html",
+   "privacy-policy/index.html",
+   "terms/index.html",
+   "challenge/index.html",
+   "challenge/rules.html",
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "contact@mys-match.com": [
    "index.html",
@@ -534,7 +595,30 @@
    "terms/index.html",
    "challenge/index.html",
    "challenge/rules.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
+  ],
+  "Close": [
+   "index.html",
+   "events/event.html"
+  ],
+  "Golden ticket": [
+   "index.html"
+  ],
+  "Ideation Challenge · Season 01": [
+   "index.html"
+  ],
+  "Participate in the competition, join our team!": [
+   "index.html"
+  ],
+  "Write a scenario, design a post or film a video for MysMatch. The best entries are invited to interview. Submissions close 1 December 2026.": [
+   "index.html"
+  ],
+  "Join the challenge →": [
+   "index.html"
+  ],
+  "Maybe later": [
+   "index.html"
   ],
   "MysMatch helps university students find study partners and classmates in their own program and semester, plus campus events and student jobs. Free.": [
    "index.html"
@@ -560,7 +644,8 @@
    "privacy-policy/index.html",
    "terms/index.html",
    "challenge/index.html",
-   "dashboard.html"
+   "dashboard.html",
+   "impressum/index.html"
   ],
   "Your campus,<br/><span class=\"grad-text\">in real life.</span>": [
    "events/index.html"
@@ -687,10 +772,19 @@
   "Loading event…": [
    "events/event.html"
   ],
+  "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registration needed. Otherwise it will be cancelled.": [
+   "events/event.html"
+  ],
+  "This event only takes place if at least <b data-min=\"\"></b> people register — <b data-missing=\"\"></b> more registrations needed. Otherwise it will be cancelled.": [
+   "events/event.html"
+  ],
   "Register": [
    "events/event.html"
   ],
   "Reserve your spot — it only takes a moment.": [
+   "events/event.html"
+  ],
+  "Prices:": [
    "events/event.html"
   ],
   "Full name <span class=\"req\">*</span>": [
@@ -715,9 +809,6 @@
    "events/event.html"
   ],
   "By registering you agree to our <a href=\"/terms/\">Terms</a> and <a href=\"/privacy-policy/\">Privacy Policy</a>. We'll share your details with the event organizer.": [
-   "events/event.html"
-  ],
-  "Close": [
    "events/event.html"
   ],
   "Download the app to be informed about all events — and much more": [
@@ -776,6 +867,9 @@
    "jobs/index.html"
   ],
   "Apply in the <span style=\"color:#CDB8FF\">MysMatch app.</span>": [
+   "jobs/index.html"
+  ],
+  "Applications are only accepted through the app — not by email, phone or on this website.": [
    "jobs/index.html"
   ],
   "Apply with your CV": [
@@ -839,7 +933,10 @@
   "Apply in the MysMatch app": [
    "jobs/job.html"
   ],
-  "Applications — with your CV and the organization's questions — are sent through the app.": [
+  "Applications are only accepted through the MysMatch app — not by email, phone or on this website.": [
+   "jobs/job.html"
+  ],
+  "Download the app, open this job and tap <strong>Apply now</strong>. Your CV and your answers to the organization's questions go straight to them, and you can follow your application in the app.": [
    "jobs/job.html"
   ],
   "Already have the app? Open this job →": [
@@ -1108,8 +1205,7 @@
    "delete-account/index.html"
   ],
   "Last updated: September 28, 2026": [
-   "delete-account/index.html",
-   "privacy-policy/index.html"
+   "delete-account/index.html"
   ],
   "This page explains how to delete your <strong>MysMatch</strong> account (the MysMatch app for iOS and Android) and what happens to your data.": [
    "delete-account/index.html"
@@ -1188,7 +1284,11 @@
   ],
   "/ Legal": [
    "privacy-policy/index.html",
-   "terms/index.html"
+   "terms/index.html",
+   "impressum/index.html"
+  ],
+  "Last updated: November 23, 2026": [
+   "privacy-policy/index.html"
   ],
   "1. Controller and Contact Information": [
    "privacy-policy/index.html"
@@ -1200,7 +1300,8 @@
    "privacy-policy/index.html"
   ],
   "Email: <a href=\"mailto:contact@mys-match.com\">contact@mys-match.com</a>": [
-   "privacy-policy/index.html"
+   "privacy-policy/index.html",
+   "impressum/index.html"
   ],
   "Website: <a href=\"https://www.mysmatch.com\">https://www.mysmatch.com</a>": [
    "privacy-policy/index.html"
@@ -1220,7 +1321,7 @@
   "Profile data: university, major, semester, study level, study description, city, profile photo": [
    "privacy-policy/index.html"
   ],
-  "Phone number: for identity verification via SMS": [
+  "Phone number: for identity verification via SMS, and to make sure each prize from a questionnaire is claimed only once per person": [
    "privacy-policy/index.html"
   ],
   "Communications: messages you send to other users through the app": [
@@ -1232,7 +1333,16 @@
   "Job applications: when you apply for a job posted by an organization in the app, the CV file you upload (PDF, JPEG or PNG, max. 10 MB) and your answers to the organization’s application questions": [
    "privacy-policy/index.html"
   ],
+  "Job application contact details: the email address and, if you choose to add it, the phone number you enter when applying for a job. Only the organization you apply to sees them, so it can contact you about your application": [
+   "privacy-policy/index.html"
+  ],
+  "Questionnaire answers: if you take part in a questionnaire in the app, your answers. They are linked to your account so each person can answer only once, and we evaluate them only in anonymised form, without your name, email address or phone number": [
+   "privacy-policy/index.html"
+  ],
   "Reports: information you provide when reporting other users": [
+   "privacy-policy/index.html"
+  ],
+  "Contact form: the name, email address and message you send through the contact form on our Legal Notice page, used only to answer you and deleted after 12 months": [
    "privacy-policy/index.html"
   ],
   "b) Information collected automatically:": [
@@ -1250,7 +1360,10 @@
   "Crash data: technical error logs, stack traces, device state at time of crash": [
    "privacy-policy/index.html"
   ],
-  "Analytics data: anonymized interaction patterns, feature usage statistics": [
+  "Analytics data: in-app usage events (screens viewed, buttons tapped, features used), linked to a pseudonymous user ID": [
+   "privacy-policy/index.html"
+  ],
+  "Link clicks: when you open the map, website or external registration link of a perk or event in the app, which perk or event, which link and on which day": [
    "privacy-policy/index.html"
   ],
   "c) Information from third parties:": [
@@ -1295,7 +1408,13 @@
   "<strong>Safety and security:</strong> verifying identities via phone number, processing user reports and blocks, detecting and preventing abuse, enforcing our Terms of Service": [
    "privacy-policy/index.html"
   ],
+  "<strong>Fair prizes:</strong> to answer a questionnaire with a prize, you need a verified phone number. Each phone number can take part only once, so a prize cannot be claimed again with another account or by deleting and re-creating an account": [
+   "privacy-policy/index.html"
+  ],
   "<strong>Improvement:</strong> analyzing aggregated usage patterns, monitoring app stability and performance, identifying and fixing bugs": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Reports for organizers:</strong> counting how many students open the map, website or registration link of a perk or event, so we can show venues and event organizers how much interest MysMatch brought them (legitimate interest, Art. 6(1)(f) GDPR). Organizers only ever receive totals, never who clicked": [
    "privacy-policy/index.html"
   ],
   "<strong>Legal compliance:</strong> responding to lawful data requests, maintaining records as required by law": [
@@ -1331,10 +1450,16 @@
   "<strong>OneSignal</strong> (OneSignal Inc., USA): push notification delivery. Receives your device token and user ID": [
    "privacy-policy/index.html"
   ],
-  "<strong>Mixpanel</strong> (Mixpanel Inc., USA): analytics and event tracking. Receives anonymized usage data": [
+  "<strong>Mixpanel</strong> (Mixpanel Inc., USA; data stored on Mixpanel's EU servers): app usage statistics. Receives usage events (screens viewed, buttons tapped, features used), your pseudonymous user ID, device type and an approximate location (city, country) derived from your IP address. Never your name, email address, phone number or message content": [
    "privacy-policy/index.html"
   ],
-  "<strong>Sentry</strong> (Functional Software Inc., USA): crash reporting and error monitoring. Receives device and error data": [
+  "<strong>Website statistics</strong> (our own, no third party; stored in our Supabase database): cookieless statistics for this website only (pages visited, referring site and campaign, country derived from your browser's time zone, device type, browser and operating system, time spent on a page and how far it was scrolled, clicks on app-store links, external links and downloads, and challenge sign-ups). No cookies are set and nothing is stored on your device. Your IP address is used only for a moment to create an anonymous visitor code that changes every day and cannot be traced back to you; the IP address itself is never stored. The data is deleted after 25 months; legal basis Art. 6(1)(f) GDPR (our legitimate interest in knowing how our website is used)": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Sentry</strong> (Functional Software Inc., USA): crash reporting and error monitoring. Receives device and error data and your pseudonymous user ID (no email address). An error report may include a screenshot of the app screen at the moment of the error": [
+   "privacy-policy/index.html"
+  ],
+  "<strong>Resend</strong> (Resend Inc., USA): sends the ticket email (with your QR code) when you register for an event on this website. Receives your name, email address and the event details; legal basis Art. 6(1)(b) GDPR. Also sends app account emails when a connection request has been waiting for you for more than 24 hours (at most one per day, one reminder after 3 days). Receives your email address, your first name and the semester, major and university of the students who sent you a request (never their names or photos), and an email when a student accepts your connection request and you haven't opened the app since (with that student's semester, major and university, never their name or photo); legal basis Art. 6(1)(f) GDPR (our legitimate interest in letting you know about requests you would otherwise miss). Every such email contains a link to stop them": [
    "privacy-policy/index.html"
   ],
   "<strong>Twilio</strong> (Twilio Inc., USA): SMS verification. Receives your phone number": [
@@ -1409,6 +1534,9 @@
   "<strong>Analytics data:</strong> retained in identifiable form for 12 months, then aggregated and anonymized": [
    "privacy-policy/index.html"
   ],
+  "<strong>Link clicks:</strong> deleted after 12 months": [
+   "privacy-policy/index.html"
+  ],
   "<strong>Legal holds:</strong> data may be retained longer if required by law or ongoing legal proceedings": [
    "privacy-policy/index.html"
   ],
@@ -1481,7 +1609,7 @@
   "The MysMatch mobile app does not use browser cookies. However, we use the following technologies:": [
    "privacy-policy/index.html"
   ],
-  "<strong>Mixpanel SDK:</strong> uses local storage to track anonymized usage events and session data. You can opt out via iOS App Tracking Transparency or by contacting us": [
+  "<strong>Mixpanel SDK:</strong> uses local storage to record usage events (screens viewed, buttons tapped) linked to your pseudonymous user ID. You can opt out via iOS App Tracking Transparency or by contacting us": [
    "privacy-policy/index.html"
   ],
   "<strong>OneSignal SDK:</strong> stores a device token for push notification delivery. You can disable notifications in your device settings": [
@@ -1490,7 +1618,7 @@
   "<strong>Sentry SDK:</strong> collects crash data automatically. This is based on our legitimate interest in maintaining app stability": [
    "privacy-policy/index.html"
   ],
-  "On our website (www.mysmatch.com), we do not use cookies or third-party tracking scripts.": [
+  "On our website (www.mysmatch.com), we do not use cookies or third-party tracking scripts. We count visits with our own cookieless statistics (see \"Website statistics\" above).": [
    "privacy-policy/index.html"
   ],
   "11. Age Requirement": [
@@ -2001,7 +2129,7 @@
   "Get inspired": [
    "challenge/index.html"
   ],
-  "Submissions close · 15 Dec 2026": [
+  "Submissions close · 1 Dec 2026": [
    "challenge/index.html"
   ],
   "Days": [
@@ -2029,7 +2157,8 @@
    "challenge/index.html"
   ],
   "Message": [
-   "challenge/index.html"
+   "challenge/index.html",
+   "impressum/index.html"
   ],
   "Do not study alone. Make students want to download MysMatch.": [
    "challenge/index.html"
@@ -2067,7 +2196,7 @@
   "Enter this track →": [
    "challenge/index.html"
   ],
-  "Static": [
+  "Static/Video": [
    "challenge/index.html"
   ],
   "Creative post": [
@@ -2076,10 +2205,10 @@
   "Design a single post or carousel that makes a student stop scrolling and want to download the app.": [
    "challenge/index.html"
   ],
-  "1–5 images (PNG, JPG or WebP)": [
+  "1–5 images or a Google Drive link": [
    "challenge/index.html"
   ],
-  "Video": [
+  "Video/Vlog": [
    "challenge/index.html"
   ],
   "Content creator": [
@@ -2091,6 +2220,36 @@
   "A Google Drive link to your video": [
    "challenge/index.html"
   ],
+  "/ What you can win": [
+   "challenge/index.html"
+  ],
+  "Prizes in <span style=\"color:var(--violet)\">every track.</span>": [
+   "challenge/index.html"
+  ],
+  "Each of the three tracks has its own winners. <a href=\"/challenge/rules.html\">Rules &amp; privacy</a>": [
+   "challenge/index.html"
+  ],
+  "1st": [
+   "challenge/index.html"
+  ],
+  "A job contract": [
+   "challenge/index.html"
+  ],
+  "A job contract in our social media team (after a short interview).": [
+   "challenge/index.html"
+  ],
+  "2nd": [
+   "challenge/index.html"
+  ],
+  "Cash gift + interview": [
+   "challenge/index.html"
+  ],
+  "Cash gift, an invitation to interview and priority in hiring for the next hiring round.": [
+   "challenge/index.html"
+  ],
+  "3rd": [
+   "challenge/index.html"
+  ],
   "/ Get inspired": [
    "challenge/index.html"
   ],
@@ -2100,19 +2259,13 @@
   "See what we post today, and try the app so you know what you're promoting.": [
    "challenge/index.html"
   ],
-  "<span><small>Download on the</small><b>App Store</b></span>": [
+  "<small>Instagram</small><b>@mysmatch.official</b>": [
    "challenge/index.html"
   ],
-  "<span><small>Get it on</small><b>Google Play</b></span>": [
+  "<small>TikTok</small><b>@mysmatch.official</b>": [
    "challenge/index.html"
   ],
-  "<span><small>Instagram</small><b>@mysmatch.official</b></span><i>↗</i>": [
-   "challenge/index.html"
-  ],
-  "<span><small>TikTok</small><b>@mysmatch.official</b></span><i>↗</i>": [
-   "challenge/index.html"
-  ],
-  "<span><small>LinkedIn</small><b>MysMatch</b></span><i>↗</i>": [
+  "<small>LinkedIn</small><b>MysMatch</b>": [
    "challenge/index.html"
   ],
   "/ Submit your entry": [
@@ -2134,7 +2287,7 @@
   "That's a wrap. <span class=\"grad-text\">Thank you.</span>": [
    "challenge/index.html"
   ],
-  "Submissions closed on 15 December 2026. If you sent an entry, sign in below to follow its status.": [
+  "Submissions closed on 1 December 2026. If you sent an entry, sign in below to follow its status.": [
    "challenge/index.html"
   ],
   "Create your account to enter.": [
@@ -2153,7 +2306,8 @@
    "challenge/index.html"
   ],
   "Email": [
-   "challenge/index.html"
+   "challenge/index.html",
+   "impressum/index.html"
   ],
   "alex@university.edu": [
    "challenge/index.html"
@@ -2183,6 +2337,12 @@
   "Sign out": [
    "challenge/index.html"
   ],
+  "<b>You're signed in as a judge.</b> Entries are reviewed on the judging page.": [
+   "challenge/index.html"
+  ],
+  "Open judging dashboard →": [
+   "challenge/index.html"
+  ],
   "Your entries": [
    "challenge/index.html"
   ],
@@ -2192,7 +2352,7 @@
   "Thanks, <span id=\"sent-name\">there</span>. <span class=\"grad-text\">You're in.</span>": [
    "challenge/index.html"
   ],
-  "We'll get back to you at <b id=\"sent-email\"></b> after submissions close on 15 December. You can edit your entry here until then.": [
+  "We'll get back to you at <b id=\"sent-email\"></b> after submissions close on 1 December. You can edit your entry here until then.": [
    "challenge/index.html"
   ],
   "Track your progress": [
@@ -2247,7 +2407,8 @@
    "challenge/index.html"
   ],
   "Germany": [
-   "challenge/index.html"
+   "challenge/index.html",
+   "impressum/index.html"
   ],
   "<span>Portfolio or LinkedIn</span><em data-err=\"portfolio_url\"></em>": [
    "challenge/index.html"
@@ -2303,10 +2464,10 @@
   "Or upload your scenario": [
    "challenge/index.html"
   ],
-  "<span>Upload your design *</span><em data-err=\"post\"></em>": [
+  "<span>Upload your design</span><em data-err=\"post\"></em>": [
    "challenge/index.html"
   ],
-  "<span>Google Drive link to your video *</span><em data-err=\"drive_url\"></em>": [
+  "<span data-only=\"video\" hidden=\"\">Google Drive link to your video *</span><span data-only=\"post\" hidden=\"\">Or share a Google Drive link (e.g. a video post)</span><em data-err=\"drive_url\"></em>": [
    "challenge/index.html"
   ],
   "https://drive.google.com/file/d/…": [
@@ -2315,7 +2476,7 @@
   "<b>i</b><span>In Google Drive, set sharing to “Anyone with the link can view” so our team can open it.</span>": [
    "challenge/index.html"
   ],
-  "<span>Your concept *</span><em data-err=\"concept_text\"></em>": [
+  "<span>Your concept, or a concept summary (if you upload your concept as a file) *</span><em data-err=\"concept_text\"></em>": [
    "challenge/index.html"
   ],
   "What's the idea, who is it for, and why would a student stop scrolling?": [
@@ -2345,16 +2506,16 @@
   "Cancel editing": [
    "challenge/index.html"
   ],
-  "We reply after 15 December 2026.": [
+  "We reply after 1 December 2026.": [
    "challenge/index.html"
   ],
   "Challenge rules": [
    "challenge/index.html"
   ],
-  "Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. Submissions close 15 December 2026.": [
+  "Write a scenario, design a post or film a video for MysMatch — as if you were already our social media manager. Submissions close 1 December 2026.": [
    "challenge/index.html"
   ],
-  "Make our feed. Join the team. Submissions close 15 December 2026.": [
+  "Make our feed. Join the team. Submissions close 1 December 2026.": [
    "challenge/index.html"
   ],
   "Creator Challenge rules &amp; privacy — MysMatch": [
@@ -2369,13 +2530,16 @@
   "The short version": [
    "challenge/rules.html"
   ],
-  "Send one entry per track (Scenario, Creative post, Content creator) by <strong>15 December 2026, 23:59 (Berlin time)</strong>.": [
+  "Send one entry per track (Scenario, Creative post, Content creator) by <strong>1 December 2026, 23:59 (Berlin time)</strong>.": [
    "challenge/rules.html"
   ],
   "It must be your own original work.": [
    "challenge/rules.html"
   ],
-  "The strongest entries are invited to interview for a role in our social media team. There is no cash prize.": [
+  "The winner of each track gets a job contract in our social media team (after a short interview).": [
+   "challenge/rules.html"
+  ],
+  "Second and third place in each track get a cash gift, an invitation to interview and priority in hiring for the next hiring round.": [
    "challenge/rules.html"
   ],
   "We keep entries until <strong>15 June 2027</strong> and then delete them, together with all uploaded files.": [
@@ -2396,13 +2560,13 @@
   "Your work and your rights": [
    "challenge/rules.html"
   ],
-  "You keep the copyright of your entry. By entering you allow MysMatch to show your entry, credited to you, on its own channels (Instagram, TikTok, LinkedIn, website and app), free of charge and without time limit. If we want to use your work commercially in any other way, we'll ask you first.": [
+  "You keep the copyright of your entry. Entering does not give MysMatch any right to publish or use your work: we only look at it to judge the challenge. Before we publish any of your work, on our own channels (Instagram, TikTok, LinkedIn, website and app) or anywhere else, we will contact you, agree with you on a fee for the rights, and publish it only after we have paid you and you have given us your permission.": [
    "challenge/rules.html"
   ],
   "Judging": [
    "challenge/rules.html"
   ],
-  "The MysMatch team judges the idea, the craft, and how well an entry fits our audience and channels. You can follow your status (Submitted, In review, Shortlisted, Interview, Selected / Not selected) on the challenge page after signing in. Being shortlisted or interviewed doesn't guarantee a job offer. Our decisions are final.": [
+  "The MysMatch team judges the idea, the craft, and how well an entry fits our audience and channels. You can follow your status (Submitted, In review, Shortlisted, Interview, Selected / Not selected) on the challenge page after signing in. Apart from the job contract for each track winner, being shortlisted or interviewed doesn't guarantee a job offer. Our decisions are final.": [
    "challenge/rules.html"
   ],
   "Privacy": [
@@ -2433,7 +2597,7 @@
    "challenge/rules.html",
    "challenge/reset.html"
   ],
-  "Rules, eligibility and privacy notes for the MysMatch Creator Challenge, Season 01.": [
+  "Rules and privacy notes for the MysMatch Creator Challenge, Season 01.": [
    "challenge/rules.html"
   ],
   "Set a new password — MysMatch": [
@@ -2469,6 +2633,9 @@
   "<small>Get it on</small>Google Play": [
    "links/index.html"
   ],
+  "<small>Creator Challenge · Season 01</small>Ideation Challenge": [
+   "links/index.html"
+  ],
   "<small>Website</small>www.mysmatch.com": [
    "links/index.html"
   ],
@@ -2489,9 +2656,82 @@
   ],
   "Organization <span class=\"grad-text\">dashboard.</span>": [
    "dashboard.html"
+  ],
+  "Legal Notice (Impressum) — MysMatch": [
+   "impressum/index.html"
+  ],
+  "Impressum: who runs MysMatch and how to reach us.": [
+   "impressum/index.html"
+  ],
+  "Information according to § 5 DDG": [
+   "impressum/index.html"
+  ],
+  "Sepehr Asgari": [
+   "impressum/index.html"
+  ],
+  "Founder": [
+   "impressum/index.html"
+  ],
+  "Jülicher Str. 209 q-s": [
+   "impressum/index.html"
+  ],
+  "52070 Aachen": [
+   "impressum/index.html"
+  ],
+  "Contact form: see below. We usually reply within 2 business days.": [
+   "impressum/index.html"
+  ],
+  "Responsible for content according to § 18 (2) MStV": [
+   "impressum/index.html"
+  ],
+  "Sepehr Asgari, address as above.": [
+   "impressum/index.html"
+  ],
+  "Consumer dispute resolution": [
+   "impressum/index.html"
+  ],
+  "We are neither willing nor obliged to take part in dispute resolution proceedings before a consumer arbitration board.": [
+   "impressum/index.html"
+  ],
+  "Contact form": [
+   "impressum/index.html"
+  ],
+  "Your message goes straight to our team. We use your name and email only to answer you and delete messages after 12 months (see our <a href=\"/privacy-policy/\">Privacy Policy</a>).": [
+   "impressum/index.html"
+  ],
+  "Name": [
+   "impressum/index.html"
+  ],
+  "Website": [
+   "impressum/index.html"
+  ],
+  "Send message": [
+   "impressum/index.html"
+  ],
+  "Thank you! Your message was sent. We'll get back to you by email.": [
+   "impressum/index.html"
+  ],
+  "Please fill in your name, a valid email and a message (at least 5 characters).": [
+   "impressum/index.html"
+  ],
+  "Too many messages in a short time. Please try again later or email us.": [
+   "impressum/index.html"
+  ],
+  "Something went wrong. Please try again or email us.": [
+   "impressum/index.html"
+  ],
+  "Legal notice (Impressum) for MysMatch: who runs the app and website, and how to reach us.": [
+   "impressum/index.html"
+  ],
+  "Who runs MysMatch and how to reach us.": [
+   "impressum/index.html"
   ]
  },
  "js": {
+  "Escape": [
+   "index.html",
+   "events/event.html"
+  ],
   "Europe/Berlin": [
    "index.html",
    "events/index.html",
@@ -2524,6 +2764,10 @@
   ],
   " spots left": [
    "index.html"
+  ],
+  "See prices": [
+   "index.html",
+   "events/index.html"
   ],
   "Free": [
    "index.html",
@@ -2688,9 +2932,6 @@
   "Could not load events.": [
    "events/index.html"
   ],
-  "Escape": [
-   "events/event.html"
-  ],
   "No event specified.": [
    "events/event.html"
   ],
@@ -2700,6 +2941,15 @@
    "dashboard.html"
   ],
   "This event is not available.<br>It may be private or no longer published.": [
+   "events/event.html"
+  ],
+  "This event has ended.": [
+   "events/event.html"
+  ],
+  "<br><a class=\"btn btn-dark\" style=\"display:inline-block;margin-top:14px\" href=\"/events/\">": [
+   "events/event.html"
+  ],
+  "See upcoming events": [
    "events/event.html"
   ],
   "Could not load this event.": [
@@ -2747,6 +2997,9 @@
    "events/event.html"
   ],
   "<div class=\"desc-wrap\"><div class=\"kicker\">/ About this event</div><div class=\"desc\">": [
+   "events/event.html"
+  ],
+  "<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle><path d=\"M12 8v4M12 16h.01\"></path></svg><span>": [
    "events/event.html"
   ],
   "<h2>Registration only on app for this event</h2>": [
@@ -2804,6 +3057,9 @@
   " <span style=\"color:var(--gray-light);font-weight:600\">(optional)</span>": [
    "events/event.html"
   ],
+  "<p class=\"doc-note\">": [
+   "events/event.html"
+  ],
   "<input id=\"f-doc\" type=\"file\" accept=\"image/png,image/jpeg,image/webp\">": [
    "events/event.html"
   ],
@@ -2849,7 +3105,7 @@
   "<div class=\"qr-box\"><img id=\"qr-img\" width=\"220\" height=\"220\" alt=\"Your ticket QR code\"></div>": [
    "events/event.html"
   ],
-  "<div class=\"qr-warn\">⚠️ <strong>Save your QR code now — it won\\'t be shown again.</strong><br>": [
+  "<div class=\"qr-warn\">📧 <strong>We have also sent this ticket to your email.</strong> Check your spam folder if you cannot find it.<br>": [
    "events/event.html"
   ],
   "To cancel your registration, log in to the MysMatch app.</div>": [
@@ -2954,9 +3210,6 @@
   "<div class=\"desc\">": [
    "jobs/job.html"
   ],
-  "<div class=\"kicker\" style=\"margin-top:40px\">/ Contact</div><div class=\"contact\">": [
-   "jobs/job.html"
-  ],
   "JobPosting": [
    "jobs/job.html"
   ],
@@ -3005,6 +3258,9 @@
   "LinkedIn": [
    "challenge/index.html"
   ],
+  "YouTube": [
+   "challenge/index.html"
+  ],
   "Season 01 · Closed": [
    "challenge/index.html"
   ],
@@ -3048,7 +3304,16 @@
   ", we sent a link to set a new password.": [
    "challenge/index.html"
   ],
-  "<span class=\"c-step ": [
+  "<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"3\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12.5l4.5 4.5L19 7.5\"/></svg>": [
+   "challenge/index.html"
+  ],
+  "<li class=\"": [
+   "challenge/index.html"
+  ],
+  "><span class=\"dot\">": [
+   "challenge/index.html"
+  ],
+  "</span><span class=\"lb\">": [
    "challenge/index.html"
   ],
   "<div class=\"c-entry\">": [
@@ -3072,7 +3337,10 @@
   "<div class=\"c-draft\">Not sent yet — something was missing or the upload stopped. Tap “Finish” to complete it.</div>": [
    "challenge/index.html"
   ],
-  "<div class=\"c-steps\">": [
+  "<div class=\"c-prog\"><span class=\"kicker\">Your progress</span><ol class=\"c-stepper\">": [
+   "challenge/index.html"
+  ],
+  "<span class=\"c-prog-now": [
    "challenge/index.html"
   ],
   "Withdraw this entry? It and its files will be deleted. You can send a new one before the deadline.": [
@@ -3147,7 +3415,10 @@
   "Write a few lines or upload a PDF": [
    "challenge/index.html"
   ],
-  "Add at least one image": [
+  "Add at least one image or a Google Drive link": [
+   "challenge/index.html"
+  ],
+  "Paste a Google Drive link": [
    "challenge/index.html"
   ],
   "Tell us a bit more": [
@@ -3168,10 +3439,7 @@
   " your attention": [
    "challenge/index.html"
   ],
-  "We reply after 15 December 2026.": [
-   "challenge/index.html"
-  ],
-  "Paste a Google Drive link": [
+  "We reply after 1 December 2026.": [
    "challenge/index.html"
   ],
   "Sending…": [

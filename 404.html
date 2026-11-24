@@ -157,12 +157,15 @@
       // Languages (Oct 2026): GitHub serves this one file for missing pages
       // under /de/ and /fa/ too, so the texts follow the address. Event share
       // links (/event/…) have no language and stay English.
-      var lang = (path.match(/^\/(de|fa)(\/|$)/) || [])[1];
+      // Turkish added Nov 2026 (/tr/).
+      var lang = (path.match(/^\/(de|fa|tr)(\/|$)/) || [])[1];
       var L = {
         de: { title404: 'Seite nicht gefunden', lede404: 'Die Seite, die du suchst, gibt es nicht. Geh am besten zurück zur Startseite.',
               noApp: 'Du hast die App noch nicht?', home: '← Zurück zur MysMatch-Startseite' },
         fa: { title404: 'صفحه پیدا نشد', lede404: 'صفحه‌ای که دنبالش هستی وجود ندارد. به صفحهٔ اصلی برگرد.',
               noApp: 'هنوز اپ را نداری؟', home: '→ بازگشت به صفحهٔ اصلی MysMatch' },
+        tr: { title404: 'Sayfa bulunamadı', lede404: 'Aradığın sayfa mevcut değil. En iyisi ana sayfaya dön.',
+              noApp: 'Uygulaman henüz yok mu?', home: '← MysMatch ana sayfasına dön' },
       }[lang];
       if (L) {
         document.documentElement.lang = lang;
