@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html dir="ltr" lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Eventos — MysMatch</title>
+<meta content="Descubre eventos para estudiantes en MysMatch y únete. De sesiones de estudio a fiestas del campus, encuentra lo que pasa cerca de ti." name="description"/>
+<meta content="#0F1020" name="theme-color"/>
+<meta content="Eventos — MysMatch" property="og:title"/>
+<meta content="Descubre eventos para estudiantes en MysMatch. Encuentra lo que pasa cerca de ti." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://www.mysmatch.com/es/events/" property="og:url"/>
+<meta content="https://www.mysmatch.com/og-image-v3.jpg" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Eventos — MysMatch" name="twitter:title"/>
+<meta content="Descubre eventos para estudiantes en MysMatch." name="twitter:description"/>
+<link href="/logo-512.png" rel="icon" type="image/png"/>
+<link href="https://www.mysmatch.com/es/events/" rel="canonical"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/css/site.css" rel="stylesheet"/>
+<style>
+  /* ───────── upcoming (filters + date cards) ───────── */
+  .upcoming .in{ display:flex; flex-direction:column; gap:clamp(40px,4vw,72px); }
+  .up-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:32px; flex-wrap:wrap; }
+  .up-head-l{ display:flex; flex-direction:column; gap:clamp(16px,1.6vw,28px); }
+  .up-head .h2{ font-size:clamp(44px,5.6vw,112px); display:flex; align-items:baseline; gap:clamp(14px,1.4vw,28px); flex-wrap:wrap; }
+  .count{ font-family:var(--mono); font-size:clamp(16px,1.4vw,24px); letter-spacing:0; font-weight:500; color:var(--violet); }
+  .free-toggle{ cursor:pointer; display:flex; align-items:center; gap:14px; padding:8px 20px 8px 8px; border-radius:9999px; background:#fff; border:1px solid #E2DEF0; font-family:inherit; font-size:clamp(15px,1.05vw,17px); color:var(--ink); font-weight:500; }
+  .free-track{ width:52px; height:30px; border-radius:9999px; background:#E2DEF0; position:relative; transition:background .25s; }
+  .free-track::after{ content:""; position:absolute; top:3px; left:3px; width:24px; height:24px; border-radius:50%; background:#fff; box-shadow:0 2px 6px rgba(15,16,32,0.2); transition:left .25s; }
+  .free-toggle[aria-pressed="true"] .free-track{ background:var(--violet); }
+  .free-toggle[aria-pressed="true"] .free-track::after{ left:25px; }
+  .cat-chips{ display:flex; gap:10px; flex-wrap:wrap; }
+  .cat-chip{ cursor:pointer; font-family:inherit; font-size:clamp(15px,1.1vw,18px); font-weight:500; padding:clamp(12px,0.9vw,15px) clamp(20px,1.6vw,28px); white-space:nowrap; border-radius:9999px; border:1px solid #E2DEF0; background:#fff; color:var(--ink-2); transition:background .25s, color .25s, border-color .25s; }
+  .cat-chip:hover{ border-color:var(--ink); }
+  .cat-chip.on{ background:var(--ink); border-color:var(--ink); color:#fff; }
+  .ev-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,340px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .ev-card{ display:flex; flex-direction:column; border-radius:36px; overflow:hidden; background:#fff; color:var(--ink); box-shadow:0 1px 2px rgba(15,16,32,0.04),0 24px 48px -28px rgba(60,40,140,0.25); transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s; }
+  .ev-card:hover{ transform:translateY(-8px); box-shadow:0 40px 70px -30px rgba(60,40,140,0.35); color:var(--ink); }
+  /* In-app-only event (Oct 2026): thin brand-gradient frame so the preview reads
+     differently from events you can register for here (same idea as before). */
+  .ev-card.app-only{ border:2px solid transparent; background:linear-gradient(#fff,#fff) padding-box, linear-gradient(100deg,#7B5CFF,#E94B9A) border-box; }
+  .ev-top{ position:relative; padding:clamp(24px,2vw,36px); min-height:clamp(220px,17vw,300px); display:flex; flex-direction:column; justify-content:space-between; gap:20px; }
+  .ev-row{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+  .ev-cat{ font-family:var(--mono); font-size:clamp(11px,0.8vw,13px); letter-spacing:0.1em; text-transform:uppercase; color:var(--ink-2); }
+  .ev-badge{ padding:6px 12px; border-radius:9999px; background:rgba(255,255,255,0.75); color:var(--ink); font-size:13px; font-weight:600; white-space:nowrap; }
+  .ev-badge.full{ background:var(--ink); color:#fff; }
+  .ev-date{ display:flex; align-items:flex-end; justify-content:space-between; gap:14px; }
+  .ev-date-l{ display:flex; align-items:flex-end; gap:14px; min-width:0; }
+  .ev-day{ font-size:clamp(88px,7.6vw,148px); line-height:0.78; font-weight:700; letter-spacing:-0.07em; }
+  .ev-mon{ display:flex; flex-direction:column; gap:2px; padding-bottom:4px; font-size:clamp(16px,1.2vw,20px); font-weight:600; letter-spacing:-0.02em; }
+  .ev-mon span:last-child{ color:var(--ink-2); font-weight:500; }
+  .ev-noday{ font-size:clamp(26px,2.2vw,36px); line-height:1.05; font-weight:600; letter-spacing:-0.04em; max-width:10ch; }
+  /* WHY a big photo (user, Oct 2026): the cover photo fills ~60% of the card's top
+     block; category + badge sit on it and the design's big date stays below. */
+  .ev-top.has-photo{ padding:0; min-height:clamp(340px,26vw,440px); gap:0; }
+  .ev-photo{ position:relative; flex:0 0 60%; overflow:hidden; background:#E6E3F3; }
+  .ev-photo img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s cubic-bezier(.2,.7,.2,1); }
+  .ev-card:hover .ev-photo img{ transform:scale(1.04); }
+  .ev-photo .ev-row{ position:absolute; left:0; right:0; top:0; padding:clamp(18px,1.6vw,26px); }
+  .ev-photo .ev-cat{ padding:6px 12px; border-radius:9999px; background:rgba(255,255,255,0.85); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px); }
+  .ev-top.has-photo .ev-date{ flex:1; align-items:flex-end; padding:clamp(18px,1.6vw,28px) clamp(24px,2vw,36px); }
+  .ev-top.has-photo .ev-day{ font-size:clamp(64px,5.4vw,104px); }
+  .ev-body{ padding:clamp(22px,1.8vw,32px) clamp(24px,2vw,36px) clamp(26px,2vw,36px); display:flex; flex-direction:column; gap:18px; flex:1; }
+  .ev-title{ font-size:clamp(22px,1.9vw,32px); font-weight:600; letter-spacing:-0.04em; line-height:1.08; }
+  .ev-foot{ margin-top:auto; display:flex; justify-content:space-between; align-items:center; gap:16px; font-size:clamp(15px,1.05vw,17px); color:var(--ink-2); }
+  .ev-price{ padding:8px 16px; border-radius:9999px; background:#F1ECFF; color:#4B3BB0; font-weight:600; white-space:nowrap; }
+  .ev-state{ padding:clamp(40px,4vw,72px) 0; display:flex; flex-direction:column; align-items:flex-start; gap:20px; }
+  .ev-state span{ font-size:clamp(24px,2.2vw,38px); font-weight:600; letter-spacing:-0.04em; line-height:1.2; max-width:30ch; }
+
+  /* ───────── guests / organizers ───────── */
+  .both .in{ display:flex; flex-direction:column; gap:clamp(56px,6vw,112px); }
+  .both .kicker{ color:var(--faint); }
+  .both .h2{ max-width:13ch; }
+  .both-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,520px),1fr)); gap:clamp(16px,1.6vw,28px); }
+  .both-card{ background:#17182C; border:1px solid rgba(255,255,255,0.08); border-radius:40px; padding:clamp(28px,3.4vw,64px); display:flex; flex-direction:column; gap:clamp(28px,2.6vw,44px); }
+  .both-card.light{ background:linear-gradient(135deg,#ECEEFF 0%,#F4ECFF 50%,#FCEBF6 100%); color:var(--ink); border:none; }
+  .both-card.light .kicker{ color:var(--ink-2); }
+  .both-list{ display:flex; flex-direction:column; border-top:1px solid rgba(255,255,255,0.1); }
+  .both-list > div{ padding:clamp(20px,1.8vw,32px) 0; border-bottom:1px solid rgba(255,255,255,0.1); display:flex; flex-direction:column; gap:8px; }
+  .both-list > div:last-child{ border-bottom:none; }
+  .both-list h3{ font-size:clamp(22px,2vw,34px); letter-spacing:-0.035em; font-weight:600; }
+  .both-list p{ font-size:clamp(16px,1.2vw,20px); line-height:1.55; color:#B4B5C8; }
+  .both-card.light .both-list, .both-card.light .both-list > div{ border-color:#DCD3F2; }
+  .both-card.light .both-list p{ color:var(--ink-2); }
+
+  @media (max-width:640px){
+    .ev-card{ border-radius:28px; }
+    .both-card{ border-radius:28px; }
+    .free-toggle{ padding-right:16px; }
+  }
+  /* v6 (user, Oct 17): "In the app" section flipped like the homepage's How it
+     works: a very pale section, the gradient on the cards instead. Guests card
+     = lighter gradient, organizers card = full brand gradient. Loads after
+     css/site.css, so these win over its .sheet-dark rules of equal weight. */
+  .both{ background:
+      radial-gradient(45% 55% at 85% 30%, rgba(226,106,216,0.07) 0%, rgba(255,255,255,0) 70%),
+      radial-gradient(50% 55% at 10% 80%, rgba(112,118,238,0.10) 0%, rgba(255,255,255,0) 70%),
+      linear-gradient(180deg,#FFFFFF 0%,#F8F3FF 100%); box-shadow:0 -24px 48px rgba(40,20,120,0.12); }
+  .both::before, .both::after{ display:none; }
+  .both .kicker{ color:var(--muted); }
+  .both .both-card, .both .both-card.light{ --veil:0.5; border:1px solid rgba(255,255,255,0.7); backdrop-filter:none; -webkit-backdrop-filter:none; box-shadow:0 30px 60px rgba(60,30,140,0.18);
+    background:
+      linear-gradient(rgba(255,255,255,var(--veil)),rgba(255,255,255,var(--veil))),
+      radial-gradient(60% 60% at 80% 25%, rgba(255,192,238,0.51) 0%, rgba(255,255,255,0) 70%),
+      var(--g-brand); }
+  .both .both-card.light{ --veil:0; }
+  .both .both-card .kicker{ color:rgba(30,26,54,0.68); }
+  .both .both-list, .both .both-list > div{ border-color:rgba(30,26,54,0.14); }
+  .both .both-list p{ color:var(--ink-soft); }
+  /* WHY: the page's .both-card.light rules (grey text) would win otherwise; grey is too faint on the full gradient. */
+  .both .both-card.light .both-list p{ color:var(--ink-soft); }
+  .both .both-card.light .kicker{ color:rgba(30,26,54,0.68); }
+</style>
+<!-- Website statistics (Nov 2026): own cookieless counter, replaces Plausible (js/mm.js). -->
+<script defer="" src="/js/mm.js"></script>
+<!-- i18n:head -->
+<link rel="alternate" hreflang="en" href="https://www.mysmatch.com/events/">
+<link rel="alternate" hreflang="de" href="https://www.mysmatch.com/de/events/">
+<link rel="alternate" hreflang="fa" href="https://www.mysmatch.com/fa/events/">
+<link rel="alternate" hreflang="tr" href="https://www.mysmatch.com/tr/events/">
+<link rel="alternate" hreflang="it" href="https://www.mysmatch.com/it/events/">
+<link rel="alternate" hreflang="es" href="https://www.mysmatch.com/es/events/">
+<link rel="alternate" hreflang="x-default" href="https://www.mysmatch.com/events/">
+<style>.lang-switch{display:inline-flex;align-items:center;gap:2px;margin-inline-end:10px;font-size:13px;font-weight:600;letter-spacing:.04em}.lang-switch a{color:rgba(255,255,255,.62);padding:6px 7px;border-radius:999px;text-decoration:none}.lang-switch a:hover{color:#fff}.lang-switch a[aria-current]{color:#fff;background:rgba(255,255,255,.12)}.lang-switch-m{display:none}@media(max-width:600px){.nav-right .lang-switch{display:none}.lang-switch.lang-switch-m{display:flex;gap:8px;margin:8px 0 0;font-size:15px}.lang-switch-m a{padding:8px 12px}}</style><script>document.addEventListener("DOMContentLoaded",function(){var q=location.search+location.hash;if(q)document.querySelectorAll(".lang-switch a").forEach(function(a){a.setAttribute("href",a.getAttribute("href")+q);});});</script>
+<!-- /i18n:head -->
+</head>
+<body>
+<!-- ════════ HEADER ════════ -->
+<header class="nav" id="nav">
+<div class="nav-in">
+<a class="brand" href="/es/"><img alt="" height="36" src="/logo-512.png" width="36"/><span>MysMatch</span></a>
+<nav class="nav-links" id="nav-links">
+<a href="/es/">Inicio</a>
+<a aria-current="page" class="on" href="/es/events/">Eventos</a>
+<a href="/es/jobs/">Empleos</a>
+<!-- WHY: Creator/Ideation Challenge launched Oct 2026 (was unlisted until then) -->
+<a class="gold" href="/challenge/">Ideation Challenge</a>
+<!-- WHY no Team/Blog links: both pages are still empty placeholders; hidden until they have real content (files kept). -->
+<!-- i18n:switch --><div class="lang-switch lang-switch-m" aria-label="Language"><a href="/events/" hreflang="en" lang="en">EN</a><a href="/de/events/" hreflang="de" lang="de">DE</a><a href="/fa/events/" hreflang="fa" lang="fa">فا</a><a href="/tr/events/" hreflang="tr" lang="tr">TR</a><a href="/it/events/" hreflang="it" lang="it">IT</a><a href="/es/events/" hreflang="es" lang="es" aria-current="true">ES</a></div><!-- /i18n:switch --></nav>
+<div class="nav-right"><!-- i18n:switch --><div class="lang-switch" aria-label="Language"><a href="/events/" hreflang="en" lang="en">EN</a><a href="/de/events/" hreflang="de" lang="de">DE</a><a href="/fa/events/" hreflang="fa" lang="fa">فا</a><a href="/tr/events/" hreflang="tr" lang="tr">TR</a><a href="/it/events/" hreflang="it" lang="it">IT</a><a href="/es/events/" hreflang="es" lang="es" aria-current="true">ES</a></div><!-- /i18n:switch --> <a class="nav-cta" href="#app">Descarga la app</a>
+<button aria-controls="nav-links" aria-expanded="false" aria-label="Abrir menú" class="menu-btn" id="menu-btn" type="button"><span></span><span></span><span></span></button>
+</div>
+</div>
+<div class="progress" id="progress"></div>
+</header>
+<!-- ════════ HERO ════════ -->
+<section class="page-hero">
+<div class="hero-stack">
+<div class="hero-head">
+<div class="kicker" data-reveal="">/ Eventos</div>
+<h1 data-reveal="">Tu campus,<br/><span class="grad-text">en la vida real.</span></h1>
+</div>
+<div class="hero-foot" data-reveal="">
+<p class="hero-sub">Descubre eventos del campus, conoce gente nueva y construye tu comunidad en la vida real.</p>
+<a class="btn btn-violet" href="#upcoming">Ver próximos eventos ↓</a>
+</div>
+</div>
+</section>
+<!-- ════════ UPCOMING (live from Supabase: every non-private upcoming event) ════════ -->
+<section class="sheet sheet-white upcoming" id="upcoming">
+<div class="in">
+<div class="up-head">
+<div class="up-head-l">
+<div class="kicker">/ Próximos</div>
+<h2 class="h2" data-reveal=""><span>Próximos eventos</span><span class="count" id="events-count"></span></h2>
+</div>
+<button aria-pressed="false" class="free-toggle" id="free-toggle" type="button"><span class="free-track"></span><span>Solo gratuitos</span></button>
+</div>
+<div class="cat-chips" id="cat-chips"></div>
+<div class="ev-state" id="events-loading"><span>Cargando eventos…</span></div>
+<div class="ev-grid" hidden="" id="events-grid"></div>
+<div class="ev-state" hidden="" id="events-empty">
+<span>Ahora mismo no hay eventos abiertos a inscripción online. Vuelve pronto o descarga la app para ver todo lo que pasa cerca de ti.</span>
+</div>
+<div class="ev-state" hidden="" id="events-nomatch">
+<span>Ningún próximo evento coincide con estos filtros.</span>
+<button class="btn btn-dark" id="clear-filters" type="button">Borrar filtros</button>
+</div>
+</div>
+</section>
+<!-- ════════ FOR GUESTS / FOR ORGANIZERS ════════ -->
+<section class="sheet sheet-dark both">
+<div class="in">
+<div class="up-head-l">
+<div class="kicker">/ En la app</div>
+<h2 class="h2" data-reveal="">Para asistentes.<br/><span style="color:#CDB8FF">Para organizadores.</span></h2>
+</div>
+<div class="both-grid">
+<div class="both-card" data-reveal="">
+<div class="kicker">/ Ir a eventos</div>
+<div class="both-list">
+<div><h3>Mira quién organiza</h3><p>Cada evento muestra el perfil del organizador. Tócalo para ver su perfil completo antes de inscribirte.</p></div>
+<div><h3>Sigue tus inscripciones</h3><p>Ve todos tus eventos inscritos, pasados y próximos, en un solo lugar desde tu perfil.</p></div>
+<div><h3>Filtra &amp; descubre</h3><p>Encuentra eventos por ciudad, fecha, categoría o precio. Los eventos pasados se ocultan solos: solo se muestran los próximos.</p></div>
+<div><h3>Indicador de completo</h3><p>Los eventos completos se marcan claramente para que veas de un vistazo qué sigue disponible.</p></div>
+</div>
+</div>
+<div class="both-card light" data-reveal="">
+<div class="kicker">/ Organizar eventos</div>
+<div class="both-list">
+<div><h3>Crea eventos</h3><p>Organiza tus propios eventos del campus con aforo, precios y equilibrio de género a tu medida.</p></div>
+<div><h3>Organizadores verificados</h3><p>Solo los usuarios con teléfono verificado pueden crear eventos, para que la comunidad sea segura y de confianza.</p></div>
+<div><h3>Escaneo de entradas QR</h3><p>Los organizadores pueden escanear entradas QR en la puerta para un acceso rápido y seguro.</p></div>
+<div><h3>Eventos gratuitos &amp; de pago</h3><p>Admite tanto eventos comunitarios gratuitos como experiencias de pago con entrada.</p></div>
+</div>
+<div><a class="btn btn-dark" href="/es/dashboard.html">Acceso para organizaciones →</a></div>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ GET THE APP ════════ -->
+<section class="sheet app-band" id="app">
+<div class="in">
+<div class="up-head-l">
+<div class="kicker" style="color:var(--ink-2)">/ Descarga la app</div>
+<h2 data-reveal="">Inscríbete.<br/>Ven.<br/><span style="color:var(--violet)">Conoce gente.</span></h2>
+</div>
+<div class="app-band-r">
+<p>Descarga MysMatch para descubrir eventos cerca de tu campus, inscribirte con un toque, seguir tus próximos eventos y crear los tuyos.</p>
+<div class="stores">
+<a class="store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="24" viewbox="0 0 24 24" width="24"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg>
+<span><small>Descárgala en</small><b>App Store</b></span>
+</a>
+<a class="store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" rel="noopener noreferrer" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="22" viewbox="0 0 24 24" width="22"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" opacity="0.8"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" opacity="0.6"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" opacity="0.9"></path></svg>
+<span><small>Disponible en</small><b>Google Play</b></span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- ════════ FOOTER ════════ -->
+<footer class="sheet footer">
+<div class="in">
+<div class="foot-top">
+<div class="foot-brand">
+<a class="brand" href="/es/"><img alt="" height="44" src="/logo-512.png" width="44"/><span>MysMatch</span></a>
+<p>No estudies solo.</p>
+</div>
+<div class="foot-cols">
+<div class="foot-col"><span class="kicker">Producto</span><a href="/es/events/">Eventos</a><a href="/es/jobs/">Empleos</a><a class="gold" href="/challenge/">Ideation Challenge</a></div>
+<div class="foot-col"><span class="kicker">Empresa</span><a href="mailto:contact@mys-match.com">Contacto</a><a href="/es/dashboard.html">Acceso para organizaciones</a><a href="/es/organizations/">Registro para organizaciones</a></div>
+<div class="foot-col"><span class="kicker">Legal</span><a href="/es/privacy-policy/">Política de privacidad</a><a href="/es/terms/">Términos del servicio</a><a href="/es/impressum/">Aviso legal</a><a href="/es/support/">Soporte</a></div>
+<div class="foot-col"><span class="kicker">Redes sociales</span><a href="https://www.instagram.com/mysmatch.official/" rel="noopener noreferrer" target="_blank">Instagram</a><a href="https://www.tiktok.com/@mysmatch.official" rel="noopener noreferrer" target="_blank">TikTok</a><a href="https://www.linkedin.com/company/mysmatch" rel="noopener noreferrer" target="_blank">LinkedIn</a></div>
+</div>
+</div>
+<div aria-hidden="true" class="wordmark">MysMatch</div>
+<!-- WHY store buttons in every footer (owner, 2026-10-18): the download links must be reachable at the end of every page. -->
+<div class="foot-stores"><span class="kicker">Descarga la app</span><a class="fs-store" href="https://apps.apple.com/gb/app/mysmatch/id6762192785" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" fill="currentColor" height="20" viewbox="0 0 24 24" width="20"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.72 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.95 3.6 2.89 1.45-.06 2-.93 3.75-.93s2.24.93 3.77.9c1.56-.03 2.55-1.42 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.02-3.03-1.16-3.08-4.59zM14.16 4.06c.8-.97 1.34-2.32 1.19-3.66-1.15.05-2.55.77-3.38 1.74-.74.85-1.39 2.23-1.22 3.54 1.29.1 2.6-.65 3.41-1.62z"></path></svg><span><small>Descárgala en</small><b>App Store</b></span></a><a class="fs-store" href="https://play.google.com/store/apps/details?id=com.mysmatch.app" rel="noopener noreferrer" target="_blank"><svg aria-hidden="true" height="18" viewbox="0 0 24 24" width="18"><path d="M3.6 1.8c-.34.36-.54.91-.54 1.62v17.15c0 .71.2 1.26.55 1.61l.09.08L13.3 12.7v-.22L3.69 1.72l-.09.08z" fill="#34A853"></path><path d="M16.5 15.9l-3.2-3.2v-.22l3.2-3.2.07.04 3.8 2.16c1.08.61 1.08 1.62 0 2.24l-3.8 2.15-.07.03z" fill="#FBBC04"></path><path d="M16.57 15.86L13.3 12.6 3.6 22.18c.36.38.95.42 1.62.04l11.35-6.36z" fill="#EA4335"></path><path d="M16.57 8.32L5.22 1.97c-.67-.38-1.26-.33-1.62.04l9.7 9.58 3.27-3.27z" fill="#4285F4"></path></svg><span><small>Disponible en</small><b>Google Play</b></span></a></div>
+<div class="foot-bottom"><span>© 2026 MysMatch. Todos los derechos reservados.</span><span class="foot-addr" translate="no">Jülicher Str. 209 q-s, 52070 Aachen</span><a href="mailto:contact@mys-match.com">contact@mys-match.com</a></div>
+</div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase.js"></script>
+<script src="/js/site.js"></script>
+<script>
+// Live events grid + filters. Pure string templating (no framework) to keep the
+// static-site footprint tiny. Data: MM.listEvents (every non-private upcoming
+// event; in-app-only ones arrive without date/location — Oct 2026).
+(function () {
+  // WHY these keys: they are the app's real event categories (create-event.tsx);
+  // the labels are the friendlier names the site already used.
+  var CATS = [
+    { key: 'Music', label: 'Música & Fiestas' },
+    { key: 'Sports', label: 'Deportes' },
+    { key: 'Tech', label: 'Tecnología & Hackathons' },
+    { key: 'Food', label: 'Comida & Social' },
+    { key: 'Art', label: 'Arte & Cultura' },
+    { key: 'Networking', label: 'Networking' },
+    { key: 'Other', label: 'Otros' },
+  ];
+  var TINTS = ['linear-gradient(150deg,#E8EAFF,#F1E8FF)', 'linear-gradient(150deg,#E6F0FF,#ECEBFF)', 'linear-gradient(150deg,#ECE9FF,#E6EEFF)',
+    'linear-gradient(150deg,#FDEBF4,#F6E9FF)', 'linear-gradient(150deg,#F3E8FF,#FDE9F3)', 'linear-gradient(150deg,#EFEAFF,#FBEAF5)', 'linear-gradient(150deg,#E9E8FF,#FCE8F2)'];
+  var catIndex = function (key) { for (var i = 0; i < CATS.length; i++) if (CATS[i].key === key) return i; return -1; };
+
+  var grid = document.getElementById('events-grid'), loading = document.getElementById('events-loading');
+  var empty = document.getElementById('events-empty'), noMatch = document.getElementById('events-nomatch');
+  var countEl = document.getElementById('events-count'), chipsEl = document.getElementById('cat-chips');
+  var freeBtn = document.getElementById('free-toggle');
+  var esc = function (s) { return (s == null ? '' : String(s)).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]; }); };
+  var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+  var plural = function (n) { return pad(n) + (n === 1 ? ' evento' : ' eventos'); };
+
+  var all = [], state = { cat: 'All', free: false };
+  var isFree = function (e) { return !e.price || e.price == 0; };
+  // 2026-10-25: with price details the number is only the lowest price -> "from €7" / "See prices".
+  var priceLabel = function (e) {
+    var note = (e.price_note || '').trim();
+    if (isFree(e)) return note ? 'See prices' : 'Gratis';
+    return note ? 'from ' + '€' + e.price : '€' + e.price;
+  };
+
+  // Date parts of the real start moment, in the EVENT's timezone (see event.html).
+  function dateParts(e) {
+    try {
+      var d = new Date(e.starts_at), tz = e.timezone || 'Europe/Berlin';
+      var get = function (o) { return d.toLocaleString('es-ES', Object.assign({ timeZone: tz }, o)); };
+      return { day: get({ day: '2-digit' }), mon: get({ month: 'long' }), wd: get({ weekday: 'short' }), time: get({ hour: '2-digit', minute: '2-digit' }) };
+    } catch (err) { return null; }
+  }
+
+  function card(e) {
+    var ci = catIndex(e.category), cat = ci >= 0 ? CATS[ci] : null;
+    var total = (e._counts && e._counts.total) || 0;
+    var full = e.max_capacity != null && total >= e.max_capacity;
+    var badge = e.max_capacity == null ? '' : (full ? '<span class="ev-badge full">Completo</span>' : '<span class="ev-badge">' + (e.max_capacity - total) + ' plazas libres</span>');
+    // In-app-only events arrive without a location (server-side, see MM.listEvents).
+    // Since Oct 11 2026 they include the date; the "in the app" fallback covers
+    // responses from before that server change.
+    var appOnly = e.web_registration === false;
+    var dp = e.starts_at ? dateParts(e) : null;
+    var date = dp
+      ? '<span class="ev-date-l"><span class="ev-day">' + esc(dp.day) + '</span><span class="ev-mon"><span>' + esc(dp.mon) + '</span><span>' + esc(dp.wd) + ' · ' + esc(dp.time) + '</span></span></span>'
+      : '<span class="ev-noday">' + (appOnly ? 'Fecha &amp; lugar en la app' : 'Fecha por anunciar') + '</span>';
+    var row = '<span class="ev-cat">' + esc(cat ? cat.label : (e.category || 'Evento')) + '</span>' + badge;
+    var place = appOnly ? (dp ? 'Ubicación en la app' : 'Descarga la app para ver el lugar y la hora') : (e.city || e.location || '');
+    return '<a class="ev-card' + (appOnly ? ' app-only' : '') + '" data-reveal href="/es/events/event.html?id=' + encodeURIComponent(e.id) + '">'
+      + '<div class="ev-top' + (e.event_image ? ' has-photo' : '') + '" style="background:' + TINTS[ci >= 0 ? ci : 0] + '">'
+      + (e.event_image
+        ? '<div class="ev-photo"><img src="' + esc(e.event_image) + '" alt="" loading="lazy"><div class="ev-row">' + row + '</div></div>'
+        : '<div class="ev-row">' + row + '</div>')
+      + '<div class="ev-date">' + date + '</div></div>'
+      + '<div class="ev-body"><span class="ev-title">' + esc(e.title) + '</span>'
+      + '<div class="ev-foot"><span>' + esc(place) + '</span><span class="ev-price">' + esc(priceLabel(e)) + '</span></div></div></a>';
+  }
+
+  function render() {
+    var list = all.filter(function (e) { return (state.cat === 'All' || e.category === state.cat) && (!state.free || isFree(e)); });
+    chipsEl.querySelectorAll('.cat-chip').forEach(function (b) { b.classList.toggle('on', b.dataset.cat === state.cat); });
+    freeBtn.setAttribute('aria-pressed', state.free ? 'true' : 'false');
+    countEl.textContent = plural(list.length);
+    if (!all.length) { grid.hidden = true; noMatch.hidden = true; empty.hidden = false; return; }
+    empty.hidden = true;
+    noMatch.hidden = list.length > 0;
+    grid.hidden = list.length === 0;
+    grid.innerHTML = list.map(card).join('');
+    if (window.MMReveal) window.MMReveal(grid);
+  }
+
+  function setCat(c) { state.cat = c; render(); }
+  chipsEl.innerHTML = [{ key: 'All', label: 'Todos los eventos' }].concat(CATS).map(function (c) {
+    return '<button class="cat-chip" type="button" data-cat="' + esc(c.key) + '">' + esc(c.label) + '</button>';
+  }).join('');
+  chipsEl.addEventListener('click', function (ev) { var b = ev.target.closest('.cat-chip'); if (b) setCat(b.dataset.cat); });
+  freeBtn.addEventListener('click', function () { state.free = !state.free; render(); });
+  document.getElementById('clear-filters').addEventListener('click', function () { state = { cat: 'All', free: false }; render(); });
+
+  if (!window.MM) { loading.firstChild.textContent = 'No se pudieron cargar los eventos.'; return; }
+  MM.listEvents().then(function (events) {
+    all = events || [];
+    loading.hidden = true;
+    render();
+  }).catch(function (err) { loading.firstChild.textContent = 'No se pudieron cargar los eventos.'; console.error(err); });
+})();
+</script>
+</body>
+</html>

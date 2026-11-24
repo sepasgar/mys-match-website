@@ -34,6 +34,11 @@ LANGS = {
     # no challenge copies and those pages show no TR in the switch/hreflang.
     'tr': {'lang': 'tr', 'dir': 'ltr', 'locale': 'tr-TR', 'label': 'TR',
            'skip': {'challenge/index.html', 'challenge/rules.html', 'challenge/reset.html'}},
+    # Italian + Spanish (Nov 2026, owner: "everywhere"); challenge left out too.
+    'it': {'lang': 'it', 'dir': 'ltr', 'locale': 'it-IT', 'label': 'IT',
+           'skip': {'challenge/index.html', 'challenge/rules.html', 'challenge/reset.html'}},
+    'es': {'lang': 'es', 'dir': 'ltr', 'locale': 'es-ES', 'label': 'ES',
+           'skip': {'challenge/index.html', 'challenge/rules.html', 'challenge/reset.html'}},
 }
 
 
@@ -266,6 +271,8 @@ LEGAL_NOTE = {
     'de': 'Dies ist eine Übersetzung zur Information. Rechtlich verbindlich ist die <a href="{en}">englische Fassung</a>.',
     'fa': 'این متن ترجمه‌ای برای آگاهی است. نسخهٔ حقوقی الزام‌آور، <a href="{en}">نسخهٔ انگلیسی</a> است.',
     'tr': 'Bu metin bilgilendirme amaçlı bir çeviridir. Hukuken bağlayıcı olan <a href="{en}">İngilizce metindir</a>.',
+    'it': 'Questa è una traduzione a scopo informativo. Il testo giuridicamente vincolante è la <a href="{en}">versione inglese</a>.',
+    'es': 'Esta es una traducción a título informativo. El texto jurídicamente vinculante es la <a href="{en}">versión en inglés</a>.',
 }
 
 

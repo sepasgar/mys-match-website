@@ -158,7 +158,7 @@
       // under /de/ and /fa/ too, so the texts follow the address. Event share
       // links (/event/…) have no language and stay English.
       // Turkish added Nov 2026 (/tr/).
-      var lang = (path.match(/^\/(de|fa|tr)(\/|$)/) || [])[1];
+      var lang = (path.match(/^\/(de|fa|tr|it|es)(\/|$)/) || [])[1];
       var L = {
         de: { title404: 'Seite nicht gefunden', lede404: 'Die Seite, die du suchst, gibt es nicht. Geh am besten zurück zur Startseite.',
               noApp: 'Du hast die App noch nicht?', home: '← Zurück zur MysMatch-Startseite' },
@@ -166,6 +166,10 @@
               noApp: 'هنوز اپ را نداری؟', home: '→ بازگشت به صفحهٔ اصلی MysMatch' },
         tr: { title404: 'Sayfa bulunamadı', lede404: 'Aradığın sayfa mevcut değil. En iyisi ana sayfaya dön.',
               noApp: 'Uygulaman henüz yok mu?', home: '← MysMatch ana sayfasına dön' },
+        it: { title404: 'Pagina non trovata', lede404: 'La pagina che cerchi non esiste. Meglio tornare alla home.',
+              noApp: "Non hai ancora l'app?", home: '← Torna alla home di MysMatch' },
+        es: { title404: 'Página no encontrada', lede404: 'La página que buscas no existe. Mejor vuelve a la página de inicio.',
+              noApp: '¿Aún no tienes la app?', home: '← Volver a la página de inicio de MysMatch' },
       }[lang];
       if (L) {
         document.documentElement.lang = lang;
