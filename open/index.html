@@ -48,6 +48,13 @@
   var accepted = params.get('to') === 'accepted';
   var u = params.get('u') || '';
   var q = 'open=requests';
+  // ?to=profile comes from the one-off "finish your profile" email (2026-11-26):
+  // the app just opens normally — an unfinished profile lands in the sign-up steps.
+  var profile = params.get('to') === 'profile';
+  if (profile) {
+    q = 'open=profile';
+    document.getElementById('s').textContent = 'Finish your profile in the app.';
+  }
   if (accepted) {
     q = 'open=accepted';
     if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(u)) q += '&user=' + u;
@@ -56,7 +63,7 @@
   if (de) {
     document.documentElement.lang = 'de';
     document.getElementById('t').textContent = 'MysMatch wird geöffnet…';
-    document.getElementById('s').textContent = accepted ? 'Deine neue Vernetzung wartet in der App.' : 'Deine Vernetzungsanfragen warten in der App.';
+    document.getElementById('s').textContent = accepted ? 'Deine neue Vernetzung wartet in der App.' : profile ? 'Stell dein Profil in der App fertig.' : 'Deine Vernetzungsanfragen warten in der App.';
     document.getElementById('open').textContent = 'App öffnen';
     document.getElementById('n').textContent = 'Du hast die App nicht auf diesem Handy?';
   }
